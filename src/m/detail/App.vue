@@ -1,7 +1,7 @@
 <template>
   <div id="detail">
     <Loading v-model="loadingshow" :text="loadtext"></Loading>
-    <div class="content">
+    <div class="content" v-if="showContent">
       <div v-if="articles.sub_type=='V'">
         <Videobox :video="articles.banner" :poster="articles.thumb"></Videobox>
       </div>
@@ -29,7 +29,7 @@
         <span>功夫财经</span>
       </div>
       <div class="download">
-        <a @click="openApp" href="http://a.app.qq.com/o/simple.jsp?pkgname=com.avatar.kungfufinance">打开APP</a>
+        <a @click="openApp">打开APP</a>
       </div>
     </footer>
   </div>
@@ -54,6 +54,7 @@
     name: 'detail',
     data () {
       return {
+        showContent:false,
         paly:0,
         showplay:true,
         title:"评论",
@@ -79,6 +80,7 @@
       openApp(){
         console.log("open");
         console.log(HOST);
+        this.getPhoneType();
       },
       //获取数据
       fetchData(id){
@@ -87,20 +89,63 @@
           this.loadingshow=false;
           this.articles=JSON.parse(data.bodyText);
           this.fetchCommentData(id);
-        }, (err)=>{console.log(err);});
+          if(this.articles.status!=0){
+            //返回为4，无权限
+            if(this.articles.status==4){
+              window.location.href="https://kofuf.com:8443/privilege/h5_article/app_download.html"
+            }
+            this.logErr(this.articles.error);
+          }else{
+            this.showContent=true;
+          }
+        }, (err)=>{
+          this.loadingshow=false;
+          this.logErr("请在网络环境下访问");
+          console.log(err);
+        });
+        //10秒之后loading消失
+        var self=this;
+        setTimeout(()=>{
+          self.loadingshow=false;
+        },10000);
       },
+
       //请求评论数据
       fetchCommentData(id){
         this.$http.get(HOST+'/api/articles/comments.json?id='+id, [])
         .then((data)=>{
           this.loadingshow=false;
           this.commentlist.items=JSON.parse(data.bodyText).items;
-          console.log();
         }, (err)=>{
           this.loadingshow=false;
           console.log(err);
         });
-      }
+      },
+      logErr(err){
+        this.$vux.alert.show({
+          title: '提示',
+          content: err,
+          dialogTransition:"",
+          maskTransition:"",
+          onShow () {},
+          onHide () {}
+        })
+      },
+      //判断手机类型
+      getPhoneType(){
+        var u = navigator.userAgent;
+        //应用市场地址：
+        if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//安卓手机
+            console.log("Android");
+            window.location.href="http://a.app.qq.com/o/simple.jsp?pkgname=com.avatar.kungfufinance"
+          } else if (u.indexOf('iPhone') > -1) {//苹果手机
+            console.log("apple");
+            this.logErr('apple');
+          } else if (u.indexOf('Windows Phone') > -1) {//winphone手机
+            console.log("Windows");
+            window.location.href="http://a.app.qq.com/o/simple.jsp?pkgname=com.avatar.kungfufinance"
+          }
+        }
     },
     filters: {
       formatDate:function (time) {
@@ -161,12 +206,12 @@
 footer{
   height: 46px;
   width: 100%;
-  max-width: 680px;
+  max-width: 652px;
   background-color: #fff;
   box-shadow: rgba(0,0,0,.2) 0 0 10px;
   position: fixed;
   bottom: 0;
-  padding: .14286rem;
+  padding: 8px;
   z-index: 1000;
   display: -webkit-box;
   -webkit-box-align: center;

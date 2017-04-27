@@ -46,7 +46,6 @@ export default {
           clearTimeout(timer);
         }else{
         }
-        console.log(0);
       },2);
     },
     play() {
@@ -164,7 +163,7 @@ audio{
     }
   }
 }
-.play{background: url('http://www.alexkatz.me/codepen/img/play.png') ;}
-.pause{background: url('http://www.alexkatz.me/codepen/img/pause.png') ;}
+.play{background: url('./images/play_audio.png') ;}
+.pause{background: url('./images/pause.png') ;}
 
 </style>

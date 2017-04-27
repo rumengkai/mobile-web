@@ -42,6 +42,7 @@
 #vediobox{
   position: relative;
   height: auto;
+  width: 100%;
 }
 #vediobox .vdo-control{
   top: 50%;
