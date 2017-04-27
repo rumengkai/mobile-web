@@ -2,15 +2,15 @@
   <div id="comments">
     <p class="comment-title vux-1px-b">{{title||'评论'}}</p>
     <ul id="comment" v-if="commentlist!=undefined">
-      <li v-for="item in commentlist.items" class="vux-1px-b">
-        <img :src="item.headimg" alt="">
+      <li v-for="item in commentlist" class="vux-1px-b">
+        <img :src="item.author.photo" alt="" onerror="this.src='http://182.92.99.123:8080/privilege/uploadedFile/default.png'">
         <div class="comment-box">
-          <p class="username">{{item.username}}</p>
-          <p class="date">{{item.date}}</p>
-          <p class="comment-con">{{item.commentCon}}</p>
-          <div class="zan">
-            <span class="icon"></span>
-            <span class="count">{{item.count}}</span>
+          <p class="username">{{item.author.name}}</p>
+          <p class="date">{{item.postd|formatDate}}</p>
+          <p class="comment-con">{{item.content}}</p>
+          <div class="zan" @click="showPluginAuto">
+            <span class="icon"><img src="../../m/detail/images/zan.png" alt=""> </span>
+            <span class="count"> {{item.support_count}}</span>
           </div>
         </div>
       </li>
@@ -24,14 +24,45 @@
 </template>
 
 <script>
+  import {formatDate} from 'common/js/date.js';
+  import Vue from 'vue'
+  import { AlertPlugin} from 'vux'
+  Vue.use(AlertPlugin)
   export default {
     name: 'comments',
     props: {
       title:String,
-      commentlist:Object
+      commentlist:Array
     },
     components: {
-      commentlist:{}
+    },
+    filters: {
+      formatDate:function (time) {
+        var date = new Date(time);
+        return formatDate(date, "yyyy-MM-dd");
+      }
+    },
+    methods: {
+      showPlugin () {
+        this.$vux.alert.show({
+          title: '小提示',
+          content: '打开APP，参与互动，<br/> 获取优质内容。',
+          dialogTransition:"",
+          maskTransition:"",
+          onShow () {
+            console.log('Plugin: I\'m showing')
+          },
+          onHide () {
+            console.log('Plugin: I\'m hiding now')
+          }
+        })
+      },
+      showPluginAuto () {
+        this.showPlugin()
+        // setTimeout(() => {
+        //   this.$vux.alert.hide()
+        // }, 3000)
+      }
     }
   }
 </script>
@@ -62,6 +93,7 @@
   float: left;
   display: block;
   width: .68rem;
+  height: .68rem;
   border-radius: .34rem;
 }
 #comment .comment-box{
@@ -76,7 +108,7 @@
   line-height: .50rem;
 }
 #comment .comment-box .date{
-  font-size:.15rem;
+  font-size:12px;
   line-height: .3rem;
   color: #888888;
 }
@@ -91,6 +123,16 @@
   position: absolute;
   right: .34rem;
   top: .34rem;
+  .icon{
+    img{
+      width: 16px;
+      height: 16px;
+    }
+  }
+  .count{
+    margin-left: 10px;
+    color: #a8a8a8
+  }
 }
 .comment-none{
   text-align: center;

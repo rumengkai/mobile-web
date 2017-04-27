@@ -1,26 +1,37 @@
 <template>
   <div id="detail">
     <Loading v-model="loadingshow" :text="loadtext"></Loading>
-    <div v-if="articles.sub_type=='V'">
-      <Videobox :video="articles.banner" :poster="articles.thumb"></Videobox>
-    </div>
-    <div v-if="articles.sub_type==='R'">
-      <Audiobox :music="articles.banner"></Audiobox>
-    </div>
-    <div v-if="articles.sub_type=='A'" class="banner">
-      <img :src="articles.banner" alt="">
-    </div>
-    <div class="articles">
-      <p class="title">{{articles.name}}</p>
-      <div class="info">
-        <img :src="articles.author_pic" alt="">
-        <span class="author">作者：{{articles.author_name}}</span>
-        <span class="created">{{articles.created | formatDate}}</span>
+    <div class="content">
+      <div v-if="articles.sub_type=='V'">
+        <Videobox :video="articles.banner" :poster="articles.thumb"></Videobox>
       </div>
-      <span class="content" v-html="articles.content" >
-      </span>
+      <div v-if="articles.sub_type==='R'">
+        <Audiobox :music="articles.banner"></Audiobox>
+      </div>
+      <div v-if="articles.sub_type=='A'" class="banner">
+        <img :src="articles.banner" alt="">
+      </div>
+      <div class="articles">
+        <p class="title">{{articles.name}}</p>
+        <div class="info vux-1px-b">
+          <img :src="articles.author_pic" alt="">
+          <span class="author">作者：{{articles.author_name}}</span>
+          <span class="created">{{articles.created | formatDate}}</span>
+        </div>
+        <span class="content" v-html="articles.content" >
+        </span>
+      </div>
+      <comment :title="title" :commentlist="commentlist.items"></comment>
     </div>
-    <comment :title="title" :commentlist="commentlist"></comment>
+    <footer>
+      <div class="gfcj">
+        <img src="./images/logo.png" alt="">
+        <span>功夫财经</span>
+      </div>
+      <div class="download">
+        <a @click="openApp" href="http://a.app.qq.com/o/simple.jsp?pkgname=com.avatar.kungfufinance">打开APP</a>
+      </div>
+    </footer>
   </div>
 </template>
 
@@ -47,19 +58,7 @@
         showplay:true,
         title:"评论",
         commentlist:{
-          "items":[{
-            "headimg":"http://img3.imgtn.bdimg.com/it/u=4180799590,1107306819&fm=23&gp=0.jpg",
-            "username":"Sara Davis",
-            "date":"2106-10-12",
-            "commentCon":"房价上涨是趋势，但不能基于上涨是趋势，但不能基于上涨是趋势，但不能基于投资",
-            "count":"678"
-          },{
-            "headimg":"http://img3.imgtn.bdimg.com/it/u=4180799590,1107306819&fm=23&gp=0.jpg",
-            "username":"Sara Davis",
-            "date":"2106-10-12",
-            "commentCon":"房价上涨是趋势，但不能基于上涨是趋势，但不能基于上涨是趋势，但不能基于投资",
-            "count":"678"
-          }]
+          "items":[]
         },
         articles:{},
         loadingshow: true,
@@ -77,14 +76,28 @@
       this.fetchData(id);
     },
     methods: {
+      openApp(){
+        console.log("open");
+        console.log(HOST);
+      },
       //获取数据
-      fetchData(cid){
-        this.$http.get('/api/articles/'+cid+'.json', [])
+      fetchData(id){
+        this.$http.get(HOST+'/api/articles/'+id+'.json', [])
         .then((data)=>{
           this.loadingshow=false;
           this.articles=JSON.parse(data.bodyText);
+          this.fetchCommentData(id);
         }, (err)=>{console.log(err);});
       },
+      //请求评论数据
+      fetchCommentData(id){
+        this.$http.get(HOST+'/api/articles/comments.json?id='+id, [])
+        .then((data)=>{
+          this.loadingshow=false;
+          this.commentlist.items=JSON.parse(data.bodyText).items;
+          console.log();
+        }, (err)=>{console.log(err);});
+      }
     },
     filters: {
       formatDate:function (time) {
@@ -95,10 +108,10 @@
   }
 </script>
 
-<style>
-html body{
-  max-width: 640px;
-  margin: auto;
+<style lang="less">
+@import '~vux/src/styles/1px.less';
+.content{
+  margin-bottom: 100px;
 }
 .banner img{
   width: 100%;
@@ -106,7 +119,7 @@ html body{
 .articles{
   width: 90%;
   color: #4f4f4f;
-  margin: auto;
+  margin:14px auto 37px;
   overflow: hidden;
   font-size: .3rem;
 }
@@ -117,7 +130,7 @@ html body{
   height: .9rem;
   overflow: hidden;
   padding: .3rem 0;
-  border-bottom: 1px solid #e2e2e2;
+  margin-bottom: 10px;
 }
 .articles .info .author{
   line-height: .9rem;
@@ -137,5 +150,53 @@ html body{
 }
 .articles .content img{
   max-width: 100%;
+}
+footer{
+  height: 46px;
+  width: 100%;
+  max-width: 680px;
+  background-color: #fff;
+  box-shadow: rgba(0,0,0,.2) 0 0 10px;
+  position: fixed;
+  bottom: 0;
+  padding: .14286rem;
+  z-index: 1000;
+  display: -webkit-box;
+  -webkit-box-align: center;
+  .gfcj{
+    font-size: 20px;
+    color: #ff8929;
+    width: 50%;
+    text-align: center;
+
+    img{
+      width: 40px;
+      height: 40px;
+      display: block;
+      float: left;
+      margin-left: 20px;
+    }
+    span{
+      line-height: 40px;
+      display: inline-block;
+    }
+  }
+  .download{
+    width: 50%;
+    a{
+      width: 90%;
+      height: 40px;
+      display: block;
+      color: #ff8929;
+      border: 1px solid #ff8929;
+      border-radius: 5px;
+      text-align: center;
+      line-height: 40px;
+      background: #fff;
+      font-size: 22px;
+      box-sizing: content-box;
+      margin-right: .08571rem;
+    }
+  }
 }
 </style>

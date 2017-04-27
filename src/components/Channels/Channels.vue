@@ -39,6 +39,7 @@
     methods: {
       channelsDetail(id){
         console.log(id);
+        window.location.href="channels-detail.html?id="+id;
       }
     }
   }
