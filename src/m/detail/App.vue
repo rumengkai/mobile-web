@@ -96,7 +96,10 @@
           this.loadingshow=false;
           this.commentlist.items=JSON.parse(data.bodyText).items;
           console.log();
-        }, (err)=>{console.log(err);});
+        }, (err)=>{
+          this.loadingshow=false;
+          console.log(err);
+        });
       }
     },
     filters: {
@@ -110,6 +113,10 @@
 
 <style lang="less">
 @import '~vux/src/styles/1px.less';
+.weui-loading_toast{
+  position: relative;
+  z-index: 1001;
+}
 .content{
   margin-bottom: 100px;
 }

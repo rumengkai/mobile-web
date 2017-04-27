@@ -58,7 +58,6 @@ for (var pathname in pages) {
     inject: true,              // js插入位置
     // necessary to consistently work with multiple chunks via CommonsChunkPlugin
     chunksSortMode: 'dependency'
-
   };
 
   if (pathname in module.exports.entry) {
