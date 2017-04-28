@@ -92,7 +92,7 @@
           if(this.articles.status!=0){
             //返回为4，无权限
             if(this.articles.status==4){
-              window.location.href="https://kofuf.com:8443/privilege/h5_article/app_download.html"
+              window.location.href="app-download.html"
             }
             this.logErr(this.articles.error);
           }else{
@@ -137,13 +137,16 @@
         //应用市场地址：
         if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//安卓手机
             console.log("Android");
-            window.location.href="http://a.app.qq.com/o/simple.jsp?pkgname=com.avatar.kungfufinance"
+            // window.location.href="http://a.app.qq.com/o/simple.jsp?pkgname=com.avatar.kungfufinance"
+            window.location.href="https://a.mlinks.cc/AK8f?id=1340&mw_ck=h5"
           } else if (u.indexOf('iPhone') > -1) {//苹果手机
             console.log("apple");
-            this.logErr('apple');
+            window.location.href="https://a.mlinks.cc/AK8f?id=1340&mw_ck=h5"
           } else if (u.indexOf('Windows Phone') > -1) {//winphone手机
             console.log("Windows");
-            window.location.href="http://a.app.qq.com/o/simple.jsp?pkgname=com.avatar.kungfufinance"
+            window.location.href="https://a.mlinks.cc/AK8f?id=1340&mw_ck=h5"
+          }else{
+            window.location.href="https://a.mlinks.cc/AK8f?id=1340&mw_ck=h5"
           }
         }
     },
@@ -158,12 +161,19 @@
 
 <style lang="less">
 @import '~vux/src/styles/1px.less';
+body{
+  background-color: #eee;
+}
+#detail{
+  background-color: #fff;
+  overflow: hidden;
+}
 .weui-loading_toast{
   position: relative;
   z-index: 1001;
 }
 .content{
-  margin-bottom: 100px;
+  padding-bottom: 100px;
 }
 .banner img{
   width: 100%;
@@ -206,12 +216,12 @@
 footer{
   height: 46px;
   width: 100%;
-  max-width: 652px;
+  max-width: 680px;
   background-color: #fff;
   box-shadow: rgba(0,0,0,.2) 0 0 10px;
   position: fixed;
   bottom: 0;
-  padding: 8px;
+  padding: 8px 0;
   z-index: 1000;
   display: -webkit-box;
   -webkit-box-align: center;

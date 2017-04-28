@@ -7,7 +7,7 @@
       <button id="pButton" @click="play" class="play" ></button>
       <div class="controls">
         <span class="current-time" ref="currentTime">0:00</span>
-        <div class="slider" @click="clickslider" data-direction="horizontal" >
+        <div class="slider" data-direction="horizontal" @click="clickslider">
           <div class="progress" ref="progress">
             <div class="pin" id="progress-pin" data-method="rewind"></div>
           </div>
@@ -15,7 +15,7 @@
         <span class="total-time" ref="totalTime">0:00</span>
       </div>
     </div>
-    <!-- <range v-model="current" :max="duration" @click="clickslider" @on-change='onchange' :range-bar-height="4"></range>{{current}} -->
+    <range v-model="current" :max="duration" @on-change='onchange' :range-bar-height="4"></range>{{current}}
   </div>
 </template>
 
@@ -54,9 +54,9 @@ export default {
         }else{
         }
       },20);
-      // var d=document.getElementsByClassName("vux-range-input")[0];
-      // console.log(d.value);
-      // d.onchange=this.onchange;
+      var d=document.getElementsByClassName("vux-range-input")[0];
+      console.log(d.value);
+      d.onchange=this.onchange;
     },
     play() {
       this.$refs.musicplay.addEventListener('timeupdate', this.updateProgress);
@@ -83,7 +83,7 @@ export default {
       var percent = current / this.$refs.musicplay.duration * 100;
       this.$refs.progress.style.width = percent + '%';
       this.$refs.currentTime.textContent = this.formatTime(current);
-      // this.current=current;
+      this.current=current;
       if(this.$refs.musicplay.currentTime == this.$refs.musicplay.duration){
         this.$refs.musicplay.pause();
         // remove pause, add play
@@ -94,12 +94,10 @@ export default {
     },
     onchange(){
       var rd=document.getElementsByClassName("range-handle")[0];
-      rd.touchend=this.change;
       rd.onmouseup=this.change;
     },
     change(){
       var d=document.getElementsByClassName("vux-range-input")[0];
-      console.log(d.value);
       this.$refs.musicplay.currentTime=d.value;
     },
     formatTime(time) {
@@ -123,7 +121,7 @@ audio{
     width: 14px;
     height: 14px;
     background-color: #f2cd4b;
-    top:-6.5px !important;
+    top:-7.5px !important;
   }
   .range-max{
     display: none;
@@ -136,7 +134,6 @@ audio{
   }
   .range-bar{
     height: 4px;
-    background-color: #D8D8D8;
   }
 }
 #audiobox{

@@ -104,7 +104,7 @@
   font-size: .2rem;
 }
 #comment .comment-box .username{
-  font-size: .32rem;
+  font-size: 16px;
   line-height: .50rem;
 }
 #comment .comment-box .date{
@@ -114,7 +114,7 @@
 }
 #comment .comment-box .comment-con{
   margin-top: .1rem;
-  font-size: .28rem;
+  font-size: 14px;
   line-height: .4rem;
   color: #9e9d9d;
 }
@@ -131,7 +131,11 @@
   }
   .count{
     margin-left: 10px;
-    color: #a8a8a8
+    color: #a8a8a8;
+    font-size: 16px;
+    line-height: 16px;
+    display: block;
+    float: left;
   }
 }
 .comment-none{
