@@ -1,5 +1,6 @@
 <template>
   <div id="detail">
+    <Failed v-show="failedshow" :msg="failedmsg"></Failed>
     <Loading v-model="loadingshow" :text="loadtext"></Loading>
     <div class="content" v-if="showContent">
       <div v-if="articles.sub_type=='V'">
@@ -23,7 +24,7 @@
       </div>
       <comment :title="title" :commentlist="commentlist.items"></comment>
     </div>
-    <footer>
+    <footer v-if="showContent">
       <div class="gfcj">
         <img src="./images/logo.png" alt="">
         <span>功夫财经</span>
@@ -32,6 +33,7 @@
         <a @click="openApp">打开APP</a>
       </div>
     </footer>
+    <app-download v-if="appdownloadshow"></app-download>
   </div>
 </template>
 
@@ -43,6 +45,8 @@
   import Comment from "components/Comment/Comment"
   import Audiobox from "components/Audio/Audio"
   import Videobox from "components/Video/Video"
+  import AppDownload from "components/AppDownload/AppDownload"
+  import Failed from "components/Failed/Failed"
   import Vue from 'vue'
   import {Loading} from 'vux'
   import VueResource from 'vue-resource'
@@ -63,14 +67,19 @@
         },
         articles:{},
         loadingshow: true,
-        loadtext: 'loading...'
+        loadtext: 'loading...',
+        appdownloadshow:false,
+        failedshow:false,
+        failedmsg:"请在网络环境下访问"
       }
     },
     components: {
       Loading,
       Comment,
       Audiobox,
-      Videobox
+      Videobox,
+      AppDownload,
+      Failed
     },
     created () {
       var id = this.$geturlpara.getUrlKey("id")||"1482";
@@ -92,15 +101,21 @@
           if(this.articles.status!=0){
             //返回为4，无权限
             if(this.articles.status==4){
-              window.location.href="app-download.html"
+              //window.location.href="app-download.html"
+              this.appdownloadshow=true;
+            }else{
+              this.failedmsg=this.articles.error;
+              this.failedshow=true;
+
+              // this.logErr(this.articles.error);
             }
-            this.logErr(this.articles.error);
           }else{
             this.showContent=true;
           }
         }, (err)=>{
           this.loadingshow=false;
-          this.logErr("请在网络环境下访问");
+          this.failedshow=true;
+          // this.logErr("请在网络环境下访问");
           console.log(err);
         });
         //10秒之后loading消失
@@ -163,16 +178,18 @@
 @import '~vux/src/styles/1px.less';
 body{
   background-color: #eee;
+
 }
 #detail{
-  background-color: #fff;
-  overflow: hidden;
+  height: 100%;
 }
 .weui-loading_toast{
   position: relative;
   z-index: 1001;
 }
 .content{
+  overflow: hidden;
+  background-color: #fff;
   padding-bottom: 100px;
 }
 .banner img{

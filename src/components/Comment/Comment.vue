@@ -70,6 +70,7 @@
 <style lang="less">
 @import '~vux/src/styles/1px.less';
 .comment-title{
+  text-align: left;
   line-height: .9rem;
   width: 90%;
   margin:auto;
@@ -83,6 +84,7 @@
   margin-bottom: 30px;
 }
 #comment li{
+
   padding: .34rem 0;
   display: block;
   height: auto;
@@ -97,7 +99,7 @@
   border-radius: .34rem;
 }
 #comment .comment-box{
-
+  text-align: left;
   width: 70%;
   margin-left: .26rem;
   float: left;

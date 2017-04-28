@@ -39,7 +39,7 @@
     methods: {
       channelsDetail(id){
         console.log(id);
-        window.location.href="channels-detail.html?id="+id;
+        window.location.href="channel.html?id="+id;
       }
     }
   }
@@ -49,7 +49,7 @@
 @import '~vux/src/styles/1px.less';
 #channels{
   .channels-item{
-
+    cursor: pointer;
     height: 165px;
     padding: 20px 0;
     margin-left: .3rem;

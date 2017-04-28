@@ -13,10 +13,11 @@ thead, tr, th, td {
     font-family: inherit;
     vertical-align: baseline;
 }
-html body{
+html,body{
   max-width: 680px;
   margin: auto;
   font-size: 12px;
+  height: 100%;
 }
 :focus {
     outline: 0;

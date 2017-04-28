@@ -1,7 +1,7 @@
 <template>
   <div id="channels">
     <Loading v-model="loadingshow" :text="loadtext"></Loading>
-    <x-header class="vux-1px-b" :left-options="{showBack: false}">订阅<a slot="right" @click="search"><icon class="search" type="search"></icon></a></x-header>
+    <x-header class="vux-1px-b" :left-options="{showBack: false}">订阅</x-header>
     <scroller lock-x ref="scrollerEvent">
       <div class="content">
         <div class="channels-title vux-1px-t vux-1px-b">
@@ -76,7 +76,11 @@
 
 <style lang="less">
 @import '~vux/src/styles/1px.less';
+body{
+  background-color: #eee;
+}
 #channels{
+  background-color: #fff;
   .vux-header{
     // height: .92rem;
     background-color: #fff;
@@ -88,6 +92,7 @@
     .vux-header-title{
       color: #000;
     }
+    max-width: 680px;
   }
   .content{
     padding-top: 46px;
