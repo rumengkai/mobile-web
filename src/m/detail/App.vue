@@ -1,6 +1,6 @@
 <template>
   <div id="detail">
-    <Failed v-show="failedshow" :msg="failedmsg"></Failed>
+    <Failed v-if="failedshow" :msg="failedmsg"></Failed>
     <Loading v-model="loadingshow" :text="loadtext"></Loading>
     <div class="content" v-if="showContent">
       <div v-if="articles.sub_type=='V'">
@@ -106,7 +106,6 @@
             }else{
               this.failedmsg=this.articles.error;
               this.failedshow=true;
-
               // this.logErr(this.articles.error);
             }
           }else{

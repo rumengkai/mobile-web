@@ -1,7 +1,7 @@
 <template>
   <div id="channel">
     <Loading v-model="loadingshow" :text="loadtext" ></Loading>
-    <x-header v-if="showContent"><a slot="right" @click="share"></a></x-header>
+    <!-- <x-header v-if="showContent"><a slot="right" @click="share"></a></x-header> -->
     <scroller lock-x ref="scrollerEvent" v-show="showContent">
       <div class="content" >
         <div class="large-img">
@@ -41,7 +41,7 @@
         <span>订阅：<span>¥{{channelsinfo.suites[0].price}}/年</span></span>
       </div>
     </footer>
-    <Failed v-show="failedshow" :msg="failedmsg"></Failed>
+    <Failed v-if="failedshow" :msg="failedmsg"></Failed>
   </div>
 </template>
 
@@ -54,7 +54,9 @@
   import {Loading,XHeader,Scroller} from 'vux'
   import Failed from "components/Failed/Failed"
   import VueResource from 'vue-resource'
+  import { AlertPlugin} from 'vux'
   Vue.use(VueResource)
+  Vue.use(AlertPlugin)
   Vue.prototype.$geturlpara=geturlpara
 
   export default {
@@ -69,7 +71,7 @@
         },
         information:"",
         failedshow:false,
-        c:"请在网络环境下访问"
+        failedmsg:"请在网络环境下访问"
       }
     },
     components: {
@@ -105,12 +107,15 @@
             },300);
             this.showContent=true;
           }
-
         }, (err)=>{
           this.loadingshow=false;
-          this.logErr("请在网络环境下访问");
+          this.failedshow=true;
           console.log(err);
         });
+        var self=this;
+        setTimeout(()=>{
+          self.loadingshow=false;
+        },10000);
       },
       share(){
         console.log("share");
@@ -124,7 +129,17 @@
       },
       subscribe(){
         window.location.href="https://a.mlinks.cc/AK8j"
-      }
+      },
+      logErr(err){
+        this.$vux.alert.show({
+          title: '提示',
+          content: err,
+          dialogTransition:"",
+          maskTransition:"",
+          onShow () {},
+          onHide () {}
+        })
+      },
     },
     filters: {
       formatDate2:function (time) {
@@ -160,6 +175,7 @@ body{
     .large-img{
       img{
         width: 100%;
+        min-height: 2.1rem;
       }
     }
     .channels-info{
