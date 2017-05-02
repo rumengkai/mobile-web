@@ -34,6 +34,16 @@
   Vue.use(VueResource)
   Vue.prototype.$geturlpara=geturlpara
 
+  Vue.http.interceptors.push(function(request, next) {
+    // modify headers
+    var gid=localStorage.getItem("gid");
+    var token=localStorage.getItem("token");
+    request.headers.set('from', '2');
+    request.headers.set('gid', gid);
+    request.headers.set('token', token);
+    next();
+  });
+
   export default {
     name: 'channels',
     data () {
@@ -57,14 +67,18 @@
       Scroller,
       Failed
     },
+    beforeCreate(){
+      localStorage.setItem("gid","1047500131");
+      localStorage.setItem("token","9a5795f406b94f3192a61d683327c550");
+    },
     created () {
       this.fetchData();
+      // this.getAjax();
     },
-
     methods: {
       //获取专栏数据数据
       fetchData(cid){
-        this.$http.get(HOST+'/api/channels.json', [])
+        this.$http.post(HOST+'/api/channels.json', {params:{}})
         .then((data)=>{
           this.channels=JSON.parse(data.bodyText);
           if(this.channels.status!=0){
@@ -86,9 +100,6 @@
         setTimeout(()=>{
           self.loadingshow=false;
         },10000);
-      },
-      search(){
-        console.log("search");
       },
       logErr(err){
         this.$vux.alert.show({

@@ -143,9 +143,13 @@
     },
     filters: {
       formatDate2:function (time) {
-        var date = formatDate2(new Date(time), "MM月dd日");
-        // console.log(date.replace(/^0/g,""));
-        return date;
+        var date = new Date(time);
+        var nowDate = new Date();
+        if ((formatDate2(new Date(time),'yyyy')-formatDate2(nowDate,'yyyy'))<0) {
+          return formatDate2(date, "yyyy年MM月dd日");
+        }else{
+          return formatDate2(date, "MM月dd日");
+        }
       }
     }
   }

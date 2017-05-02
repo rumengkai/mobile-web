@@ -19,10 +19,17 @@
           <span class="author">作者：{{articles.author_name}}</span>
           <span class="created">{{articles.created | formatDate}}</span>
         </div>
-        <span class="content" v-html="articles.content" >
-        </span>
+        <div class="content" v-html="articles.content" ></div>
       </div>
+      <!-- 评论加载更多，btn -->
       <comment :title="title" :commentlist="commentlist.items"></comment>
+      <div v-if='nonecomment' class="comment-bottom">
+        <p>暂无数据</p>
+      </div>
+      <div v-if='!nonecomment' class="comment-bottom">
+        <p v-if="loadmore" @click="commentLoad">{{commentBottomMsg}}</p>
+        <load-more v-else tip="正在加载">正在加载</load-more>
+      </div>
     </div>
     <footer v-if="showContent">
       <div class="gfcj">
@@ -48,7 +55,7 @@
   import AppDownload from "components/AppDownload/AppDownload"
   import Failed from "components/Failed/Failed"
   import Vue from 'vue'
-  import {Loading} from 'vux'
+  import {Loading,LoadMore} from 'vux'
   import VueResource from 'vue-resource'
   Vue.use(VueResource)
   Vue.prototype.$geturlpara=geturlpara
@@ -70,7 +77,12 @@
         loadtext: 'loading...',
         appdownloadshow:false,
         failedshow:false,
-        failedmsg:"请在网络环境下访问"
+        failedmsg:"请在网络环境下访问",
+        nonecomment:false,
+        loadmore:true,
+        commentBottomMsg:"点击，获取更多数据",
+        pn:0,
+        last_time:""
       }
     },
     components: {
@@ -79,7 +91,8 @@
       Audiobox,
       Videobox,
       AppDownload,
-      Failed
+      Failed,
+      LoadMore
     },
     created () {
       var id = this.$geturlpara.getUrlKey("id")||"1482";
@@ -97,6 +110,7 @@
         .then((data)=>{
           this.loadingshow=false;
           this.articles=JSON.parse(data.bodyText);
+
           this.fetchCommentData(id);
           if(this.articles.status!=0){
             //返回为4，无权限
@@ -125,11 +139,23 @@
       },
 
       //请求评论数据
-      fetchCommentData(id){
-        this.$http.get(HOST+'/api/articles/comments.json?id='+id, [])
+      fetchCommentData(id,pn,last_time){
+        this.$http.get(HOST+'/api/articles/comments.json?id='+id+'&pn='+pn+'&last_time='+last_time, [])
         .then((data)=>{
           this.loadingshow=false;
-          this.commentlist.items=JSON.parse(data.bodyText).items;
+          this.datalist=JSON.parse(data.bodyText);
+          if (this.datalist.items.length<=0&&this.loadmore==true) {
+            this.nonecomment=true;
+          }else{
+            this.commentlist.items=this.commentlist.items.concat(this.datalist.items);
+            if (this.commentlist.items[this.commentlist.items.length-1].postd) {
+              this.last_time=this.commentlist.items[this.commentlist.items.length-1].postd;
+            }
+            if(!this.datalist.has_next){
+              this.commentBottomMsg="没有更多数据";
+            }
+            this.loadmore=true;
+          }
         }, (err)=>{
           this.loadingshow=false;
           console.log(err);
@@ -152,17 +178,24 @@
         if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//安卓手机
             console.log("Android");
             // window.location.href="http://a.app.qq.com/o/simple.jsp?pkgname=com.avatar.kungfufinance"
-            window.location.href="https://a.mlinks.cc/AK8f?id=1340&mw_ck=h5"
-          } else if (u.indexOf('iPhone') > -1) {//苹果手机
-            console.log("apple");
-            window.location.href="https://a.mlinks.cc/AK8f?id=1340&mw_ck=h5"
-          } else if (u.indexOf('Windows Phone') > -1) {//winphone手机
-            console.log("Windows");
-            window.location.href="https://a.mlinks.cc/AK8f?id=1340&mw_ck=h5"
-          }else{
-            window.location.href="https://a.mlinks.cc/AK8f?id=1340&mw_ck=h5"
-          }
+          window.location.href="https://a.mlinks.cc/AK8f?id=1340&mw_ck=h5"
+        } else if (u.indexOf('iPhone') > -1) {//苹果手机
+          console.log("apple");
+          window.location.href="https://a.mlinks.cc/AK8f?id=1340&mw_ck=h5"
+        } else if (u.indexOf('Windows Phone') > -1) {//winphone手机
+          console.log("Windows");
+          window.location.href="https://a.mlinks.cc/AK8f?id=1340&mw_ck=h5"
+        }else{
+          window.location.href="https://a.mlinks.cc/AK8f?id=1340&mw_ck=h5"
         }
+      },
+      commentLoad(){
+        this.loadmore=false;
+        console.log(0);
+        var id = this.$geturlpara.getUrlKey("id")||"1482";
+        console.log(this.last_time);
+        this.fetchCommentData(id,++this.pn,this.last_time);
+      }
     },
     filters: {
       formatDate:function (time) {
@@ -181,99 +214,105 @@ body{
 }
 #detail{
   height: 100%;
-}
-.weui-loading_toast{
-  position: relative;
-  z-index: 1001;
-}
-.content{
-  overflow: hidden;
-  background-color: #fff;
-  padding-bottom: 100px;
-}
-.banner img{
-  width: 100%;
-}
-.articles{
-  width: 90%;
-  color: #4f4f4f;
-  margin:14px auto 37px;
-  overflow: hidden;
-  font-size: .3rem;
-}
-.articles .title{
-  font-size: .42rem;
-}
-.articles .info{
-  height: .9rem;
-  overflow: hidden;
-  padding: .3rem 0;
-  margin-bottom: 10px;
-}
-.articles .info .author{
-  line-height: .9rem;
-  margin-left: .3rem;
-  color: #a0a0a0;
-}
-.articles .info .created{
-  float: right;
-  line-height: .9rem;
-  color: #a0a0a0;
-}
-.articles .info img{
-  width: .9rem;
-  height:.9rem;
-  border-radius: .45rem;
-  float: left;
-}
-.articles .content img{
-  max-width: 100%;
-}
-footer{
-  height: 46px;
-  width: 100%;
-  max-width: 680px;
-  background-color: #fff;
-  box-shadow: rgba(0,0,0,.2) 0 0 10px;
-  position: fixed;
-  bottom: 0;
-  padding: 8px 0;
-  z-index: 1000;
-  display: -webkit-box;
-  -webkit-box-align: center;
-  .gfcj{
-    font-size: 20px;
-    color: #ff8929;
-    width: 50%;
-    text-align: center;
-
-    img{
-      width: 40px;
-      height: 40px;
-      display: block;
-      float: left;
-      margin-left: 20px;
-    }
-    span{
-      line-height: 40px;
-      display: inline-block;
+  .weui-loading_toast{
+    position: relative;
+    z-index: 1001;
+  }
+  .content{
+    overflow: hidden;
+    background-color: #fff;
+    padding-bottom: 100px;
+  }
+  .banner img{
+    width: 100%;
+  }
+  .articles{
+    width: 90%;
+    color: #4f4f4f;
+    margin:14px auto 37px;
+    overflow: hidden;
+    font-size: .3rem;
+  }
+  .articles .title{
+    font-size: .42rem;
+  }
+  .articles .info{
+    height: .9rem;
+    overflow: hidden;
+    padding: .3rem 0;
+    margin-bottom: 10px;
+  }
+  .articles .info .author{
+    line-height: .9rem;
+    margin-left: .3rem;
+    color: #a0a0a0;
+  }
+  .articles .info .created{
+    float: right;
+    line-height: .9rem;
+    color: #a0a0a0;
+  }
+  .articles .info img{
+    width: .9rem;
+    height:.9rem;
+    border-radius: .45rem;
+    float: left;
+  }
+  .articles .content img{
+    max-width: 100%;
+  }
+  .comment-bottom{
+    color: #eee;
+    p{
+      text-align: center;
     }
   }
-  .download{
-    width: 50%;
-    a{
-      width: 90%;
-      height: 40px;
-      display: block;
+  footer{
+    height: 46px;
+    width: 100%;
+    max-width: 680px;
+    background-color: #fff;
+    box-shadow: rgba(0,0,0,.2) 0 0 10px;
+    position: fixed;
+    bottom: 0;
+    padding: 8px 0;
+    z-index: 1000;
+    display: -webkit-box;
+    -webkit-box-align: center;
+    .gfcj{
+      font-size: 20px;
       color: #ff8929;
-      border: 1px solid #ff8929;
-      border-radius: 5px;
+      width: 50%;
       text-align: center;
-      line-height: 40px;
-      background: #fff;
-      font-size: 22px;
-      box-sizing: content-box;
-      margin-right: .08571rem;
+
+      img{
+        width: 40px;
+        height: 40px;
+        display: block;
+        float: left;
+        margin-left: 20px;
+      }
+      span{
+        line-height: 40px;
+        display: inline-block;
+      }
+    }
+    .download{
+      width: 50%;
+      a{
+        width: 90%;
+        height: 40px;
+        display: block;
+        color: #ff8929;
+        border: 1px solid #ff8929;
+        border-radius: 5px;
+        text-align: center;
+        line-height: 40px;
+        background: #fff;
+        font-size: 22px;
+        box-sizing: content-box;
+        margin-right: .08571rem;
+      }
     }
   }
 }

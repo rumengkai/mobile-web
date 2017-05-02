@@ -1,21 +1,20 @@
 <template>
   <div id="audiobox" class="vux-1px">
-    <audio :src="music" ref="musicplay">
+    <audio :src="music" ref="musicplay" id="audio">
       您的浏览器不支持audio
     </audio>
     <div id="audioplayer" >
       <button id="pButton" @click="play" class="play" ></button>
       <div class="controls">
         <span class="current-time" ref="currentTime">0:00</span>
-        <div class="slider" @click="clickslider" data-direction="horizontal" >
+        <div class="slider" ref="slider" @click="clickslider" data-direction="horizontal" >
           <div class="progress" ref="progress">
-            <div class="pin" id="progress-pin" data-method="rewind"></div>
+            <div class="pin" ref="propin" id="progress-pin" data-method="rewind"></div>
           </div>
         </div>
         <span class="total-time" ref="totalTime">0:00</span>
       </div>
     </div>
-    <!-- <range v-model="current" :max="duration" @click="clickslider" @on-change='onchange' :range-bar-height="4"></range>{{current}} -->
   </div>
 </template>
 
@@ -32,7 +31,10 @@ export default {
       duration:0,
       current:0,
       max:0,
-      value:0
+      value:0,
+      sdrag:false,
+      tx:0,
+      x:0
     }
   },
   components: {
@@ -40,9 +42,40 @@ export default {
   },
   mounted () {
     this.inits();
-    console.log(this);
+    var pin=document.getElementById("progress-pin");
+    pin.addEventListener('touchend',this.moveend);
+    pin.addEventListener('touchstart',this.selectmouse);
+    pin.addEventListener('touchmove',this.movemouse);
   },
   methods:{
+    moveend(e){
+      this.$refs.musicplay.play();
+      pButton.className = "pause";
+      this.$refs.musicplay.addEventListener('timeupdate', this.updateProgress);
+
+        this.sdrag = false;
+        var cw=e.target.offsetLeft;
+        var w=e.target.parentElement.parentElement.clientWidth;
+        var audio=document.getElementById("audio");
+        audio.currentTime=audio.duration*cw/w;
+    },
+    selectmouse(e){
+       this.isdrag = true;
+       this.tx = parseInt(document.getElementById("progress-pin").style.left+0);
+       this.x = e.touches[0].pageX;
+       return false;
+    },
+    movemouse(e){
+      this.$refs.musicplay.pause();
+      this.isdrag = true;
+      var w=this.$refs.slider.offsetWidth;
+      var n = this.tx + e.touches[0].pageX - this.x;
+      if (this.isdrag&&n>0&&n<w){
+       document.getElementById("progress-pin").style.left=n+"px";
+       this.$refs.progress.style.width=n+'px';
+       return false;
+      }
+    },
     inits(){
       var self=this;
       var timer=setInterval(function () {
@@ -82,6 +115,8 @@ export default {
       var current = this.$refs.musicplay.currentTime;
       var percent = current / this.$refs.musicplay.duration * 100;
       this.$refs.progress.style.width = percent + '%';
+      var w=this.$refs.slider.offsetWidth;
+      this.$refs.propin.style.left=percent*w/100+"px";
       this.$refs.currentTime.textContent = this.formatTime(current);
       // this.current=current;
       if(this.$refs.musicplay.currentTime == this.$refs.musicplay.duration){
@@ -92,23 +127,12 @@ export default {
         this.$refs.musicplay.currentTime=0;
       }
     },
-    onchange(){
-      var rd=document.getElementsByClassName("range-handle")[0];
-      rd.touchend=this.change;
-      rd.onmouseup=this.change;
-    },
-    change(){
-      var d=document.getElementsByClassName("vux-range-input")[0];
-      console.log(d.value);
-      this.$refs.musicplay.currentTime=d.value;
-    },
     formatTime(time) {
       var min = Math.floor(time / 60);
       var sec = Math.floor(time % 60);
       return min + ':' + (sec < 10 ? '0' + sec : sec);
     }
   }
-
 }
 
 </script>
@@ -118,27 +142,6 @@ audio{
   display: none;
 }
 @import '~vux/src/styles/1px.less';
-#audiobox{
-  .range-handle{
-    width: 14px;
-    height: 14px;
-    background-color: #f2cd4b;
-    top:-6.5px !important;
-  }
-  .range-max{
-    display: none;
-  }
-  .range-min{
-    display: none;
-  }
-  .range-quantity{
-    background-color: #f2cd4b;
-  }
-  .range-bar{
-    height: 4px;
-    background-color: #D8D8D8;
-  }
-}
 #audiobox{
   width: 90%;
   height: 50px;
