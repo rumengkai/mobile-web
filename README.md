@@ -14,8 +14,10 @@ npm run dev
 npm run build
 ```
 ## dist 目录
+``` bash
 目录/m为线上
 目录/test为测试
 测试时，统一都放到服务器/m文件夹下
+```
 
 For detailed explanation on how things work, checkout the [guide](https://cn.vuejs.org/v2/guide/forms.html) and [vue-cli-multipage](https://github.com/breezefeng/vue-cli-multipage).
