@@ -95,7 +95,7 @@
       LoadMore
     },
     created () {
-      var id = this.$geturlpara.getUrlKey("id")||"1482";
+      var id = this.$geturlpara.getUrlKey("id");
       this.fetchData(id);
     },
     methods: {
@@ -127,6 +127,7 @@
           }
         }, (err)=>{
           this.loadingshow=false;
+          this.failedmsg="请求参数有误";
           this.failedshow=true;
           // this.logErr("请在网络环境下访问");
           console.log(err);
@@ -173,27 +174,26 @@
       },
       //判断手机类型
       getPhoneType(){
+        var id = this.$geturlpara.getUrlKey("id");
         var u = navigator.userAgent;
         //应用市场地址：
         if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//安卓手机
-            console.log("Android");
-            // window.location.href="http://a.app.qq.com/o/simple.jsp?pkgname=com.avatar.kungfufinance"
-          window.location.href="https://a.mlinks.cc/AK8f?id=1340&mw_ck=h5"
+          console.log("Android");
+          // window.location.href="http://a.app.qq.com/o/simple.jsp?pkgname=com.avatar.kungfufinance"
+          window.location.href="https://a.mlinks.cc/AK8f?id="+id;
         } else if (u.indexOf('iPhone') > -1) {//苹果手机
           console.log("apple");
-          window.location.href="https://a.mlinks.cc/AK8f?id=1340&mw_ck=h5"
+          window.location.href="https://a.mlinks.cc/AK8f?id="+id;
         } else if (u.indexOf('Windows Phone') > -1) {//winphone手机
           console.log("Windows");
-          window.location.href="https://a.mlinks.cc/AK8f?id=1340&mw_ck=h5"
+          window.location.href="https://a.mlinks.cc/AK8f?id="+id;
         }else{
-          window.location.href="https://a.mlinks.cc/AK8f?id=1340&mw_ck=h5"
+          window.location.href="https://a.mlinks.cc/AK8f?id="+id;
         }
       },
       commentLoad(){
         this.loadmore=false;
-        console.log(0);
         var id = this.$geturlpara.getUrlKey("id")||"1482";
-        console.log(this.last_time);
         this.fetchCommentData(id,++this.pn,this.last_time);
       }
     },
@@ -283,7 +283,6 @@ body{
       font-size: 20px;
       color: #ff8929;
       width: 50%;
-      text-align: center;
 
       img{
         width: 40px;
@@ -295,6 +294,7 @@ body{
       span{
         line-height: 40px;
         display: inline-block;
+        margin-left: 18px;
       }
     }
     .download{
@@ -309,7 +309,7 @@ body{
         text-align: center;
         line-height: 40px;
         background: #fff;
-        font-size: 22px;
+        font-size: 18px;
         box-sizing: content-box;
         margin-right: .08571rem;
       }

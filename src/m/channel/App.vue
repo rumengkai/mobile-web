@@ -81,7 +81,7 @@
       Failed
     },
     created () {
-      var id = this.$geturlpara.getUrlKey("id")||"300";
+      var id = this.$geturlpara.getUrlKey("id");
       this.fetchData(id);
     },
 
@@ -125,10 +125,12 @@
         window.location.href="detail.html?id="+id;
       },
       freeRead(){
-        window.location.href="https://a.mlinks.cc/AK8j"
+        var id = this.$geturlpara.getUrlKey("id");
+        window.location.href="https://a.mlinks.cc/AK8j?id="+id;
       },
       subscribe(){
-        window.location.href="https://a.mlinks.cc/AK8j"
+        var id = this.$geturlpara.getUrlKey("id");
+        window.location.href="https://a.mlinks.cc/AK8j?id="+id;
       },
       logErr(err){
         this.$vux.alert.show({
