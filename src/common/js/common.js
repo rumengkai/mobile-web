@@ -8,8 +8,6 @@ window.VERSION="0.1"
 
 // 测试地址
 // window.HOST="http://123.57.35.40:8000"
-window.HOST="http://dev.kofuf.com"
+// window.HOST="http://dev.kofuf.com"
 // 线上地址
- // window.HOST="http://api.kofuf.com"
-
-// document.domain = 'devs.kofuf.com';
+ window.HOST="http://api.kofuf.com"
