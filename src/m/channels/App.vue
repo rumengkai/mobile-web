@@ -36,11 +36,12 @@
 
   Vue.http.interceptors.push(function(request, next) {
     // modify headers
-    var gid=localStorage.getItem("gid");
-    var token=localStorage.getItem("token");
+    var gid=localStorage.getItem("gfci_gid");
+    var token=localStorage.getItem("gfcj_token");
     request.headers.set('from', '2');
     request.headers.set('gid', gid);
     request.headers.set('token', token);
+    request.headers.set('version', VERSION);
     next();
   });
 
@@ -56,7 +57,7 @@
         },
         showContent:false,
         failedshow:false,
-        failedmsg:"请在网络环境下访问"
+        failedmsg:"服务请求失败，请刷新重试"
       }
     },
     components: {
@@ -68,8 +69,8 @@
       Failed
     },
     beforeCreate(){
-      localStorage.setItem("gid","1047500131");
-      localStorage.setItem("token","9a5795f406b94f3192a61d683327c550");
+      localStorage.setItem("gfci_gid","1047500131");
+      localStorage.setItem("gfcj_token","9a5795f406b94f3192a61d683327c550");
     },
     created () {
       this.fetchData();
@@ -78,7 +79,7 @@
     methods: {
       //获取专栏数据数据
       fetchData(cid){
-        this.$http.post(HOST+'/api/channels.json', {params:{}})
+        this.$http.get(HOST+'/api/channels.json', {params:{}})
         .then((data)=>{
           this.channels=JSON.parse(data.bodyText);
           if(this.channels.status!=0){

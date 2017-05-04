@@ -71,7 +71,7 @@
         },
         information:"",
         failedshow:false,
-        failedmsg:"请在网络环境下访问"
+        failedmsg:"服务请求失败，请刷新重试"
       }
     },
     components: {

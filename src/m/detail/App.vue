@@ -22,7 +22,7 @@
         <div class="content" v-html="articles.content" ></div>
       </div>
       <!-- 评论加载更多，btn -->
-      <comment :title="title" :commentlist="commentlist.items"></comment>
+      <comment :name="articles.name" :commentlist="commentlist.items" :id="id"></comment>
       <div v-if='nonecomment' class="comment-bottom">
         <p>暂无数据</p>
       </div>
@@ -34,10 +34,10 @@
     <footer v-if="showContent">
       <div class="gfcj">
         <img src="./images/logo.png" alt="">
-        <span>功夫财经</span>
+        <div class="gf"><p class="p1">功夫财经</p><p class="p2">学财经&nbsp;&nbsp;&nbsp;长本事</p></div>
       </div>
       <div class="download">
-        <a @click="openApp">打开APP</a>
+        <a @click='openApp' id='btnOpenApp'>打开APP</a>
       </div>
     </footer>
     <app-download v-if="appdownloadshow"></app-download>
@@ -59,16 +59,15 @@
   import VueResource from 'vue-resource'
   Vue.use(VueResource)
   Vue.prototype.$geturlpara=geturlpara
-
   //sub_type:a:文章 r：音频  v：视频
   export default {
     name: 'detail',
     data () {
       return {
+        id:0,
         showContent:false,
         paly:0,
         showplay:true,
-        title:"评论",
         commentlist:{
           "items":[]
         },
@@ -96,12 +95,19 @@
     },
     created () {
       var id = this.$geturlpara.getUrlKey("id");
+      this.id=id;
       this.fetchData(id);
+      // var self=this;
+      // setTimeout(function () {
+      //   new Mlink({
+      //     mlink: "https://a.mlinks.cc/AK8f",
+      //     button: document.querySelector('a#btnOpenApp'),
+      //     autoLaunchApp : false,
+      //   });
+      // },100);
     },
     methods: {
       openApp(){
-        console.log("open");
-        console.log(HOST);
         this.getPhoneType();
       },
       //获取数据
@@ -124,6 +130,7 @@
             }
           }else{
             this.showContent=true;
+
           }
         }, (err)=>{
           this.loadingshow=false;
@@ -283,24 +290,34 @@ body{
       font-size: 20px;
       color: #ff8929;
       width: 50%;
-
       img{
         width: 40px;
         height: 40px;
         display: block;
         float: left;
-        margin-left: 20px;
+        margin-left: 15px;
       }
-      span{
-        line-height: 40px;
-        display: inline-block;
+      .gf{
+        width: 105px;
+        float: left;
         margin-left: 18px;
+        color: #868686;
+        .p1{
+          font-size: 16px;
+          line-height: 20px;
+          font-weight: 400;
+        }
+        .p2{
+          font-weight: 100;
+          font-size: 12px;
+        }
       }
     }
     .download{
       width: 50%;
+      text-align: right;
       a{
-        width: 90%;
+        width: 148px;
         height: 40px;
         display: block;
         color: #ff8929;
@@ -311,7 +328,8 @@ body{
         background: #fff;
         font-size: 18px;
         box-sizing: content-box;
-        margin-right: .08571rem;
+        margin-right: 15px;
+        margin-left: auto;
       }
     }
   }

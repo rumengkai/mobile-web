@@ -2,9 +2,19 @@
   <div id="addcomment">
     <div class="content">
       <div class="title">
-        <p>顺丰连续四个涨停，开扒背后金主掘金图；交通部：积极鼓励支持共享单车| 功夫早报（音频版）</p>
+        <p>{{name}}</p>
       </div>
-      <x-textarea :max="20" :placeholder="placeholder"></x-textarea>
+      <div class="comcontent">
+        <textarea autocomplete="off" v-model="textdata" autocapitalize="off" autocorrect="off" spellcheck="false" :placeholder="placeholder" class="weui-textarea"></textarea>
+      </div>
+      <box gap="20px 20px" >
+        <div v-if="sub">
+          <x-button type="primary" @click.native="submit" :disabled="textdata?false:true">提交</x-button>
+        </div>
+        <div v-else>
+          <x-button type="primary" show-loading @click.native="submit">正在提交</x-button>
+        </div>
+      </box>
     </div>
   </div>
 </template>
@@ -13,62 +23,90 @@
   import 'common/css/reset.css';
   import 'common/js/common.js';
   import geturlpara from 'common/js/geturlpara.js';
+  import ajaxServer from 'common/js/ajaxServer.js';
   import Vue from 'vue'
-  import { formatDate2 } from 'common/js/date.js';
-  import {XTextarea} from 'vux'
-  import VueResource from 'vue-resource'
-  Vue.use(VueResource)
+  import {XButton,Box,Toast,ToastPlugin} from 'vux'
+  Vue.use(ToastPlugin)
   Vue.prototype.$geturlpara=geturlpara
 
   export default {
     name: 'addcomment',
+    mounted () {
+      var name = this.$geturlpara.getUrlKey("name");
+      var id = this.$geturlpara.getUrlKey("id");
+      this.name=name;
+      this.id=id;
+    },
     data () {
       return {
-        placeholder:"lalall"
+        textdata:'',
+        placeholder:"写下您想说的话",
+        name:"",
+        sub:true,
+        id:0
       }
     },
     components: {
-      XTextarea
+      XButton,
+      Box
     },
     created () {
-
+      if (localStorage.getItem("gfci_gid")) {
+        this.$vux.toast.show({
+         text: '存在此用户',
+         width:'10em'
+        })
+      }else{
+        this.$vux.toast.show({
+         text: '请前往注册页面',
+         width:'11em'
+        })
+      }
     },
-
     methods: {
-      onEvent (event) {
-      console.log('on', event)
-    },
-      //获取专栏数据数据
-      fetchData(id){
-        this.$http.get(HOST+'/api/channels/'+id+'.json', [])
-        .then((data)=>{
-          this.loadingshow=false;
-          this.channelsinfo=JSON.parse(data.bodyText);
-          if(this.channelsinfo.status!=0){
-            this.failedmsg=this.channelsinfo.error;
-            this.failedshow=true;
-          } else{
-            //正则匹配，处理information
-            this.information=this.channelsinfo.information.replace(/[。]/g,"。<br/>") ;
-            var self=this;
-            //加载完成后，重置scroll
-            setTimeout(function () {
-              self.$nextTick(() => {
-                self.$refs.scrollerEvent.reset()
-              })
-            },300);
-            this.showContent=true;
-          }
-        }, (err)=>{
-          this.loadingshow=false;
-          this.failedshow=true;
-          console.log(err);
-        });
+      // 提交评论
+      submit(){
+        this.sub=false;
         var self=this;
-        setTimeout(()=>{
-          self.loadingshow=false;
-        },10000);
+        ajaxServer.ajaxPost(
+          HOST+'/api/comments/add',
+          {
+            from:2,
+            gid:localStorage.getItem("gfci_gid"),
+            token:localStorage.getItem("gfcj_token"),
+            item:self.id,
+            content:self.textdata,
+            origin_comment:""
+          },
+          (data)=>{
+            self.sub=true;
+            if (data.status!=0) {
+              console.log('err');
+              self.$vux.toast.show({
+               text: '评论失败，请稍后重试',
+               type:'warn',
+               width:'10em'
+              })
+            }else{
+              self.$vux.toast.show({
+                text: '评论成功',
+              }),
+              setTimeout(()=>{
+                window.history.go(-1);
+              },3000)
+            }
+          },
+          (err)=>{
+            self.sub=true;
+            console.log(err);
+            self.$vux.toast.show({
+             text: '评论失败，请稍后重试',
+             type:'warn',
+            })
+          }
+        );
       },
+
     },
     filters: {
 
@@ -94,12 +132,19 @@ body{
         color:#000;
       }
     }
-
-    .weui-cell{
-      // padding: 0;
-      // textarea{
-      //   padding:10px 15px;
-      // }
+    .comcontent{
+      padding:0 15px;
+      background-color: #fff;
+      position: relative;
+      textarea{
+        padding:10px 0px;
+        line-height: 20px;
+        height: 127px;
+        width: 100%;
+        overflow:hidden;
+        resize:none;
+        border:none;
+      }
     }
   }
 }

@@ -1,6 +1,12 @@
 <template>
   <div id="comments">
-    <p class="comment-title vux-1px-b">{{title||'评论'}}</p>
+    <div class="title">
+      <p class="comment-title vux-1px-b">{{title||'评论'}}</p>
+      <p class="add-comment" @click="addComment">
+        写评论
+        <img src="./images/write.png" alt="">
+      </p>
+    </div>
     <ul id="comment" v-if="commentlist!=undefined">
       <li v-for="item in commentlist" class="vux-1px-b">
         <img :src="item.author.photo" alt="" onerror="this.src='http://182.92.99.123:8080/privilege/uploadedFile/default.png'">
@@ -31,8 +37,9 @@
   export default {
     name: 'comments',
     props: {
-      title:String,
-      commentlist:Array
+      name:String,
+      commentlist:Array,
+      id:String,
     },
     components: {
     },
@@ -62,6 +69,10 @@
         // setTimeout(() => {
         //   this.$vux.alert.hide()
         // }, 3000)
+      },
+      addComment(){
+        console.log(0);
+        window.location.href="comment.html?id="+this.id+"&name="+this.name;
       }
     }
   }
@@ -69,19 +80,41 @@
 
 <style lang="less">
 @import '~vux/src/styles/1px.less';
-.comment-title{
-  text-align: left;
-  line-height: .9rem;
-  width: 90%;
-  margin:auto;
-  font-size: .3rem;
-  color: #a8a8a8;
-}
-#comment{
-  width: 90%;
-  margin:auto;
+#comments{
   position: relative;
-  margin-bottom: 30px;
+  #comment{
+    width: 90%;
+    margin:auto;
+    position: relative;
+    margin-bottom: 30px;
+  }
+  .title{
+
+    .comment-title{
+      text-align: left;
+      line-height: .9rem;
+      width: 90%;
+      margin:auto;
+      font-size: 16px;
+      color: #a8a8a8;
+    }
+    .add-comment{
+      display: flex;
+      align-items:center;
+      line-height: .9rem;
+      position: absolute;
+      right: .4rem;
+      top: 0;
+      font-size: 16px;
+      color: #a8a8a8;
+      img{
+        display: block;
+        margin-left: 5px;
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
 }
 #comment li{
 
