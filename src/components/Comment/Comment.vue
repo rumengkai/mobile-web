@@ -8,14 +8,14 @@
       </p>
     </div>
     <ul id="comment" v-if="commentlist!=undefined">
-      <li v-for="item in commentlist" class="vux-1px-b">
+      <li v-for="(item , index) in commentlist" class="vux-1px-b">
         <img :src="item.author.photo" alt="" onerror="this.src='http://182.92.99.123:8080/privilege/uploadedFile/default.png'">
         <div class="comment-box">
           <p class="username">{{item.author.name}}</p>
           <p class="date">{{item.postd|formatDate}}</p>
           <p class="comment-con">{{item.content}}</p>
-          <div class="zan" @click="showPluginAuto">
-            <span class="icon"><img src="../../m/detail/images/zan.png" alt=""> </span>
+          <div class="zan" @click="clickZan(item.id,index)">
+            <span class="icon"><img src="./images/zan.png" alt=""> </span>
             <span class="count"> {{item.support_count}}</span>
           </div>
         </div>
@@ -31,8 +31,9 @@
 
 <script>
   import {formatDate} from 'common/js/date.js';
+  import AjaxServer from 'common/js/ajaxServer.js';
   import Vue from 'vue'
-  import { AlertPlugin} from 'vux'
+  import { AlertPlugin,cookie,querystring} from 'vux'
   Vue.use(AlertPlugin)
   export default {
     name: 'comments',
@@ -41,12 +42,39 @@
       commentlist:Array,
       id:String,
     },
+    data () {
+      return {
+        isClick:{}
+      }
+    },
     components: {
     },
     filters: {
       formatDate:function (time) {
         var date = new Date(time);
-        return formatDate(date, "yyyy-MM-dd");
+        var nowDate = new Date();
+        if ((formatDate(new Date(time),'yyyy')-formatDate(nowDate,'yyyy'))<0) {
+          return formatDate(date, "yyyy-MM-dd");
+        }else if((formatDate(new Date(time),'MM')-formatDate(nowDate,'MM'))<0){
+          return formatDate(date, "MM-dd");
+        }else {
+          var d=formatDate(nowDate,'dd')-formatDate(date, "dd");
+          if(d==0){
+            var h=formatDate(nowDate,'hh')-formatDate(date, "hh");
+            if(h==0){
+              var m=formatDate(nowDate,'mm')-formatDate(date, "mm")
+              if(m<5){
+                return "刚刚";
+              }
+              if (isNaN(m)) {
+                return h+"小时前";
+              }
+              return m+'分钟前';
+            }
+            return h+"小时前";
+          }
+          return d+"天前";
+        }
       }
     },
     methods: {
@@ -66,13 +94,52 @@
       },
       showPluginAuto () {
         this.showPlugin()
-        // setTimeout(() => {
-        //   this.$vux.alert.hide()
-        // }, 3000)
       },
       addComment(){
-        console.log(0);
-        window.location.href="comment.html?id="+this.id+"&name="+this.name;
+        if (localStorage.getItem("gid")) {
+          window.location.href="comment.html?id="+this.id+"&name="+this.name;
+        }else{
+          getAuth(cookie,querystring,"item",this.id);
+          console.log(0);
+        }
+      },
+      clickZan(id,index){
+        if (localStorage.getItem("gid")) {
+          var self=this;
+          if (!this.isClick[index]) {
+            this.isClick[index]=1;
+            AjaxServer.httpPost(
+              Vue,
+              HOST+'/api/comments/do_like',
+              {
+                id:id
+              },function (res) {
+                console.log(res);
+                console.log(res.count);
+                self.commentlist[index].support_count=res.count;
+              },function (err) {
+                console.log(1);
+              });
+          }else{
+            this.isClick[index]=0;
+            // 还差取消点赞
+            AjaxServer.httpPost(
+              Vue,
+              HOST+'/api/comments/cancel_like',
+              {
+                id:id
+              },function (res) {
+                console.log(res);
+                self.commentlist[index].support_count=res.count;
+              },function (err) {
+                console.log(1);
+              });
+          }
+          console.log(this.isClick);
+        }else{
+          getAuth(cookie,querystring,"item",this.id);
+          console.log(0);
+        }
       }
     }
   }

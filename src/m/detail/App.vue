@@ -12,7 +12,7 @@
       <div v-if="articles.sub_type=='A'" class="banner">
         <img :src="articles.banner" alt="">
       </div>
-      <div class="articles">
+      <div class="article">
         <p class="title">{{articles.name}}</p>
         <div class="info vux-1px-b">
           <img :src="articles.author_pic" alt="">
@@ -22,13 +22,15 @@
         <div class="content" v-html="articles.content" ></div>
       </div>
       <!-- 评论加载更多，btn -->
-      <comment :name="articles.name" :commentlist="commentlist.items" :id="id"></comment>
-      <div v-if='nonecomment' class="comment-bottom">
-        <p>暂无数据</p>
-      </div>
-      <div v-if='!nonecomment' class="comment-bottom">
-        <p v-if="loadmore" @click="commentLoad">{{commentBottomMsg}}</p>
-        <load-more v-else tip="正在加载">正在加载</load-more>
+      <div v-if="showComment">
+        <comment  :name="articles.name" :commentlist="commentlist.items" :id="id"></comment>
+        <div v-if='nonecomment' class="comment-bottom">
+          <p>暂无数据</p>
+        </div>
+        <div v-if='!nonecomment' class="comment-bottom">
+          <p v-if="loadmore" @click="commentLoad">{{commentBottomMsg}}</p>
+          <load-more v-else tip="正在加载">正在加载</load-more>
+        </div>
       </div>
     </div>
     <footer v-if="showContent">
@@ -72,16 +74,17 @@
           "items":[]
         },
         articles:{},
+        showComment:false,
         loadingshow: true,
         loadtext: 'loading...',
         appdownloadshow:false,
         failedshow:false,
-        failedmsg:"请在网络环境下访问",
+        failedmsg:"服务请求失败，请刷新重试",
         nonecomment:false,
         loadmore:true,
         commentBottomMsg:"点击，获取更多数据",
         pn:0,
-        last_time:""
+        last_time:"",
       }
     },
     components: {
@@ -130,7 +133,8 @@
             }
           }else{
             this.showContent=true;
-
+            //是否展示评论
+            this.showComment=this.articles.need_comments=="false"?false:true;
           }
         }, (err)=>{
           this.loadingshow=false;
@@ -217,7 +221,9 @@
 @import '~vux/src/styles/1px.less';
 body{
   background-color: #eee;
-
+}
+.showA{
+  display: none;
 }
 #detail{
   height: 100%;
@@ -233,39 +239,39 @@ body{
   .banner img{
     width: 100%;
   }
-  .articles{
+  .article{
     width: 90%;
     color: #4f4f4f;
     margin:14px auto 37px;
     overflow: hidden;
     font-size: .3rem;
   }
-  .articles .title{
+  .article .title{
     font-size: .42rem;
   }
-  .articles .info{
+  .article .info{
     height: .9rem;
     overflow: hidden;
     padding: .3rem 0;
     margin-bottom: 10px;
   }
-  .articles .info .author{
+  .article .info .author{
     line-height: .9rem;
     margin-left: .3rem;
     color: #a0a0a0;
   }
-  .articles .info .created{
+  .article .info .created{
     float: right;
     line-height: .9rem;
     color: #a0a0a0;
   }
-  .articles .info img{
+  .article .info img{
     width: .9rem;
     height:.9rem;
     border-radius: .45rem;
     float: left;
   }
-  .articles .content img{
+  .article .content img{
     max-width: 100%;
   }
   .comment-bottom{

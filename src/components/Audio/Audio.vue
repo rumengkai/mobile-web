@@ -183,7 +183,7 @@ audio{
         height: 4px;
         flex-grow: 1;
         background-color: #D8D8D8;
-        cursor: pointer;
+        // cursor: pointer;
         position: relative;
         .progress {
           width: 0;

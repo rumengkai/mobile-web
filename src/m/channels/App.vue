@@ -4,11 +4,11 @@
     <!-- <x-header v-if="showContent" class="vux-1px-b" :left-options="{showBack: false}">订阅</x-header> -->
     <scroller v-if="showContent" lock-x ref="scrollerEvent">
       <div class="content">
-        <div class="channels-title vux-1px-t vux-1px-b">
+        <div v-if="showsub" class="channels-title vux-1px-t vux-1px-b">
           <span></span>
           已订阅
         </div>
-        <Channels :subs="channels.subs"></Channels>
+        <Channels v-if="showsub" :subs="channels.subs"></Channels>
         <div class="channels-title vux-1px-t vux-1px-b">
           <span></span>
           推荐订阅
@@ -29,21 +29,10 @@
   import Vue from 'vue'
   import {Loading,XHeader,Icon,Scroller} from 'vux'
   import VueResource from 'vue-resource'
-  import { AlertPlugin} from 'vux'
+  import { AlertPlugin,querystring,cookie} from 'vux'
   Vue.use(AlertPlugin)
   Vue.use(VueResource)
   Vue.prototype.$geturlpara=geturlpara
-
-  Vue.http.interceptors.push(function(request, next) {
-    // modify headers
-    var gid=localStorage.getItem("gfci_gid");
-    var token=localStorage.getItem("gfcj_token");
-    request.headers.set('from', '2');
-    request.headers.set('gid', gid);
-    request.headers.set('token', token);
-    request.headers.set('version', VERSION);
-    next();
-  });
 
   export default {
     name: 'channels',
@@ -56,6 +45,7 @@
           subs:[]
         },
         showContent:false,
+        showsub:false,
         failedshow:false,
         failedmsg:"服务请求失败，请刷新重试"
       }
@@ -69,8 +59,10 @@
       Failed
     },
     beforeCreate(){
-      localStorage.setItem("gfci_gid","1047500131");
-      localStorage.setItem("gfcj_token","9a5795f406b94f3192a61d683327c550");
+      //授权
+      getAuth(cookie,querystring);
+      // localStorage.setItem("gid","1047500131");
+      // localStorage.setItem("token","9a5795f406b94f3192a61d683327c550");
     },
     created () {
       this.fetchData();
@@ -79,6 +71,14 @@
     methods: {
       //获取专栏数据数据
       fetchData(cid){
+        Vue.http.interceptors.push(function(request, next) {
+          // modify headers
+          request.headers.set('from', '3');
+          request.headers.set('gid', localStorage.getItem("gid"));
+          request.headers.set('token', localStorage.getItem("gid"));
+          request.headers.set('version', VERSION);
+          next();
+        });
         this.$http.get(HOST+'/api/channels.json', {params:{}})
         .then((data)=>{
           this.channels=JSON.parse(data.bodyText);
@@ -86,6 +86,9 @@
             this.failedmsg=this.channels.error;
             this.failedshow=true;
           } else{
+            if(this.channels.subs!=0){
+              this.showsub=true;
+            }
             this.showContent=true;
             this.loadingshow=false;
             this.$nextTick(() => {

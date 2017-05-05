@@ -9,10 +9,10 @@
       </div>
       <box gap="20px 20px" >
         <div v-if="sub">
-          <x-button type="primary" @click.native="submit" :disabled="textdata?false:true">提交</x-button>
+          <x-button type="primary" @click.native="submit" :disabled="textdata&&writeAble?false:true">提交</x-button>
         </div>
         <div v-else>
-          <x-button type="primary" show-loading @click.native="submit">正在提交</x-button>
+          <x-button type="primary" disabled show-loading @click.native="submit">正在提交</x-button>
         </div>
       </box>
     </div>
@@ -23,7 +23,7 @@
   import 'common/css/reset.css';
   import 'common/js/common.js';
   import geturlpara from 'common/js/geturlpara.js';
-  import ajaxServer from 'common/js/ajaxServer.js';
+  import AjaxServer from 'common/js/ajaxServer.js';
   import Vue from 'vue'
   import {XButton,Box,Toast,ToastPlugin} from 'vux'
   Vue.use(ToastPlugin)
@@ -43,7 +43,8 @@
         placeholder:"写下您想说的话",
         name:"",
         sub:true,
-        id:0
+        id:0,
+        writeAble:true
       }
     },
     components: {
@@ -51,11 +52,7 @@
       Box
     },
     created () {
-      if (localStorage.getItem("gfci_gid")) {
-        this.$vux.toast.show({
-         text: '存在此用户',
-         width:'10em'
-        })
+      if (localStorage.getItem("gid")) {
       }else{
         this.$vux.toast.show({
          text: '请前往注册页面',
@@ -68,22 +65,24 @@
       submit(){
         this.sub=false;
         var self=this;
-        ajaxServer.ajaxPost(
+        this.writeAble=false;
+        //http
+        AjaxServer.httpPost(
+          Vue,
           HOST+'/api/comments/add',
           {
-            from:2,
-            gid:localStorage.getItem("gfci_gid"),
-            token:localStorage.getItem("gfcj_token"),
+            from:3,
+            gid:localStorage.getItem("gid"),
+            token:localStorage.getItem("token"),
             item:self.id,
             content:self.textdata,
             origin_comment:""
-          },
-          (data)=>{
+          },(data)=>{
             self.sub=true;
             if (data.status!=0) {
               console.log('err');
               self.$vux.toast.show({
-               text: '评论失败，请稍后重试',
+               text: data.error,
                type:'warn',
                width:'10em'
               })
@@ -103,8 +102,7 @@
              text: '评论失败，请稍后重试',
              type:'warn',
             })
-          }
-        );
+          });
       },
 
     },
