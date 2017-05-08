@@ -23,6 +23,7 @@
 <script>
   import 'common/css/reset.css';
   import 'common/js/common.js';
+  import AjaxServer from 'common/js/ajaxServer.js';
   import geturlpara from 'common/js/geturlpara.js';
   import Channels from "components/Channels/Channels"
   import Failed from "components/Failed/Failed"
@@ -61,8 +62,6 @@
     beforeCreate(){
       //授权
       getAuth(cookie,querystring);
-      // localStorage.setItem("gid","1047500131");
-      // localStorage.setItem("token","9a5795f406b94f3192a61d683327c550");
     },
     created () {
       this.fetchData();
@@ -71,36 +70,63 @@
     methods: {
       //获取专栏数据数据
       fetchData(cid){
-        Vue.http.interceptors.push(function(request, next) {
-          // modify headers
-          request.headers.set('from', '3');
-          request.headers.set('gid', localStorage.getItem("gid"));
-          request.headers.set('token', localStorage.getItem("gid"));
-          request.headers.set('version', VERSION);
-          next();
-        });
-        this.$http.get(HOST+'/api/channels.json', {params:{}})
-        .then((data)=>{
-          this.channels=JSON.parse(data.bodyText);
-          if(this.channels.status!=0){
-            this.failedmsg=this.channels.error;
-            this.failedshow=true;
-          } else{
-            if(this.channels.subs!=0){
-              this.showsub=true;
-            }
-            this.showContent=true;
-            this.loadingshow=false;
-            this.$nextTick(() => {
-              this.$refs.scrollerEvent.reset()
-            })
-          }
-        }, (err)=>{
-          console.log(err);
-          this.loadingshow=false;
-          this.failedshow=true;
-        });
         var self=this;
+        AjaxServer.httpGet(
+          Vue,
+          HOST+'/api/channels.json',
+          {},
+          (data)=>{
+            self.channels=data;
+            if(self.channels.status!=0){
+              self.failedmsg=self.channels.error;
+              self.failedshow=true;
+            } else{
+              if(self.channels.subs!=0){
+                self.showsub=true;
+              }
+              self.showContent=true;
+              self.loadingshow=false;
+              self.$nextTick(() => {
+                self.$refs.scrollerEvent.reset()
+              })
+            }
+          },
+          (err)=>{
+            console.log(err);
+            self.loadingshow=false;
+            self.failedshow=true;
+          }
+        );
+        // Vue.http.interceptors.push(function(request, next) {
+        //   // modify headers
+        //   request.headers.set('from', '3');
+        //   request.headers.set('gid', localStorage.getItem("gid"));
+        //   request.headers.set('token', localStorage.getItem("gid"));
+        //   request.headers.set('version', VERSION);
+        //   next();
+        // });
+        // this.$http.get(HOST+'/api/channels.json', {params:{}})
+        // .then((data)=>{
+        //   this.channels=JSON.parse(data.bodyText);
+        //   if(this.channels.status!=0){
+        //     this.failedmsg=this.channels.error;
+        //     this.failedshow=true;
+        //   } else{
+        //     if(this.channels.subs!=0){
+        //       this.showsub=true;
+        //     }
+        //     this.showContent=true;
+        //     this.loadingshow=false;
+        //     this.$nextTick(() => {
+        //       this.$refs.scrollerEvent.reset()
+        //     })
+        //   }
+        // }, (err)=>{
+        //   console.log(err);
+        //   this.loadingshow=false;
+        //   this.failedshow=true;
+        // });
+
         setTimeout(()=>{
           self.loadingshow=false;
         },10000);

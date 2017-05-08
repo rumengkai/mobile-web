@@ -15,7 +15,7 @@
       <div class="article">
         <p class="title">{{articles.name}}</p>
         <div class="info vux-1px-b">
-          <img :src="articles.author_pic" alt="">
+          <img :src="articles.author_pic" alt="" onerror="this.src='http://182.92.99.123:8080/privilege/uploadedFile/1491147612922.jpg?imageView2/1/w/200/h/133/q/100|imageslim'">
           <span class="author">作者：{{articles.author_name}}</span>
           <span class="created">{{articles.created | formatDate}}</span>
         </div>

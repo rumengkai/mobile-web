@@ -15,7 +15,7 @@
           <p class="date">{{item.postd|formatDate}}</p>
           <p class="comment-con">{{item.content}}</p>
           <div class="zan" @click="clickZan(item.id,index)">
-            <span class="icon"><img src="./images/zan.png" alt=""> </span>
+            <span class="icon" ref="zan" :class="{ img1:iszan, img2:!iszan}"></span>
             <span class="count"> {{item.support_count}}</span>
           </div>
         </div>
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-  import {formatDate} from 'common/js/date.js';
+  import {formatedDate} from 'common/js/date.js';
   import AjaxServer from 'common/js/ajaxServer.js';
   import Vue from 'vue'
   import { AlertPlugin,ToastPlugin,cookie,querystring} from 'vux'
@@ -45,38 +45,14 @@
     },
     data () {
       return {
-        isClick:{}
+        isClick:{},
+        iszan:true,
       }
     },
     components: {
     },
     filters: {
-      formatDate:function (time) {
-        var date = new Date(time);
-        var nowDate = new Date();
-        if ((formatDate(new Date(time),'yyyy')-formatDate(nowDate,'yyyy'))<0) {
-          return formatDate(date, "yyyy-MM-dd");
-        }else if((formatDate(new Date(time),'MM')-formatDate(nowDate,'MM'))<0){
-          return formatDate(date, "MM-dd");
-        }else {
-          var d=formatDate(nowDate,'dd')-formatDate(date, "dd");
-          if(d==0){
-            var h=formatDate(nowDate,'hh')-formatDate(date, "hh");
-            if(h==0){
-              var m=formatDate(nowDate,'mm')-formatDate(date, "mm")
-              if(m<5){
-                return "刚刚";
-              }
-              if (isNaN(m)) {
-                return h+"小时前";
-              }
-              return m+'分钟前';
-            }
-            return h+"小时前";
-          }
-          return d+"天前";
-        }
-      }
+      formatDate:formatedDate
     },
     methods: {
       showPlugin () {
@@ -109,6 +85,7 @@
           var self=this;
           if (!this.isClick[index]) {
             this.isClick[index]=1;
+            this.$refs.zan[index].className='icon img2';
             AjaxServer.httpPost(
               Vue,
               HOST+'/api/comments/do_like',
@@ -116,7 +93,6 @@
                 id:id
               },function (res) {
                 if(res.status!=0){
-                  console.log(res);
                   self.$vux.toast.show({
                    text: res.error,
                    type:'warn',
@@ -126,11 +102,11 @@
                   self.commentlist[index].support_count=res.count;
                 }
               },function (err) {
-                console.log(1);
+                console.log(err);
               });
           }else{
             this.isClick[index]=0;
-            // 还差取消点赞
+            this.$refs.zan[index].className='icon img1';
             AjaxServer.httpPost(
               Vue,
               HOST+'/api/comments/cancel_like',
@@ -243,10 +219,19 @@
   right: .34rem;
   top: .34rem;
   .icon{
-    img{
-      width: 16px;
-      height: 16px;
-    }
+    width: 16px;
+    height: 16px;
+    background-color: #f00;
+    display: block;
+    float: left;
+  }
+  .img1{
+    background: url(./images/zan.png);
+    background-size: 16px 16px;
+  }
+  .img2{
+    background: url(./images/zaned.png);
+    background-size: 16px 16px;
   }
   .count{
     margin-left: 10px;

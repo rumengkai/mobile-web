@@ -2,12 +2,18 @@
   <div id="channel">
     <Loading v-model="loadingshow" :text="loadtext" ></Loading>
     <!-- <x-header v-if="showContent"><a slot="right" @click="share"></a></x-header> -->
-    <scroller lock-x ref="scrollerEvent" v-show="showContent">
-      <div class="content" >
+    <!-- <scroller lock-x ref="scrollerEvent" v-show="showContent"> -->
+      <div class="content" v-show="showContent">
         <div class="large-img">
           <img :src="channelsinfo.large_thumb" alt="">
         </div>
-        <ul class="channels-info">
+        <div v-if="subscription" class="subtab">
+          <div class="tab">
+            <p><span @click="conList" :class="{focus:isfocus}">内容列表</span></p>
+            <p><span @click="channelInfo" :class="{focus:!isfocus}">专栏介绍</span></p>
+          </div>
+        </div>
+        <ul class="channels-info" v-if="!isfocus||!subscription">
           <li class="vux-1px-b">
             <p class="title">专栏介绍</p>
             <p class="con">{{channelsinfo.abstract}}</p>
@@ -20,7 +26,7 @@
             <p class="title">订阅须知</p>
             <p class="con" v-html="information">{{information}}</p>
           </li>
-          <li>
+          <li v-if="!subscription">
             <p class="title">最新更新</p>
             <ul class="newupdate">
               <li class="item vux-1px-b" v-for="item in channelsinfo.articles" @click="geDetail(item.id)">
@@ -28,12 +34,23 @@
                 <p class="title">{{item.name}}</p>
                 <p class="date">{{item.published | formatDate2}}</p>
               </li>
+              <div v-if='!nonecomment' class="comment-bottom">
+                <p v-if="loadmore" @click="commentLoad">{{commentBottomMsg}}</p>
+                <load-more v-else tip="正在加载">正在加载</load-more>
+              </div>
             </ul>
           </li>
         </ul>
+        <ul class="channel-list" v-if="isfocus&&subscription">
+          <list :datalist="channelsinfo.articles"></list>
+          <div v-if='!nonecomment' class="comment-bottom">
+            <p v-if="loadmore" @click="commentLoad">{{commentBottomMsg}}</p>
+            <load-more v-else tip="正在加载">正在加载</load-more>
+          </div>
+        </ul>
       </div>
-    </scroller>
-    <footer v-if="showContent">
+    <!-- </scroller> -->
+    <footer v-if="showContent&&!subscription">
       <div class="freeread" @click="freeRead">
         <span>免费试读</span>
       </div>
@@ -48,13 +65,14 @@
 <script>
   import 'common/css/reset.css';
   import 'common/js/common.js';
+  import AjaxServer from 'common/js/ajaxServer.js';
   import geturlpara from 'common/js/geturlpara.js';
   import Vue from 'vue'
   import { formatDate2 } from 'common/js/date.js';
-  import {Loading,XHeader,Scroller} from 'vux'
+  import {Loading,XHeader,Scroller,LoadMore,AlertPlugin,querystring,cookie} from 'vux'
   import Failed from "components/Failed/Failed"
+  import List from "components/List/List"
   import VueResource from 'vue-resource'
-  import { AlertPlugin,querystring,cookie} from 'vux'
   Vue.use(VueResource)
   Vue.use(AlertPlugin)
   Vue.prototype.$geturlpara=geturlpara
@@ -72,14 +90,22 @@
         },
         information:"",
         failedshow:false,
-        failedmsg:"服务请求失败，请刷新重试"
+        failedmsg:"服务请求失败，请刷新重试",
+        nonecomment:false,
+        loadmore:true,
+        commentBottomMsg:"点击，获取更多数据",
+        pn:0,
+        subscription:false,//是否订阅
+        isfocus:true,
       }
     },
     components: {
       XHeader,
       Loading,
+      LoadMore,
       Scroller,
-      Failed
+      Failed,
+      List
     },
     beforeCreate(){
       //授权
@@ -91,35 +117,42 @@
       this.id=id;
       this.fetchData(id);
     },
-
     methods: {
       //获取专栏数据数据
       fetchData(id){
-        this.$http.get(HOST+'/api/channels/'+id+'.json', [])
-        .then((data)=>{
-          this.loadingshow=false;
-          this.channelsinfo=JSON.parse(data.bodyText);
-          if(this.channelsinfo.status!=0){
-            this.failedmsg=this.channelsinfo.error;
+        var self = this;
+        AjaxServer.httpGet(
+          Vue,
+          HOST+'/api/channels/'+id+'.json',
+          {},
+          (data)=>{
+            this.loadingshow=false;
+            this.channelsinfo=data;
+            if(this.channelsinfo.status!=0){
+              this.failedmsg=this.channelsinfo.error;
+              this.failedshow=true;
+            } else{
+              //正则匹配，处理information
+              this.information=this.channelsinfo.information.replace(/[。]/g,"。<br/>") ;
+              //加载完成后，重置scroll
+              // setTimeout(function () {
+              //   self.$nextTick(() => {
+              //     self.$refs.scrollerEvent.reset()
+              //   })
+              // },500);
+              if(!data.articles.has_next){
+                this.commentBottomMsg="没有更多数据";
+              }
+              this.showContent=true;
+            }
+          },
+          (err)=>{
+            this.loadingshow=false;
             this.failedshow=true;
-          } else{
-            //正则匹配，处理information
-            this.information=this.channelsinfo.information.replace(/[。]/g,"。<br/>") ;
-            var self=this;
-            //加载完成后，重置scroll
-            setTimeout(function () {
-              self.$nextTick(() => {
-                self.$refs.scrollerEvent.reset()
-              })
-            },500);
-            this.showContent=true;
+            console.log(err);
           }
-        }, (err)=>{
-          this.loadingshow=false;
-          this.failedshow=true;
-          console.log(err);
-        });
-        var self=this;
+        );
+
         setTimeout(()=>{
           self.loadingshow=false;
         },10000);
@@ -148,6 +181,37 @@
           onShow () {},
           onHide () {}
         })
+      },
+      commentLoad(){
+        this.loadmore=false;
+        var id = this.$geturlpara.getUrlKey("id");
+        if (id) {
+          var self = this;
+          AjaxServer.httpGet(
+            Vue,
+            HOST+'/api/channels/articles.json?id='+id+'&pn='+self.pn,
+            {},
+            (data)=>{
+              if (data.status==0) {
+                self.loadmore=true;
+                if (!data.has_next) {
+                  self.commentBottomMsg="没有更多数据";
+                }else{
+                  this.pn++;
+                }
+                self.channelsinfo.articles.concat(data.articles);
+                // self.$refs.scrollerEvent.reset()
+              }
+            }
+          );
+        }
+      },
+      conList(){
+        this.isfocus=true;
+      },
+      channelInfo(){
+        this.isfocus=false;
+        console.log(0);
       },
     },
     filters: {
@@ -184,16 +248,50 @@ body{
     }
   }
   .content{
-    padding-bottom: 80px;
     .large-img{
       img{
         width: 100%;
-        min-height: 4.5rem;
+        min-height: 4.2rem;
+        display: block;
+      }
+    }
+    .subtab{
+      height: 62px;
+      background-color: #f3f3f3;
+      .tab{
+        height: 46px;
+        background-color: #fff;
+        width: 100%;
+        box-shadow:0 2px 2px #dddddd;
+        p{
+          display: block;
+          height: 100%;
+          width: 50%;
+          text-align: center;
+          color: #6e6e6e;
+          float: left;
+          font-size: 16px;
+          span{
+            margin: auto;
+            display: block;
+            text-align: center;
+            width: 50%;
+            height: 46px;
+            line-height: 46px;
+            box-sizing: border-box;
+          }
+        }
+        .focus{
+          color: #f8c600;
+          border-bottom: 3px solid #f8c600;
+        }
       }
     }
     .channels-info{
+      padding-bottom: 80px;
       padding-left: .3rem;
       padding-right: .3rem;
+      background-color: #fff;
       li{
         padding-bottom: 12px;
         .title{
@@ -241,6 +339,16 @@ body{
         }
       }
     }
+    .channel-list{
+      padding-bottom: 50px;
+    }
+    .comment-bottom{
+      margin-top: 40px;
+      color: #999;
+      p{
+        text-align: center;
+      }
+    }
   }
   footer{
     height: 46px;
@@ -272,5 +380,6 @@ body{
     }
   }
 }
+
 
 </style>
