@@ -89,11 +89,11 @@
             }else{
               self.$vux.toast.show({
                 text: '评论成功',
-              }),
-              setTimeout(()=>{
-                window.history.go(-1);
-              },3000)
+              })
             }
+            setTimeout(()=>{
+              window.history.go(-1);
+            },3000)
           },
           (err)=>{
             self.sub=true;

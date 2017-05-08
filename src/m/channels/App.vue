@@ -1,7 +1,7 @@
 <template>
   <div id="channels">
     <Loading v-model="loadingshow" :text="loadtext"></Loading>
-    <!-- <x-header v-if="showContent" class="vux-1px-b" :left-options="{showBack: false}">订阅</x-header> -->
+    <!-- <x-header v-if="showContent" class="vux-1px-b" :left-options="{showBack: false}"><a slot="right" @click="loginout">退出</a></x-header> -->
     <scroller v-if="showContent" lock-x ref="scrollerEvent">
       <div class="content">
         <div v-if="showsub" class="channels-title vux-1px-t vux-1px-b">
@@ -115,6 +115,15 @@
           onHide () {}
         })
       },
+      loginout(){
+        console.log(0);
+        localStorage.clear();
+        cookie.remove('gid');
+        cookie.remove('token');
+        console.log(1);
+        console.log(cookie.remove('gid'));
+        console.log(cookie);
+      }
     }
   }
 </script>
@@ -128,7 +137,7 @@ body{
   height: 100%;
   background-color: #fff;
   .vux-header{
-    // height: .92rem;
+    height: 40px;
     background-color: #fff;
     color: #000;
     position: fixed;
@@ -136,7 +145,10 @@ body{
     z-index: 99;
     overflow: hidden;
     .vux-header-title{
-      color: #000;
+      color: #ccc;
+    }
+    .vux-header-right{
+      line-height: 14px
     }
     max-width: 680px;
   }

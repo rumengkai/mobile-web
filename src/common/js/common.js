@@ -4,22 +4,22 @@
 	var _size=_w/750*100;
 	document.documentElement.style.fontSize=_size+"px";
 })()
+//版本
 window.VERSION="0.1"
 
 // 测试地址
 // window.HOST="http://123.57.35.40:8000"
 // window.HOST="http://dev.kofuf.com"
 // 线上地址
- window.HOST="http://api.kofuf.com"
-
+window.HOST="http://api.kofuf.com"
  //微信授权地址
  window.getAuthLink=function (type,id){
 	 //type:item_(id),channel_(id)
-	 return "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx05e842991e5fa0b2&redirect_uri=http%3A%2F%2Fdev.kofuf.com%2Fapi%2Fsession%2Fauth_weixin&response_type=code&scope=snsapi_userinfo&state="+type+"_"+id+"#wechat_redirect"
+	 return "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx05e842991e5fa0b2&redirect_uri="+HOST+"%2Fapi%2Fsession%2Fauth_weixin&response_type=code&scope=snsapi_userinfo&state="+type+"_"+id+"#wechat_redirect"
  }
  //微信授权
- window.getAuth=function (cookie,querystring,type,id){
-	 //获取cookie
+window.getAuth=function (cookie,querystring,type,id){
+	//获取cookie
  	var cookie_git=cookie.get('gid');
  	//获取URLparse
  	var parse=querystring.parse();

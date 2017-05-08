@@ -54,7 +54,7 @@
   import {Loading,XHeader,Scroller} from 'vux'
   import Failed from "components/Failed/Failed"
   import VueResource from 'vue-resource'
-  import { AlertPlugin} from 'vux'
+  import { AlertPlugin,querystring,cookie} from 'vux'
   Vue.use(VueResource)
   Vue.use(AlertPlugin)
   Vue.prototype.$geturlpara=geturlpara
@@ -63,6 +63,7 @@
     name: 'channel',
     data () {
       return {
+        id:0,
         showContent:false,
         loadingshow: true,
         loadtext: 'loading...',
@@ -80,8 +81,14 @@
       Scroller,
       Failed
     },
+    beforeCreate(){
+      //授权
+      var id = this.$geturlpara.getUrlKey("id");
+      getAuth(cookie,querystring,"channel",id);
+    },
     created () {
       var id = this.$geturlpara.getUrlKey("id");
+      this.id=id;
       this.fetchData(id);
     },
 
@@ -104,7 +111,7 @@
               self.$nextTick(() => {
                 self.$refs.scrollerEvent.reset()
               })
-            },300);
+            },500);
             this.showContent=true;
           }
         }, (err)=>{
@@ -181,7 +188,7 @@ body{
     .large-img{
       img{
         width: 100%;
-        min-height: 2.1rem;
+        min-height: 4.5rem;
       }
     }
     .channels-info{

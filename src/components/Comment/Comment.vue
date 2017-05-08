@@ -33,7 +33,8 @@
   import {formatDate} from 'common/js/date.js';
   import AjaxServer from 'common/js/ajaxServer.js';
   import Vue from 'vue'
-  import { AlertPlugin,cookie,querystring} from 'vux'
+  import { AlertPlugin,ToastPlugin,cookie,querystring} from 'vux'
+  Vue.use(ToastPlugin)
   Vue.use(AlertPlugin)
   export default {
     name: 'comments',
@@ -114,9 +115,16 @@
               {
                 id:id
               },function (res) {
-                console.log(res);
-                console.log(res.count);
-                self.commentlist[index].support_count=res.count;
+                if(res.status!=0){
+                  console.log(res);
+                  self.$vux.toast.show({
+                   text: res.error,
+                   type:'warn',
+                   width:'10em'
+                  })
+                }else{
+                  self.commentlist[index].support_count=res.count;
+                }
               },function (err) {
                 console.log(1);
               });
@@ -130,7 +138,16 @@
                 id:id
               },function (res) {
                 console.log(res);
-                self.commentlist[index].support_count=res.count;
+                if(res.status!=0){
+                  console.log(res);
+                  self.$vux.toast.show({
+                   text: res.error,
+                   type:'warn',
+                   width:'10em'
+                  })
+                }else{
+                  self.commentlist[index].support_count=res.count;
+                }
               },function (err) {
                 console.log(1);
               });

@@ -34,7 +34,7 @@
       </div>
     </div>
     <footer v-if="showContent">
-      <div class="gfcj">
+      <div class="gfcj" @click="toChannels">
         <img src="./images/logo.png" alt="">
         <div class="gf"><p class="p1">功夫财经</p><p class="p2">学财经&nbsp;&nbsp;&nbsp;长本事</p></div>
       </div>
@@ -206,6 +206,9 @@
         this.loadmore=false;
         var id = this.$geturlpara.getUrlKey("id")||"1482";
         this.fetchCommentData(id,++this.pn,this.last_time);
+      },
+      toChannels(){
+        window.location.href="channels.html"
       }
     },
     filters: {
@@ -295,7 +298,7 @@ body{
     .gfcj{
       font-size: 20px;
       color: #ff8929;
-      width: 50%;
+      width: 60%;
       img{
         width: 40px;
         height: 40px;
@@ -314,16 +317,17 @@ body{
           font-weight: 400;
         }
         .p2{
+          line-height: 20px;
           font-weight: 100;
           font-size: 12px;
         }
       }
     }
     .download{
-      width: 50%;
+      width: 40%;
       text-align: right;
       a{
-        width: 148px;
+        // width: 148px;
         height: 40px;
         display: block;
         color: #ff8929;
