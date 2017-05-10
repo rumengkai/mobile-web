@@ -1,10 +1,18 @@
 <template>
   <div id="channel">
-    <Loading v-model="loadingshow" :text="loadtext" ></Loading>
+
     <!-- <x-header v-if="showContent"><a slot="right" @click="share"></a></x-header> -->
     <!-- <scroller lock-x ref="scrollerEvent" v-show="showContent"> -->
       <div class="content" v-show="showContent">
         <div class="large-img">
+          <div class="name-brief">
+            <p class="name">
+              {{channelsinfo.name}}
+            </p>
+            <p class="brief">
+              {{channelsinfo.brief}}
+            </p>
+          </div>
           <img :src="channelsinfo.large_thumb" alt="">
         </div>
         <div v-if="subscription" class="subtab">
@@ -54,11 +62,12 @@
       <div class="freeread" @click="freeRead">
         <span>免费试读</span>
       </div>
-      <div class="subscribe" @click="subscribe">
+      <div class="subscribe" @click="subscribe" disabled="disable">
         <span>订阅：<span>¥{{channelsinfo.suites[0].price}}/年</span></span>
       </div>
     </footer>
     <Failed v-if="failedshow" :msg="failedmsg"></Failed>
+    <Loading v-model="loadingshow" :text="loadtext" ></Loading>
   </div>
 </template>
 
@@ -67,13 +76,15 @@
   import 'common/js/common.js';
   import AjaxServer from 'common/js/ajaxServer.js';
   import geturlpara from 'common/js/geturlpara.js';
+  import { toPay } from 'common/js/pay.js';
   import Vue from 'vue'
   import { formatDate2 } from 'common/js/date.js';
-  import {Loading,XHeader,Scroller,LoadMore,AlertPlugin,querystring,cookie} from 'vux'
+  import {Loading,XHeader,Scroller,LoadMore,AlertPlugin,ToastPlugin,querystring,cookie} from 'vux'
   import Failed from "components/Failed/Failed"
   import List from "components/List/List"
   import VueResource from 'vue-resource'
   Vue.use(VueResource)
+  Vue.use(ToastPlugin)
   Vue.use(AlertPlugin)
   Vue.prototype.$geturlpara=geturlpara
 
@@ -97,6 +108,7 @@
         pn:0,
         subscription:false,//是否订阅
         isfocus:true,
+        disable:true,
       }
     },
     components: {
@@ -140,9 +152,10 @@
               //     self.$refs.scrollerEvent.reset()
               //   })
               // },500);
-              if(!data.articles.has_next){
+              if(!data.has_next){
                 this.commentBottomMsg="没有更多数据";
               }
+              self.subscription=data.followed;
               this.showContent=true;
             }
           },
@@ -168,9 +181,81 @@
         var id = this.$geturlpara.getUrlKey("id");
         window.location.href="https://a.mlinks.cc/AK8j?id="+id;
       },
+      //订阅支付
       subscribe(){
         var id = this.$geturlpara.getUrlKey("id");
-        window.location.href="https://a.mlinks.cc/AK8j?id="+id;
+        var self=this;
+        //已登陆情况
+        if (localStorage.getItem("gid")&&this.disable) {
+          self.loadtext="加载中..."
+          self.loadingshow=true;
+          this.disable=false;
+          //发起订单请求
+          AjaxServer.httpPost(
+            Vue,
+            HOST+"/pay/weixin/create_order",
+            {
+              type: "JSAPI",
+              items: id
+            },
+            (data)=>{
+              console.log(data.id);
+              self.loadingshow=false;
+              if (data.status!=0) {
+                this.$vux.alert.show({
+                  title: '提示',
+                  content: "创建订单失败",
+                  dialogTransition:"",
+                  maskTransition:"",
+                });
+              }else{
+                self.loadingshow=false;
+                console.log("订单创建成功");
+                self.orderInfo=data;
+                toPay(data,self.callback,self);
+              }
+            },
+            (err)=>{
+              self.disable=true;
+              console.log(err);
+              console.log("订单创建失败");
+              this.$vux.alert.show({
+                title: '提示',
+                content: "网络异常，请稍后重试",
+                dialogTransition:"",
+                maskTransition:"",
+              });
+              self.loadingshow=false;
+            }
+          );
+        }else{
+          //未登陆情况，跳转到授权
+          getAuth(cookie,querystring,"channel",this.id);
+        }
+      },
+      //支付成功回调
+      callback(data){
+        var self=this;
+        AjaxServer.httpPost(
+          Vue,
+          HOST+"/pay/weixin/check",
+          {
+            id:data.id
+          },
+          (data)=>{
+            // alert(JSON.stringify(data));
+            if (data.status!=0) {
+              self.$vux.alert.show({
+                title: '提示',
+                content: "服务器维护中，您的订单已支付成功，请勿重复支付。如有疑问请联系客服：400-966-7718",
+                dialogTransition:"",
+                maskTransition:"",
+              });
+            }else{
+              location.href="channel.html?id="+self.id;
+            }
+          }
+        );
       },
       logErr(err){
         this.$vux.alert.show({
@@ -249,9 +334,28 @@ body{
   }
   .content{
     .large-img{
+      position: relative;
+      .name-brief{
+        position: absolute;
+        color: #fff;
+        bottom: 2px;
+        width: 100%;
+        padding-left: .3rem;
+        padding-right: .3rem;
+        .name{
+          line-height: 36px;
+          font-size: 22px;
+          font-weight: 400;
+        }
+        .brief{
+          line-height: 22px;
+          font-size: 16px;
+          font-weight: 200;
+        }
+      }
       img{
         width: 100%;
-        min-height: 4.2rem;
+        height: 4.8rem;
         display: block;
       }
     }

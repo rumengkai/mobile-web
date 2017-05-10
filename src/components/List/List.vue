@@ -47,24 +47,24 @@ import {formatedDate} from 'common/js/date.js';
 #list{
   background-color: #f3f3f3;
   li{
-    height: 245px;
+    height: 4.9rem;
     width: auto;
     background-color: #fff;
     box-shadow: 0 2px 2px #eee;
     margin-bottom: 14px;
-    padding: 15px 15px 10px;
+    padding: .3rem 15px .2rem;
     .title{
       font-size: 14px;
       font-weight: 500;
       color: #404040;
-      line-height: 20px;
+      line-height: .4rem;
       overflow: hidden;
       text-overflow:ellipsis;
       white-space: nowrap;
     }
     .img{
       padding: 15px 0;
-      height: 165px;
+      height: 3.3rem;
       img{
         display: block;
         width: 100%;
@@ -73,20 +73,20 @@ import {formatedDate} from 'common/js/date.js';
     }
     .date{
       float: left;
-      line-height:38px;
+      line-height:.76rem;
       color:#cbcbcb;
-      font-weight: 100;
+      font-weight: 400;
     }
     .view{
       float: right;
-      line-height:38px;
+      line-height:.76rem;
       color:#cbcbcb;
-      font-weight: 100;
+      font-weight: 400;
       overflow: hidden;
       img{
         vertical-align:middle;
         margin-right: 10px;
-        margin-top: -4px;
+        margin-top: -.08rem;
         width: 20px;
       }
     }

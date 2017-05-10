@@ -58,6 +58,7 @@
     text-align:center;
     width:100%;
     background:url('./images/background.png');
+    background:url('http://m.kofuf.com/m/static/img/background.2e6be3f.png');
     background-size:100% 120%;
     margin-top:70px;
     .logo{

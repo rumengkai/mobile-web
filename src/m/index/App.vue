@@ -1,6 +1,6 @@
 <template>
   <div id="index">
-    index
+    功夫财经
   </div>
 </template>
 

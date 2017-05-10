@@ -208,7 +208,7 @@ audio{
     }
   }
 }
-.play{background: url('./images/play_audio.png') ;}
-.pause{background: url('./images/pause.png') ;}
+.play{background: url('images/play_audio.png') ;}
+.pause{background: url('images/pause.png') ;}
 
 </style>

@@ -1,22 +1,24 @@
 <template>
   <div id="channels">
-    <Loading v-model="loadingshow" :text="loadtext"></Loading>
     <!-- <x-header v-if="showContent" class="vux-1px-b" :left-options="{showBack: false}"><a slot="right" @click="loginout">退出</a></x-header> -->
     <scroller v-if="showContent" lock-x ref="scrollerEvent">
-      <div class="content">
-        <div v-if="showsub" class="channels-title vux-1px-t vux-1px-b">
-          <span></span>
-          已订阅
+      <div class="wriper">
+        <div class="content vux-1px-b">
+          <div v-if="showsub" class="channels-title vux-1px-t vux-1px-b">
+            <span></span>
+            已订阅
+          </div>
+          <Channels v-if="showsub" :subs="channels.subs"></Channels>
+          <div class="channels-title vux-1px-t vux-1px-b">
+            <span></span>
+            推荐订阅
+          </div>
+          <Channels :subs="channels.unsubs"></Channels>
         </div>
-        <Channels v-if="showsub" :subs="channels.subs"></Channels>
-        <div class="channels-title vux-1px-t vux-1px-b">
-          <span></span>
-          推荐订阅
-        </div>
-        <Channels :subs="channels.unsubs"></Channels>
       </div>
     </scroller>
     <Failed v-if="failedshow" :msg="failedmsg"></Failed>
+    <Loading v-model="loadingshow" :text="loadtext"></Loading>
   </div>
 </template>
 
@@ -142,11 +144,9 @@
         })
       },
       loginout(){
-        console.log(0);
         localStorage.clear();
         cookie.remove('gid');
         cookie.remove('token');
-        console.log(1);
         console.log(cookie.remove('gid'));
         console.log(cookie);
       }
@@ -162,26 +162,30 @@ body{
 #channels{
   height: 100%;
   background-color: #fff;
-  .vux-header{
-    height: 40px;
-    background-color: #fff;
-    color: #000;
-    position: fixed;
-    width: 100%;
-    z-index: 99;
+  // .vux-header{
+  //   height: 40px;
+  //   background-color: #fff;
+  //   color: #000;
+  //   position: fixed;
+  //   width: 100%;
+  //   z-index: 99;
+  //   overflow: hidden;
+  //   .vux-header-title{
+  //     color: #ccc;
+  //   }
+  //   .vux-header-right{
+  //     line-height: 14px
+  //   }
+  //   max-width: 680px;
+  // }
+  .wriper{
+    height: auto;
     overflow: hidden;
-    .vux-header-title{
-      color: #ccc;
+    .content{
+      margin-bottom: 100px;
     }
-    .vux-header-right{
-      line-height: 14px
-    }
-    max-width: 680px;
   }
-  .content{
-    // padding-top: 46px;
-    padding-bottom: 50px;
-  }
+
   .channels-title{
     width: 100%;
     height: 46px;

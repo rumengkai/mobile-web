@@ -226,11 +226,11 @@
     float: left;
   }
   .img1{
-    background: url(./images/zan.png);
+    background: url(images/zan.png);
     background-size: 16px 16px;
   }
   .img2{
-    background: url(./images/zaned.png);
+    background: url(images/zaned.png);
     background-size: 16px 16px;
   }
   .count{

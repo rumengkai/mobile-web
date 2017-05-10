@@ -1,7 +1,7 @@
 <template>
   <div id="channels">
     <div v-if="subs.length!=0">
-      <div class="channels-item vux-1px-b" v-for="item in subs" @click="channelsDetail(item.id)">
+      <div class="channels-item vux-1px-b" ref="list" v-for="item in subs" @click="channelsDetail(item.id)">
         <img :src="item.thumb" alt="" onerror="this.src='http://182.92.99.123:8080/privilege/uploadedFile/1490888681914.jpg'" class="headimg">
         <div class="channels-info">
           <p class="name">{{item.name}}</p>
@@ -33,6 +33,8 @@
       }
     },
     mounted(){
+      this.$refs.list[this.$refs.list.length-1].className="channels-item";
+      console.log(this.$refs.list[this.$refs.list.length-1].className);
     },
     components: {
     },

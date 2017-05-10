@@ -1,7 +1,6 @@
 <template>
   <div id="detail">
     <Failed v-if="failedshow" :msg="failedmsg"></Failed>
-    <Loading v-model="loadingshow" :text="loadtext"></Loading>
     <div class="content" v-if="showContent">
       <div v-if="articles.sub_type=='V'">
         <Videobox :video="articles.banner" :poster="articles.thumb"></Videobox>
@@ -43,6 +42,7 @@
       </div>
     </footer>
     <app-download v-if="appdownloadshow"></app-download>
+    <Loading v-model="loadingshow" :text="loadtext"></Loading>
   </div>
 </template>
 
@@ -208,7 +208,7 @@
         this.fetchCommentData(id,++this.pn,this.last_time);
       },
       toChannels(){
-        window.location.href="channels.html"
+        // window.location.href="channels.html"
       }
     },
     filters: {
