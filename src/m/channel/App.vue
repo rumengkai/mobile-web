@@ -37,7 +37,7 @@
           <li v-if="!subscription">
             <p class="title">最新更新</p>
             <ul class="newupdate">
-              <li class="item vux-1px-b" v-for="item in channelsinfo.articles" @click="geDetail(item.id)">
+              <li class="item vux-1px-b" v-for="item in channelsinfo.articles" @click="toDetail(item.id)">
                 <img :src="item.thumb" alt="" onerror="this.src='http://182.92.99.123:8080/privilege/uploadedFile/1491147612922.jpg?imageView2/1/w/200/h/133/q/100|imageslim'">
                 <p class="title">{{item.name}}</p>
                 <p class="date">{{item.published | formatDate2}}</p>
@@ -62,7 +62,7 @@
       <div class="freeread" @click="freeRead">
         <span>免费试读</span>
       </div>
-      <div class="subscribe" @click="subscribe" disabled="disable">
+      <div class="subscribe" @click="subscribe" >
         <span>订阅：<span>¥{{channelsinfo.suites[0].price}}/年</span></span>
       </div>
     </footer>
@@ -155,13 +155,16 @@
               if(!data.has_next){
                 this.commentBottomMsg="没有更多数据";
               }
+              console.log(0);
+              console.log(0);
+              document.title = "专栏-"+data.name;
               self.subscription=data.followed;
               this.showContent=true;
             }
           },
           (err)=>{
             this.loadingshow=false;
-            this.failedshow=true;
+            // this.failedshow=true;
             console.log(err);
           }
         );
@@ -173,13 +176,14 @@
       share(){
         console.log("share");
       },
-      geDetail(id){
-        console.log(id);
+      toDetail(id){
         window.location.href="detail.html?id="+id;
       },
       freeRead(){
         var id = this.$geturlpara.getUrlKey("id");
-        window.location.href="https://a.mlinks.cc/AK8j?id="+id;
+        console.log(id);
+        window.location.href="freeread.html?id="+id;
+        // window.location.href="https://a.mlinks.cc/AK8j?id="+id;
       },
       //订阅支付
       subscribe(){
@@ -338,17 +342,20 @@ body{
       .name-brief{
         position: absolute;
         color: #fff;
-        bottom: 2px;
+        bottom: 0px;
         width: 100%;
-        padding-left: .3rem;
-        padding-right: .3rem;
+        background-color: rgba(0,0,0,0.2);
+        overflow: hidden;
         .name{
-          line-height: 36px;
+          padding-left: .3rem;
+          width: 100%;
+          line-height: 30px;
           font-size: 22px;
           font-weight: 400;
         }
         .brief{
-          line-height: 22px;
+          padding-left: .3rem;
+          line-height: 28px;
           font-size: 16px;
           font-weight: 200;
         }
@@ -396,6 +403,9 @@ body{
       padding-left: .3rem;
       padding-right: .3rem;
       background-color: #fff;
+      p{
+        text-align: justify;
+      }
       li{
         padding-bottom: 12px;
         .title{

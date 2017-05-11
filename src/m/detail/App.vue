@@ -1,12 +1,13 @@
 <template>
   <div id="detail">
     <Failed v-if="failedshow" :msg="failedmsg"></Failed>
-    <div class="content" v-if="showContent">
+    <div class="contents" v-if="showContent">
       <div v-if="articles.sub_type=='V'">
         <Videobox :video="articles.banner" :poster="articles.thumb"></Videobox>
       </div>
       <div v-if="articles.sub_type==='R'">
-        <Audiobox :music="articles.banner"></Audiobox>
+        <img class="img" :src="articles.thumb" alt="">
+        <!-- <Audiobox :music="articles.banner"></Audiobox> -->
       </div>
       <div v-if="articles.sub_type=='A'" class="banner">
         <img :src="articles.banner" alt="">
@@ -18,7 +19,10 @@
           <span class="author">作者：{{articles.author_name}}</span>
           <span class="created">{{articles.created | formatDate}}</span>
         </div>
-        <div class="content" v-html="articles.content" ></div>
+        <div v-if="articles.sub_type==='R'">
+          <Audiobox :music="articles.banner"></Audiobox>
+        </div>
+        <div class="content" id="contenthtml" ref="contenthtml" v-html="articles.content" > </div>
       </div>
       <!-- 评论加载更多，btn -->
       <div v-if="showComment">
@@ -32,6 +36,7 @@
         </div>
       </div>
     </div>
+
     <footer v-if="showContent">
       <div class="gfcj" @click="toChannels">
         <img src="./images/logo.png" alt="">
@@ -108,6 +113,15 @@
       //     autoLaunchApp : false,
       //   });
       // },100);
+    },
+    mounted(){
+      var self=this;
+      // setTimeout(function () {
+      //   var alist=Array.prototype.slice.call(document.getElementsByTagName("a"));
+      //   alist.map(function (item,index,arr) {
+      //     console.log(item.href);
+      //   });
+      // },200);
     },
     methods: {
       openApp(){
@@ -190,7 +204,6 @@
         //应用市场地址：
         if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//安卓手机
           console.log("Android");
-          // window.location.href="http://a.app.qq.com/o/simple.jsp?pkgname=com.avatar.kungfufinance"
           window.location.href="https://a.mlinks.cc/AK8f?id="+id;
         } else if (u.indexOf('iPhone') > -1) {//苹果手机
           console.log("apple");
@@ -208,7 +221,7 @@
         this.fetchCommentData(id,++this.pn,this.last_time);
       },
       toChannels(){
-        // window.location.href="channels.html"
+        window.location.href="channels.html"
       }
     },
     filters: {
@@ -234,10 +247,14 @@ body{
     position: relative;
     z-index: 1001;
   }
-  .content{
+  .contents{
     overflow: hidden;
     background-color: #fff;
     padding-bottom: 100px;
+    .img{
+      width: 100%;
+      height: 4.56rem;
+    }
   }
   .banner img{
     width: 100%;

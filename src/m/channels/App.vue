@@ -1,8 +1,14 @@
 <template>
   <div id="channels">
-    <!-- <x-header v-if="showContent" class="vux-1px-b" :left-options="{showBack: false}"><a slot="right" @click="loginout">退出</a></x-header> -->
+    <!-- <x-header v-if="showContent" class="vux-1px-b" :left-options="{showBack: false}"><a slot="right" @click="loginout">退出</a> </x-header> -->
     <scroller v-if="showContent" lock-x ref="scrollerEvent">
       <div class="wriper">
+        <div class="header" v-show="channels.user">
+          <div class="headimg">
+            <img :src="channels.user.profile" alt="">
+          </div>
+          <span class="name">{{channels.user.name}}</span>
+        </div>
         <div class="content vux-1px-b">
           <div v-if="showsub" class="channels-title vux-1px-t vux-1px-b">
             <span></span>
@@ -99,36 +105,6 @@
             self.failedshow=true;
           }
         );
-        // Vue.http.interceptors.push(function(request, next) {
-        //   // modify headers
-        //   request.headers.set('from', '3');
-        //   request.headers.set('gid', localStorage.getItem("gid"));
-        //   request.headers.set('token', localStorage.getItem("gid"));
-        //   request.headers.set('version', VERSION);
-        //   next();
-        // });
-        // this.$http.get(HOST+'/api/channels.json', {params:{}})
-        // .then((data)=>{
-        //   this.channels=JSON.parse(data.bodyText);
-        //   if(this.channels.status!=0){
-        //     this.failedmsg=this.channels.error;
-        //     this.failedshow=true;
-        //   } else{
-        //     if(this.channels.subs!=0){
-        //       this.showsub=true;
-        //     }
-        //     this.showContent=true;
-        //     this.loadingshow=false;
-        //     this.$nextTick(() => {
-        //       this.$refs.scrollerEvent.reset()
-        //     })
-        //   }
-        // }, (err)=>{
-        //   console.log(err);
-        //   this.loadingshow=false;
-        //   this.failedshow=true;
-        // });
-
         setTimeout(()=>{
           self.loadingshow=false;
         },10000);
@@ -145,10 +121,18 @@
       },
       loginout(){
         localStorage.clear();
-        cookie.remove('gid');
-        cookie.remove('token');
-        console.log(cookie.remove('gid'));
-        console.log(cookie);
+        cookie.set('gid', 0,{
+            domain: '.kofuf.com',
+            path: '/',
+            expires: -1
+          });
+        cookie.set('token', 0,{
+            domain: '.kofuf.com',
+            path: '/',
+            expires: -1
+          });
+        WeixinJSBridge.invoke('closeWindow',{},function(res){});
+        // location.reload();
       }
     }
   }
@@ -162,22 +146,32 @@ body{
 #channels{
   height: 100%;
   background-color: #fff;
-  // .vux-header{
-  //   height: 40px;
-  //   background-color: #fff;
-  //   color: #000;
-  //   position: fixed;
-  //   width: 100%;
-  //   z-index: 99;
-  //   overflow: hidden;
-  //   .vux-header-title{
-  //     color: #ccc;
-  //   }
-  //   .vux-header-right{
-  //     line-height: 14px
-  //   }
-  //   max-width: 680px;
-  // }
+  .header{
+    width: 100%;
+    height: 37px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    background-color: #333;
+    .headimg{
+      margin-left: .3rem;
+      width: 30px;
+      height: 30px;
+      border-radius: 15px;
+      background-color: #f00;
+      overflow: hidden;
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .name{
+      font-size: 12px;
+      color: #ccc;
+      margin-left: .3rem;
+      font-weight: 200;
+    }
+  }
   .wriper{
     height: auto;
     overflow: hidden;

@@ -143,7 +143,7 @@ audio{
 }
 @import '~vux/src/styles/1px.less';
 #audiobox{
-  width: 90%;
+  width: 99%;
   height: 50px;
   margin: 10px auto 20px auto;
   #audioplayer{

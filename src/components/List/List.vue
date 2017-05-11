@@ -7,6 +7,9 @@
      </div>
      <div class="img vux-1px-b">
        <img :src="item.thumb" alt="" onerror="this.src='http://static0.kofuf.com/1493739178223.jpg?imageView2/1/w/200/h/133/q/100|imageslim'">
+       <div class="hint" v-show="freeshow">
+         试读
+       </div>
      </div>
      <span class="date">{{item.published|formatDate}}</span>
      <span class="view"><img src="./images/read.png" alt="">{{item.view_count}} 人看过</span>
@@ -23,6 +26,7 @@ import {formatedDate} from 'common/js/date.js';
       }
     },
     props: {
+      freeshow:Boolean,
       datalist:Array
     },
     components: {
@@ -30,7 +34,6 @@ import {formatedDate} from 'common/js/date.js';
     },
     created () {
     },
-
     methods: {
       toDetail(id){
         location.href="detail.html?id="+id;
@@ -65,6 +68,19 @@ import {formatedDate} from 'common/js/date.js';
     .img{
       padding: 15px 0;
       height: 3.3rem;
+      position: relative;
+      .hint{
+        position: absolute;
+        width: 44px;
+        height: 23px;
+        background-color: #02a4ec;
+        color: #fff;
+        right: 0;
+        top: 37px;
+        line-height: 23px;
+        z-index: 100;
+        box-shadow: 0 1px 2px #333;
+      }
       img{
         display: block;
         width: 100%;
@@ -88,6 +104,7 @@ import {formatedDate} from 'common/js/date.js';
         margin-right: 10px;
         margin-top: -.08rem;
         width: 20px;
+
       }
     }
   }
