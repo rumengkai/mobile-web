@@ -193,7 +193,7 @@
 }
 #comment .comment-box{
   text-align: left;
-  width: 70%;
+  width: 79%;
   margin-left: .26rem;
   float: left;
   font-size: .2rem;
@@ -216,7 +216,7 @@
 #comment .comment-box .zan{
   font-size: #949494;
   position: absolute;
-  right: .34rem;
+  right: .1rem;
   top: .34rem;
   .icon{
     width: 16px;

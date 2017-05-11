@@ -291,8 +291,13 @@ body{
     border-radius: .45rem;
     float: left;
   }
-  .article .content img{
-    max-width: 100%;
+  .article .content{
+    p{
+      text-align: justify;
+    }
+    img{
+      max-width: 100%;
+    }
   }
   .comment-bottom{
     color: #eee;
