@@ -29,25 +29,39 @@ FastClick.attach(document.body)
 
 
 //微信授权地址
- window.getAuthLink=function (type,id){
-	 //type:item_(id),channel_(id)
-	 return "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx05e842991e5fa0b2&redirect_uri="+HOST+"%2Fapi%2Fsession%2Fauth_weixin&response_type=code&scope=snsapi_userinfo&state="+type+"_"+id+"#wechat_redirect"
- }
+window.getAuthLink=function (type,id){
+	//type:item_(id),channel_(id)
+	return "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx05e842991e5fa0b2&redirect_uri="+HOST+"%2Fapi%2Fsession%2Fauth_weixin&response_type=code&scope=snsapi_userinfo&state="+type+"_"+id+"#wechat_redirect"
+}
 //微信登陆授权
 window.getAuth=function (cookie,querystring,type,id){
 	//获取cookie
- 	var cookie_git=cookie.get('gid');
- 	//获取URLparse
- 	var parse=querystring.parse();
- 	if(!localStorage.getItem("gid")){
- 		if (typeof parse.gid!="undefined") {
- 			localStorage.setItem("gid",parse.gid);
- 			localStorage.setItem("token",parse.token);
- 		}else if(typeof cookie_git!="undefined"){
- 			localStorage.setItem("gid",cookie.get('gid'));
- 			localStorage.setItem("token",cookie.get('token'));
- 		}else {
- 			window.location.href=getAuthLink(type,id);
- 		}
- 	}
- }
+	var cookie_git=cookie.get('gid');
+	//获取URLparse
+	var parse=querystring.parse();
+	if(!localStorage.getItem("gid")){
+		if (typeof parse.gid!="undefined") {
+			localStorage.setItem("gid",parse.gid);
+			localStorage.setItem("token",parse.token);
+		}else if(typeof cookie_git!="undefined"){
+			localStorage.setItem("gid",cookie.get('gid'));
+			localStorage.setItem("token",cookie.get('token'));
+		}else {
+			window.location.href=getAuthLink(type,id);
+		}
+	}
+}
+
+window.clearcookie=function (cookie) {
+	localStorage.clear();
+	cookie.set('gid', 0,{
+		domain: '.kofuf.com',
+		path: '/',
+		expires: -1
+	});
+	cookie.set('token', 0,{
+		domain: '.kofuf.com',
+		path: '/',
+		expires: -1
+	});
+}

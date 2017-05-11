@@ -3,7 +3,7 @@
     <!-- <x-header v-if="showContent" class="vux-1px-b" :left-options="{showBack: false}"><a slot="right" @click="loginout">退出</a> </x-header> -->
     <scroller v-if="showContent" lock-x ref="scrollerEvent">
       <div class="wriper">
-        <div class="header" v-show="channels.user">
+        <div class="header" v-if="channels.user">
           <div class="headimg">
             <img :src="channels.user.profile" alt="">
           </div>
@@ -51,7 +51,11 @@
         loadtext: 'loading...',
         channels:{
           unsubs:[],
-          subs:[]
+          subs:[],
+          user:{
+            name:"功夫财经",
+            profile:"https://mwimg.mlinks.cc/ms_image_18938_6d17d71962adfbf579928a0a49704002.jpg?imageMogr/v2/thumbnail/300x300",
+          }
         },
         showContent:false,
         showsub:false,

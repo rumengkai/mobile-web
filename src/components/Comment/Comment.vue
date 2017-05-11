@@ -49,6 +49,13 @@
         iszan:true,
       }
     },
+    updated(){
+      var self=this;
+      //用户点赞记录
+      this.commentlist.map(function (item,index) {
+        self.isClick[index]=item.liked;
+      })
+    },
     components: {
     },
     filters: {
@@ -98,6 +105,9 @@
                    type:'warn',
                    width:'10em'
                   })
+                  //清除cookie,重新授权
+                  clearcookie(cookie);
+                  getAuth(cookie,querystring);
                 }else{
                   self.commentlist[index].support_count=res.count;
                 }
@@ -121,6 +131,9 @@
                    type:'warn',
                    width:'10em'
                   })
+                  //清除cookie,重新授权
+                  clearcookie(cookie);
+                  getAuth(cookie,querystring);
                 }else{
                   self.commentlist[index].support_count=res.count;
                 }

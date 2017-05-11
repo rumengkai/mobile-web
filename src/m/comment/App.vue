@@ -86,6 +86,9 @@
                type:'warn',
                width:'10em'
               })
+              //清除cookie,重新授权
+              clearcookie(cookie);
+              getAuth(cookie,querystring);
             }else{
               self.$vux.toast.show({
                 text: '评论成功',
