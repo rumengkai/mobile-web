@@ -62,7 +62,7 @@
       <div class="freeread" @click="freeRead">
         <span>免费试读</span>
       </div>
-      <div class="subscribe" @click="subscribe" >
+      <div class="subscribe" @click="subscribe1" >
         <span>订阅：<span>¥{{channelsinfo.suites[0].price}}/年</span></span>
       </div>
     </footer>
@@ -186,6 +186,10 @@
         // window.location.href="https://a.mlinks.cc/AK8j?id="+id;
       },
       //订阅支付
+      subscribe1(){
+        var id = this.$geturlpara.getUrlKey("id");
+        window.location.href="https://a.mlinks.cc/AK8j?id="+id;
+      },
       subscribe(){
         var id = this.$geturlpara.getUrlKey("id");
         var self=this;

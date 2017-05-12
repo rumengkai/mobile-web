@@ -221,7 +221,7 @@
         this.fetchCommentData(id,++this.pn,this.last_time);
       },
       toChannels(){
-        // window.location.href="channels.html"
+        window.location.href="channels.html"
       }
     },
     filters: {
