@@ -106,7 +106,7 @@
           (err)=>{
             console.log(err);
             self.loadingshow=false;
-            self.failedshow=true;
+            // self.failedshow=true;
           }
         );
         setTimeout(()=>{

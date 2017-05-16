@@ -15,7 +15,7 @@
           <p class="date">{{item.postd|formatDate}}</p>
           <p class="comment-con">{{item.content}}</p>
           <div class="zan" @click="clickZan(item.id,index)">
-            <span class="icon" ref="zan" :class="{ img1:iszan, img2:!iszan}"></span>
+            <span class="icon" ref="zan" :class="{ img1:!item.liked, img2:item.liked}"></span>
             <span class="count"> {{item.support_count}}</span>
           </div>
         </div>
@@ -46,15 +46,9 @@
     data () {
       return {
         isClick:{},
-        iszan:true,
       }
     },
-    updated(){
-      var self=this;
-      //用户点赞记录
-      this.commentlist.map(function (item,index) {
-        self.isClick[index]=item.liked;
-      })
+    mounted(){
     },
     components: {
     },
@@ -90,8 +84,10 @@
       clickZan(id,index){
         if (localStorage.getItem("gid")) {
           var self=this;
-          if (!this.isClick[index]) {
-            this.isClick[index]=1;
+          //此处可以优化，去掉isClick变量；
+          if (!this.isClick[index]&&!this.commentlist[index].liked) {
+            this.commentlist[index].liked=!this.commentlist[index].liked;
+            this.isClick[index]=true;
             this.$refs.zan[index].className='icon img2';
             AjaxServer.httpPost(
               Vue,
@@ -115,7 +111,8 @@
                 console.log(err);
               });
           }else{
-            this.isClick[index]=0;
+            this.commentlist[index].liked=!this.commentlist[index].liked;
+            this.isClick[index]=false;
             this.$refs.zan[index].className='icon img1';
             AjaxServer.httpPost(
               Vue,

@@ -1,9 +1,11 @@
 import Vue from 'vue'
 import App from './App'
-import 'common/js/common.js';
-import 'common/css/reset.css';
+
+import VueResource from 'vue-resource'
+Vue.use(VueResource)
+/* eslint-disable no-new */
 new Vue({
-  el: '#wxpay',
+  el: '#good',
   template: '<App/>',
   components: { App },
 })

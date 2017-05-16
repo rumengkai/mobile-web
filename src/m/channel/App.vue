@@ -24,15 +24,15 @@
         <ul class="channels-info" v-if="!isfocus||!subscription">
           <li class="vux-1px-b">
             <p class="title">专栏介绍</p>
-            <p class="con">{{channelsinfo.abstract}}</p>
+            <p class="con" v-html="channelsinfo.abstract"></p>
           </li>
           <li class="vux-1px-b">
             <p class="title">适宜人群</p>
-            <p class="con">{{channelsinfo.suit_crowds}}</p>
+            <p class="con" v-html="channelsinfo.suit_crowds"></p>
           </li>
           <li class="vux-1px-b">
             <p class="title">订阅须知</p>
-            <p class="con" v-html="information">{{information}}</p>
+            <p class="con" v-html="channelsinfo.information"></p>
           </li>
           <li v-if="!subscription">
             <p class="title">最新更新</p>
@@ -144,8 +144,11 @@
               this.failedmsg=this.channelsinfo.error;
               this.failedshow=true;
             } else{
+              console.log(data);
+              data.abstract=data.abstract.replace(/[\n]/g,"<br/>") ;
+              data.suit_crowds=data.suit_crowds.replace(/[\n]/g,"<br/>") ;
               //正则匹配，处理information
-              this.information=this.channelsinfo.information.replace(/[。]/g,"。<br/>") ;
+              data.information=data.information.replace(/[\n]/g,"<br/>") ;
               //加载完成后，重置scroll
               // setTimeout(function () {
               //   self.$nextTick(() => {

@@ -10,8 +10,8 @@
 // 全局变量，配置
 //版本
 window.VERSION="0.1"
-// window.HOST="http://dev.kofuf.com"// 测试地址
-window.HOST="http://api.kofuf.com"// 线上地址
+window.HOST="http://dev.kofuf.com"// 测试地址
+// window.HOST="http://api.kofuf.com"// 线上地址
 
 
 
@@ -31,7 +31,7 @@ FastClick.attach(document.body)
 //微信授权地址
 window.getAuthLink=function (type,id){
 	//type:item_(id),channel_(id)
-	return "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx05e842991e5fa0b2&redirect_uri="+HOST+"%2Fapi%2Fsession%2Fauth_weixin&response_type=code&scope=snsapi_userinfo&state="+type+"_"+id+"#wechat_redirect"
+	return "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx05e842991e5fa0b2&redirect_uri="+"http://api.kofuf.com"+"%2Fapi%2Fsession%2Fauth_weixin&response_type=code&scope=snsapi_userinfo&state="+type+"_"+id+"#wechat_redirect"
 }
 //微信登陆授权
 window.getAuth=function (cookie,querystring,type,id){

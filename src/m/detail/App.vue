@@ -56,6 +56,7 @@
   import 'common/js/common.js';
   import geturlpara from 'common/js/geturlpara.js';
   import {formatDate} from 'common/js/date.js';
+  import AjaxServer from 'common/js/ajaxServer.js';
   import Comment from "components/Comment/Comment"
   import Audiobox from "components/Audio/Audio"
   import Videobox from "components/Video/Video"
@@ -116,12 +117,12 @@
     },
     mounted(){
       var self=this;
-      // setTimeout(function () {
-      //   var alist=Array.prototype.slice.call(document.getElementsByTagName("a"));
-      //   alist.map(function (item,index,arr) {
-      //     console.log(item.href);
-      //   });
-      // },200);
+      setTimeout(function () {
+        var alist=Array.prototype.slice.call(document.getElementsByTagName("a"));
+        alist.map(function (item,index,arr) {
+          console.log(item.href);
+        });
+      },100);
     },
     methods: {
       openApp(){
@@ -133,6 +134,27 @@
         .then((data)=>{
           this.loadingshow=false;
           this.articles=JSON.parse(data.bodyText);
+          if (/<a/g.test(this.articles.content)) {
+            //替换channel的URL
+            var parase0=this.articles.content.match(/href=\"channel\/\d{3,}/g);
+            console.log(parase0);
+            if (parase0) {
+              var channelID=parase0[0].replace("href=\"channel/","");
+              this.articles.content=this.articles.content.replace(/href=\"channel\/\d{3,}/g,"href=\"channel.html?id="+channelID);
+            }
+            //替换articles的URL
+            var parase1=this.articles.content.match(/href=\"article\/\d{3,}/g);
+            if (parase1) {
+              var articleID=parase1[0].replace("href=\"article/","");
+              this.articles.content=this.articles.content.replace(/href=\"article\/\d{3,}/g,"href=\"detail.html?id="+articleID);
+            }
+            //替换good的URL
+            var parase2=this.articles.content.match(/href=\"good\/\d{3,}/g);
+            if (parase2) {
+              var goodID=parase2[0].replace("href=\"good/","");
+              this.articles.content=this.articles.content.replace(/href=\"good\/\d{3,}/g,"href=\"good.html?id="+goodID);
+            }
+          }
 
           this.fetchCommentData(id);
           if(this.articles.status!=0){
@@ -166,26 +188,53 @@
 
       //请求评论数据
       fetchCommentData(id,pn,last_time){
-        this.$http.get(HOST+'/api/articles/comments.json?id='+id+'&pn='+pn+'&last_time='+last_time, [])
-        .then((data)=>{
-          this.loadingshow=false;
-          this.datalist=JSON.parse(data.bodyText);
-          if (this.datalist.items.length<=0&&this.loadmore==true) {
-            this.nonecomment=true;
-          }else{
-            this.commentlist.items=this.commentlist.items.concat(this.datalist.items);
-            if (this.commentlist.items[this.commentlist.items.length-1].postd) {
-              this.last_time=this.commentlist.items[this.commentlist.items.length-1].postd;
+        var self=this;
+        AjaxServer.httpGet(
+          Vue,
+          HOST+'/api/articles/comments.json?id='+id+'&pn='+pn+'&last_time='+last_time,
+          {},
+          (data)=>{
+            self.loadingshow=false;
+            self.datalist=data;
+            console.log(self.datalist);
+            if (self.datalist.items.length<=0&&self.loadmore==true) {
+              self.nonecomment=true;
+            }else{
+              self.commentlist.items=self.commentlist.items.concat(self.datalist.items);
+              if (self.commentlist.items[self.commentlist.items.length-1].postd) {
+                self.last_time=self.commentlist.items[self.commentlist.items.length-1].postd;
+              }
+              if(!self.datalist.has_next){
+                self.commentBottomMsg="没有更多数据";
+              }
+              self.loadmore=true;
             }
-            if(!this.datalist.has_next){
-              this.commentBottomMsg="没有更多数据";
-            }
-            this.loadmore=true;
+          },
+          (err)=>{
+            self.loadingshow=false;
+            console.log(err);
           }
-        }, (err)=>{
-          this.loadingshow=false;
-          console.log(err);
-        });
+        );
+        // this.$http.get(HOST+'/api/articles/comments.json?id='+id+'&pn='+pn+'&last_time='+last_time, [])
+        // .then((data)=>{
+        //   this.loadingshow=false;
+        //   this.datalist=JSON.parse(data.bodyText);
+        //   if (this.datalist.items.length<=0&&this.loadmore==true) {
+        //     this.nonecomment=true;
+        //   }else{
+        //     this.commentlist.items=this.commentlist.items.concat(this.datalist.items);
+        //     if (this.commentlist.items[this.commentlist.items.length-1].postd) {
+        //       this.last_time=this.commentlist.items[this.commentlist.items.length-1].postd;
+        //     }
+        //     if(!this.datalist.has_next){
+        //       this.commentBottomMsg="没有更多数据";
+        //     }
+        //     this.loadmore=true;
+        //   }
+        // }, (err)=>{
+        //   this.loadingshow=false;
+        //   console.log(err);
+        // });
       },
       logErr(err){
         this.$vux.alert.show({
