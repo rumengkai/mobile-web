@@ -17,7 +17,7 @@
 
 <script>
   import 'common/css/reset.css';
-  import 'common/js/common.js';
+  import 'common/js/config.js';
 
   export default {
     name: 'app-download',

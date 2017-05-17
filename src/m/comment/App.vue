@@ -21,7 +21,7 @@
 
 <script>
   import 'common/css/reset.css';
-  import 'common/js/common.js';
+  import 'common/js/config.js';
   import geturlpara from 'common/js/geturlpara.js';
   import AjaxServer from 'common/js/ajaxServer.js';
   import Vue from 'vue'

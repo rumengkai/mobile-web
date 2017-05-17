@@ -30,7 +30,8 @@
 
 <script>
   import 'common/css/reset.css';
-  import 'common/js/common.js';
+  import 'common/js/config.js';
+  import {isWeiXin} from 'common/js/common.js';
   import AjaxServer from 'common/js/ajaxServer.js';
   import geturlpara from 'common/js/geturlpara.js';
   import Channels from "components/Channels/Channels"
@@ -73,7 +74,9 @@
     },
     beforeCreate(){
       //授权
-      getAuth(cookie,querystring);
+      if(isWeiXin()){
+        getAuth(cookie,querystring);
+      }
     },
     created () {
       this.fetchData();

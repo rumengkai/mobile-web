@@ -21,6 +21,9 @@
 
   export default {
     name: 'app-download',
+    props: {
+      id:String
+    },
     data () {
       return {
 
@@ -34,7 +37,7 @@
 
     methods: {
       BrowserType(){
-        window.location.href="https://a.mlinks.cc/AK8k"
+        window.location.href="https://a.mlinks.cc/AK8f?id="+this.id
       }
     }
   }

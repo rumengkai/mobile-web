@@ -23,7 +23,7 @@
 
 <script>
   import 'common/css/reset.css';
-  import 'common/js/common.js';
+  import 'common/js/config.js';
   import AjaxServer from 'common/js/ajaxServer.js';
   import geturlpara from 'common/js/geturlpara.js';
   import { toPay } from 'common/js/pay.js';

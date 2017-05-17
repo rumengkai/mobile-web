@@ -73,7 +73,8 @@
 
 <script>
   import 'common/css/reset.css';
-  import 'common/js/common.js';
+  import 'common/js/config.js';
+  import {isWeiXin} from 'common/js/common.js';
   import AjaxServer from 'common/js/ajaxServer.js';
   import geturlpara from 'common/js/geturlpara.js';
   import { toPay } from 'common/js/pay.js';
@@ -87,7 +88,7 @@
   Vue.use(ToastPlugin)
   Vue.use(AlertPlugin)
   Vue.prototype.$geturlpara=geturlpara
-
+  console.log(geturlpara);
   export default {
     name: 'channel',
     data () {
@@ -120,9 +121,11 @@
       List
     },
     beforeCreate(){
-      //授权
-      var id = this.$geturlpara.getUrlKey("id");
-      getAuth(cookie,querystring,"channel",id);
+      if(isWeiXin()){
+        //授权
+        var id = this.$geturlpara.getUrlKey("id");
+        getAuth(cookie,querystring,"channel",id);
+      }
     },
     created () {
       var id = this.$geturlpara.getUrlKey("id");

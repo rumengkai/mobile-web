@@ -46,14 +46,14 @@
         <a @click='openApp' id='btnOpenApp'>打开APP</a>
       </div>
     </footer>
-    <app-download v-if="appdownloadshow"></app-download>
+    <app-download v-if="appdownloadshow" :id="id"></app-download>
     <Loading v-model="loadingshow" :text="loadtext"></Loading>
   </div>
 </template>
 
 <script>
   import 'common/css/reset.css';
-  import 'common/js/common.js';
+  import 'common/js/config.js';
   import geturlpara from 'common/js/geturlpara.js';
   import {formatDate} from 'common/js/date.js';
   import AjaxServer from 'common/js/ajaxServer.js';
