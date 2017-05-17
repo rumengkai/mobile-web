@@ -58,12 +58,14 @@
         </ul>
       </div>
     <!-- </scroller> -->
-    <footer v-if="showContent&&!subscription">
+    <footer v-show="showContent&&!subscription">
       <div class="freeread" @click="freeRead">
         <span>免费试读</span>
       </div>
-      <div class="subscribe" @click="subscribe1" >
-        <span>订阅：<span>¥{{channelsinfo.suites[0].price}}/年</span></span>
+      <div class="subscribe">
+        <a id="btnOpenApp">
+          <span>订阅：<span>¥{{channelsinfo.suites[0].price}}/年</span></span>
+        </a>
       </div>
     </footer>
     <Failed v-if="failedshow" :msg="failedmsg"></Failed>
@@ -131,6 +133,14 @@
       var id = this.$geturlpara.getUrlKey("id");
       this.id=id;
       this.fetchData(id);
+    },
+    mounted(){
+      //唤起app
+      new Mlink({
+        mlink: "https://a.mlinks.cc/AK8j?id="+this.id,
+        button: document.querySelector('a#btnOpenApp'),
+        autoLaunchApp : false,
+      });
     },
     methods: {
       //获取专栏数据数据
@@ -501,6 +511,9 @@ body{
       line-height: 46px;
       text-align: center;
       background-color: #ffbf00;
+      a{
+        color: #fbfbfb;
+      }
     }
   }
 }

@@ -10,7 +10,7 @@
       </div>
 
     </div>
-    <button class="load" @click="BrowserType">打开APP阅读</button>
+    <a class="load" id="btnOpenApp2" @click="BrowserType">打开APP阅读</a>
   </div>
 
 </template>
@@ -32,7 +32,12 @@
     components: {
 
     },
-    created () {
+    mounted () {
+      new Mlink({
+        mlink: "https://a.mlinks.cc/AK8f?id="+this.id,
+        button: document.querySelector('a#btnOpenApp2'),
+        autoLaunchApp : false,
+      });
     },
 
     methods: {
@@ -84,6 +89,7 @@
     }
   }
   .load{
+    line-height: 40px;
     background: #fdd000;
     background-size: 100% 100%;
     margin-bottom: 40px;

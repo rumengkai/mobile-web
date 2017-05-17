@@ -37,13 +37,13 @@
       </div>
     </div>
 
-    <footer v-if="showContent">
+    <footer v-show="showContent">
       <div class="gfcj" @click="toChannels">
         <img src="./images/logo.png" alt="">
         <div class="gf"><p class="p1">功夫财经</p><p class="p2">学财经&nbsp;&nbsp;&nbsp;长本事</p></div>
       </div>
       <div class="download">
-        <a @click='openApp' id='btnOpenApp'>打开APP</a>
+        <a id='btnOpenApp'>打开APP</a>
       </div>
     </footer>
     <app-download v-if="appdownloadshow" :id="id"></app-download>
@@ -106,23 +106,13 @@
       var id = this.$geturlpara.getUrlKey("id");
       this.id=id;
       this.fetchData(id);
-      // var self=this;
-      // setTimeout(function () {
-      //   new Mlink({
-      //     mlink: "https://a.mlinks.cc/AK8f",
-      //     button: document.querySelector('a#btnOpenApp'),
-      //     autoLaunchApp : false,
-      //   });
-      // },100);
     },
     mounted(){
-      var self=this;
-      setTimeout(function () {
-        var alist=Array.prototype.slice.call(document.getElementsByTagName("a"));
-        alist.map(function (item,index,arr) {
-          console.log(item.href);
-        });
-      },100);
+      new Mlink({
+        mlink: "https://a.mlinks.cc/AK8f?id="+this.id,
+        button: document.querySelector('a#btnOpenApp'),
+        autoLaunchApp : false,
+      });
     },
     methods: {
       openApp(){
