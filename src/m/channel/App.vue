@@ -68,6 +68,12 @@
         </a>
       </div>
     </footer>
+    <div class="qr_code_pc_inner">
+      <div class="qr_code_pc">
+        <img id="js_pc_qr_code_img" class="qr_code_pc_img" src="http://www.kofuf.com/img/wx.jpg">
+        <p>微信扫一扫<br>学财经，长本事</p>
+      </div>
+    </div>
     <Failed v-if="failedshow" :msg="failedmsg"></Failed>
     <Loading v-model="loadingshow" :text="loadtext" ></Loading>
   </div>
@@ -340,7 +346,7 @@
 <style lang="less">
 @import '~vux/src/styles/1px.less';
 body{
-  background-color: #eee;
+  // background-color: #eee;
 }
 #channel{
   height: 100%;

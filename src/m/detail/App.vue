@@ -46,6 +46,12 @@
         <a id='btnOpenApp'>打开APP</a>
       </div>
     </footer>
+    <div class="qr_code_pc_inner">
+      <div class="qr_code_pc">
+        <img id="js_pc_qr_code_img" class="qr_code_pc_img" src="http://www.kofuf.com/img/wx.jpg">
+        <p>微信扫一扫<br>学财经，长本事</p>
+      </div>
+    </div>
     <app-download v-if="appdownloadshow" :id="id"></app-download>
     <Loading v-model="loadingshow" :text="loadtext"></Loading>
   </div>
@@ -275,18 +281,20 @@
 <style lang="less">
 @import '~vux/src/styles/1px.less';
 body{
-  background-color: #eee;
+  // background-color: #eee;
 }
 .showA{
   display: none;
 }
 #detail{
+  position: relative;
   height: 100%;
   .weui-loading_toast{
     position: relative;
     z-index: 1001;
   }
   .contents{
+    // box-shadow: 0px 0px 5px #ccc;
     overflow: hidden;
     background-color: #fff;
     padding-bottom: 100px;
@@ -303,10 +311,10 @@ body{
     color: #4f4f4f;
     margin:14px auto 37px;
     overflow: hidden;
-    font-size: .3rem;
+    font-size: 15px;
   }
   .article .title{
-    font-size: .42rem;
+    font-size: 21px;
   }
   .article .info{
     height: .9rem;
@@ -315,18 +323,18 @@ body{
     margin-bottom: 10px;
   }
   .article .info .author{
-    line-height: .9rem;
+    line-height: 45px;
     margin-left: .3rem;
     color: #a0a0a0;
   }
   .article .info .created{
     float: right;
-    line-height: .9rem;
+    line-height: 45px;
     color: #a0a0a0;
   }
   .article .info img{
-    width: .9rem;
-    height:.9rem;
+    width: 45px;
+    height:45px;
     border-radius: .45rem;
     float: left;
   }
@@ -335,6 +343,7 @@ body{
       text-align: justify;
     }
     img{
+      // box-shadow: 0px 0px 5px #ccc;
       max-width: 100%;
     }
   }
@@ -353,7 +362,7 @@ body{
     position: fixed;
     bottom: 0;
     padding: 8px 0;
-    z-index: 1000;
+    z-index: 10002;
     display: -webkit-box;
     -webkit-box-align: center;
     .gfcj{

@@ -21,14 +21,20 @@
         </div>
         <div class="detail" v-html="itemsinfo.detail"></div>
       </div>
-    <footer v-if="showContent">
-      <div class="left" @click="addCart">
+    <footer v-show="showContent">
+      <a id="btnOpenApp" class="left" >
         <span>加入购物车</span>
-      </div>
-      <div class="right" @click="buy" >
+      </a>
+      <a id="btnOpenApp1" class="right" >
         <span>立即购买</span>
-      </div>
+      </a>
     </footer>
+    <div class="qr_code_pc_inner">
+      <div class="qr_code_pc">
+        <img id="js_pc_qr_code_img" class="qr_code_pc_img" src="http://www.kofuf.com/img/wx.jpg">
+        <p>微信扫一扫<br>学财经，长本事</p>
+      </div>
+    </div>
     <Failed v-if="failedshow" :msg="failedmsg"></Failed>
     <Loading v-model="loadingshow" :text="loadtext" ></Loading>
   </div>
@@ -37,6 +43,7 @@
 <script>
   import 'common/css/reset.css';
   import 'common/js/config.js';
+  import {isWeiXin} from 'common/js/common.js';
   import AjaxServer from 'common/js/ajaxServer.js';
   import geturlpara from 'common/js/geturlpara.js';
   import { toPay } from 'common/js/pay.js';
@@ -76,13 +83,27 @@
     },
     beforeCreate(){
       //授权
-      var id = this.$geturlpara.getUrlKey("id");
-      getAuth(cookie,querystring,"item",id);
+      if(isWeiXin()){
+        var id = this.$geturlpara.getUrlKey("id");
+        getAuth(cookie,querystring,"item",id);
+      }
     },
     created () {
       var id = this.$geturlpara.getUrlKey("id");
       this.id=id;
       this.fetchData(id);
+    },
+    mounted(){
+      //唤起app
+      new Mlink([{
+        mlink: "https://a.mlinks.cc/Acej?id="+this.id,
+        button: document.querySelector('a#btnOpenApp1'),
+        autoLaunchApp : false,
+      },{
+        mlink: "https://a.mlinks.cc/Acej?id="+this.id,
+        button: document.querySelector('a#btnOpenApp'),
+        autoLaunchApp : false,
+      }]);
     },
     methods: {
       //获取商品数据
@@ -117,18 +138,18 @@
       toDetail(id){
         window.location.href="detail.html?id="+id;
       },
-      //加入购物车
-      addCart(){
-        var id = this.$geturlpara.getUrlKey("id");
-        console.log(id);
-        window.location.href="https://a.mlinks.cc/AK8j?id="+id;
-      },
-      //立即购买
-      buy(){
-        var id = this.$geturlpara.getUrlKey("id");
-        console.log(id);
-        window.location.href="https://a.mlinks.cc/AK8j?id="+id;
-      },
+      // //加入购物车
+      // addCart(){
+      //   var id = this.$geturlpara.getUrlKey("id");
+      //   console.log(id);
+      //   window.location.href="https://a.mlinks.cc/Acej?id="+id;
+      // },
+      // //立即购买
+      // buy(){
+      //   var id = this.$geturlpara.getUrlKey("id");
+      //   console.log(id);
+      //   window.location.href="https://a.mlinks.cc/Acej?id="+id;
+      // },
       logErr(err){
         this.$vux.alert.show({
           title: '提示',
@@ -160,7 +181,7 @@
 <style lang="less">
 @import '~vux/src/styles/1px.less';
 body{
-  background-color: #eee;
+  // background-color: #eee;
 }
 #good{
   height: 100%;
@@ -226,6 +247,9 @@ body{
     display: -webkit-box;
     -webkit-box-align: center;
     font-size: 20px;
+    a{
+      display: block;
+    }
     .left{
       color: #fbfbfb;
       width: 50%;
