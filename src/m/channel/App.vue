@@ -37,20 +37,20 @@
           <li v-if="!subscription">
             <p class="title">最新更新</p>
             <ul class="newupdate">
-              <li class="item vux-1px-b" v-for="item in channelsinfo.articles" @click="toDetail(item.id)">
+              <li class="item vux-1px-b" v-for="item in channelsinfo.articles" @click="toDetail(item.id,item.tryout)">
                 <img :src="item.thumb" alt="" onerror="this.src='http://182.92.99.123:8080/privilege/uploadedFile/1491147612922.jpg?imageView2/1/w/200/h/133/q/100|imageslim'">
                 <p class="title">{{item.name}}</p>
                 <p class="date">{{item.published | formatDate2}}</p>
               </li>
-              <div v-if='!nonecomment' class="comment-bottom">
+              <!-- <div v-if='!nonecomment' class="comment-bottom">
                 <p v-if="loadmore" @click="commentLoad">{{commentBottomMsg}}</p>
                 <load-more v-else tip="正在加载">正在加载</load-more>
-              </div>
+              </div> -->
             </ul>
           </li>
         </ul>
         <ul class="channel-list" v-if="isfocus&&subscription">
-          <list :datalist="channelsinfo.articles"></list>
+          <list :datalist="articles.articles"></list>
           <div v-if='!nonecomment' class="comment-bottom">
             <p v-if="loadmore" @click="commentLoad">{{commentBottomMsg}}</p>
             <load-more v-else tip="正在加载">正在加载</load-more>
@@ -118,6 +118,7 @@
         subscription:false,//是否订阅
         isfocus:true,
         disable:true,
+        articles:{'articles':[],'has_next':true},
       }
     },
     components: {
@@ -139,6 +140,7 @@
       var id = this.$geturlpara.getUrlKey("id");
       this.id=id;
       this.fetchData(id);
+      this.commentLoad(id);
     },
     mounted(){
       //唤起app
@@ -163,7 +165,7 @@
               this.failedmsg=this.channelsinfo.error;
               this.failedshow=true;
             } else{
-              console.log(data);
+              // console.log(data);
               data.abstract=data.abstract.replace(/[\n]/g,"<br/>") ;
               data.suit_crowds=data.suit_crowds.replace(/[\n]/g,"<br/>") ;
               //正则匹配，处理information
@@ -174,11 +176,9 @@
               //     self.$refs.scrollerEvent.reset()
               //   })
               // },500);
-              if(!data.has_next){
-                this.commentBottomMsg="没有更多数据";
-              }
-              console.log(0);
-              console.log(0);
+              // if(!data.has_next){
+              //   this.commentBottomMsg="没有更多数据";
+              // }
               document.title = "专栏-"+data.name;
               self.subscription=data.followed;
               this.showContent=true;
@@ -190,7 +190,6 @@
             console.log(err);
           }
         );
-
         setTimeout(()=>{
           self.loadingshow=false;
         },10000);
@@ -198,8 +197,20 @@
       share(){
         console.log("share");
       },
-      toDetail(id){
-        window.location.href="detail.html?id="+id;
+      toDetail(id,tryout){
+        console.log(tryout);
+        if (!tryout) {
+          console.log("请订阅后查看");
+          this.$vux.toast.show({
+             text: '请订阅后查看',
+            //  position:'bottom',
+             time:3000,
+             width:'10em',
+             type:'text'
+          })
+        }else{
+          window.location.href="detail.html?id="+id;
+        }
       },
       freeRead(){
         var id = this.$geturlpara.getUrlKey("id");
@@ -302,23 +313,29 @@
         var id = this.$geturlpara.getUrlKey("id");
         if (id) {
           var self = this;
-          AjaxServer.httpGet(
-            Vue,
-            HOST+'/api/channels/articles.json?id='+id+'&pn='+self.pn,
-            {},
-            (data)=>{
-              if (data.status==0) {
-                self.loadmore=true;
-                if (!data.has_next) {
-                  self.commentBottomMsg="没有更多数据";
-                }else{
-                  this.pn++;
+          if (!self.articles.has_next) {
+            console.log("");
+            this.loadmore=true;
+          }else {
+            AjaxServer.httpGet(
+              Vue,
+              HOST+'/api/channels/articles.json?id='+id+'&pn='+self.pn,
+              {},
+              (data)=>{
+                if (data.status==0) {
+                  self.loadmore=true;
+                  if (!data.has_next) {
+                    self.commentBottomMsg="没有更多数据";
+                  }else{
+                    this.pn++;
+                  }
+                  self.articles.articles=self.articles.articles.concat(data.articles);
+                  self.articles.has_next=data.has_next;
+                  // self.$refs.scrollerEvent.reset()
                 }
-                self.channelsinfo.articles.concat(data.articles);
-                // self.$refs.scrollerEvent.reset()
               }
-            }
-          );
+            );
+          }
         }
       },
       conList(){
@@ -481,6 +498,7 @@ body{
     }
     .channel-list{
       padding-bottom: 50px;
+      background-color: #f3f3f3;
     }
     .comment-bottom{
       margin-top: 40px;

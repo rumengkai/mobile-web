@@ -165,7 +165,7 @@ body{
       width: 30px;
       height: 30px;
       border-radius: 15px;
-      background-color: #f00;
+      // background-color: #f00;
       overflow: hidden;
       img{
         width: 100%;

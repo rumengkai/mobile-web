@@ -152,10 +152,10 @@
             }
           }
 
-          this.fetchCommentData(id);
+          // this.fetchCommentData(id);
           if(this.articles.status!=0){
             //返回为4，无权限
-            if(this.articles.status==4){
+            if(this.articles.status!=4){
               //window.location.href="app-download.html"
               this.appdownloadshow=true;
             }else{
@@ -166,7 +166,11 @@
           }else{
             this.showContent=true;
             //是否展示评论
-            this.showComment=this.articles.need_comments=="false"?false:true;
+            this.showComment=this.articles.need_comments;
+            if (this.showComment) {
+              //请求评论
+              this.fetchCommentData(id);
+            }
           }
         }, (err)=>{
           this.loadingshow=false;

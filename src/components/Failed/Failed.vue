@@ -1,6 +1,6 @@
 <template>
   <div id="failed">
-    <img src="./images/failed.png" alt="">
+    <img src="./images/pay_result_failure.png" alt="">
     <p>{{msg}}</p>
   </div>
 </template>
@@ -33,10 +33,10 @@
   height: 100%;
   background-color: #fff;
   img{
+    margin: 30% auto;
     display: block;
-    width: 100%;
-    margin-top: 20%;
-    height: 60%;
+    width: 332px;
+    height: 258px;
   }
   p{
     color: #ffbf00;
