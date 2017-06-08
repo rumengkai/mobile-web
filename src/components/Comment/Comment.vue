@@ -9,7 +9,7 @@
     </div>
     <ul id="comment" v-if="commentlist!=undefined">
       <li v-for="(item , index) in commentlist" class="vux-1px-b">
-        <img :src="item.author.photo" alt="" onerror="this.src='http://182.92.99.123:8080/privilege/uploadedFile/default.png'">
+        <img :src="item.author.photo" alt="" onerror="this.src='http://m.kofuf.com/static/img/default.png'">
         <div class="comment-box">
           <p class="username">{{item.author.name}}</p>
           <p class="date">{{item.postd|formatDate}}</p>
@@ -236,11 +236,11 @@
     float: left;
   }
   .img1{
-    background: url(images/zan.png);
+    background: url('./images/like.png');
     background-size: 16px 16px;
   }
   .img2{
-    background: url(images/zaned.png);
+    background: url('./images/liked.png');
     background-size: 16px 16px;
   }
   .count{

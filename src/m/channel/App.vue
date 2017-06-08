@@ -62,9 +62,11 @@
       <div class="freeread" @click="freeRead">
         <span>免费试读</span>
       </div>
-      <div class="subscribe">
+      <!-- <div class="subscribe" @click="subscribe"> -->
+        <div class="subscribe">
         <a id="btnOpenApp">
-          <span>订阅：<span>¥{{channelsinfo.suites[0].price}}/年</span></span>
+        <!-- <a> -->
+          <span>订阅：<span>¥{{price}}/年</span></span>
         </a>
       </div>
     </footer>
@@ -119,6 +121,7 @@
         isfocus:true,
         disable:true,
         articles:{'articles':[],'has_next':true},
+        price:0
       }
     },
     components: {
@@ -161,6 +164,11 @@
           (data)=>{
             this.loadingshow=false;
             this.channelsinfo=data;
+            if (this.channelsinfo.channel_price>=0) {
+              this.price=this.channelsinfo.channel_price;
+            }else{
+              this.price=this.channelsinfo.suites[0].price;
+            }
             if(this.channelsinfo.status!=0){
               this.failedmsg=this.channelsinfo.error;
               this.failedshow=true;

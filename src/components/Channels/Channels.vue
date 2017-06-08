@@ -5,11 +5,15 @@
         <img :src="item.thumb" alt="" onerror="this.src='http://182.92.99.123:8080/privilege/uploadedFile/1490888681914.jpg'" class="headimg">
         <div class="channels-info">
           <p class="name">{{item.name}}</p>
+          <span class="view_count" v-if="item.view_count!=0">{{item.view_count}}人订阅</span>
           <p class="author_name"><span>{{item.author_name}}</span><span>{{item.author_field}}</span></p>
           <p class="brief">{{item.brief}}</p>
           <p class="price-co">
-            <span class="price">¥ <span>{{item.suites[0].price}}</span>/年</span>
-            <span class="view_count" v-if="item.view_count!=0">{{item.view_count}}人订阅</span>
+            <span v-if="item.channel_price==-1" class="price">¥ <span>{{item.suites[0].price}}</span>/年</span>
+            <span v-else>
+              <span class="price">{{item.text}} ¥ <span>{{item.channel_price}}</span>/年</span>
+              <span class="oldprice"> ¥ <span>{{item.suites[0].price}}</span>/年</span>
+            </span>
           </p>
           <div class="nstep "></div>
         </div>
@@ -35,6 +39,15 @@
     mounted(){
       this.$refs.list[this.$refs.list.length-1].className="channels-item";
       console.log(this.$refs.list[this.$refs.list.length-1].className);
+      console.log(this.subs);
+      var temp=this.subs.map(function (item,index) {
+        console.log(item.view_count);
+        if (item.view_count>9999) {
+          item.view_count=(Math.ceil(item.view_count/1000)/10).toFixed(1)+"万"
+        }
+        return item
+      });
+      console.log(temp);
     },
     components: {
     },
@@ -64,11 +77,13 @@
       height: 124px;
       display: block;
       float: left;
+      border-radius: 2px;
+      margin-right: 16px;
     }
     .channels-info{
-      width: 67%;
+      width: auto;
       margin-right: 0;
-      float: left;
+      // float: left;
       margin-left: .15rem;
       height: 100%;
       right: 0;
@@ -90,25 +105,34 @@
         color: #888;
         font-size: 14px;
         line-height:20px;
-        width: 98%;
+        // width: 98%;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
       }
       .price-co{
-        margin-top: 10px;
+        margin-top: 15px;
         font-size: 10px;
+        font-size: 14px;
         .price{
+          font-size: 14px;
           color: #fdd000;
           span{
             font-size: 15px;
             font-weight: bold;
           }
         }
-        .view_count{
-          float: right;
-          color: #888;
+        .oldprice{
+          color: #bcbcbc;
+          font-size: 12px;
+          text-decoration:line-through;
+          margin-left: 10px;
         }
+      }
+      .view_count{
+        float: right;
+        color: #888;
+        margin-top: -22px;
       }
     }
   }

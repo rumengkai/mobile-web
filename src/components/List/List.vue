@@ -83,6 +83,7 @@ import {formatedDate} from 'common/js/date.js';
       }
       img{
         display: block;
+        border-radius: 2px;
         width: 100%;
         height: 100%;
       }
