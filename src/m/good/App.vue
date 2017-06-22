@@ -225,10 +225,10 @@ body{
     }
     .detail{
       width: auto;
-      padding: 0 .32rem .2rem;
+      padding: 0 .32rem 100px;
       box-shadow: 0 5px 5px #dedede;
-      margin-bottom: 80px;
       background-color: #fff;
+      overflow: hidden;
       img{
         width: 100%;
       }

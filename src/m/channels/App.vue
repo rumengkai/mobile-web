@@ -5,7 +5,7 @@
       <div class="wriper">
         <div class="header" v-if="channels.user">
           <div class="headimg">
-            <img :src="channels.user.profile" alt="">
+            <img :src="channels.user.profile" onerror="this.src='http://m.kofuf.com/static/img/weblogo.png'" alt="">
           </div>
           <span class="name">{{channels.user.name}}</span>
         </div>
@@ -15,11 +15,11 @@
             已订阅
           </div>
           <Channels v-if="showsub" :subs="channels.subs"></Channels>
-          <div class="channels-title vux-1px-t vux-1px-b">
+          <div v-if="channels.unsubs.length" class="channels-title vux-1px-t vux-1px-b">
             <span></span>
             推荐订阅
           </div>
-          <Channels :subs="channels.unsubs"></Channels>
+          <Channels v-if="channels.unsubs.length" :subs="channels.unsubs"></Channels>
         </div>
       </div>
     </scroller>
@@ -86,11 +86,17 @@
       //获取专栏数据数据
       fetchData(cid){
         var self=this;
+        getAuth(cookie,querystring,"item",this.id);
         AjaxServer.httpGet(
           Vue,
           HOST+'/api/channels.json',
           {},
           (data)=>{
+            //如果登陆过期，清除localStorage,刷新当前页面
+            if (!data.is_login) {
+              localStorage.clear();
+              window.location.reload();
+            }
             self.channels=data;
             if(self.channels.status!=0){
               self.failedmsg=self.channels.error;

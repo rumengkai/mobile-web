@@ -95,8 +95,10 @@
               })
             }
             setTimeout(()=>{
-              window.history.go(-1);
-            },3000)
+              console.log(this.id);
+              window.location.href="./detail.html?id="+this.id;
+              // window.history.go(-1);
+            },2000)
           },
           (err)=>{
             self.sub=true;

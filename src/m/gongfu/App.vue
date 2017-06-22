@@ -1,5 +1,5 @@
 <template>
-  <div id="detail">
+  <div id="gongfu">
     <Failed v-if="failedshow" :msg="failedmsg"></Failed>
     <div class="contents" v-if="showContent">
       <div v-if="articles.sub_type=='V'">
@@ -58,6 +58,7 @@
 </template>
 
 <script>
+  window.location.href="http://detail.youzan.com/show/goods?alias=3nwklbnnoeybu&sls=2IItkM";
   import 'common/css/reset.css';
   import 'common/js/config.js';
   import geturlpara from 'common/js/geturlpara.js';
@@ -72,21 +73,13 @@
   import {Loading,LoadMore} from 'vux'
   import VueResource from 'vue-resource'
   Vue.use(VueResource)
-  Vue.prototype.$geturlpara=geturlpara
-  Vue.http.interceptors.push(function(request, next) {
-    // modify headers
-    request.headers.set('from', '3');
-    request.headers.set('gid', localStorage.getItem("gid"));
-    request.headers.set('token', localStorage.getItem("token"));
-    request.headers.set('version', VERSION);
-    next();
-  });
+  // Vue.prototype.$geturlpara=geturlpara
   //sub_type:a:文章 r：音频  v：视频
   export default {
-    name: 'detail',
+    name: 'gongfu',
     data () {
       return {
-        id:0,
+        id:"1817",
         showContent:false,
         paly:0,
         showplay:true,
@@ -117,7 +110,7 @@
       LoadMore
     },
     created () {
-      var id = this.$geturlpara.getUrlKey("id");
+      var id = "1817";//this.$geturlpara.getUrlKey("id");
       this.id=id;
       this.fetchData(id);
     },
@@ -132,7 +125,6 @@
       openApp(){
         this.getPhoneType();
       },
-
       //获取数据
       fetchData(id){
         this.$http.get(HOST+'/api/articles/'+id+'.json', [])
@@ -187,10 +179,8 @@
               //window.location.href="app-download.html"
               this.appdownloadshow=true;
             }else{
-              console.log(this.articles.channel);
-              // this.failedmsg=this.articles.error;
-              // this.failedshow=true;
-              window.location.href="./channel.html?id="+this.articles.channel;
+              this.failedmsg=this.articles.error;
+              this.failedshow=true;
               // this.logErr(this.articles.error);
             }
           }else{
@@ -279,7 +269,7 @@
       },
       //判断手机类型
       getPhoneType(){
-        var id = this.$geturlpara.getUrlKey("id");
+        var id = "1817";//this.$geturlpara.getUrlKey("id");
         var u = navigator.userAgent;
         //应用市场地址：
         if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//安卓手机
@@ -297,7 +287,7 @@
       },
       commentLoad(){
         this.loadmore=false;
-        var id = this.$geturlpara.getUrlKey("id")||"1482";
+        var id = "1817"//this.$geturlpara.getUrlKey("id")||"1482";
         this.fetchCommentData(id,++this.pn,this.last_time);
       },
       toChannels(){
@@ -321,7 +311,7 @@ body{
 .showA{
   display: none;
 }
-#detail{
+#gongfu{
   position: relative;
   height: 100%;
   .weui-loading_toast{

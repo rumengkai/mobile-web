@@ -1,6 +1,5 @@
 <template>
   <div id="channel">
-
     <!-- <x-header v-if="showContent"><a slot="right" @click="share"></a></x-header> -->
     <!-- <scroller lock-x ref="scrollerEvent" v-show="showContent"> -->
       <div class="content" v-show="showContent">
@@ -62,12 +61,21 @@
       <div class="freeread" @click="freeRead">
         <span>免费试读</span>
       </div>
-      <!-- <div class="subscribe" @click="subscribe"> -->
-        <div class="subscribe">
-        <a id="btnOpenApp">
-        <!-- <a> -->
+      <div class="subscribe" @click="subscribe">
+        <!-- <div class="subscribe">
+        <a id="btnOpenApp"> -->
+        <a>
           <span>订阅：<span>¥{{price}}/年</span></span>
         </a>
+      </div>
+    </footer>
+    <footer v-show="!(showContent&&!subscription)" class = "openApp">
+      <div class="gfcj" @click="toChannels">
+        <img src="http://m.kofuf.com/static/img/logo.png" alt="">
+        <div class="gf"><p class="p1">微信登陆APP</p><p class="p2">阅读体验更佳</p></div>
+      </div>
+      <div class="download">
+        <a id='btnOpenApp'>打开APP</a>
       </div>
     </footer>
     <div class="qr_code_pc_inner">
@@ -154,6 +162,9 @@
       });
     },
     methods: {
+      toChannels(){
+        window.location.href="channels.html"
+      },
       //获取专栏数据数据
       fetchData(id){
         var self = this;
@@ -505,7 +516,7 @@ body{
       }
     }
     .channel-list{
-      padding-bottom: 50px;
+      padding-bottom: 100px;
       background-color: #f3f3f3;
     }
     .comment-bottom{
@@ -546,6 +557,67 @@ body{
       a{
         color: #fbfbfb;
       }
+    }
+  }
+}
+.openApp{
+  height: 46px;
+  padding: 8px 0 !important;
+  width: 100%;
+  max-width: 680px;
+  background-color: #fff;
+  box-shadow: rgba(0,0,0,.2) 0 0 10px;
+  position: fixed;
+  bottom: 0;
+  z-index: 1000;
+  display: -webkit-box;
+  -webkit-box-align: center;
+  font-size: 20px;
+  .gfcj{
+    font-size: 20px;
+    color: #ff8929;
+    width: 60%;
+    img{
+      width: 40px;
+      height: 40px;
+      display: block;
+      float: left;
+      margin-left: 15px;
+    }
+    .gf{
+      width: 105px;
+      float: left;
+      margin-left: 18px;
+      color: #868686;
+      .p1{
+        font-size: 12px;
+        line-height: 20px;
+        font-weight: 400;
+      }
+      .p2{
+        line-height: 20px;
+        font-weight: 100;
+        font-size: 12px;
+      }
+    }
+  }
+  .download{
+    width: 40%;
+    text-align: right;
+    a{
+      // width: 148px;
+      height: 40px;
+      display: block;
+      color: #ff8929;
+      border: 1px solid #ff8929;
+      border-radius: 5px;
+      text-align: center;
+      line-height: 40px;
+      background: #fff;
+      font-size: 18px;
+      box-sizing: content-box;
+      margin-right: 15px;
+      margin-left: auto;
     }
   }
 }

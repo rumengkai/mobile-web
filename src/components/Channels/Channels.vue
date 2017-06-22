@@ -38,22 +38,17 @@
     },
     mounted(){
       this.$refs.list[this.$refs.list.length-1].className="channels-item";
-      console.log(this.$refs.list[this.$refs.list.length-1].className);
-      console.log(this.subs);
       var temp=this.subs.map(function (item,index) {
-        console.log(item.view_count);
         if (item.view_count>9999) {
           item.view_count=(Math.ceil(item.view_count/1000)/10).toFixed(1)+"万"
         }
         return item
       });
-      console.log(temp);
     },
     components: {
     },
     methods: {
       channelsDetail(id){
-        console.log(id);
         window.location.href="channel.html?id="+id;
       }
     }
