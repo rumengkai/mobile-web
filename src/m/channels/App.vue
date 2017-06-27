@@ -86,30 +86,33 @@
       //获取专栏数据数据
       fetchData(cid){
         var self=this;
-        getAuth(cookie,querystring,"item",this.id);
+        getAuth(cookie,querystring);
         AjaxServer.httpGet(
           Vue,
           HOST+'/api/channels.json',
           {},
           (data)=>{
             //如果登陆过期，清除localStorage,刷新当前页面
-            if (!data.is_login) {
+            if (!data.is_login&&isWeiXin()) {
+              localStorage.setItem("gid","");
               localStorage.clear();
-              window.location.reload();
-            }
-            self.channels=data;
-            if(self.channels.status!=0){
-              self.failedmsg=self.channels.error;
-              self.failedshow=true;
-            } else{
-              if(self.channels.subs!=0){
-                self.showsub=true;
+              clearcookie(cookie);
+              getAuth(cookie,querystring);
+            }else{
+              self.channels=data;
+              if(self.channels.status!=0){
+                self.failedmsg=self.channels.error;
+                self.failedshow=true;
+              } else{
+                if(self.channels.subs!=0){
+                  self.showsub=true;
+                }
+                self.showContent=true;
+                self.loadingshow=false;
+                self.$nextTick(() => {
+                  self.$refs.scrollerEvent.reset()
+                })
               }
-              self.showContent=true;
-              self.loadingshow=false;
-              self.$nextTick(() => {
-                self.$refs.scrollerEvent.reset()
-              })
             }
           },
           (err)=>{

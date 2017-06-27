@@ -9,10 +9,21 @@
           <p class="author_name"><span>{{item.author_name}}</span><span>{{item.author_field}}</span></p>
           <p class="brief">{{item.brief}}</p>
           <p class="price-co">
-            <span v-if="item.channel_price==-1" class="price">¥ <span>{{item.suites[0].price}}</span>/年</span>
+            <span v-if="item.channel_price==-1" class="price">¥ <span>{{item.suites[0].price}}</span>/
+              <!-- <span v-if="item.suites[0].effectDuration>1">{{item.suites[0].effectDuration}}</span> -->
+              <span v-if="item.suites[0].unit=='Y'">年</span>
+              <span v-if="item.suites[0].unit=='M'">20期</span>
+            </span>
             <span v-else>
-              <span class="price">{{item.text}} ¥ <span>{{item.channel_price}}</span>/年</span>
-              <span class="oldprice"> ¥ <span>{{item.suites[0].price}}</span>/年</span>
+              <span class="price">{{item.text}} ¥ <span>{{item.channel_price}}</span>/
+                <!-- <span v-if="item.suites[0].effectDuration>1">{{item.suites[0].effectDuration}}</span> -->
+                <span v-if="item.suites[0].unit=='Y'">年</span>
+                <span v-if="item.suites[0].unit=='M'">20期</span></span>
+              <span class="oldprice"> ¥ <span>{{item.suites[0].price}}</span>/
+                <!-- <span v-if="item.suites[0].effectDuration>1">{{item.suites[0].effectDuration}}</span> -->
+                <span v-if="item.suites[0].unit=='Y'">年</span>
+                <span v-if="item.suites[0].unit=='M'">20期</span>
+              </span>
             </span>
           </p>
           <div class="nstep "></div>

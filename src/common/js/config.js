@@ -29,9 +29,9 @@ FastClick.attach(document.body)
 
 
 //微信授权地址
-window.getAuthLink=function (type,id){
+window.getAuthLink=function (params){
 	//type:item_(id),channel_(id)
-	return "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx05e842991e5fa0b2&redirect_uri="+"http://api.kofuf.com"+"%2Fapi%2Fsession%2Fauth_weixin&response_type=code&scope=snsapi_userinfo&state="+type+"_"+id+"#wechat_redirect"
+	return "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx05e842991e5fa0b2&redirect_uri="+"http://api.kofuf.com"+"%2Fapi%2Fsession%2Fauth_weixin&response_type=code&scope=snsapi_userinfo&state="+params+"#wechat_redirect"
 }
 //微信登陆授权
 window.getAuth=function (cookie,querystring,type,id){
@@ -39,15 +39,25 @@ window.getAuth=function (cookie,querystring,type,id){
 	var cookie_git=cookie.get('gid');
 	//获取URLparse
 	var parse=querystring.parse();
-	if(!localStorage.getItem("gid")){
+	if(!localStorage.getItem("gid")||localStorage.getItem("gid")==""){
+		console.log('aaa');
 		if (typeof parse.gid!="undefined") {
+			console.log('bbb');
 			localStorage.setItem("gid",parse.gid);
 			localStorage.setItem("token",parse.token);
 		}else if(typeof cookie_git!="undefined"){
 			localStorage.setItem("gid",cookie.get('gid'));
 			localStorage.setItem("token",cookie.get('token'));
+			window.location.href=getAuthLink(params);
 		}else {
-			window.location.href=getAuthLink(type,id);
+			var params;
+			console.log(id);
+			if (!(id==undefined)) {
+				params=type+"_"+id;
+			}else{
+				params="";
+			}
+			window.location.href=getAuthLink(params);
 		}
 	}
 }

@@ -38,6 +38,7 @@
             <ul class="newupdate">
               <li class="item vux-1px-b" v-for="item in channelsinfo.articles" @click="toDetail(item.id,item.tryout)">
                 <img :src="item.thumb" alt="" onerror="this.src='http://182.92.99.123:8080/privilege/uploadedFile/1491147612922.jpg?imageView2/1/w/200/h/133/q/100|imageslim'">
+                <div v-if="item.tryout" class="try">试 读</div>
                 <p class="title">{{item.name}}</p>
                 <p class="date">{{item.published | formatDate2}}</p>
               </li>
@@ -65,11 +66,11 @@
         <!-- <div class="subscribe">
         <a id="btnOpenApp"> -->
         <a>
-          <span>订阅：<span>¥{{price}}/年</span></span>
+          <span>订阅：<span>¥{{price}}/{{unit}}</span></span>
         </a>
       </div>
     </footer>
-    <footer v-show="!(showContent&&!subscription)" class = "openApp">
+    <footer v-show="showContent&&!(showContent&&!subscription)" class = "openApp">
       <div class="gfcj" @click="toChannels">
         <img src="http://m.kofuf.com/static/img/logo.png" alt="">
         <div class="gf"><p class="p1">微信登陆APP</p><p class="p2">阅读体验更佳</p></div>
@@ -129,7 +130,8 @@
         isfocus:true,
         disable:true,
         articles:{'articles':[],'has_next':true},
-        price:0
+        price:0,
+        unit:"年"
       }
     },
     components: {
@@ -173,34 +175,58 @@
           HOST+'/api/channels/'+id+'.json',
           {},
           (data)=>{
-            this.loadingshow=false;
-            this.channelsinfo=data;
-            if (this.channelsinfo.channel_price>=0) {
-              this.price=this.channelsinfo.channel_price;
+            if (!data.is_login&&data.is_login!=undefined&&isWeiXin()) {
+              console.log("----------");
+              localStorage.setItem("gid","");
+              localStorage.clear();
+              // clearcookie(cookie);
+              var id = this.$geturlpara.getUrlKey("id");
+              getAuth(cookie,querystring,"channel",id);
             }else{
-              this.price=this.channelsinfo.suites[0].price;
-            }
-            if(this.channelsinfo.status!=0){
-              this.failedmsg=this.channelsinfo.error;
-              this.failedshow=true;
-            } else{
-              // console.log(data);
-              data.abstract=data.abstract.replace(/[\n]/g,"<br/>") ;
-              data.suit_crowds=data.suit_crowds.replace(/[\n]/g,"<br/>") ;
-              //正则匹配，处理information
-              data.information=data.information.replace(/[\n]/g,"<br/>") ;
-              //加载完成后，重置scroll
-              // setTimeout(function () {
-              //   self.$nextTick(() => {
-              //     self.$refs.scrollerEvent.reset()
-              //   })
-              // },500);
-              // if(!data.has_next){
-              //   this.commentBottomMsg="没有更多数据";
-              // }
-              document.title = "专栏-"+data.name;
-              self.subscription=data.followed;
-              this.showContent=true;
+              this.loadingshow=false;
+              this.channelsinfo=data;
+              if (this.channelsinfo.channel_price>=0) {
+                this.price=this.channelsinfo.channel_price;
+              }else{
+                this.price=this.channelsinfo.suites[0].price;
+              }
+              if(this.channelsinfo.status!=0){
+                this.failedmsg=this.channelsinfo.error;
+                this.failedshow=true;
+              } else{
+                // console.log(data);
+                data.abstract=data.abstract.replace(/[\n]/g,"<br/>") ;
+                data.suit_crowds=data.suit_crowds.replace(/[\n]/g,"<br/>") ;
+                //正则匹配，处理information
+                data.information=data.information.replace(/[\n]/g,"<br/>") ;
+                //加载完成后，重置scroll
+                // setTimeout(function () {
+                //   self.$nextTick(() => {
+                //     self.$refs.scrollerEvent.reset()
+                //   })
+                // },500);
+                // if(!data.has_next){
+                //   this.commentBottomMsg="没有更多数据";
+                // }
+                document.title = "专栏-"+data.name;
+                self.subscription=data.followed;
+                if (data.suites[0].unit=="M") {
+                  if (data.suites[0].effectDuration>1) {
+                    // self.unit=data.suites[0].effectDuration+"月"
+                    self.unit="20期"
+                  }else{
+                    // self.unit="月"
+                    self.unit="20期"
+                  }
+                }else if(data.suites[0].unit=="Y"){
+                  if (data.suites[0].effectDuration>1) {
+                    self.unit=data.suites[0].effectDuration+"年"
+                  }else{
+                    self.unit="年"
+                  }
+                }
+                this.showContent=true;
+              }
             }
           },
           (err)=>{
@@ -482,6 +508,20 @@ body{
           color: #9d9d9d;
         }
         .newupdate{
+          .item{
+            .try{
+                position: absolute;
+                width: 120px;
+                height: 20px;
+                background-color: #ffbf00;
+                bottom:16px;
+                border-bottom-right-radius: 3px;
+                border-bottom-left-radius: 3px;
+                text-align: center;
+                line-height: 20px;
+                color: #fff;
+            }
+          }
           li{
             cursor:pointer;
             overflow: hidden;
