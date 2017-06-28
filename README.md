@@ -1,4 +1,4 @@
-# 功夫财经h5:vue-cli多页面应用
+# h5:vue-cli多页面应用
 > A Vue.js project
 
 ## Build Setup
