@@ -145,6 +145,7 @@
     beforeCreate(){
       if(isWeiXin()){
         //授权
+
         var id = this.$geturlpara.getUrlKey("id");
         getAuth(cookie,querystring,"channel",id);
       }
@@ -175,11 +176,10 @@
           HOST+'/api/channels/'+id+'.json',
           {},
           (data)=>{
-            if (!data.is_login&&data.is_login!=undefined&&isWeiXin()) {
-              console.log("----------");
+            if (!data.is_login&&data.is_login!=undefined&&isWeiXin()&&localStorage.getItem("gid")) {
               localStorage.setItem("gid","");
               localStorage.clear();
-              // clearcookie(cookie);
+              clearcookie(cookie);
               var id = this.$geturlpara.getUrlKey("id");
               getAuth(cookie,querystring,"channel",id);
             }else{

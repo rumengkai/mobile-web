@@ -48,7 +48,7 @@ window.getAuth=function (cookie,querystring,type,id){
 		}else if(typeof cookie_git!="undefined"){
 			localStorage.setItem("gid",cookie.get('gid'));
 			localStorage.setItem("token",cookie.get('token'));
-			window.location.href=getAuthLink(params);
+			// window.location.href=getAuthLink(params);
 		}else {
 			var params;
 			console.log(id);
