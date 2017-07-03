@@ -450,7 +450,7 @@ body{
       }
       img{
         width: 100%;
-        height: 4.8rem;
+        // height: 4.8rem;
         display: block;
       }
     }

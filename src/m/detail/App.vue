@@ -335,7 +335,7 @@ body{
     padding-bottom: 100px;
     .img{
       width: 100%;
-      height: 4.56rem;
+      // height: 4.56rem;
     }
   }
   .banner img{
