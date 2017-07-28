@@ -34,7 +34,7 @@
 
     methods: {
       BrowserType(){
-        window.location.href="https://a.mlinks.cc/AK8k"
+        window.location.href="https://ah88dj.mlinks.cc/AK8k"
       }
     }
   }
@@ -75,7 +75,7 @@ body{
     }
   }
   .load{
-    background: #fdd000;
+    background: #ca915c;
     background-size: 100% 100%;
     margin-bottom: 40px;
     border: 0px;
@@ -91,9 +91,9 @@ body{
     text-decoration: none;
     width: 200px;
     height: 40px;
-    -webkit-box-shadow: #fdd000 0px 0px 10px;
-    -moz-box-shadow: #fdd000 0px 0px 10px;
-    box-shadow: #fdd000 0px 0px 10px;
+    -webkit-box-shadow: #ca915c 0px 0px 10px;
+    -moz-box-shadow: #ca915c 0px 0px 10px;
+    box-shadow: #ca915c 0px 0px 10px;
   }
 }
 

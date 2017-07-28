@@ -5,28 +5,33 @@
         <img :src="item.thumb" alt="" onerror="this.src='http://182.92.99.123:8080/privilege/uploadedFile/1490888681914.jpg'" class="headimg">
         <div class="channels-info">
           <p class="name">{{item.name}}</p>
-          <span class="view_count" v-if="item.view_count!=0">{{item.view_count}}人订阅</span>
+          <span class="view_count" v-if="item.view_count!=0&&phonetype!='small'">{{item.view_count}}人订阅</span>
           <p class="author_name"><span>{{item.author_name}}</span><span>{{item.author_field}}</span></p>
           <p class="brief">{{item.brief}}</p>
           <p class="price-co">
             <span v-if="item.channel_price==-1" class="price">¥ <span>{{item.suites[0].price}}</span>/
               <!-- <span v-if="item.suites[0].effectDuration>1">{{item.suites[0].effectDuration}}</span> -->
+              <span>{{item.price_unit}}</span>
+              <!-- <span v-if="item.suites[0].unit=='Y'">年</span>
               <span v-if="item.suites[0].unit=='Y'">年</span>
-              <span v-if="item.suites[0].unit=='M'">20期</span>
+              <span v-if="item.suites[0].unit=='M'">20期</span> -->
             </span>
             <span v-else>
               <span class="price">{{item.text}} ¥ <span>{{item.channel_price}}</span>/
                 <!-- <span v-if="item.suites[0].effectDuration>1">{{item.suites[0].effectDuration}}</span> -->
-                <span v-if="item.suites[0].unit=='Y'">年</span>
-                <span v-if="item.suites[0].unit=='M'">20期</span></span>
+                <span>{{item.price_unit}}</span>
+                <!-- <span v-if="item.suites[0].unit=='Y'">年</span>
+                <span v-if="item.suites[0].unit=='M'">20期</span> -->
+              </span>
               <span class="oldprice"> ¥ <span>{{item.suites[0].price}}</span>/
                 <!-- <span v-if="item.suites[0].effectDuration>1">{{item.suites[0].effectDuration}}</span> -->
-                <span v-if="item.suites[0].unit=='Y'">年</span>
-                <span v-if="item.suites[0].unit=='M'">20期</span>
+                <span>{{item.price_unit}}</span>
+                <!-- <span v-if="item.suites[0].unit=='Y'">年</span>
+                <span v-if="item.suites[0].unit=='M'">20期</span> -->
               </span>
             </span>
           </p>
-          <div class="nstep "></div>
+          <!-- <div class="nstep "></div> -->
         </div>
       </div>
     </div>
@@ -44,7 +49,8 @@
     },
     data () {
       return {
-        loadtext: 'loading...'
+        loadtext: 'loading...',
+        phonetype:window.phonetype
       }
     },
     mounted(){
@@ -94,7 +100,7 @@
       height: 100%;
       right: 0;
       .name{
-        font-size: 18px;
+        font-size: .36rem;
         font-weight: bold;
         color: #333;
         line-height: 33px;
@@ -122,7 +128,7 @@
         font-size: 14px;
         .price{
           font-size: 14px;
-          color: #fdd000;
+          color: #ca915c;
           span{
             font-size: 15px;
             font-weight: bold;
@@ -138,7 +144,7 @@
       .view_count{
         float: right;
         color: #888;
-        margin-top: -22px;
+        margin-top: -25px;
       }
     }
   }

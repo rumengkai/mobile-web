@@ -4,6 +4,12 @@
 	_w=_w>640?640:_w;
 	var _size=_w/750*100;
 	document.documentElement.style.fontSize=_size+"px";
+	console.log(_w);
+	if (_w<350) {
+		window.phonetype="small";
+	}else{
+		window.phonetype="large";
+	}
 })();
 
 // 全局变量，配置
@@ -40,24 +46,22 @@ window.getAuth=function (cookie,querystring,type,id){
 	//获取URLparse
 	var parse=querystring.parse();
 	if(!localStorage.getItem("gid")||localStorage.getItem("gid")==""){
-		console.log('aaa');
 		if (typeof parse.gid!="undefined") {
-			console.log('bbb');
 			localStorage.setItem("gid",parse.gid);
 			localStorage.setItem("token",parse.token);
 		}else if(typeof cookie_git!="undefined"){
 			localStorage.setItem("gid",cookie.get('gid'));
 			localStorage.setItem("token",cookie.get('token'));
-			// window.location.href=getAuthLink(params);
 		}else {
 			var params;
 			console.log(id);
 			if (!(id==undefined)) {
 				params=type+"_"+id;
 			}else{
-				params="";
+				params=type;
 			}
 			window.location.href=getAuthLink(params);
+			//http://local.kofuf.com:8000/m/channels.html
 		}
 	}
 }

@@ -116,7 +116,7 @@
     },
     mounted(){
       new Mlink({
-        mlink: "https://a.mlinks.cc/AK8f?id="+this.id,
+        mlink: "https://ah88dj.mlinks.cc/AK8f?id="+this.id,
         button: document.querySelector('a#btnOpenApp'),
         autoLaunchApp : false,
       });
@@ -274,15 +274,15 @@
         //应用市场地址：
         if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//安卓手机
           console.log("Android");
-          window.location.href="https://a.mlinks.cc/AK8f?id="+id;
+          window.location.href="https://ah88dj.mlinks.cc/AK8f?id="+id;
         } else if (u.indexOf('iPhone') > -1) {//苹果手机
           console.log("apple");
-          window.location.href="https://a.mlinks.cc/AK8f?id="+id;
+          window.location.href="https://ah88dj.mlinks.cc/AK8f?id="+id;
         } else if (u.indexOf('Windows Phone') > -1) {//winphone手机
           console.log("Windows");
-          window.location.href="https://a.mlinks.cc/AK8f?id="+id;
+          window.location.href="https://ah88dj.mlinks.cc/AK8f?id="+id;
         }else{
-          window.location.href="https://a.mlinks.cc/AK8f?id="+id;
+          window.location.href="https://ah88dj.mlinks.cc/AK8f?id="+id;
         }
       },
       commentLoad(){
@@ -392,9 +392,10 @@ body{
     -webkit-box-align: center;
     .gfcj{
       font-size: 20px;
-      color: #ff8929;
+      color: #ca915c;
       width: 60%;
       img{
+        border-radius: 5px;
         width: 40px;
         height: 40px;
         display: block;
@@ -425,8 +426,8 @@ body{
         // width: 148px;
         height: 40px;
         display: block;
-        color: #ff8929;
-        border: 1px solid #ff8929;
+        color: #ca915c;
+        border: 1px solid #ca915c;
         border-radius: 5px;
         text-align: center;
         line-height: 40px;

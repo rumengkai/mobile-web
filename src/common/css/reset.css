@@ -18,6 +18,7 @@ html,body{
   margin: auto;
   font-size: 12px;
   height: 100%;
+  -webkit-touch-callout: none      /* disables the callout 禁止文件选中*/
 }
 :focus {
     outline: 0;

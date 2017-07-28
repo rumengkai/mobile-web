@@ -107,7 +107,6 @@
   Vue.use(ToastPlugin)
   Vue.use(AlertPlugin)
   Vue.prototype.$geturlpara=geturlpara
-  console.log(geturlpara);
   export default {
     name: 'channel',
     data () {
@@ -145,7 +144,6 @@
     beforeCreate(){
       if(isWeiXin()){
         //授权
-
         var id = this.$geturlpara.getUrlKey("id");
         getAuth(cookie,querystring,"channel",id);
       }
@@ -159,7 +157,7 @@
     mounted(){
       //唤起app
       new Mlink({
-        mlink: "https://a.mlinks.cc/AK8j?id="+this.id,
+        mlink: "https://ah88dj.mlinks.cc/AK8j?id="+this.id,
         button: document.querySelector('a#btnOpenApp'),
         autoLaunchApp : false,
       });
@@ -210,21 +208,22 @@
                 // }
                 document.title = "专栏-"+data.name;
                 self.subscription=data.followed;
-                if (data.suites[0].unit=="M") {
-                  if (data.suites[0].effectDuration>1) {
-                    // self.unit=data.suites[0].effectDuration+"月"
-                    self.unit="20期"
-                  }else{
-                    // self.unit="月"
-                    self.unit="20期"
-                  }
-                }else if(data.suites[0].unit=="Y"){
-                  if (data.suites[0].effectDuration>1) {
-                    self.unit=data.suites[0].effectDuration+"年"
-                  }else{
-                    self.unit="年"
-                  }
-                }
+                self.unit=data.price_unit;
+                // if (data.suites[0].unit=="M") {
+                //   if (data.suites[0].effectDuration>1) {
+                //     // self.unit=data.suites[0].effectDuration+"月"
+                //     self.unit="20期"
+                //   }else{
+                //     // self.unit="月"
+                //     self.unit="20期"
+                //   }
+                // }else if(data.suites[0].unit=="Y"){
+                //   if (data.suites[0].effectDuration>1) {
+                //     self.unit=data.suites[0].effectDuration+"年"
+                //   }else{
+                //     self.unit="年"
+                //   }
+                // }
                 this.showContent=true;
               }
             }
@@ -259,14 +258,12 @@
       },
       freeRead(){
         var id = this.$geturlpara.getUrlKey("id");
-        console.log(id);
         window.location.href="freeread.html?id="+id;
-        // window.location.href="https://a.mlinks.cc/AK8j?id="+id;
       },
       //订阅支付
       subscribe1(){
         var id = this.$geturlpara.getUrlKey("id");
-        window.location.href="https://a.mlinks.cc/AK8j?id="+id;
+        window.location.href="https://ah88dj.mlinks.cc/AK8j?id="+id;
       },
       subscribe(){
         var id = this.$geturlpara.getUrlKey("id");
@@ -285,7 +282,6 @@
               items: id
             },
             (data)=>{
-              console.log(data.id);
               self.loadingshow=false;
               if (data.status!=0) {
                 this.$vux.alert.show({
@@ -293,10 +289,18 @@
                   content: "创建订单失败",
                   dialogTransition:"",
                   maskTransition:"",
+                  onHide (){
+                    console.log("订单创建失败");
+                    if(data.status==5){
+                      localStorage.clear();
+                      clearcookie(cookie);
+                      getAuth(cookie,querystring,"channel",id);
+                    }
+                  }
                 });
               }else{
                 self.loadingshow=false;
-                console.log("订单创建成功");
+                console.log("订单创建成功。。");
                 self.orderInfo=data;
                 toPay(data,self.callback,self);
               }
@@ -338,7 +342,7 @@
                 maskTransition:"",
               });
             }else{
-              location.href="channel.html?id="+self.id;
+              location.reload(true);
             }
           }
         );
@@ -481,8 +485,8 @@ body{
           }
         }
         .focus{
-          color: #f8c600;
-          border-bottom: 3px solid #f8c600;
+          color: #ca915c;
+          border-bottom: 3px solid #ca915c;
         }
       }
     }
@@ -513,7 +517,7 @@ body{
                 position: absolute;
                 width: 120px;
                 height: 20px;
-                background-color: #ffbf00;
+                background-color: #ca915c;
                 bottom:16px;
                 border-bottom-right-radius: 3px;
                 border-bottom-left-radius: 3px;
@@ -593,7 +597,7 @@ body{
       color: #fbfbfb;
       line-height: 46px;
       text-align: center;
-      background-color: #ffbf00;
+      background-color: #ca915c;
       a{
         color: #fbfbfb;
       }
@@ -615,9 +619,10 @@ body{
   font-size: 20px;
   .gfcj{
     font-size: 20px;
-    color: #ff8929;
+    color: #ca915c;
     width: 60%;
     img{
+      border-radius: 5px;
       width: 40px;
       height: 40px;
       display: block;
@@ -648,8 +653,8 @@ body{
       // width: 148px;
       height: 40px;
       display: block;
-      color: #ff8929;
-      border: 1px solid #ff8929;
+      color: #ca915c;
+      border: 1px solid #ca915c;
       border-radius: 5px;
       text-align: center;
       line-height: 40px;

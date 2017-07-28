@@ -34,7 +34,7 @@
     },
     mounted () {
       new Mlink({
-        mlink: "https://a.mlinks.cc/AK8f?id="+this.id,
+        mlink: "https://ah88dj.mlinks.cc/AK8f?id="+this.id,
         button: document.querySelector('a#btnOpenApp2'),
         autoLaunchApp : false,
       });
@@ -42,7 +42,7 @@
 
     methods: {
       BrowserType(){
-        window.location.href="https://a.mlinks.cc/AK8f?id="+this.id
+        window.location.href="https://ah88dj.mlinks.cc/AK8f?id="+this.id
       }
     }
   }
@@ -90,7 +90,7 @@
   }
   .load{
     line-height: 40px;
-    background: #fdd000;
+    background: #ca915c;
     background-size: 100% 100%;
     margin-bottom: 40px;
     border: 0px;
@@ -109,9 +109,9 @@
     margin-left: -100px;
     left: 50%;
     height: 40px;
-    -webkit-box-shadow: #fdd000 0px 0px 10px;
-    -moz-box-shadow: #fdd000 0px 0px 10px;
-    box-shadow: #fdd000 0px 0px 10px;
+    -webkit-box-shadow: #ca915c 0px 0px 10px;
+    -moz-box-shadow: #ca915c 0px 0px 10px;
+    box-shadow: #ca915c 0px 0px 10px;
   }
 }
 

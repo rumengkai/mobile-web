@@ -188,7 +188,7 @@ audio{
         .progress {
           width: 0;
           height: 100%;
-          background-color: #f2cd4b;
+          background-color: #ca915c;
           border-radius: inherit;
           position: absolute;
           pointer-events: none;
@@ -196,7 +196,7 @@ audio{
             height: 14px;
             width: 14px;
             border-radius: 8px;
-            background-color: #f2cd4b;
+            background-color: #ca915c;
             position: absolute;
             pointer-events: all;
             box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.32);

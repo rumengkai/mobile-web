@@ -39,7 +39,7 @@
     height: 258px;
   }
   p{
-    color: #ffbf00;
+    color: #ca915c;
     font-size: 24px;
     text-align: center;
   }

@@ -19,8 +19,7 @@ import 'common/css/reset.css';
     components: {},
     mounted () {
       new Mlink({
-        mlink: "https://a.mlinks.cc/AK8f",
-        // mlink: "https://a.mlinks.cc/AAB7",
+        mlink: "https://ah88dj.mlinks.cc/AK8f",
         button: document.querySelector('a#btnOpenApp'),
         autoLaunchApp : false,
       });

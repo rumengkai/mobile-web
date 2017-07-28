@@ -11,12 +11,12 @@
         </div>
         <div class="content vux-1px-b">
           <div v-if="showsub" class="channels-title vux-1px-t vux-1px-b">
-            <span></span>
+            <!-- <span></span> -->
             已订阅
           </div>
           <Channels v-if="showsub" :subs="channels.subs"></Channels>
           <div v-if="channels.unsubs.length" class="channels-title vux-1px-t vux-1px-b">
-            <span></span>
+            <!-- <span></span> -->
             推荐订阅
           </div>
           <Channels v-if="channels.unsubs.length" :subs="channels.unsubs"></Channels>
@@ -86,7 +86,7 @@
       //获取专栏数据数据
       fetchData(cid){
         var self=this;
-        getAuth(cookie,querystring);
+        // getAuth(cookie,querystring);
         AjaxServer.httpGet(
           Vue,
           HOST+'/api/channels.json',
@@ -197,6 +197,7 @@ body{
   }
 
   .channels-title{
+    padding-left: 14px;
     width: 100%;
     height: 46px;
     background-color: #f0f0f0;
@@ -208,7 +209,7 @@ body{
       display: block;
       height: 16px;
       width: 4px;
-      background-color: #fdd000;
+      background-color: #ca915c;
       margin-left: .3rem;
       margin-right: .15rem;
     }

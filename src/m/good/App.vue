@@ -96,11 +96,11 @@
     mounted(){
       //唤起app
       new Mlink([{
-        mlink: "https://a.mlinks.cc/Acej?id="+this.id,
+        mlink: "https://ah88dj.mlinks.cc/Acej?id="+this.id,
         button: document.querySelector('a#btnOpenApp1'),
         autoLaunchApp : false,
       },{
-        mlink: "https://a.mlinks.cc/Acej?id="+this.id,
+        mlink: "https://ah88dj.mlinks.cc/Acej?id="+this.id,
         button: document.querySelector('a#btnOpenApp'),
         autoLaunchApp : false,
       }]);
@@ -142,13 +142,11 @@
       // addCart(){
       //   var id = this.$geturlpara.getUrlKey("id");
       //   console.log(id);
-      //   window.location.href="https://a.mlinks.cc/Acej?id="+id;
       // },
       // //立即购买
       // buy(){
       //   var id = this.$geturlpara.getUrlKey("id");
       //   console.log(id);
-      //   window.location.href="https://a.mlinks.cc/Acej?id="+id;
       // },
       logErr(err){
         this.$vux.alert.show({
@@ -204,7 +202,7 @@ body{
         line-height: 26px;
       }
       .info{
-        color: #ffbf00;
+        color: #ca915c;
         line-height: 50px;
         .price{
           font-size:20px;
@@ -217,7 +215,7 @@ body{
           line-height: 21px;
           box-sizing: border-box;
           border-radius: 3px;
-          border: 1px solid #ffbf00;
+          border: 1px solid #ca915c;
           padding: 0 5px;
           float: right;
         }
@@ -263,7 +261,7 @@ body{
       color: #fbfbfb;
       line-height: 46px;
       text-align: center;
-      background-color: #ffbf00;
+      background-color: #ca915c;
     }
   }
 }
