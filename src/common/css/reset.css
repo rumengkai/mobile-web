@@ -17,8 +17,11 @@ html,body{
   max-width: 680px;
   margin: auto;
   font-size: 12px;
-  height: 100%;
+  height: auto;
   -webkit-touch-callout: none      /* disables the callout 禁止文件选中*/
+}
+html{
+  height: 100%;
 }
 :focus {
     outline: 0;
@@ -74,11 +77,20 @@ del {
 .clearfix {display: block;}
 
 
+body {
+-webkit-touch-callout: none; /* iOS Safari */
+-webkit-user-select: none; /* Chrome/Safari/Opera */
+-khtml-user-select: none; /* Konqueror */
+-moz-user-select: none; /* Firefox */
+-ms-user-select: none; /* Internet Explorer/Edge */
+user-select: none; /* Non-prefixed version, currently not supported by any browser */
+}
+
 .nstep{
   display: inline-block;
   height: 10px;
   width: 10px;
-  border-width: 2px 2px 0 0;
+  border-width: 1px 1px 0 0;
   border-color: #C8C8CD;
   border-style: solid;
   -webkit-transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);

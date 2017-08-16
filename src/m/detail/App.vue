@@ -40,7 +40,7 @@
     <footer v-show="showContent">
       <div class="gfcj" @click="toChannels">
         <img src="http://m.kofuf.com/static/img/logo.png" alt="">
-        <div class="gf"><p class="p1">功夫财经</p><p class="p2">学财经&nbsp;&nbsp;&nbsp;长本事</p></div>
+        <div class="gf"><p class="p1">微信登陆APP</p><p class="p2">阅读体验更佳</p></div>
       </div>
       <div class="download">
         <a id='btnOpenApp'>打开APP</a>
@@ -53,6 +53,7 @@
       </div>
     </div>
     <app-download v-if="appdownloadshow" :id="id"></app-download>
+    <BackHome></BackHome>
     <Loading v-model="loadingshow" :text="loadtext"></Loading>
   </div>
 </template>
@@ -63,9 +64,11 @@
   import geturlpara from 'common/js/geturlpara.js';
   import {formatDate} from 'common/js/date.js';
   import AjaxServer from 'common/js/ajaxServer.js';
+  import {isWeiXin,weixinShare} from 'common/js/common.js';
   import Comment from "components/Comment/Comment"
   import Audiobox from "components/Audio/Audio"
   import Videobox from "components/Video/Video"
+  import BackHome from "components/BackHome/BackHome"
   import AppDownload from "components/AppDownload/AppDownload"
   import Failed from "components/Failed/Failed"
   import Vue from 'vue'
@@ -114,10 +117,13 @@
       Videobox,
       AppDownload,
       Failed,
-      LoadMore
+      LoadMore,
+      BackHome
     },
     created () {
       var id = this.$geturlpara.getUrlKey("id");
+      if(isWeiXin()){
+      }
       this.id=id;
       this.fetchData(id);
     },
@@ -140,46 +146,46 @@
           this.loadingshow=false;
           this.articles=JSON.parse(data.bodyText);
           document.title = this.articles.name;
-          if (/<a/g.test(this.articles.content)) {
-            //替换channel的URL
-            var parase0=this.articles.content.match(/href=\"channel\/\d{3,}/g);
-            console.log(parase0);
-            if (parase0) {
-              var channelID=parase0[0].replace("href=\"channel/","");
-              this.articles.content=this.articles.content.replace(/href=\"channel\/\d{3,}/g,"href=\"channel.html?id="+channelID);
-            }
-            //替换articles的URL
-            var parase1=this.articles.content.match(/href=\"article\/\d{3,}/g);
-            if (parase1) {
-              var articleID=parase1[0].replace("href=\"article/","");
-              this.articles.content=this.articles.content.replace(/href=\"article\/\d{3,}/g,"href=\"detail.html?id="+articleID);
-            }
-            //替换good的URL
-            var parase2=this.articles.content.match(/href=\"good\/\d{3,}/g);
-            if (parase2) {
-              var that = this;
-              console.log(parase2);
-              var goodID_0=parase2[0].replace("href=\"good/","");
-                that.articles.content=that.articles.content.replace(/href=\"good\/\d{3,}/,"href=\"good.html?id="+goodID_0);
-                that.articles.content=that.articles.content.replace(/href=\"good\/\d{3,}/,"href=\"good.html?id="+goodID_0);
-                that.articles.content=that.articles.content.replace(/href=\"good\/\d{3,}/,"href=\"good.html?id="+goodID_0);
-              if (parase2[3]) {
-                var goodID_1=parase2[3].replace("href=\"good/","");
-                  that.articles.content=that.articles.content.replace(/href=\"good\/\d{3,}/,"href=\"good.html?id="+goodID_1);
-                  that.articles.content=that.articles.content.replace(/href=\"good\/\d{3,}/,"href=\"good.html?id="+goodID_1);
-                  that.articles.content=that.articles.content.replace(/href=\"good\/\d{3,}/,"href=\"good.html?id="+goodID_1);
-              }
-              if (parase2[6]) {
-                var goodID_2=parase2[6].replace("href=\"good/","");
-                  that.articles.content=that.articles.content.replace(/href=\"good\/\d{3,}/,"href=\"good.html?id="+goodID_2);
-                  that.articles.content=that.articles.content.replace(/href=\"good\/\d{3,}/,"href=\"good.html?id="+goodID_2);
-                  that.articles.content=that.articles.content.replace(/href=\"good\/\d{3,}/,"href=\"good.html?id="+goodID_2);
-              }
-              console.log(goodID_0);
-              console.log(goodID_1);
-              console.log(goodID_2);
-            }
-          }
+          // if (/<a/g.test(this.articles.content)) {
+          //   //替换channel的URL
+          //   var parase0=this.articles.content.match(/href=\"channel\/\d{3,}/g);
+          //   console.log(parase0);
+          //   if (parase0) {
+          //     var channelID=parase0[0].replace("href=\"channel/","");
+          //     this.articles.content=this.articles.content.replace(/href=\"channel\/\d{3,}/g,"href=\"channel.html?id="+channelID);
+          //   }
+          //   //替换articles的URL
+          //   var parase1=this.articles.content.match(/href=\"article\/\d{3,}/g);
+          //   if (parase1) {
+          //     var articleID=parase1[0].replace("href=\"article/","");
+          //     this.articles.content=this.articles.content.replace(/href=\"article\/\d{3,}/g,"href=\"detail.html?id="+articleID);
+          //   }
+          //   //替换good的URL
+          //   var parase2=this.articles.content.match(/href=\"good\/\d{3,}/g);
+          //   if (parase2) {
+          //     var that = this;
+          //     console.log(parase2);
+          //     var goodID_0=parase2[0].replace("href=\"good/","");
+          //       that.articles.content=that.articles.content.replace(/href=\"good\/\d{3,}/,"href=\"good.html?id="+goodID_0);
+          //       that.articles.content=that.articles.content.replace(/href=\"good\/\d{3,}/,"href=\"good.html?id="+goodID_0);
+          //       that.articles.content=that.articles.content.replace(/href=\"good\/\d{3,}/,"href=\"good.html?id="+goodID_0);
+          //     if (parase2[3]) {
+          //       var goodID_1=parase2[3].replace("href=\"good/","");
+          //         that.articles.content=that.articles.content.replace(/href=\"good\/\d{3,}/,"href=\"good.html?id="+goodID_1);
+          //         that.articles.content=that.articles.content.replace(/href=\"good\/\d{3,}/,"href=\"good.html?id="+goodID_1);
+          //         that.articles.content=that.articles.content.replace(/href=\"good\/\d{3,}/,"href=\"good.html?id="+goodID_1);
+          //     }
+          //     if (parase2[6]) {
+          //       var goodID_2=parase2[6].replace("href=\"good/","");
+          //         that.articles.content=that.articles.content.replace(/href=\"good\/\d{3,}/,"href=\"good.html?id="+goodID_2);
+          //         that.articles.content=that.articles.content.replace(/href=\"good\/\d{3,}/,"href=\"good.html?id="+goodID_2);
+          //         that.articles.content=that.articles.content.replace(/href=\"good\/\d{3,}/,"href=\"good.html?id="+goodID_2);
+          //     }
+          //     console.log(goodID_0);
+          //     console.log(goodID_1);
+          //     console.log(goodID_2);
+          //   }
+          // }
           // this.fetchCommentData(id);
           if(this.articles.status!=0){
             //返回为4，无权限
@@ -187,17 +193,24 @@
               //window.location.href="app-download.html"
               this.appdownloadshow=true;
             }else{
-              console.log(this.articles.channel);
+              // console.log(this.articles.channel);
               // this.failedmsg=this.articles.error;
               // this.failedshow=true;
-              window.location.href="./channel.html?id="+this.articles.channel;
+              window.location.href="/m/channel.html?id="+this.articles.channel;
               // this.logErr(this.articles.error);
             }
           }else{
             this.showContent=true;
             //是否展示评论
             this.showComment=this.articles.need_comments;
-
+            window.shareData={
+              title:'功夫财经'+this.articles.name,
+              // link:'http://dev.kofuf.com/m/detail.html?id='+this.id+'',
+              link:HOSTM+'/m/detail.html?id='+this.id+'',
+              imgUrl:'http://m.kofuf.com/static/img_h5/h5_logo.png',
+              desc:this.articles.name
+            }
+            weixinShare(Vue);
             if (this.showComment) {
               //请求评论
               this.fetchCommentData(id);
@@ -227,7 +240,6 @@
           (data)=>{
             self.loadingshow=false;
             self.datalist=data;
-            console.log(self.datalist);
             if (self.datalist.items.length<=0&&self.loadmore==true) {
               self.nonecomment=true;
             }else{
@@ -301,7 +313,7 @@
         this.fetchCommentData(id,++this.pn,this.last_time);
       },
       toChannels(){
-        window.location.href="channels.html"
+        window.location.href="/m/home.html"
       }
     },
     filters: {
@@ -389,7 +401,7 @@ body{
     }
   }
   footer{
-    height: 46px;
+    height: .92rem;
     width: 100%;
     max-width: 680px;
     background-color: #fff;
@@ -407,7 +419,7 @@ body{
       img{
         border-radius: 5px;
         width: 40px;
-        height: 40px;
+        height: .8rem;
         display: block;
         float: left;
         margin-left: 15px;
@@ -418,12 +430,12 @@ body{
         margin-left: 18px;
         color: #868686;
         .p1{
-          font-size: 16px;
-          line-height: 20px;
+          font-size: 12px;
+          line-height: .4rem;
           font-weight: 400;
         }
         .p2{
-          line-height: 20px;
+          line-height: .4rem;
           font-weight: 100;
           font-size: 12px;
         }
@@ -434,13 +446,13 @@ body{
       text-align: right;
       a{
         // width: 148px;
-        height: 40px;
+        height: .8rem;
         display: block;
         color: #ca915c;
         border: 1px solid #ca915c;
         border-radius: 5px;
         text-align: center;
-        line-height: 40px;
+        line-height: .8rem;
         background: #fff;
         font-size: 18px;
         box-sizing: content-box;

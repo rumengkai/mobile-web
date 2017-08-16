@@ -36,7 +36,7 @@ import {formatedDate} from 'common/js/date.js';
     },
     methods: {
       toDetail(id){
-        location.href="detail.html?id="+id;
+        location.href="/m/detail.html?id="+id;
       }
     },
     filters: {
@@ -57,7 +57,7 @@ import {formatedDate} from 'common/js/date.js';
     margin-bottom: 14px;
     padding: .3rem 15px .2rem;
     .title{
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 500;
       color: #404040;
       line-height: .4rem;

@@ -3,8 +3,8 @@
 	var _w = document.documentElement.clientWidth||document.body.clientWidth;
 	_w=_w>640?640:_w;
 	var _size=_w/750*100;
+	_size=_size<50?_size:50;
 	document.documentElement.style.fontSize=_size+"px";
-	console.log(_w);
 	if (_w<350) {
 		window.phonetype="small";
 	}else{
@@ -17,6 +17,7 @@
 window.VERSION="0.1"
 // window.HOST="http://dev.kofuf.com"// 测试地址
 window.HOST="http://api.kofuf.com"// 线上地址
+window.HOSTM="http://m.kofuf.com"// 线上地址
 
 
 
@@ -54,7 +55,6 @@ window.getAuth=function (cookie,querystring,type,id){
 			localStorage.setItem("token",cookie.get('token'));
 		}else {
 			var params;
-			console.log(id);
 			if (!(id==undefined)) {
 				params=type+"_"+id;
 			}else{

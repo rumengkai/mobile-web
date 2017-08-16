@@ -75,7 +75,7 @@
       },
       addComment(){
         if (localStorage.getItem("gid")) {
-          window.location.href="comment.html?id="+this.id+"&name="+this.name;
+          window.location.href="/m/comment.html?id="+this.id+"&name="+this.name;
         }else{
           getAuth(cookie,querystring,"item",this.id);
           console.log(0);

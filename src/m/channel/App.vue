@@ -70,7 +70,7 @@
         </a>
       </div>
     </footer>
-    <footer v-show="showContent&&!(showContent&&!subscription)" class = "openApp">
+    <dev v-show="showContent&&!(showContent&&!subscription)" class = "openApp">
       <div class="gfcj" @click="toChannels">
         <img src="http://m.kofuf.com/static/img/logo.png" alt="">
         <div class="gf"><p class="p1">微信登陆APP</p><p class="p2">阅读体验更佳</p></div>
@@ -78,13 +78,14 @@
       <div class="download">
         <a id='btnOpenApp'>打开APP</a>
       </div>
-    </footer>
+    </dev>
     <div class="qr_code_pc_inner">
       <div class="qr_code_pc">
         <img id="js_pc_qr_code_img" class="qr_code_pc_img" src="http://www.kofuf.com/img/wx.jpg">
         <p>微信扫一扫<br>学财经，长本事</p>
       </div>
     </div>
+    <BackHome></BackHome>
     <Failed v-if="failedshow" :msg="failedmsg"></Failed>
     <Loading v-model="loadingshow" :text="loadtext" ></Loading>
   </div>
@@ -101,6 +102,7 @@
   import { formatDate2 } from 'common/js/date.js';
   import {Loading,XHeader,Scroller,LoadMore,AlertPlugin,ToastPlugin,querystring,cookie} from 'vux'
   import Failed from "components/Failed/Failed"
+  import BackHome from "components/BackHome/BackHome"
   import List from "components/List/List"
   import VueResource from 'vue-resource'
   Vue.use(VueResource)
@@ -139,7 +141,8 @@
       LoadMore,
       Scroller,
       Failed,
-      List
+      List,
+      BackHome
     },
     beforeCreate(){
       if(isWeiXin()){
@@ -164,7 +167,7 @@
     },
     methods: {
       toChannels(){
-        window.location.href="channels.html"
+        window.location.href="/m/home.html"
       },
       //获取专栏数据数据
       fetchData(id){
@@ -253,12 +256,12 @@
              type:'text'
           })
         }else{
-          window.location.href="detail.html?id="+id;
+          window.location.href="/m/detail.html?id="+id;
         }
       },
       freeRead(){
         var id = this.$geturlpara.getUrlKey("id");
-        window.location.href="freeread.html?id="+id;
+        window.location.href="/m/freeread.html?id="+id;
       },
       //订阅支付
       subscribe1(){
@@ -572,7 +575,7 @@ body{
     }
   }
   footer{
-    height: 46px;
+    height: .92rem;
     width: 100%;
     max-width: 680px;
     background-color: #fff;
@@ -589,13 +592,13 @@ body{
       width: 50%;
       text-align: center;
       background-color: #757475;
-      height: 100%;
-      line-height: 46px;
+      height:.92rem;
+      line-height: .92rem;
     }
     .subscribe{
       width: 50%;
       color: #fbfbfb;
-      line-height: 46px;
+      line-height: .92rem;
       text-align: center;
       background-color: #ca915c;
       a{
@@ -605,8 +608,8 @@ body{
   }
 }
 .openApp{
-  height: 46px;
-  padding: 8px 0 !important;
+  height: .92rem;
+  padding: .16rem 0 !important;
   width: 100%;
   max-width: 680px;
   background-color: #fff;
@@ -623,24 +626,24 @@ body{
     width: 60%;
     img{
       border-radius: 5px;
-      width: 40px;
-      height: 40px;
+      width: .8rem;
+      height: .8rem;
       display: block;
       float: left;
-      margin-left: 15px;
+      margin-left: .3rem;
     }
     .gf{
-      width: 105px;
+      width: 2.1rem;
       float: left;
-      margin-left: 18px;
+      margin-left: .36rem;
       color: #868686;
       .p1{
         font-size: 12px;
-        line-height: 20px;
+        line-height: .4rem;
         font-weight: 400;
       }
       .p2{
-        line-height: 20px;
+        line-height: .4rem;
         font-weight: 100;
         font-size: 12px;
       }
@@ -651,13 +654,13 @@ body{
     text-align: right;
     a{
       // width: 148px;
-      height: 40px;
+      height: .8rem;
       display: block;
       color: #ca915c;
       border: 1px solid #ca915c;
       border-radius: 5px;
       text-align: center;
-      line-height: 40px;
+      line-height: .8rem;
       background: #fff;
       font-size: 18px;
       box-sizing: content-box;

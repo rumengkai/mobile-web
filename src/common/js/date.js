@@ -15,13 +15,18 @@ export function formatedDate(time) {
           return "刚刚";
         }
         if (isNaN(m)) {
-          return h+"小时前";
+          return "1小时前";
         }
         return m+'分钟前';
+      }else{
+        return h+"小时前";
       }
-      return h+"小时前";
     }
-    return d+"天前";
+    if(d==1){
+      return "昨天"
+    }else{
+      return d+"天前";
+    }
   }
 }
 

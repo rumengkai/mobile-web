@@ -136,7 +136,7 @@
         },10000);
       },
       toDetail(id){
-        window.location.href="detail.html?id="+id;
+        window.location.href="/m/detail.html?id="+id;
       },
       // //加入购物车
       // addCart(){

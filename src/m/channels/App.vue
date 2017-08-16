@@ -3,12 +3,12 @@
     <!-- <x-header v-if="showContent" class="vux-1px-b" :left-options="{showBack: false}"><a slot="right" @click="loginout">退出</a> </x-header> -->
     <scroller v-if="showContent" lock-x ref="scrollerEvent">
       <div class="wriper">
-        <div class="header" v-if="channels.user">
+        <!-- <div class="header" v-if="channels.user">
           <div class="headimg">
             <img :src="channels.user.profile" onerror="this.src='http://m.kofuf.com/static/img/weblogo.png'" alt="">
           </div>
           <span class="name">{{channels.user.name}}</span>
-        </div>
+        </div> -->
         <div class="content vux-1px-b">
           <div v-if="showsub" class="channels-title vux-1px-t vux-1px-b">
             <!-- <span></span> -->
@@ -23,6 +23,7 @@
         </div>
       </div>
     </scroller>
+    <TabBar active="sub"></TabBar>
     <Failed v-if="failedshow" :msg="failedmsg"></Failed>
     <Loading v-model="loadingshow" :text="loadtext"></Loading>
   </div>
@@ -35,6 +36,7 @@
   import AjaxServer from 'common/js/ajaxServer.js';
   import geturlpara from 'common/js/geturlpara.js';
   import Channels from "components/Channels/Channels"
+  import TabBar from "components/TabBar/TabBar"
   import Failed from "components/Failed/Failed"
   import Vue from 'vue'
   import {Loading,XHeader,Icon,Scroller} from 'vux'
@@ -69,6 +71,7 @@
       XHeader,
       Loading,
       Channels,
+      TabBar,
       Scroller,
       Failed
     },
@@ -199,7 +202,7 @@ body{
   .channels-title{
     padding-left: 14px;
     width: 100%;
-    height: 46px;
+    height: .7rem;
     background-color: #f0f0f0;
     display: flex;
     align-items: center;

@@ -98,7 +98,7 @@
     data () {
       return {
         loadingshow:true,
-        active:true,
+        active:false,
         loadtext:"加载中。。。",
         showContent:false,
         show_bigbang:true,
@@ -142,10 +142,12 @@
         autoLaunchApp : false,
       });
       var time=new Date().getTime();
+      // var endtime=new Date("2017-7-30 11:00:00").getTime();
       var endtime=new Date("2017-7-30 12:00:00").getTime();
-      // var endtime=new Date("2017-7-27 18:48:00").getTime();
       if ((endtime-time)<=0) {
         this.active=false;
+      }else if((endtime-time)>0){
+        this.active=true;
       }
     },
     methods: {

@@ -7,6 +7,22 @@ export function isWeiXin(){
 	}
 }
 
+export function getClient(){
+	var l,t,w,h;
+	l  =  document.documentElement.scrollLeft || document.body.scrollLeft;
+	t  =  document.documentElement.scrollTop || document.body.scrollTop;
+	w =   document.documentElement.clientWidth;
+	h =   document.documentElement.clientHeight;
+	return {'left':l,'top':t,'width':w,'height':h} ;
+}
+
+export function getBody(){
+	var h,t;
+	h  = document.body.clientHeight;
+	t  =  document.body.scrollTop;
+	return {'top':t,'height':h} ;
+}
+ //
 export function weixinShare(Vue,data){
 	var url="http://dev.kofuf.com/api/session/share_weixin_config?url="+encodeURIComponent(window.location.href.split('#')[0]);
 	Vue.http.get(url)

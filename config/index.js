@@ -6,10 +6,12 @@ module.exports = {
     env: require('./prod.env'),
     assetsRoot: path.resolve(__dirname, '../dist/'),
     index: path.resolve(__dirname, '../dist/m/index.html'),
+    // assetsSubDirectory: 'm/static',
+    // assetsPublicPath: '../',
     assetsSubDirectory: 'm/static',
+    assetsPublicPath: '/',
     // index: path.resolve(__dirname, '../dist/test/index.html'),
     // assetsSubDirectory: 'test/static',
-    assetsPublicPath: '../',
     productionSourceMap: false,
     // Gzip off by default as many popular static hosts such as
     // Surge or Netlify already gzip all static assets for you.
@@ -37,6 +39,6 @@ module.exports = {
     // (https://github.com/webpack/css-loader#sourcemaps)
     // In our experience, they generally work as expected,
     // just be aware of this issue when enabling this option.
-    cssSourceMap: false
+    cssSourceMap: true
   }
 }
