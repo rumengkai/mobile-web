@@ -1,27 +1,23 @@
 <template>
   <div id="coupons">
-    <div v-bind:class="{coupon_used:couponData.has_received,coupon_no:!couponData.has_received}">
-      <div class="coupon vux-1px">
-        <img v-if="!couponData.has_received" src="./images/coupon_1_03.png" alt="">
-        <img v-else src="./images/coupon_1_03.png" alt="">
-        <div class="left" v-if="couponData.type==1">
-          <span class="price"><span></span>{{couponData.type_value}}</span>
-          <span class="use_condition" v-html="couponData.use_condition"></span>
-        </div>
-        <div class="left" v-if="couponData.type==2">
-          <span class="price"><span>¥</span>{{couponData.type_value}}</span>
-          <span class="use_condition" v-html="couponData.use_condition"></span>
-        </div>
-        <div class="right">
-          <p class="name" v-html="couponData.name"></p>
-          <p class="explain">
-            <span class="period" v-html="couponData.period"></span>
-            <span class="getcoupon" v-if="!couponData.has_received" @click="getcoupon">点击领取</span>
-            <span class="have" v-if="couponData.has_received">已领取</span>
-            <!-- <span v-if="!couponData.has_received" class="use_explain" @click="showexplain">使用说明</span> -->
-            <span class="use_explain" @click="showexplain">使用说明</span>
-            <!-- <span class="use_explain">已领取</span> -->
-          </p>
+    <div class="" v-for="item in couponD" v-if="show">
+      <div v-bind:class="{coupon_used:item.state,coupon_no:!item.state}">
+        <div class="coupon vux-1px" >
+          <img v-if="!item.state" src="./images/coupon_1_03.png" alt="">
+          <img v-else src="./images/coupon_2_03.png" alt="">
+          <div class="left" >
+            <span class="price"><span v-if="item.type==2">¥</span>{{item.type_value}}<span v-if="item.type==2">.00</span></span>
+            <span class="use_condition" v-html="item.use_condition"></span>
+          </div>
+          <div class="right">
+            <p class="name" v-html="item.name"></p>
+            <p class="explain">
+              <span class="period" v-bind:class="{red:item.will_expired}" v-html="item.period">有效期至：{{item.end_time}}</span>
+              <span class="have" v-if="item.state==1">已使用</span>
+              <span class="have" v-if="item.state==2">已过期</span>
+              <span class="use_explain" v-if="item.state==0" @click="showexplain(item)">使用说明</span>
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -32,27 +28,44 @@
   import Vue from 'vue'
   import { AlertPlugin } from 'vux'
   import AjaxServer from 'common/js/ajaxServer.js';
+  import {formatDate} from 'common/js/date.js';
 
   Vue.use(AlertPlugin)
   export default {
     name: 'coupons',
     props: {
-      couponData:Object
+      couponData:Array
     },
     data () {
       return {
+        show:false,
+        couponD:[]
       }
     },
     components: {
     },
     mounted(){
+      console.log(this.couponData);
+      this.couponD=this.couponData.map((item)=>{
+        item.end_time=formatDate(new Date(item.end_time),"yyyy-MM-dd");
+        return item;
+      })
+      this.show=true;
     },
     methods: {
-      showexplain () {
+      showexplain (item) {
+        item.start_time=formatDate(new Date(item.start_time),"yyyy-MM-dd")
+        item.end_time=formatDate(new Date(item.end_time),"yyyy-MM-dd")
+        var text='<div class="alert">'+
+                    '<p><b>优惠券名称：</b>'+item.name+"</p>"+
+                    '<p><b>适用类型：</b>'+item.use_condition+"</p>"+
+                    "<p><b>可用时间：</b>"+item.start_time+"至"+item.end_time+"</p>"+
+                    "<p><b>可用业务：</b>"+item.use_scope+"</p>"+
+                  '</div>';
         // 显示
         this.$vux.alert.show({
-          title: '使用说明',
-          content: this.couponData.use_scope,
+          title: '使用规则',
+          content: text,
           dialogTransition:"",
           maskTransition:"",
           onShow () {
@@ -63,64 +76,31 @@
           }
         })
       },
-      getcoupon(){
-        self.loadingshow=true;
-        var id=this.couponData.id;
-        AjaxServer.httpPost(
-          Vue,
-          HOST+'/api/coupons/add',
-          {id:id},
-          (data)=>{
-            self.showContent=true;
-            if (data.status==0) {
-              self.showContent=false;
-              this.$vux.alert.show({
-                title: '',
-                content: "领取成功",
-                dialogTransition:"",
-                maskTransition:"",
-                onHide () {
-                  window.location.reload();
-                }
-              })
-            }else{
-              this.$vux.alert.show({
-                title: '',
-                content: data.error,
-                dialogTransition:"",
-                maskTransition:"",
-              })
-            }
-          },
-          (err)=>{
-            console.log(err);
-            self.loadingshow=false;
-            self.failedshow=true;
-          }
-        );
-      }
+    },
+    filters: {
+      formatD:formatDate
     }
   }
 </script>
 
 <style lang="less">
 @import '~vux/src/styles/1px.less';
-#coupon{
-  height: auto;
+#coupons{
   background-color: #f5f5f5;
   color: #999;
   font-size: 14px;
+  padding-bottom: 30px;
   .coupon{
     position: relative;
     width: 6.92rem;
-    height: 2.21rem;
+    height: 2.2rem;
     background: #fff;
     margin: 20px auto;
     img{
       position: absolute;
       top: 0;
       left: 0;
-      height: 2.21rem;
+      height: 2.24rem;
       overflow: hidden;
     }
     .left{
@@ -145,7 +125,7 @@
       width: 4.69rem;
       float: left;
       color: #333;
-      padding: .4rem;
+      padding: .4rem .2rem;
       box-sizing: border-box;
       height: 100%;
       position: relative;
@@ -168,10 +148,18 @@
         bottom: -.8rem;
         margin-bottom: 20px;
         z-index: 999;
+        color: #ccc;
         .period{
           font-size: 12px;
-          color: #ccc;
           float: left;
+          line-height: 20px;
+          width: 2.9rem;
+          white-space:nowrap;
+          text-overflow:ellipsis;
+          overflow: hidden;
+        }
+        .red{
+          color: #f00;
         }
         .use_explain{
           font-size: 12px;
@@ -181,8 +169,8 @@
         }
         .have{
           font-size: 12px;
-          color: #a8d2f0;
-          float: left;
+          color: #ccc;
+          float: right;
           line-height: 20px;
         }
       }
@@ -194,21 +182,23 @@
     }
   }
   .coupon_used{
-    // .coupon{
-    //   .right{
-    //     .name{
-    //       color: #ccc;
-    //     }
-    //     .explain{
-    //       .use_explain{
-    //         color: #ccc;
-    //       }
-    //     }
-    //   }
-    // }
     .vux-1px:before {
-      border: 1px solid #c49466;
+      border: 1px solid #ccc;
     }
   }
 }
+
+.alert{
+  text-align: left;
+  font-size: 12px;
+  color: #333;
+  width: 100%;
+  line-height: 20px;
+  b{
+    display: inline-block;
+    width: 1.7rem;
+    text-align: right;
+  }
+}
+
 </style>

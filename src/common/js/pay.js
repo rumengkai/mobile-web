@@ -36,10 +36,23 @@ function onBridgeReady(data,success,self){
       console.log(res);
       if(res.err_msg == "get_brand_wcpay_request:ok" ) {
         success(data);
-      }else{
-        alert("支付取消");
+      }else if(res.err_msg == "get_brand_wcpay_request:fail" ){
         self.disable=true;
-      }    // 使用以上方式判断前端返回
+        self.$vux.alert.show({
+          title: '',
+          content: "由于跨号支付，请关注'功夫财经'公众号'，下载APP购买",
+          dialogTransition:"",
+          maskTransition:"",
+        });
+      }else{
+        self.disable=true;
+        self.$vux.alert.show({
+          title: '',
+          content: "支付取消",
+          dialogTransition:"",
+          maskTransition:"",
+        });
+      }
     }
   );
 }

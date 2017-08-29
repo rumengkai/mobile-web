@@ -94,11 +94,10 @@
 <style lang="less">
 @import '~vux/src/styles/1px.less';
 body{
-  background-color: #eee;
+  background-color: #efeef4;
 }
 #about{
   height: 100%;
-  background-color: #efeef4;
   color: #999;
   font-size: 14px;
   .top{

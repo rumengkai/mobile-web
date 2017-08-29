@@ -2,7 +2,7 @@
   <div id="channel">
     <!-- <x-header v-if="showContent"><a slot="right" @click="share"></a></x-header> -->
     <!-- <scroller lock-x ref="scrollerEvent" v-show="showContent"> -->
-      <div class="content" v-show="showContent">
+      <div class="content" v-if="showContent">
         <div class="large-img">
           <div class="name-brief">
             <p class="name">
@@ -56,19 +56,39 @@
             <load-more v-else tip="正在加载">正在加载</load-more>
           </div>
         </ul>
+        <popup v-model="showpopup">
+            <div class="popup2">
+              <group>
+                <cell title="您有可用的优惠券" value="Donate"></cell>
+                <cell title="Total" value="$10.24"></cell>
+              </group>
+              this is the first popup
+              <dev class="warp">
+                  <Coupons :couponData="channelsinfo.coupons"></Coupons>
+                  <Coupons :couponData="channelsinfo.invalid_coupons"></Coupons>
+                  <Coupons :couponData="channelsinfo.invalid_coupons"></Coupons>
+                  <Coupons :couponData="channelsinfo.invalid_coupons"></Coupons>
+              </dev>
+            </div>
+        </popup>
       </div>
     <!-- </scroller> -->
+    <!-- 底部弹框 -->
+
     <footer v-show="showContent&&!subscription">
-      <div class="freeread" @click="freeRead">
-        <span>免费试读</span>
-      </div>
-      <div class="subscribe" @click="subscribe">
-        <!-- <div class="subscribe">
-        <a id="btnOpenApp"> -->
-        <a>
-          <span>订阅：<span>¥{{price}}/{{unit}}</span></span>
-        </a>
-      </div>
+        <div class="freeread" @click="freeRead" v-if="unit!='1期'">
+          <span>免费试读</span>
+        </div>
+        <div class="subscribe" @click="subscribe" v-if="unit!='1期'">
+          <a>
+            <span>订阅：<span>¥{{price}}/{{unit}}</span></span>
+          </a>
+        </div>
+        <div class="subscribe_one" @click="subscribe" v-if="unit=='1期'">
+          <a>
+            <span>订阅专栏：<span>¥{{price}}</span></span>
+          </a>
+        </div>
     </footer>
     <dev v-show="showContent&&!(showContent&&!subscription)" class = "openApp">
       <div class="gfcj" @click="toChannels">
@@ -100,10 +120,11 @@
   import { toPay } from 'common/js/pay.js';
   import Vue from 'vue'
   import { formatDate2 } from 'common/js/date.js';
-  import {Loading,XHeader,Scroller,LoadMore,AlertPlugin,ToastPlugin,querystring,cookie} from 'vux'
+  import {Loading,XHeader,Scroller,LoadMore,AlertPlugin,ToastPlugin,querystring,cookie,Popup,XSwitch,Group,Cell} from 'vux'
   import Failed from "components/Failed/Failed"
   import BackHome from "components/BackHome/BackHome"
   import List from "components/List/List"
+  import Coupons from "components/Coupons/Coupons"
   import VueResource from 'vue-resource'
   Vue.use(VueResource)
   Vue.use(ToastPlugin)
@@ -132,7 +153,9 @@
         disable:true,
         articles:{'articles':[],'has_next':true},
         price:0,
-        unit:"年"
+        unit:"年",
+        coupon_id:"",
+        showpopup:false
       }
     },
     components: {
@@ -142,7 +165,12 @@
       Scroller,
       Failed,
       List,
-      BackHome
+      BackHome,
+      Popup,
+      Group,
+      XSwitch,
+      Cell,
+      Coupons,
     },
     beforeCreate(){
       if(isWeiXin()){
@@ -184,8 +212,9 @@
               var id = this.$geturlpara.getUrlKey("id");
               getAuth(cookie,querystring,"channel",id);
             }else{
-              this.loadingshow=false;
               this.channelsinfo=data;
+              console.log(this.channelsinfo);
+              this.loadingshow=false;
               if (this.channelsinfo.channel_price>=0) {
                 this.price=this.channelsinfo.channel_price;
               }else{
@@ -201,11 +230,11 @@
                 //正则匹配，处理information
                 data.information=data.information.replace(/[\n]/g,"<br/>") ;
                 //加载完成后，重置scroll
-                // setTimeout(function () {
-                //   self.$nextTick(() => {
-                //     self.$refs.scrollerEvent.reset()
-                //   })
-                // },500);
+                setTimeout(function () {
+                  self.$nextTick(() => {
+                    self.$refs.scrollerEvent.reset()
+                  })
+                },500);
                 // if(!data.has_next){
                 //   this.commentBottomMsg="没有更多数据";
                 // }
@@ -271,6 +300,10 @@
       subscribe(){
         var id = this.$geturlpara.getUrlKey("id");
         var self=this;
+        if (self.channelsinfo.coupons.length) {
+          self.showpopup=true;
+          return
+        }
         //已登陆情况
         if (localStorage.getItem("gid")&&this.disable) {
           self.loadtext="加载中..."
@@ -282,7 +315,8 @@
             HOST+"/pay/weixin/create_order",
             {
               type: "JSAPI",
-              items: id
+              items: id,
+              coupon_id:self.coupon_id
             },
             (data)=>{
               self.loadingshow=false;
@@ -583,7 +617,7 @@ body{
     position: fixed;
     bottom: 0;
     padding: 0;
-    z-index: 1000;
+    z-index: 500;
     display: -webkit-box;
     -webkit-box-align: center;
     font-size: 20px;
@@ -604,6 +638,17 @@ body{
       a{
         color: #fbfbfb;
       }
+    }
+    .subscribe_one{
+      color: #fff;
+      font-size: 17px;
+      line-height: .7rem;
+      width: 200px;
+      height: .7rem;
+      background: #ca915c;
+      margin: auto;
+      text-align: center;
+      border-radius: 4px;
     }
   }
 }
@@ -669,6 +714,9 @@ body{
     }
   }
 }
-
+.warp{
+  height: 300px;
+  overflow: scroll;
+}
 
 </style>

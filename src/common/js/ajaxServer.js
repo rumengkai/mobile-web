@@ -23,9 +23,12 @@ export default{
     };
     Vue.http.interceptors.push(function(request, next) {
       // modify headers
-      request.headers.set('from', '3');
-      request.headers.set('gid', localStorage.getItem("gid"));
-      request.headers.set('token', localStorage.getItem("token"));
+      // request.headers.set('from', '3');
+      // request.headers.set('gid', localStorage.getItem("gid"));
+      // request.headers.set('token', localStorage.getItem("token"));
+      request.headers.set('from', '2');
+      request.headers.set('gid', '1047500131');
+      request.headers.set('token', '9a5795f406b94f3192a61d683327c550');
       request.headers.set('version', VERSION);
       next();
     });
@@ -46,9 +49,12 @@ export default{
     };
     Vue.http.interceptors.push(function(request, next) {
       // modify headers
-      request.headers.set('from', '3');
-      request.headers.set('gid', localStorage.getItem("gid"));
-      request.headers.set('token', localStorage.getItem("token"));
+      // request.headers.set('from', '3');
+      // request.headers.set('gid', localStorage.getItem("gid"));
+      // request.headers.set('token', localStorage.getItem("token"));
+      request.headers.set('from', '2');
+      request.headers.set('gid', '1047500131');
+      request.headers.set('token', '9a5795f406b94f3192a61d683327c550');
       request.headers.set('version', VERSION);
       next();
     });

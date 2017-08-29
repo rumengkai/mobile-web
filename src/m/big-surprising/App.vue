@@ -71,6 +71,7 @@
         <p class="phone"><a href="tel:+4009667718">Tel：400-966-7718</a></p>
       </div>
     </div>
+
     <div class="open-app" v-show="showContent">
       <a class="btnOpenApp">打开APP查看订阅专栏</a>
     </div>
@@ -97,7 +98,7 @@
     name: 'big-surprising',
     data () {
       return {
-        loadingshow:true,
+        loadingshow:false,
         active:false,
         loadtext:"加载中。。。",
         showContent:false,
@@ -135,7 +136,7 @@
       getAuth(cookie,querystring,"big-surprising.html");
     },
     mounted () {
-      this.fetchData();
+      // this.fetchData();
       new Mlink({
         mlink: "https://ah88dj.mlinks.cc/AK8f",
         button: document.querySelector('a.btnOpenApp'),

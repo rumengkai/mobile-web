@@ -190,14 +190,9 @@
           if(this.articles.status!=0){
             //返回为4，无权限
             if(this.articles.status!=4){
-              //window.location.href="app-download.html"
               this.appdownloadshow=true;
             }else{
-              // console.log(this.articles.channel);
-              // this.failedmsg=this.articles.error;
-              // this.failedshow=true;
               window.location.href="/m/channel.html?id="+this.articles.channel;
-              // this.logErr(this.articles.error);
             }
           }else{
             this.showContent=true;
@@ -205,7 +200,6 @@
             this.showComment=this.articles.need_comments;
             window.shareData={
               title:'功夫财经'+this.articles.name,
-              // link:'http://dev.kofuf.com/m/detail.html?id='+this.id+'',
               link:HOSTM+'/m/detail.html?id='+this.id+'',
               imgUrl:'http://m.kofuf.com/static/img_h5/h5_logo.png',
               desc:this.articles.name
@@ -243,6 +237,10 @@
             if (self.datalist.items.length<=0&&self.loadmore==true) {
               self.nonecomment=true;
             }else{
+              self.datalist.items=self.datalist.items.map((item)=>{
+                item.content=item.content.replace(/\n/g,"<br/>");
+                return item
+              });
               self.commentlist.items=self.commentlist.items.concat(self.datalist.items);
               if (self.commentlist.items[self.commentlist.items.length-1].postd) {
                 self.last_time=self.commentlist.items[self.commentlist.items.length-1].postd;
@@ -258,26 +256,6 @@
             console.log(err);
           }
         );
-        // this.$http.get(HOST+'/api/articles/comments.json?id='+id+'&pn='+pn+'&last_time='+last_time, [])
-        // .then((data)=>{
-        //   this.loadingshow=false;
-        //   this.datalist=JSON.parse(data.bodyText);
-        //   if (this.datalist.items.length<=0&&this.loadmore==true) {
-        //     this.nonecomment=true;
-        //   }else{
-        //     this.commentlist.items=this.commentlist.items.concat(this.datalist.items);
-        //     if (this.commentlist.items[this.commentlist.items.length-1].postd) {
-        //       this.last_time=this.commentlist.items[this.commentlist.items.length-1].postd;
-        //     }
-        //     if(!this.datalist.has_next){
-        //       this.commentBottomMsg="没有更多数据";
-        //     }
-        //     this.loadmore=true;
-        //   }
-        // }, (err)=>{
-        //   this.loadingshow=false;
-        //   console.log(err);
-        // });
       },
       logErr(err){
         this.$vux.alert.show({

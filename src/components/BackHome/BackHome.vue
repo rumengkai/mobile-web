@@ -47,7 +47,7 @@
       display: block;
     }
     .img{
-      padding: .11rem;
+      padding: .11rem .05rem;
       overflow: hidden;
       img{
         display: inline-block;

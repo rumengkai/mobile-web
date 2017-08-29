@@ -31,7 +31,7 @@
 #failed{
   overflow: hidden;
   height: 100%;
-  background-color: #fff;
+  // background-color: #fff;
   img{
     margin: 30% auto;
     display: block;

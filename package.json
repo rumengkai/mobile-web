@@ -2,7 +2,7 @@
   "name": "vue-multipage",
   "version": "1.0.0",
   "description": "A Vue.js project",
-  "author": "breezefeng",
+  "author": "rumengkai",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",

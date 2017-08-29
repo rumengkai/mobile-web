@@ -13,9 +13,11 @@
         </div>
       </div>
       <group class="group g1">
-        <cell title="个人信息" is-link @click.native="toprofile"></cell>
+        <cell title="我的收藏" is-link @click.native="tocollect"></cell>
+        <cell title="优惠券" is-link @click.native="tocoupons"><span class="tp">{{myInfo.user.coupon_count}}张待使用</span></cell>
       </group>
       <group class="group">
+        <cell title="个人信息" is-link @click.native="toprofile"></cell>
         <cell title="关于我们" is-link @click.native="toAbout"></cell>
       </group>
       <group class="group">
@@ -62,8 +64,8 @@
     beforeCreate(){
       //授权
       if(isWeiXin()){
-        getAuth(cookie,querystring);
       }
+      getAuth(cookie,querystring);
     },
     created () {
       this.fetchData();
@@ -114,6 +116,12 @@
       },
       privilege(){
         window.location.href="/m/privilege.html";
+      },
+      tocoupons(){
+        window.location.href="/m/coupons.html";
+      },
+      tocollect(){
+        window.location.href="/m/collect.html";
       }
     }
   }
@@ -122,11 +130,10 @@
 <style lang="less">
 @import '~vux/src/styles/1px.less';
 body{
-  background-color: #eee;
+  background-color: #efeef4;
 }
 #my{
   height: 100%;
-  background-color: #efeef4;
   .profile{
     height: 4.24rem;
     width: 100%;
@@ -174,7 +181,10 @@ body{
   }
   .group{
     .vux-label{
+      font-size: 14px;
       color: #333;
+    }
+    .tp{
       font-size: 14px;
     }
   }

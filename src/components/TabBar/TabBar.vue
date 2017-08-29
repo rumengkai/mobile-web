@@ -64,6 +64,7 @@
 @import '~vux/src/styles/1px.less';
 #tabbar{
   width: 100%;
+  max-width: 680px;
   position: fixed;
   bottom: 0;
   height: .98rem;

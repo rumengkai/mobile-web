@@ -83,7 +83,7 @@
 <style lang="less">
 @import '~vux/src/styles/1px.less';
 body{
-  background-color: #eee;
+  background-color: #efeef4;
 }
 #privilege{
   height: auto;

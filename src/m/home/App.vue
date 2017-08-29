@@ -6,15 +6,6 @@
       <AudioList :audiolist="indexdata.daily"></AudioList>
       <TitleBar title="订阅专栏" more="查看全部" line="line" url="/m/channels.html"></TitleBar>
       <div class="channels">
-        <!-- <scroller lock-y :scrollbar-x="sc" ref="scrollerEvent">
-          <div class="box1" ref="box1">
-            <div class="box1-item" v-for="item in indexdata.channels" @click="toChannel(item.id)">
-              <img :src="item.thumb" alt="">
-              <p class="title" v-html="item.name"></p>
-              <p class="brief" v-html="item.brief"></p>
-            </div>
-          </div>
-        </scroller> -->
         <div class="warp">
           <div class="box1" ref="box1">
             <div class="box1-item" v-for="item in indexdata.channels" @click="toChannel(item.id)">
@@ -175,8 +166,8 @@ body{
   padding:12px 7px;
   position: relative;
   img{
-    width: 100%;
-    height: auto;
+    width: 136px;
+    height: 136px;
   }
   .title{
     margin-top: 8px;

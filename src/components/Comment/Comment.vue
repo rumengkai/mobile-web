@@ -11,9 +11,9 @@
       <li v-for="(item , index) in commentlist" class="vux-1px-b">
         <img :src="item.author.photo" alt="" onerror="this.src='http://m.kofuf.com/static/img/default.png'">
         <div class="comment-box">
-          <p class="username">{{item.author.name}}</p>
+          <p class="username">{{item.author.name}}<span class="top" v-if="item.top">置顶</span></p>
           <p class="date">{{item.postd|formatDate}}</p>
-          <p class="comment-con">{{item.content}}</p>
+          <p class="comment-con" v-html="item.content"></p>
           <div class="zan" @click="clickZan(item.id,index)">
             <span class="icon" ref="zan" :class="{ img1:!item.liked, img2:item.liked}"></span>
             <span class="count"> {{item.support_count}}</span>
@@ -209,8 +209,16 @@
   font-size: .2rem;
 }
 #comment .comment-box .username{
-  font-size: 16px;
+  font-size: .32rem;
   line-height: .50rem;
+  .top{
+    font-size: 12px;
+    margin-left: 10px;
+    border: 1px solid #ca915c;
+    color: #ca915c;
+    border-radius: 3px;
+    padding: 2px;
+  }
 }
 #comment .comment-box .date{
   font-size:12px;
