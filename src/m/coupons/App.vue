@@ -2,7 +2,8 @@
   <div id="coupons">
     <div v-if="showContent">
       <p class="coupons_info" @click="toinfo">
-        优惠券适用说明
+        优惠券使用说明
+        <span class="nstep"></span>
       </p>
       <Coupons :couponData="couponData"></Coupons>
     </div>
@@ -104,7 +105,7 @@
 <style lang="less">
 @import '~vux/src/styles/1px.less';
 body{
-  background-color: #fff;
+  background-color: #f5f5f5;
   height: 100%;
 }
 #coupons{
@@ -112,8 +113,14 @@ body{
   background-color: #f5f5f5;
   color: #999;
   font-size: 14px;
+  .nstep{
+    margin-top: -5px;
+  }
   .coupons_info{
-    padding:20px 20px 0px;
+    box-sizing: border-box;
+    position: relative;
+    padding-right: 15px;
+    margin:20px 10px 0px;
     line-height: 20px;
     text-align: right;
     color: #333;

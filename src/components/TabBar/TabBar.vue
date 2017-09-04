@@ -10,19 +10,19 @@
         <span>首页</span>
       </li>
       <li @click="tab('sub')" v-if="active=='sub'" class="focus">
-        <img src="./images/tabbar_subscripe_select.png" alt="首页">
-        <span>订阅</span>
+        <img src="./images/tabbar_subscripe_select.png" alt="">
+        <span>讲武堂</span>
       </li>
       <li @click="tab('sub')" v-else>
-        <img src="./images/tabbar_subscripe.png" alt="首页">
-        <span>订阅</span>
+        <img src="./images/tabbar_subscripe.png" alt="">
+        <span>讲武堂</span>
       </li>
       <li @click="tab('my')" v-if="active=='my'" class="focus">
-        <img src="./images/tabbar_profile_select.png" alt="首页">
+        <img src="./images/tabbar_profile_select.png" alt="">
         <span>我的</span>
       </li>
       <li @click="tab('my')" v-else>
-        <img src="./images/tabbar_profile.png" alt="首页">
+        <img src="./images/tabbar_profile.png" alt="">
         <span>我的</span>
       </li>
     </ul>

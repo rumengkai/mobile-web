@@ -2,9 +2,9 @@
   <div id="home">
     <div v-if="showContent">
        <Banner :bannerlist="indexdata.carousels"></Banner>
-      <TitleBar title="功夫日课" more="查看全部" url="/m/daily.html"></TitleBar>
+      <TitleBar :title="indexdata.daily_head.title" more="查看全部" url="/m/daily.html"></TitleBar>
       <AudioList :audiolist="indexdata.daily"></AudioList>
-      <TitleBar title="订阅专栏" more="查看全部" line="line" url="/m/channels.html"></TitleBar>
+      <TitleBar :title="indexdata.channel_head.title" more="查看全部" line="line" url="/m/channels.html"></TitleBar>
       <div class="channels">
         <div class="warp">
           <div class="box1" ref="box1">
@@ -16,9 +16,9 @@
           </div>
         </div>
       </div>
-      <TitleBar title="每日有料" more="查看全部" url="/m/goods.html"></TitleBar>
+      <TitleBar :title="indexdata.goods_head.title" more="查看全部" url="/m/goods.html"></TitleBar>
       <AudioList :audiolist="indexdata.goods"></AudioList>
-      <TitleBar title="功夫文章" line="line"></TitleBar>
+      <TitleBar :title="indexdata.article_head.title" line="line"></TitleBar>
       <Article :articlelist="indexdata.articles"></Article>
       <div class="load">
         <LazyLoadingMore url="/api/articles/list.json" v-on:getData="loadList" params="articles"></LazyLoadingMore>

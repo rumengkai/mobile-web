@@ -54,8 +54,8 @@ body{
     box-sizing: border-box;
     text-align:justify;
     width:100%;
-    background-size:100% 120%;
     margin-top:20px;
+    font-size: 16px;
   }
 }
 

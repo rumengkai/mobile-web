@@ -21,6 +21,9 @@
         </div>
       </div>
     </div>
+    <div class="couponsnone" v-if="!couponD.length">
+      <img src="./images/empty_coupon.png" alt="">
+    </div>
   </div>
 </template>
 
@@ -57,7 +60,7 @@
         item.start_time=formatDate(new Date(item.start_time),"yyyy-MM-dd")
         item.end_time=formatDate(new Date(item.end_time),"yyyy-MM-dd")
         var text='<div class="alert">'+
-                    '<p><b>优惠券名称：</b>'+item.name+"</p>"+
+                    '<p><b>优&nbsp;&nbsp;惠&nbsp;&nbsp;券：</b>'+item.name+"</p>"+
                     '<p><b>适用类型：</b>'+item.use_condition+"</p>"+
                     "<p><b>可用时间：</b>"+item.start_time+"至"+item.end_time+"</p>"+
                     "<p><b>可用业务：</b>"+item.use_scope+"</p>"+
@@ -100,7 +103,7 @@
       position: absolute;
       top: 0;
       left: 0;
-      height: 2.24rem;
+      height: 2.22rem;
       overflow: hidden;
     }
     .left{
@@ -163,7 +166,7 @@
         }
         .use_explain{
           font-size: 12px;
-          color: #a8d2f0;
+          color: #88a2d0;
           float: right;
           line-height: 20px;
         }
@@ -190,15 +193,21 @@
 
 .alert{
   text-align: left;
-  font-size: 12px;
+  font-size: .28rem;
   color: #333;
   width: 100%;
   line-height: 20px;
   b{
     display: inline-block;
-    width: 1.7rem;
-    text-align: right;
+    // width: 1.7rem;
+    text-align: left;
   }
 }
-
+.couponsnone{
+  padding: 30px 0;
+  text-align: center;
+  img{
+    width: 6.92rem;
+  }
+}
 </style>
