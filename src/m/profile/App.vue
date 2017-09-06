@@ -11,6 +11,9 @@
         <cell title="微信" v-if='myInfo.user.weixin'>{{myInfo.user.weixin}}</cell>
         <cell title="微博" v-if='myInfo.user.weibo'>{{myInfo.user.weibo}}</cell>
       </group>
+      <group class="group">
+        <cell title="兑换码" is-link @click.native="toCode"></cell>
+      </group>
     </div>
     <Failed v-if="failedshow" :msg="failedmsg"></Failed>
     <Loading v-model="loadingshow" :text="loadtext"></Loading>
@@ -37,7 +40,7 @@
         showContent:true,
         failedshow:false,
         failedmsg:"服务请求失败，请刷新重试",
-        myInfo:{},
+        myInfo:{user:{photo:""}},
       }
     },
     components: {
@@ -84,6 +87,9 @@
           self.loadingshow=false;
         },10000);
       },
+      toCode(){
+        window.location.href="/m/code-active.html"
+      }
     }
   }
 </script>
@@ -100,6 +106,9 @@ body{
   font-size: 14px;
   .headimg{
     width: 50px;
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
   }
   .vux-label{
     font-size: 14px;

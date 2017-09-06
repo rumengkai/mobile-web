@@ -1,7 +1,7 @@
 <template>
   <div id="titlebar">
     <div class="con">
-      <img class="img" src="./images/icon_title.png" alt=".">
+      <img v-if="img" class="img" :src="img" alt=".">
       <span v-html="title"></span>
       <span v-html="more" class="more" v-if="more" @click="toskip"></span>
       <span class="nstep" v-if="more"></span>
@@ -18,7 +18,8 @@
       title:String,
       more:String,
       url:String,
-      line:String
+      line:String,
+      img:String
     },
     data () {
       return {

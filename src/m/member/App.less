@@ -1,0 +1,125 @@
+body{
+  text-align:justify;
+  margin:0;
+  font-family:'微软雅黑';
+  background-color: @bg_color;
+}
+#member{
+  .content{
+    box-sizing: border-box;
+    text-align:justify;
+    width:100%;
+    font-size: 16px;
+    color: @font_color_b;
+    .header{
+      height: 1.45rem;
+      width: 100%;
+      padding: .24rem;
+      box-sizing: border-box;
+      background-color: #fff;
+      .headimg{
+        float: left;
+        img{
+          width: .93rem;
+          height: .93rem;
+          border-radius: 5rem;
+        }
+      }
+      .name-title{
+        margin-left: 1.30rem;
+        .name{
+          font-style: 16px;
+          font-weight: 700;
+          line-height: .5rem;
+        }
+        .t{
+          font-size: 14px;
+          line-height: .5rem;
+          color: @font_color_g;
+        }
+      }
+    }
+    .memberlist{
+      width: 100%;
+      box-sizing: border-box;
+      background-color: #fff;
+      padding: .36rem .30rem;
+      margin-top: .3rem;
+      ul{
+        li{
+          height: .85rem;
+          border-radius: 3px;
+          border: 1px solid #ccc;
+          line-height: .85rem;
+          margin:15px 0;
+          color: #font_color_b;
+          .price{
+            float: right;
+            margin-right: 20px;
+          }
+          img{
+            width: .6rem;
+            height: .6rem;
+            margin: .125rem;
+            vertical-align:middle;
+          }
+        }
+        li.active{
+          border: 1px solid @base_color;
+          color:@base_color;
+          .price{
+            color: @base_color;
+          }
+        }
+      }
+    }
+    .memberprivilege{
+      width: 100%;
+      box-sizing: border-box;
+      background-color: #fff;
+      padding: .36rem .30rem;
+      margin-top: .3rem;
+      .detail{
+        margin:.2rem 0 1rem;
+        img{
+          max-width: 100%;
+        }
+      }
+    }
+  }
+  footer{
+    height: .92rem;
+    width: 100%;
+    max-width: 680px;
+    background-color: #fff;
+    box-shadow: rgba(0,0,0,.2) 0 0 10px;
+    position: fixed;
+    bottom: 0;
+    padding: 0;
+    z-index: 500;
+    display: -webkit-box;
+    -webkit-box-align: center;
+    font-size: 20px;
+    .price{
+      color: @font_color_b;
+      font-size: 16px;
+      width: 64%;
+      padding-left: .4rem;
+      box-sizing: border-box;
+      background-color: #fff;
+      height:.92rem;
+      line-height: .92rem;
+    }
+    .buy{
+      width: 36%;
+      color: #fbfbfb;
+      line-height: .92rem;
+      text-align: center;
+      background-color: @base_color;
+      font-size: 16px;
+      a{
+        color: #fbfbfb;
+      }
+    }
+  }
+}

@@ -1,0 +1,79 @@
+body{
+  text-align:justify;
+  margin:0;
+  font-family:'微软雅黑';
+  background-color: @bg_color;
+}
+#member-center{
+  .content{
+    box-sizing: border-box;
+    text-align:justify;
+    width:100%;
+    font-size: 16px;
+    color: @font_color_b;
+    .channels-list{
+      width: 100%;
+      box-sizing: border-box;
+      background-color: #fff;
+      padding:.2rem .10rem;
+      ul{
+        overflow: hidden;
+        height: auto;
+        display: flex;
+        justify-content: space-around;
+        flex-direction:row;
+        li{
+          align-items:center;
+          .img{
+            position: relative;
+            img{
+              width: 2.2rem;
+              height: 2.2rem;
+              overflow: hidden;
+              display: block;
+            }
+            .channel-name{
+              background: rgba(0, 0, 0, 0.3);
+              width: 100%;
+              text-align: center;
+              line-height: .5rem;
+              position: absolute;
+              color: #ccc;
+              font-size: .28rem;
+              bottom: 0rem;
+            }
+          }
+          p{
+            line-height: .6rem;
+            .price{
+              color: @base_color;
+              font-size: 14px;
+            }
+            .proprice{
+              margin-left: 10px;
+              color: #ccc;
+              font-size: 12px;
+            }
+          }
+        }
+      }
+    }
+    .weui-cell__ft,.vux-label{
+      font-size: 14px;
+    }
+  }
+  footer{
+    height: .92rem;
+    width: 100%;
+    max-width: 680px;
+    background-color: #fff;
+    box-shadow: rgba(0,0,0,.2) 0 0 10px;
+    position: fixed;
+    bottom: 0;
+    padding: 0;
+    z-index: 500;
+    display: -webkit-box;
+    -webkit-box-align: center;
+    font-size: 20px;
+  }
+}

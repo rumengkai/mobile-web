@@ -14,7 +14,11 @@
       </div>
       <group class="group g1">
         <cell title="我的收藏" is-link @click.native="tocollect"></cell>
-        <cell title="优惠券" is-link @click.native="tocoupons"><span class="tp">{{myInfo.user.coupon_count}}张待使用</span></cell>
+        <cell title="会员中心" is-link @click.native="tomember">
+          <span class="tp tp1" v-if="myInfo.user.level==0">开通会员</span>
+          <span class="tp tp1" v-if="myInfo.user.level!=0">{{myInfo.user.coupon_count}}项未兑换</span>
+        </cell>
+        <cell title="优惠券" is-link @click.native="tocoupons"><span class="tp"><span class="tp1">{{myInfo.user.coupon_count}}</span>张待使用</span></cell>
       </group>
       <group class="group">
         <cell title="个人信息" is-link @click.native="toprofile"></cell>
@@ -114,6 +118,14 @@
       toprofile(){
         window.location.href="/m/profile.html";
       },
+      tomember(){
+        if (this.myInfo.level==0) {
+          window.location.href="/m/member.html";
+        }else{
+          //会员
+          window.location.href="/m/member.html";
+        }
+      },
       privilege(){
         window.location.href="/m/privilege.html";
       },
@@ -129,6 +141,7 @@
 
 <style lang="less">
 @import '~vux/src/styles/1px.less';
+@import "../index/App.less";
 body{
   background-color: #efeef4;
 }
@@ -186,6 +199,9 @@ body{
     }
     .tp{
       font-size: 14px;
+    }
+    .tp1{
+      color: @base_color;
     }
   }
   .g1{

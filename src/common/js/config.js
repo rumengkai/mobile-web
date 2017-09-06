@@ -15,8 +15,8 @@
 // 全局变量，配置
 //版本
 window.VERSION="0.1"
-// window.HOST="http://dev.kofuf.com"// 测试地址
-window.HOST="http://api.kofuf.com"// 线上地址
+window.HOST="http://dev.kofuf.com"// 测试地址
+// window.HOST="http://api.kofuf.com"// 线上地址
 window.HOSTM="http://m.kofuf.com"// 线上地址，分享时用
 
 

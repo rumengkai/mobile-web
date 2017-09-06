@@ -75,7 +75,9 @@ del {
 .clearfix {display: inline-block;}
 * html .clearfix {height: 1%;}
 .clearfix {display: block;}
-
+strong{
+  font-weight: 900;
+}
 
 body {
 -webkit-touch-callout: none; /* iOS Safari */
