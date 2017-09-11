@@ -21,13 +21,18 @@
         </div>
         <div class="detail" v-html="itemsinfo.detail"></div>
       </div>
-    <footer v-show="showContent">
+    <footer v-show="showContent&&type==''">
       <a id="btnOpenApp" class="left" >
         <span>加入购物车</span>
       </a>
       <a id="btnOpenApp1" class="right" >
         <span>立即购买</span>
       </a>
+    </footer>
+    <footer v-show="showContent&&type=='dh'">
+      <div class="duihuan" @click="confirm">
+        <span>兑换</span>
+      </div>
     </footer>
     <div class="qr_code_pc_inner">
       <div class="qr_code_pc">
@@ -69,6 +74,7 @@
         failedmsg:"服务请求失败，请刷新重试",
         nonecomment:false,
         loadmore:true,
+        type:""
       }
     },
     components: {
@@ -89,6 +95,9 @@
       }
     },
     created () {
+      if (this.$geturlpara.getUrlKey("type")) {
+        this.type = this.$geturlpara.getUrlKey("type");
+      }
       var id = this.$geturlpara.getUrlKey("id");
       this.id=id;
       this.fetchData(id);
@@ -158,6 +167,9 @@
           onHide () {}
         })
       },
+      confirm(){
+        console.log(this.id);
+      }
     },
     filters: {
       formatDate2:function (time) {
@@ -258,6 +270,13 @@ body{
     }
     .right{
       width: 50%;
+      color: #fbfbfb;
+      line-height: 46px;
+      text-align: center;
+      background-color: #ca915c;
+    }
+    .duihuan{
+      width: 100%;
       color: #fbfbfb;
       line-height: 46px;
       text-align: center;

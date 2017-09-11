@@ -57,7 +57,9 @@
             <div class="popup12">
                 <p class="p1">可用优惠券</p>
                 <Couponsuse :couponData="channelsinfo.coupons" v-on:getCoupons="CouponsSelected"></Couponsuse>
-                <p class="p1" v-if="channelsinfo.invalid_coupons.length">不可用优惠券</p>
+                <div v-if="channelsinfo.invalid_coupons">
+                  <p class="p1" v-if="channelsinfo.invalid_coupons.length">不可用优惠券</p>
+                </div>
                 <Couponsuse :couponData="channelsinfo.invalid_coupons" state="3"></Couponsuse>
               <div class="cancelCoupons">
                 <x-button @click.native="cancelCoupons">暂不使用优惠券</x-button>
@@ -126,12 +128,14 @@
         </div>
         <div class="subscribe" @click="composite_readysub" v-if="unit!='1期'">
           <a>
-            <span>订阅：<span>¥{{price}}/{{unit}}</span></span>
+            <span v-if="price!='0'">订阅：<span>¥{{price}}/{{unit}}</span></span>
+            <span v-if="price=='0'">免费领取</span></span>
           </a>
         </div>
         <div class="subscribe_one" @click="composite_readysub" v-if="unit=='1期'">
           <a>
-            <span>订阅专栏：<span>¥{{price}}</span></span>
+            <span v-if="price!='0'">订阅专栏：<span>¥{{price}}</span></span>
+            <span v-if="price=='0'">免费领取</span></span>
           </a>
         </div>
     </footer>
@@ -185,7 +189,7 @@
         loadingshow: true,
         loadtext: 'loading...',
         channelsinfo:{
-          suites:[{price:""}]
+          suites:[{price:""}],
         },
         information:"",
         failedshow:false,
@@ -291,6 +295,7 @@
                 // if(!data.has_next){
                 //   this.commentBottomMsg="没有更多数据";
                 // }
+                this.loadingshow=false;
                 document.title = "专栏-"+data.name;
                 self.subscription=data.followed;
                 self.unit=data.price_unit;
@@ -300,7 +305,6 @@
           },
           (err)=>{
             this.loadingshow=false;
-            // this.failedshow=true;
             console.log(err);
           }
         );
@@ -313,7 +317,6 @@
       },
       toDetail(id,tryout){
         if (!tryout) {
-          console.log("请订阅后查看");
           this.$vux.toast.show({
              text: '请订阅后查看',
             //  position:'bottom',
@@ -330,16 +333,46 @@
         window.location.href="/m/freeread.html?id="+id;
       },
       //订阅支付
-      subscribe1(){
-        var id = this.$geturlpara.getUrlKey("id");
-        window.location.href="https://ah88dj.mlinks.cc/AK8j?id="+id;
-      },
       composite_readysub(){
-        if (this.channelsinfo.composite_channel) {
-          var self=this;
-          self.show_composite_channel=true;
+        var self=this;
+        getAuth(cookie,querystring,"channel",this.id);
+        //如果价格为0，则免费领取
+        if (this.price=="0") {
+          var url="/pay/orders/pay_free";
+          AjaxServer.httpPost(
+            Vue,
+            HOST+url,
+            {
+              type: config['paytype'],
+              items: self.buy_id,
+            },
+            (data)=>{
+              if (data.status!=0) {
+                self.$vux.alert.show({
+                  title: '提示',
+                  content: "服务器维护中，您的订单已支付成功，请勿重复支付。如有疑问请联系客服：400-966-7718",
+                  dialogTransition:"",
+                  maskTransition:"",
+                });
+              }else{
+                self.$vux.alert.show({
+                  title: '提示',
+                  content: "恭喜您，领取成功",
+                  dialogTransition:"",
+                  maskTransition:"",
+                  onHide (){
+                    location.href="/m/channels.html";
+                  }
+                });
+              }
+            })
         }else{
-          this.readysub();
+          if (this.channelsinfo.composite_channel) {
+            var self=this;
+            self.show_composite_channel=true;
+          }else{
+            this.readysub();
+          }
         }
       },
       oneBuySubscribe(){
@@ -376,11 +409,12 @@
           self.loadingshow=true;
           this.disable=false;
           //发起订单请求
+          var url="/pay/weixin/create_order"
           AjaxServer.httpPost(
             Vue,
-            HOST+"/pay/weixin/create_order",
+            HOST+url,
             {
-              type: "JSAPI",
+              type: config['paytype'],
               items: self.buy_id,
               coupon_id:self.coupon_id,
               order_type:self.order_type
@@ -422,6 +456,7 @@
               self.loadingshow=false;
             }
           );
+
         }else{
           //未登陆情况，跳转到授权
           getAuth(cookie,querystring,"channel",this.id);

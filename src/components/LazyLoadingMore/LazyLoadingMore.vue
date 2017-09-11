@@ -22,6 +22,7 @@ import {isWeiXin,getClient,getSubClient,getBody} from 'common/js/common.js';
         commentBottomMsg:"上拉，立即加载更多",
         loadmore:true,
         islazyload:true,
+        allload:false,//是否加载完毕
       }
     },
     props: {
@@ -38,18 +39,20 @@ import {isWeiXin,getClient,getSubClient,getBody} from 'common/js/common.js';
         var Client=getClient();
         var body=getBody();
         // console.log(body.top+"|"+Client.height+"|"+body.height+"|"+self.islazyload);
-        if (body.top+Client.height>=body.height&&self.islazyload) {
+        if (body.top+Client.height>=body.height+10&&self.islazyload) {
+          this.islazyload=false
           self.dataLoad();
         }
   　　}
     },
     methods: {
       dataLoad(){
-        this.loadmore=false;
-        this.fetchData(++this.pn);
+        if (!this.allload) {
+          this.loadmore=false;
+          this.fetchData(++this.pn);
+        }
       },
       fetchData(pn){
-        this.islazyload=false
         var self = this;
         AjaxServer.httpGet(
           Vue,
@@ -60,6 +63,7 @@ import {isWeiXin,getClient,getSubClient,getBody} from 'common/js/common.js';
               self.islazyload=true;
               self.loadmore=true;
               if (!data.has_next) {
+                self.allload=true;
                 self.commentBottomMsg="- 到底啦 -"
               }
               if (!self.params) {

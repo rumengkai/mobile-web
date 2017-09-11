@@ -115,7 +115,7 @@
             Vue,
             HOST+"/pay/weixin/create_order",
             {
-              type: "JSAPI",
+              type: config['paytype'],
               items: self.id+":"+this.level_id,
               order_type:""
             },

@@ -35,8 +35,10 @@
       <div class="goods-list">
         <group class="header" v-for="item in goodsList">
           <cell :title="item.name" is-link @click.native="toGood(item)">
-            <span v-if="item.state==0">未兑换</span>
+            <span v-if="item.state==0">未开始</span>
             <span v-if="item.state==1">未兑换</span>
+            <span v-if="item.state==2">已兑换</span>
+            <span v-if="item.state==3">已过期</span>
           </cell>
         </group>
       </div>
@@ -76,8 +78,8 @@
     },
     created () {
       if (isWeiXin()) {
-        this.fetchData();
       }
+      this.fetchData();
     },
     methods: {
       fetchData(id){
@@ -111,8 +113,7 @@
         console.log("年终盛典门票");
       },
       toGood(data){
-        console.log(data);
-        console.log("商品");
+        window.location.href="/m/privilege-detail.html?id="+data.id;
       }
     }
   }

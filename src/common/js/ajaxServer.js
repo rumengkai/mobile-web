@@ -22,13 +22,9 @@ export default{
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
     };
     Vue.http.interceptors.push(function(request, next) {
-      // modify headers
-      // request.headers.set('from', '3');
-      // request.headers.set('gid', localStorage.getItem("gid"));
-      // request.headers.set('token', localStorage.getItem("token"));
-      request.headers.set('from', '2');
-      request.headers.set('gid', '1047500131');
-      request.headers.set('token', '9a5795f406b94f3192a61d683327c550');
+      request.headers.set('from', config()['from']);
+      request.headers.set('gid', config()['gid']);
+      request.headers.set('token', config()['token']);
       request.headers.set('version', VERSION);
       next();
     });
@@ -41,7 +37,7 @@ export default{
       error(err)
     });
   },
-  httpGet:function (Vue,url,data,success,error) {
+  httpGet:function (Vue,url,params,success,error) {
     //将vue-resouses设置为formdata
     Vue.http.options.emulateJSON = true;
     Vue.http.options.headers = {
@@ -49,16 +45,13 @@ export default{
     };
     Vue.http.interceptors.push(function(request, next) {
       // modify headers
-      // request.headers.set('from', '3');
-      // request.headers.set('gid', localStorage.getItem("gid"));
-      // request.headers.set('token', localStorage.getItem("token"));
-      request.headers.set('from', '2');
-      request.headers.set('gid', '1047500131');
-      request.headers.set('token', '9a5795f406b94f3192a61d683327c550');
+      request.headers.set('from', config()['from']);
+      request.headers.set('gid', config()['gid']);
+      request.headers.set('token', config()['token']);
       request.headers.set('version', VERSION);
       next();
     });
-    Vue.http.get(url, data)
+    Vue.http.get(url, {params:params})
     .then((res)=>{return res.bodyText;})
     .then((res)=>{
       var res=JSON.parse(res);

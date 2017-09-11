@@ -12,13 +12,36 @@
 	}
 })();
 
-// 全局变量，配置
-//版本
-window.VERSION="0.1"
-window.HOST="http://dev.kofuf.com"// 测试地址
-// window.HOST="http://api.kofuf.com"// 线上地址
-window.HOSTM="http://m.kofuf.com"// 线上地址，分享时用
 
+
+
+window.base="pro"
+// 全局变量，配置
+if (base=="pro") {
+	window.VERSION="0.1"
+	window.HOST="http://api.kofuf.com"// 线上地址
+	window.HOSTM="http://m.kofuf.com"// 线上地址，分享时用
+	window.config=function () {
+		return {
+			paytype:"JSAPI",
+			from:"3",
+			gid:localStorage.getItem("gid"),
+			token:localStorage.getItem("token"),
+		}
+	}
+}else{
+	window.VERSION="0.1"
+	window.HOST="http://dev.kofuf.com"// 测试地址
+	window.HOSTM="http://m.kofuf.com"// 线上地址，分享时用
+	window.config=function () {
+		return {
+			paytype:"APP",
+			from:"2",
+			gid:'1047500131',
+			token:'df2d1ecf7d064049966b15787786900f',
+		}
+	}
+}
 
 
 
@@ -44,6 +67,7 @@ window.getAuthLink=function (params){
 window.getAuth=function (cookie,querystring,type,id){
 	//获取cookie
 	var cookie_git=cookie.get('gid');
+
 	//获取URLparse
 	var parse=querystring.parse();
 	if(!localStorage.getItem("gid")||localStorage.getItem("gid")==""){
@@ -61,7 +85,6 @@ window.getAuth=function (cookie,querystring,type,id){
 				params=type;
 			}
 			window.location.href=getAuthLink(params);
-			//http://local.kofuf.com:8000/m/channels.html
 		}
 	}
 }
