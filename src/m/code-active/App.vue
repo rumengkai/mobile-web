@@ -61,6 +61,9 @@
                  width:'10em',
                  type:'text'
               })
+              setTimeout(()=>{
+                window.location.href="/m/my.html"
+              },2000)
             }else{
               this.$vux.toast.show({
                  text: data.error,

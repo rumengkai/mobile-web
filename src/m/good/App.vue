@@ -169,6 +169,39 @@
       },
       confirm(){
         console.log(this.id);
+        var self=this;
+        this.loadingshow=true;
+        var url="/pay/orders/pay_free";
+        AjaxServer.httpPost(
+          Vue,
+          HOST+url,
+          {
+            type: config()['paytype'],
+            items: this.id,
+            order_type:8,
+            receive_id:this.itemsinfo.receiver.uuid
+          },
+          (data)=>{
+            this.loadingshow=false;
+            if (data.status!=0) {
+              self.$vux.alert.show({
+                title: '提示',
+                content: data.error,
+                dialogTransition:"",
+                maskTransition:"",
+              });
+            }else{
+              self.$vux.alert.show({
+                title: '提示',
+                content: "恭喜您，兑换成功",
+                dialogTransition:"",
+                maskTransition:"",
+                onHide (){
+                  location.href="/m/member-center.html";
+                }
+              });
+            }
+          })
       }
     },
     filters: {

@@ -20,6 +20,15 @@
             <p><span @click="channelInfo" :class="{focus:!isfocus}">专栏介绍</span></p>
           </div>
         </div>
+        <div class="buy_member" v-if="!subscription&&channelsinfo.member_prices.length!=0">
+          <div class="member-list">
+            <p class="member-title">会员折扣价</p>
+            <p class="member-price"><span v-for="item in channelsinfo.member_prices">{{item.name}}¥{{item.price}}</span></p>
+          </div>
+          <p class="buy-now" @click="toActiveMember">
+            &nbsp;&nbsp;立即开通
+          </p>
+        </div>
         <ul class="channels-info" v-if="!isfocus||!subscription">
           <li class="vux-1px-b">
             <p class="title">专栏介绍</p>
@@ -163,7 +172,7 @@
 <script>
   import 'common/css/reset.css';
   import 'common/js/config.js';
-  import {isWeiXin} from 'common/js/common.js';
+  import {isWeiXin,weixinShare} from 'common/js/common.js';
   import AjaxServer from 'common/js/ajaxServer.js';
   import geturlpara from 'common/js/geturlpara.js';
   import { toPay } from 'common/js/pay.js';
@@ -300,6 +309,13 @@
                 self.subscription=data.followed;
                 self.unit=data.price_unit;
                 this.showContent=true;
+                window.shareData={
+                  title:'功夫财经'+data.name,
+                  link:HOSTM+'/m/channel.html?id='+data.id+'',
+                  imgUrl:'http://m.kofuf.com/static/img_h5/h5_logo.png',
+                  desc:data.abstract
+                }
+                weixinShare(Vue);
               }
             }
           },
@@ -343,7 +359,7 @@
             Vue,
             HOST+url,
             {
-              type: config['paytype'],
+              type: config()['paytype'],
               items: self.buy_id,
             },
             (data)=>{
@@ -414,7 +430,7 @@
             Vue,
             HOST+url,
             {
-              type: config['paytype'],
+              type: config()['paytype'],
               items: self.buy_id,
               coupon_id:self.coupon_id,
               order_type:self.order_type
@@ -538,7 +554,6 @@
         this.showpopup=false;
       },
       CouponsSelected(data){
-        console.log(data);
         this.showpopup=true;
         this.showlist=false;
         this.coupon_id=data.id;
@@ -560,8 +575,10 @@
         this.order_type="";
       },
       toChannelsTuiJian(channel){
-        console.log(channel);
         window.location.href="/m/channel.html?id="+channel.id;
+      },
+      toActiveMember(){
+        window.location.href="/m/member.html"
       }
     },
     filters: {

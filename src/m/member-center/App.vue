@@ -1,9 +1,19 @@
 <template>
   <div id="member-center">
     <div class="content" v-if="showContent">
-      <group class="header">
+      <!-- <group class="header">
         <cell title="年中盛典门票" is-link @click.native="activeTicket"><span>已过期</span></cell>
-      </group>
+      </group> -->
+      <div class="goods-list" v-if="dataInfo.items[0].type='goods'">
+        <group class="header" v-for="item in dataInfo.items[0].items">
+          <cell :title="item.name" is-link @click.native="toGood(item)">
+            <span v-if="item.state==0">未开始</span>
+            <span v-if="item.state==1">未兑换</span>
+            <span v-if="item.state==2">已兑换</span>
+            <span v-if="item.state==3">已过期</span>
+          </cell>
+        </group>
+      </div>
       <TitleBar title="专栏折扣价" more="查看更多" line="" url="/m/channels.html"></TitleBar>
       <div class="channels-list">
         <ul>
@@ -32,7 +42,7 @@
           </li>
         </ul>
       </div>
-      <div class="goods-list">
+      <div class="goods-list" v-if="dataInfo.items[3]">
         <group class="header" v-for="item in goodsList">
           <cell :title="item.name" is-link @click.native="toGood(item)">
             <span v-if="item.state==0">未开始</span>
@@ -113,7 +123,11 @@
         console.log("年终盛典门票");
       },
       toGood(data){
-        window.location.href="/m/privilege-detail.html?id="+data.id;
+        if (data.state!=2&&data.state!=3) {
+          window.location.href="/m/privilege-detail.html?id="+data.id;
+        }else{
+
+        }
       }
     }
   }

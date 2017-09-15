@@ -1,6 +1,6 @@
 <template>
   <div id="banner" class="vux-1px-t">
-    <swiper :list="bannerlist" v-model="demo01_index" height="2.68rem" @on-index-change="bannerChange" loop auto></swiper>
+    <swiper :list="bannerlist" v-model="demo01_index" height="2.9rem" @on-index-change="bannerChange" loop auto></swiper>
   </div>
 </template>
 

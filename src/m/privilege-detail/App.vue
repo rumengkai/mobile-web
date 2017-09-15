@@ -1,8 +1,7 @@
 <template>
   <div id="privilege-detail">
     <div class="content" v-if="showContent">
-      <div class="intro">
-        {{dataInfo.intro}}
+      <div class="intro" v-html="dataInfo.intro">
       </div>
       <GoodList :items="dataInfo.items" line="line" dh="dh"></GoodList>
     </div>
@@ -62,7 +61,7 @@
             this.loadingshow=false;
             if (data.status==0) {
               this.dataInfo=data;
-              console.log(data);
+              this.dataInfo.intro=this.dataInfo.intro.replace(/[\n]/g,'</br>');
               document.title=this.dataInfo.name
               this.showContent=true;
             }else{

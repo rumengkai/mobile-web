@@ -46,7 +46,7 @@
   import 'common/css/reset.css';
   import 'common/js/config.js';
   import AjaxServer from 'common/js/ajaxServer.js';
-  import {isWeiXin} from 'common/js/common.js';
+  import {isWeiXin,weixinShare} from 'common/js/common.js';
   import { toPay } from 'common/js/pay.js';
   import { Group,Cell,Loading,AlertPlugin,cookie,querystring } from 'vux'
   import Vue from 'vue'
@@ -71,6 +71,7 @@
     },
     created () {
       if (isWeiXin()) {
+        weixinShare(Vue);
         this.fetchData();
       }
     },
@@ -115,7 +116,7 @@
             Vue,
             HOST+"/pay/weixin/create_order",
             {
-              type: config['paytype'],
+              type: config()['paytype'],
               items: self.id+":"+this.level_id,
               order_type:""
             },
@@ -184,8 +185,10 @@
                 content: "您可在会员中心查看您的特权",
                 dialogTransition:"",
                 maskTransition:"",
+                onHide (){
+                  location.href="/m/my.html";
+                }
               });
-              location.href="/m/my.html";
             }
           }
         );

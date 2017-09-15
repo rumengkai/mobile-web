@@ -1,10 +1,12 @@
 <template>
   <div id="privilege-confirm">
     <div class="content" v-if="showContent">
-      <group class="header" >
-         <x-input :title="dataInfo.receiver.name" v-model="dataInfo.receiver.phone"></x-input>
-         <x-address raw-value @on-hide="logHide" @on-show="logShow" :title="title" v-model="value" :list="addressData"  placeholder="请选择地址"  ></x-address>
-         <x-textarea placeholder="请填写详细地址，如街道，楼牌号等" v-model="addressdetail"></x-textarea>
+      <group class="header" v-if="haveAddress">
+        <cell :title="dataInfo.receiver.name" :value="dataInfo.receiver.phone" value-align="left"></cell>
+        <cell title="收货地址：" value-align="left" is-link @click.native="toAddress()">{{addresseAll}} </cell>
+      </group>
+      <group class="header" v-if="!haveAddress">
+        <cell title="选择收货地址" value-align="left" is-link @click.native="toAddress()"></cell>
       </group>
       <GoodList :items="gooddata" line="" dh=""></GoodList>
     </div>
@@ -20,22 +22,18 @@ import 'common/css/reset.css';
 import 'common/js/config.js';
 import AjaxServer from 'common/js/ajaxServer.js';
 import {isWeiXin} from 'common/js/common.js';
-import { Group,Cell,Loading,AlertPlugin,cookie,querystring,XButton,XInput,XAddress,XTextarea, ChinaAddressV3Data, Value2nameFilter as value2name } from 'vux'
-import TitleBar from "components/TitleBar/TitleBar"
+import { Group,Cell,Loading,AlertPlugin,cookie,querystring,XButton} from 'vux'
 import GoodList from 'components/GoodList/GoodList';
 import geturlpara from 'common/js/geturlpara.js';
 import Vue from 'vue';
+Vue.use(AlertPlugin)
 Vue.prototype.$geturlpara=geturlpara;
 export default {
   components: {
     Group,
     Cell,
     Loading,
-    TitleBar,
     XButton,
-    XInput,
-    XAddress,
-    XTextarea,
     GoodList,
   },
   data () {
@@ -46,11 +44,9 @@ export default {
       loadingshow: false,
       loadtext: '加载中...',
       dataInfo:{receiver:{name:"",phone:""}},
-      value: [],
-      addressdetail:"",
-      addressData:ChinaAddressV3Data,
+      addresseAll:"",
       gooddata:[],
-      showAddress: false
+      haveAddress:false
     }
   },
   created () {
@@ -61,7 +57,6 @@ export default {
   },
   methods: {
     fetchData(id){
-      console.log(id);
       AjaxServer.httpGet(
         Vue,
         HOST+'/api/items/'+id+'.json',
@@ -72,9 +67,11 @@ export default {
           this.loadingshow=false;
           if (data.status==0) {
             this.dataInfo=data;
-            var arr=data.receiver.address.split("@")
-            this.value = [this.getValue(arr[0]),this.getValue(arr[1]),this.getValue(arr[2])];
-            this.addressdetail=arr[3];
+            if (data.receiver) {
+              this.haveAddress=true;
+              console.log();
+              this.addresseAll=data.receiver.address.replace(/@/g," ");
+            }
             this.gooddata.push({
               thumb:data.thumb,
               price:data.price,
@@ -85,34 +82,49 @@ export default {
           }else{
             console.log(data.error);
           }
-        }),
+        },
         (err)=>{
           console.log(err);
         }
+      );
     },
     confirm(data){
-      console.log(data);
-      console.log("兑换");
+      var self=this;
+      this.loadingshow=true;
+      var url="/pay/orders/pay_free";
+      AjaxServer.httpPost(
+        Vue,
+        HOST+url,
+        {
+          type: config()['paytype'],
+          items: this.id,
+          order_type:8,
+          receive_id:this.dataInfo.receiver.uuid
+        },
+        (data)=>{
+          this.loadingshow=false;
+          if (data.status!=0) {
+            self.$vux.alert.show({
+              title: '提示',
+              content: data.error,
+              dialogTransition:"",
+              maskTransition:"",
+            });
+          }else{
+            self.$vux.alert.show({
+              title: '提示',
+              content: "恭喜您，兑换成功",
+              dialogTransition:"",
+              maskTransition:"",
+              onHide (){
+                location.href="/m/member-center.html";
+              }
+            });
+          }
+        })
     },
-    logHide (str) {
-      console.log('on-hide', str)
-      console.log(this.getName(this.value));
-    },
-    logShow (str) {
-      console.log('on-show')
-    },
-    getName (value) {
-      return value2name(value, ChinaAddressV3Data)
-    },
-    getValue (name) {
-      var value="";
-      for (var i = 0; i < ChinaAddressV3Data.length; i++) {
-        if (ChinaAddressV3Data[i].name==name) {
-          value=ChinaAddressV3Data[i].value;
-          break;
-        }
-      }
-      return value;
+    toAddress(){
+      window.location.href="/m/address.html?type="+this.id;
     },
   }
 }

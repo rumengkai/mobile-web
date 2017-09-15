@@ -11,30 +11,32 @@ body{
     width:100%;
     font-size: 16px;
     color: @font_color_b;
-    .coderule{
-      line-height: 30px;
-      text-align: right;
-      margin-right: 20px;
-      font-size: 14px;
+  }
+  .header{
+    .weui-cells{
+      font-size: 14px !important;
+    }
+    .vux-label,.weui-label{
+      width: 75px !important;
+    }
+    .cz{
       img{
+        width: 20px;
         vertical-align: middle;
-        width: 30px;
-        height: 30px;
+        height: 20px;
+        margin-right: 5px;
+      }
+      .edit,.del{
+        float: right;
+        margin-left: 10px;
       }
     }
   }
-  footer{
-    height: .92rem;
-    width: 100%;
-    max-width: 680px;
-    background-color: #fff;
-    box-shadow: rgba(0,0,0,.2) 0 0 10px;
+  .complete{
     position: fixed;
-    bottom: 0;
-    padding: 0;
-    z-index: 500;
-    display: -webkit-box;
-    -webkit-box-align: center;
-    font-size: 20px;
+    bottom: 72px;
+    width: 5rem;
+    margin-left: -2.5rem;
+    left: 50%;
   }
 }

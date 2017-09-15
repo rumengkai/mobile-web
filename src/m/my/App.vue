@@ -14,11 +14,11 @@
       </div>
       <group class="group g1">
         <cell title="我的收藏" is-link @click.native="tocollect"></cell>
-        <!-- <cell title="会员中心" is-link @click.native="tomember">
+        <cell title="会员中心" is-link @click.native="tomember" v-if="myInfo.user.level!=0&&(myInfo.user.privilege_count!=-1||myInfo.user.show_privilege)">
           <span class="tp tp1" v-if="myInfo.user.level==0">开通会员</span>
-          <span class="tp tp1" v-if="myInfo.user.level!=0">{{myInfo.user.coupon_count}}项未兑换</span>
+          <span class="tp tp1" v-if="myInfo.user.level!=0">{{myInfo.user.privilege_count}}项未兑换</span>
         </cell>
-        <cell title="收货地址管理" is-link @click.native="toaddress"></cell> -->
+        <cell title="收货地址管理" is-link @click.native="toaddress"></cell>
         <cell title="优惠券" is-link @click.native="tocoupons"><span class="tp"><span class="tp1">{{myInfo.user.coupon_count}}</span>张待使用</span></cell>
       </group>
       <group class="group g1">
@@ -125,7 +125,7 @@
         window.location.href="/m/profile.html";
       },
       tomember(){
-        if (this.myInfo.level==0) {
+        if (this.myInfo.user.level==0) {
           window.location.href="/m/member.html";
         }else{
           //会员
