@@ -1,7 +1,7 @@
 <template>
   <div id="member">
     <div class="content" v-if="showContent">
-      <div class="header">
+      <div class="header" v-if="dataInfo.user">
         <div class="headimg" @click="toProfile">
           <img :src="dataInfo.user.photo" alt="">
         </div>
@@ -72,8 +72,8 @@
     created () {
       if (isWeiXin()) {
         weixinShare(Vue);
-        this.fetchData();
       }
+      this.fetchData();
     },
     methods: {
       fetchData(id){
