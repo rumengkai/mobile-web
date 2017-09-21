@@ -39,7 +39,7 @@ import {isWeiXin,getClient,getSubClient,getBody} from 'common/js/common.js';
         var Client=getClient();
         var body=getBody();
         // console.log(body.top+"|"+Client.height+"|"+body.height+"|"+self.islazyload);
-        if (body.top+Client.height>=body.height+10&&self.islazyload) {
+        if (body.top+Client.height>=body.height-10&&self.islazyload) {
           this.islazyload=false
           self.dataLoad();
         }

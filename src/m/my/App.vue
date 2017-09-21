@@ -1,8 +1,8 @@
 <template>
   <div id="my">
-    <div v-if="showContent">
+    <div v-if="showContent" class="content">
       <div class="profile">
-        <div class="privilege" v-if="myInfo.user.level!=0" @click="privilege">
+        <div class="privilege" v-if="myInfo.user.level!=0" @click="toSkip('privilege.html')">
           <img class="mark" src="./images/vip_question_mark.png" alt="">
           特权说明
         </div>
@@ -13,17 +13,18 @@
         </div>
       </div>
       <group class="group g1">
-        <cell title="我的收藏" is-link @click.native="tocollect"></cell>
-        <cell title="会员中心" is-link @click.native="tomember" v-if="myInfo.user.level!=0&&(myInfo.user.privilege_count!=-1||myInfo.user.show_privilege)">
+        <cell title="我的收藏" is-link @click.native="toSkip('collect.html')"></cell>
+        <!-- <cell title="我的订单" is-link @click.native="toSkip('order.html')"></cell> -->
+        <cell title="会员中心" is-link @click.native="tomember" v-if="myInfo.user.privilege_count!=-1||myInfo.user.show_privilege">
           <span class="tp tp1" v-if="myInfo.user.level==0">开通会员</span>
-          <span class="tp tp1" v-if="myInfo.user.level!=0">{{myInfo.user.privilege_count}}项未兑换</span>
+          <span class="tp tp1" v-if="myInfo.user.level!=0"><span v-if="myInfo.user.privilege_count!=0">{{myInfo.user.privilege_count}}项未兑换</span></span>
         </cell>
-        <cell title="收货地址管理" is-link @click.native="toaddress"></cell>
-        <cell title="优惠券" is-link @click.native="tocoupons"><span class="tp"><span class="tp1">{{myInfo.user.coupon_count}}</span>张待使用</span></cell>
+        <cell title="收货地址管理" is-link @click.native="toSkip('address.html')"></cell>
+        <cell title="优惠券" is-link @click.native="toSkip('coupons.html')"><span class="tp" v-if="myInfo.user.coupon_count!=0"><span class="tp1">{{myInfo.user.coupon_count}}</span>张待使用</span></cell>
       </group>
       <group class="group g1">
-        <cell title="个人信息" is-link @click.native="toprofile"></cell>
-        <cell title="关于我们" is-link @click.native="toAbout"></cell>
+        <cell title="个人信息" is-link @click.native="toSkip('profile.html')"></cell>
+        <cell title="关于我们" is-link @click.native="toSkip('about.html')"></cell>
       </group>
       <group class="group g1">
         <cell title="下载APP" is-link @click.native="toApp"></cell>
@@ -70,7 +71,7 @@
       //授权
       if(isWeiXin()){
       }
-      getAuth(cookie,querystring);
+      getAuth(cookie,querystring,"my.html");
     },
     created () {
       this.fetchData();
@@ -118,11 +119,8 @@
       toApp(){
         window.location.href="https://ah88dj.mlinks.cc/AK8j";
       },
-      toAbout(){
-        window.location.href="/m/about.html";
-      },
-      toprofile(){
-        window.location.href="/m/profile.html";
+      toSkip(data){
+        window.location.href="/m/"+data;
       },
       tomember(){
         if (this.myInfo.user.level==0) {
@@ -132,18 +130,6 @@
           window.location.href="/m/member-center.html";
         }
       },
-      privilege(){
-        window.location.href="/m/privilege.html";
-      },
-      tocoupons(){
-        window.location.href="/m/coupons.html";
-      },
-      tocollect(){
-        window.location.href="/m/collect.html";
-      },
-      toaddress(){
-        window.location.href="/m/address.html";
-      }
     }
   }
 </script>
@@ -156,11 +142,14 @@ body{
 }
 #my{
   height: 100%;
+  .content{
+    margin-bottom: 100px;
+  }
   .profile{
     height: 4.24rem;
     width: 100%;
     text-align: center;
-    background: url(http://static1.kofuf.com/1502441383636.png);
+    background: url(http://static1.kofuf.com/1505881780454.png);
     background-size: 100% auto;
     overflow: hidden;
     position: relative;

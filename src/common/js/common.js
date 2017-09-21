@@ -24,7 +24,7 @@ export function getBody(){
 }
  //
 export function weixinShare(Vue,data){
-	var url=HOSTA+"/api/session/share_weixin_config?url="+encodeURIComponent(window.location.href.split('#')[0]);
+	var url=HOST+"/api/session/share_weixin_config?url="+encodeURIComponent(window.location.href.split('#')[0]);
 	Vue.http.get(url)
 	.then((res)=>{return res.bodyText;})
 	.then((data)=>{

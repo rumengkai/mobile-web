@@ -20,9 +20,9 @@ window.base="pro"
 // 全局变量，配置
 if (base=="pro") {
 	window.VERSION="0.1"
-	window.HOST="http://api.kofuf.com"// 线上地址
-	window.HOSTM="http://m.kofuf.com"// 线上地址，分享时用
-	window.HOSTA="http://api.kofuf.com"// 授权使用
+	window.HOST="https://api.kofuf.com"// 线上地址
+	window.HOSTM="https://m.kofuf.com"// 线上地址，分享时用
+	window.HOSTA="https://api.kofuf.com"// 授权使用
 	window.appid="wx05e842991e5fa0b2"
 	window.config=function () {
 		return {
@@ -34,9 +34,9 @@ if (base=="pro") {
 	}
 }else{
 	window.VERSION="0.1"
-	window.HOST="http://123.57.35.40"// 测试地址
-	window.HOSTM="http://123.57.35.40"// 分享时用
-	window.HOSTA="http://dev.kofuf.com"// 授权使用
+	window.HOST="https://123.57.35.40"// 	测试地址
+	window.HOSTM="https://123.57.35.40"// 分享时用
+	window.HOSTA="https://dev.kofuf.com"// 授权使用
 	window.appid="wx0a542ef9d4d41cef"
 	window.config=function () {
 		return {
@@ -90,7 +90,7 @@ window.getAuth=function (cookie,querystring,type,id){
 			localStorage.setItem("token",cookie.get('token'));
 		}else {
 			var params;
-			if (!(id==undefined)) {
+			if (!(id==undefined)&&id!='') {
 				params=type+"_"+id;
 			}else{
 				params=type;

@@ -1,10 +1,10 @@
 <template>
   <div id="home">
     <div v-if="showContent">
-       <Banner :bannerlist="indexdata.carousels"></Banner>
-      <TitleBar :title="indexdata.daily_head.title" more="查看全部" img="http://static2.kofuf.com/1504608671349.png" url="/m/daily.html"></TitleBar>
+      <Banner :bannerlist="indexdata.carousels"></Banner>
+      <TitleBar :title="indexdata.daily_head.title" more="查看全部" :img="indexdata.daily_head.image" url="/m/daily.html"></TitleBar>
       <AudioList :audiolist="indexdata.daily"></AudioList>
-      <TitleBar :title="indexdata.channel_head.title" more="查看全部" img="http://static2.kofuf.com/1504608671349.png" line="line" url="/m/channels.html"></TitleBar>
+      <TitleBar :title="indexdata.channel_head.title" more="查看全部" :img="indexdata.channel_head.image" line="line" url="/m/channels.html"></TitleBar>
       <div class="channels">
         <div class="warp">
           <div class="box1" ref="box1">
@@ -16,9 +16,9 @@
           </div>
         </div>
       </div>
-      <TitleBar :title="indexdata.goods_head.title" more="查看全部" img="http://static2.kofuf.com/1504608671349.png" url="/m/goods.html"></TitleBar>
+      <TitleBar :title="indexdata.goods_head.title" more="查看全部" :img="indexdata.goods_head.image" url="/m/goods.html"></TitleBar>
       <AudioList :audiolist="indexdata.goods"></AudioList>
-      <TitleBar :title="indexdata.article_head.title" line="line" img="http://static2.kofuf.com/1504608671349.png"></TitleBar>
+      <TitleBar :title="indexdata.article_head.title" line="line" :img="indexdata.article_head.image"></TitleBar>
       <Article :articlelist="indexdata.articles"></Article>
       <div class="load">
         <LazyLoadingMore url="/api/articles/list.json" v-on:getData="loadList" params="articles"></LazyLoadingMore>

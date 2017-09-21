@@ -310,10 +310,10 @@
                 self.unit=data.price_unit;
                 this.showContent=true;
                 window.shareData={
-                  title:'功夫财经'+data.name,
+                  title:data.name,
                   link:HOSTM+'/m/channel.html?id='+data.id+'',
                   imgUrl:'http://m.kofuf.com/static/img_h5/h5_logo.png',
-                  desc:data.abstract
+                  desc:data.brief
                 }
                 weixinShare(Vue);
               }

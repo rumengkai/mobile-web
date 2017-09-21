@@ -53,7 +53,7 @@
     position: relative;
     .img{
       display: inline-block;
-      width: .60rem;
+      width: .50rem;
       float: left;
     }
     span{
