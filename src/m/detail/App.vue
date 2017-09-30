@@ -37,7 +37,7 @@
       </div>
     </div>
 
-    <footer v-show="showContent">
+    <footer v-if="showContent&&!open_channel">
       <div class="gfcj" @click="toChannels">
         <img src="http://m.kofuf.com/static/img/logo.png" alt="">
         <div class="gf"><p class="p1">微信登陆APP</p><p class="p2">阅读体验更佳</p></div>
@@ -46,9 +46,18 @@
         <a id='btnOpenApp'>打开APP</a>
       </div>
     </footer>
+    <footer v-if="open_channel&&showContent" class = "open-channel">
+      <div class="gfcj" >
+        <img :src="articles.from_channel.thumb" alt="">
+        <div class="gf"><p class="p1">{{articles.from_channel.name}}</p><p class="p2">¥{{articles.from_channel.price}}</p></div>
+      </div>
+      <div class="download" @click="openChannel(articles.from_channel.id)">
+        <a id='btnOpenApp'>点此购买</a>
+      </div>
+    </footer>
     <div class="qr_code_pc_inner">
       <div class="qr_code_pc">
-        <img id="js_pc_qr_code_img" class="qr_code_pc_img" src="http://m.kofuf.com/static/img/wx.jpg">
+        <img id="js_pc_qr_code_img" class="qr_code_pc_img" src="https://www.kofuf.com/static/images/code.png">
         <p>微信扫一扫<br>学财经，长本事</p>
       </div>
     </div>
@@ -108,6 +117,7 @@
         commentBottomMsg:"点击，获取更多数据",
         pn:0,
         last_time:"",
+        open_channel:false,
       }
     },
     components: {
@@ -146,47 +156,8 @@
           this.loadingshow=false;
           this.articles=JSON.parse(data.bodyText);
           document.title = this.articles.name;
-          // if (/<a/g.test(this.articles.content)) {
-          //   //替换channel的URL
-          //   var parase0=this.articles.content.match(/href=\"channel\/\d{3,}/g);
-          //   console.log(parase0);
-          //   if (parase0) {
-          //     var channelID=parase0[0].replace("href=\"channel/","");
-          //     this.articles.content=this.articles.content.replace(/href=\"channel\/\d{3,}/g,"href=\"channel.html?id="+channelID);
-          //   }
-          //   //替换articles的URL
-          //   var parase1=this.articles.content.match(/href=\"article\/\d{3,}/g);
-          //   if (parase1) {
-          //     var articleID=parase1[0].replace("href=\"article/","");
-          //     this.articles.content=this.articles.content.replace(/href=\"article\/\d{3,}/g,"href=\"detail.html?id="+articleID);
-          //   }
-          //   //替换good的URL
-          //   var parase2=this.articles.content.match(/href=\"good\/\d{3,}/g);
-          //   if (parase2) {
-          //     var that = this;
-          //     console.log(parase2);
-          //     var goodID_0=parase2[0].replace("href=\"good/","");
-          //       that.articles.content=that.articles.content.replace(/href=\"good\/\d{3,}/,"href=\"good.html?id="+goodID_0);
-          //       that.articles.content=that.articles.content.replace(/href=\"good\/\d{3,}/,"href=\"good.html?id="+goodID_0);
-          //       that.articles.content=that.articles.content.replace(/href=\"good\/\d{3,}/,"href=\"good.html?id="+goodID_0);
-          //     if (parase2[3]) {
-          //       var goodID_1=parase2[3].replace("href=\"good/","");
-          //         that.articles.content=that.articles.content.replace(/href=\"good\/\d{3,}/,"href=\"good.html?id="+goodID_1);
-          //         that.articles.content=that.articles.content.replace(/href=\"good\/\d{3,}/,"href=\"good.html?id="+goodID_1);
-          //         that.articles.content=that.articles.content.replace(/href=\"good\/\d{3,}/,"href=\"good.html?id="+goodID_1);
-          //     }
-          //     if (parase2[6]) {
-          //       var goodID_2=parase2[6].replace("href=\"good/","");
-          //         that.articles.content=that.articles.content.replace(/href=\"good\/\d{3,}/,"href=\"good.html?id="+goodID_2);
-          //         that.articles.content=that.articles.content.replace(/href=\"good\/\d{3,}/,"href=\"good.html?id="+goodID_2);
-          //         that.articles.content=that.articles.content.replace(/href=\"good\/\d{3,}/,"href=\"good.html?id="+goodID_2);
-          //     }
-          //     console.log(goodID_0);
-          //     console.log(goodID_1);
-          //     console.log(goodID_2);
-          //   }
-          // }
-          // this.fetchCommentData(id);
+          this.open_channel=!!this.articles.from_channel;
+          console.log(this.open_channel);
           if(this.articles.status!=0){
             //返回为4，无权限
             if(this.articles.status!=4){
@@ -292,6 +263,9 @@
       },
       toChannels(){
         window.location.href="/m/home.html"
+      },
+      openChannel(id){
+        window.location.href="/m/channel.html?id="+id;
       }
     },
     filters: {
@@ -386,26 +360,26 @@ body{
     box-shadow: rgba(0,0,0,.2) 0 0 10px;
     position: fixed;
     bottom: 0;
-    padding: 8px 0;
+    padding: .16rem 0;
     z-index: 10002;
     display: -webkit-box;
     -webkit-box-align: center;
     .gfcj{
-      font-size: 20px;
+      font-size: .4rem;
       color: #ca915c;
       width: 60%;
       img{
         border-radius: 5px;
-        width: 40px;
+        width: .8rem;
         height: .8rem;
         display: block;
         float: left;
-        margin-left: 15px;
+        margin-left: .3rem;
       }
       .gf{
-        width: 105px;
+        width: 2.1rem;
         float: left;
-        margin-left: 18px;
+        margin-left: .36rem;
         color: #868686;
         .p1{
           font-size: 12px;
@@ -420,23 +394,46 @@ body{
       }
     }
     .download{
-      width: 40%;
+      width: 36%;
       text-align: right;
       a{
         // width: 148px;
-        height: .8rem;
+        height: .68rem;
         display: block;
         color: #ca915c;
         border: 1px solid #ca915c;
         border-radius: 5px;
         text-align: center;
-        line-height: .8rem;
+        line-height: .68rem;
         background: #fff;
         font-size: 18px;
         box-sizing: content-box;
-        margin-right: 15px;
+        margin-right: .2rem;
         margin-left: auto;
       }
+    }
+  }
+  .open-channel{
+    .gfcj{
+      .gf{
+        width: 2.87rem;
+        .p1{
+          font-size: .26rem;
+          line-height: .4rem;
+          font-weight: 400;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          color: #333;
+        }
+        .p2{
+          line-height: .4rem;
+          font-weight: 100;
+          font-size: 12px;
+          color: #ca915c;
+        }
+      }
+
     }
   }
   strong{

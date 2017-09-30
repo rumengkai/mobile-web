@@ -20,7 +20,7 @@
             <p><span @click="channelInfo" :class="{focus:!isfocus}">专栏介绍</span></p>
           </div>
         </div>
-        <div class="buy_member" v-if="!subscription&&channelsinfo.member_prices.length!=0">
+        <div class="buy_member" v-if="!subscription&&channelsinfo.member_prices&&channelsinfo.member_prices.length!=0">
           <div class="member-list">
             <p class="member-title">会员折扣价</p>
             <p class="member-price"><span v-for="item in channelsinfo.member_prices">{{item.name}}¥{{item.price}}</span></p>
@@ -157,9 +157,10 @@
         <a id='btnOpenApp'>打开APP</a>
       </div>
     </dev>
+
     <div class="qr_code_pc_inner">
       <div class="qr_code_pc">
-        <img id="js_pc_qr_code_img" class="qr_code_pc_img" src="http://www.kofuf.com/img/wx.jpg">
+        <img id="js_pc_qr_code_img" class="qr_code_pc_img" src="https://www.kofuf.com/static/images/code.png">
         <p>微信扫一扫<br>学财经，长本事</p>
       </div>
     </div>
@@ -220,7 +221,7 @@
         couponstext:"选择优惠券",
         couponsname:"优惠券",
         show_composite_channel:false,
-        order_type:""
+        order_type:"",
       }
     },
     components: {
@@ -317,6 +318,11 @@
                 }
                 weixinShare(Vue);
               }
+            }
+            if(data.status!=0){
+              this.loadingshow=false;
+              failedmsg=data.error;
+              self.failedshow=true;
             }
           },
           (err)=>{

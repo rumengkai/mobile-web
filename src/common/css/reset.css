@@ -40,7 +40,7 @@ a img, iframe {
 a{
   text-decoration:none;
 }
-ol, ul {
+ol, ul ,li{
     list-style: none;
 }
 input, textarea, select, button {

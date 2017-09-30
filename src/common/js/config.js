@@ -34,8 +34,8 @@ if (base=="pro") {
 	}
 }else{
 	window.VERSION="0.1"
-	window.HOST="https://123.57.35.40"// 	测试地址
-	window.HOSTM="https://123.57.35.40"// 分享时用
+	window.HOST="https://dev.kofuf.com"// 	测试地址
+	window.HOSTM="https://dev.kofuf.com"// 分享时用
 	window.HOSTA="https://dev.kofuf.com"// 授权使用
 	window.appid="wx0a542ef9d4d41cef"
 	window.config=function () {

@@ -1,17 +1,24 @@
 <template>
   <div id="order">
     <div class="content" v-if="showContent">
-      <tab>
-        <tab-item selected @on-item-click="onItemClick">全部</tab-item>
-        <tab-item @on-item-click="onItemClick">待付款</tab-item>
-        <tab-item @on-item-click="onItemClick">待发货</tab-item>
-        <tab-item @on-item-click="onItemClick">待收货</tab-item>
+      <tab style="position:fiexd;">
+        <tab-item :selected="index=== 0" @on-item-click="onItemClick">全部</tab-item>
+        <tab-item :selected="index=== 1" @on-item-click="onItemClick">待付款</tab-item>
+        <tab-item :selected="index=== 2" @on-item-click="onItemClick">待发货</tab-item>
+        <tab-item :selected="index=== 3" @on-item-click="onItemClick">待收货</tab-item>
       </tab>
-      <swiper v-model="index" height="100px" :show-dots="false">
-        <swiper-item v-for="(item, index) in list2" :key="index">
-          <div class="tab-swiper vux-center">{{item}} Container</div>
-        </swiper-item>
-      </swiper>
+      <div class="ht"></div>
+      <dev v-for="(item, i) in dataInfo">
+        <div v-if="i==index">
+          <div v-if="item.length!=0">
+            <OrderList :datalist="item" v-on:on-updateDate="fetchData()"></OrderList>
+          </div>
+          <div v-if="item.length==0" class="empty">
+            <p><img src="./images/order_empty.png" alt=""></p>
+            <p>暂无{{orderempaty[i]}}订单</p>
+          </div>
+        </div>
+      </dev>
     </div>
     <BackHome></BackHome>
     <Loading v-model="loadingshow" :text="loadtext" ></Loading>
@@ -22,34 +29,36 @@
   import 'common/css/reset.css';
   import 'common/js/config.js';
   import BackHome from "components/BackHome/BackHome"
+  import OrderList from "components/OrderList/OrderList"
   import AjaxServer from 'common/js/ajaxServer.js';
   import {isWeiXin,weixinShare} from 'common/js/common.js';
   import { toPay } from 'common/js/pay.js';
-  import { Tab, TabItem, Swiper, SwiperItem,Loading,AlertPlugin,cookie,querystring } from 'vux'
+  import { Tab, TabItem,Loading,AlertPlugin,cookie,querystring } from 'vux'
   import Vue from 'vue'
-  const list = () => ['全部', '待付款', '待发货', '待收货'];
+  const list = () => [[], [], [], []];
   Vue.use(AlertPlugin)
   // console.log(process.env.NODE_ENV);
   export default {
-    name: 'member',
+    name: 'order',
     data () {
       return {
         id:0,
         showContent:false,
         loadingshow: true,
         loadtext: '加载中...',
-        dataInfo:{},
+        dataInfo:list(),
         index: 0,
-        list2: list(),
+        statelist:['','p','s','L'],
+        orderempaty:['','待付款','待发货','待收货']
       }
     },
     components: {
+      Loading,
       Tab,
       TabItem,
       Loading,
       BackHome,
-      Swiper,
-      SwiperItem,
+      OrderList,
     },
     beforeCreate(){
       //授权
@@ -68,18 +77,37 @@
           {},
           (data)=>{
             if (data.status==0) {
+              this.dataInfo[0]=data.items;
               this.loadingshow=false;
               this.showContent=true;
-              this.dataInfo=data.items;
             }
-          }),
+          },
           (err)=>{
             console.log(err);
           }
+        );
       },
       onItemClick (index) {
         this.index=index;
-        console.log('on item click:', index)
+        this.loadingshow=true;
+        this.showContent=false;
+        AjaxServer.httpGet(
+          Vue,
+          HOST+'/pay/orders/my',
+          {
+            state:this.statelist[index]
+          },
+          (data)=>{
+            if (data.status==0) {
+              this.loadingshow=false;
+              this.showContent=true;
+              this.dataInfo[index]=data.items;
+            }
+          },
+          (err)=>{
+            console.log(err);
+          }
+        );
       },
     }
   }

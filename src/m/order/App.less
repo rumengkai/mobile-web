@@ -4,12 +4,40 @@ body{
   font-family:'微软雅黑';
   background-color: @bg_color;
 }
-#order-detail{
+#order{
   .content{
     box-sizing: border-box;
     text-align:justify;
     width:100%;
     font-size: 16px;
     color: @font_color_b;
+  }
+  .ht{
+    height: 44px;
+  }
+  .empty{
+    margin: auto;
+    width: 3rem;
+    text-align: center;
+    margin-top: 2rem;
+    img{
+      width: 3rem;
+    }
+    p{
+      line-height: 1rem;
+      color: #999;
+    }
+  }
+  .vux-tab .vux-tab-item.vux-tab-selected{
+    color: @base_color !important;
+    border-bottom:0px solid @base_color !important;
+  }
+  .vux-tab{
+    position: fixed !important;
+    z-index: 1000;
+    width: 100%;
+  }
+  .vux-tab-ink-bar{
+    background-color:@base_color !important;
   }
 }
