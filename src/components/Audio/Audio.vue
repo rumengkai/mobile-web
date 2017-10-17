@@ -104,6 +104,8 @@ export default {
         // remove pause, add play
         pButton.className = "";
         pButton.className = "play";
+        //在这里加上暂停统计请求
+        
       }
     },
     clickslider(e){

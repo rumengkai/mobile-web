@@ -1,0 +1,185 @@
+body{
+  text-align:justify;
+  margin:0;
+  font-family:'微软雅黑';
+  background-color: @bg_color;
+}
+#gift-card-exchange{
+  .content{
+    background: #fff;
+    box-sizing: border-box;
+    text-align:justify;
+    width:100%;
+    font-size: 16px;
+    color: @font_color_b;
+  }
+}
+.btn{
+  padding: .1rem 10% .5rem;
+  margin: auto;
+}
+.btn-none{
+  background: #ddd !important;
+  color: #999 !important;
+  border: none !important;
+}
+.btn-fiexd{
+  position: fixed;
+  bottom: .5rem;
+  height: .8rem;
+  display: flex;
+  justify-content:space-around;
+  width: 100%;
+  .btn-1,.btn-2{
+    text-align: center;
+    height: .8rem;
+    width: 3rem;
+    font-size: 14px;
+    line-height: .8rem;
+    border-radius: 4px;
+    box-shadow: 1px 2px 10px #ccc;
+  }
+  .btn-1{
+    background: #09BB07;
+    color: #fff;
+  }
+  .btn-2{
+    background: #fff;
+    color: @base_color;
+  }
+}
+.header{
+  padding-top: .5rem;
+  text-align: center;
+  .head-img{
+    img{
+      width: 1.4rem;
+      height: 1.4rem;
+      border-radius: 0.7rem;
+    }
+  }
+  .p-0{
+    margin: 10px;
+    font-size:16px;
+  }
+  .p-1{
+    font-size:16px;
+    color: @base_color;
+  }
+  .p-2{
+    line-height: 25px;
+    margin-bottom: 20px;
+    font-size:12px;
+    color: #999;
+  }
+}
+.channel{
+}
+.channels-item{
+  height: 165px;
+  padding: 20px 0;
+  margin-left: .3rem;
+  margin-right: .3rem;
+  box-sizing:border-box;
+  overflow: hidden;
+  position: relative;
+  .headimg{
+    width: 90px;
+    height: 124px;
+    float: left;
+    margin-right: 16px;
+    position: relative;
+    img{
+      border-radius: 2px;
+      display: block;
+      height: 100%;
+      width: 100%;
+    }
+    .tip{
+      width: 14px;
+      height: 14px;
+      background-color: #f00;
+      border-radius: 7px;
+      position: absolute;
+      right: -8px;
+      top: -8px;
+      text-align: center;
+      line-height: 14px;
+      color: #fff;
+      line-height: 14px;
+      span{
+        line-height: 17px;
+        font-size: 12px;
+        transform: scale(0.8);
+      }
+    }
+  }
+  .channels-info{
+    width: auto;
+    margin-right: 0;
+    // float: left;
+    margin-left: .15rem;
+    height: 100%;
+    right: 0;
+    .name{
+      font-size: .36rem;
+      font-weight: bold;
+      color: #333;
+      line-height: 33px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .author_name{
+      color: #666;
+      font-size: 15px;
+      line-height: 33px;
+      span{
+        margin-right: 8px;
+      }
+    }
+    .brief{
+      color: #888;
+      font-size: 14px;
+      line-height:20px;
+      // width: 98%;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .price-co{
+      margin-top: 15px;
+      font-size: 10px;
+      font-size: 14px;
+      .price{
+        font-size: 14px;
+        color: #ca915c;
+        span{
+          font-size: 14px;
+          font-weight: bold;
+        }
+      }
+      .oldprice{
+        color: #bcbcbc;
+        font-size: 12px;
+        text-decoration:line-through;
+        margin-left: 10px;
+      }
+    }
+    .view_count{
+      float: right;
+      color: #888;
+      margin-top: -25px;
+    }
+  }
+}
+.text{
+  padding: .3rem;
+  margin-bottom: 2rem;
+  p{
+    font-size: 13px;
+    color: #666;
+    line-height: 20px;
+    margin-top: .3rem;
+  }
+}

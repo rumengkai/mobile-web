@@ -16,7 +16,7 @@
 
 
 
-window.base="pro"
+window.base="dev"
 // 全局变量，配置
 if (base=="pro") {
 	window.VERSION="0.1"
@@ -34,9 +34,9 @@ if (base=="pro") {
 	}
 }else{
 	window.VERSION="0.1"
-	window.HOST="https://dev.kofuf.com"// 	测试地址
-	window.HOSTM="https://dev.kofuf.com"// 分享时用
-	window.HOSTA="https://dev.kofuf.com"// 授权使用
+	window.HOST="http://dev.kofuf.com"// 	测试地址
+	window.HOSTM="http://dev.kofuf.com"// 分享时用
+	window.HOSTA="http://dev.kofuf.com"// 授权使用
 	window.appid="wx0a542ef9d4d41cef"
 	window.config=function () {
 		return {
