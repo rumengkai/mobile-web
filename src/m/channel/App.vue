@@ -12,7 +12,7 @@
               {{channelsinfo.brief}}
             </p>
           </div>
-          <img :src="channelsinfo.large_thumb" alt="">
+          <img :src="channelsinfo.large_thumb" onerror="this.src='https://static1.kofuf.com/1508740825405.jpg'" alt="">
         </div>
         <div v-if="subscription" class="subtab">
           <div class="tab">
@@ -46,7 +46,7 @@
             <p class="title">最新更新</p>
             <ul class="newupdate">
               <li class="item vux-1px-b" v-for="item in channelsinfo.articles" @click="toDetail(item.id,item.tryout)">
-                <img :src="item.thumb" alt="" onerror="this.src='http://182.92.99.123:8080/privilege/uploadedFile/1491147612922.jpg?imageView2/1/w/200/h/133/q/100|imageslim'">
+                <img :src="item.thumb" alt="" onerror="this.src='https://static1.kofuf.com/1508740825405.jpg?imageView2/1/w/200/h/133/q/100|imageslim'">
                 <div v-if="item.tryout" class="try">试 读</div>
                 <p class="title">{{item.name}}</p>
                 <p class="date">{{item.published | formatDate2}}</p>

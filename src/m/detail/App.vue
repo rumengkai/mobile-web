@@ -37,7 +37,7 @@
       </div>
     </div>
 
-    <footer v-if="showContent&&!open_channel">
+    <footer v-show="showContent&&!open_channel">
       <div class="gfcj" @click="toChannels">
         <img src="http://m.kofuf.com/static/img/logo.png" alt="">
         <div class="gf"><p class="p1">微信登陆APP</p><p class="p2">阅读体验更佳</p></div>
@@ -46,7 +46,7 @@
         <a id='btnOpenApp'>打开APP</a>
       </div>
     </footer>
-    <footer v-if="open_channel&&showContent" class = "open-channel">
+    <!-- <footer v-if="open_channel&&showContent" class = "open-channel">
       <div class="gfcj" >
         <img :src="articles.from_channel.thumb" alt="">
         <div class="gf"><p class="p1">{{articles.from_channel.name}}</p><p class="p2">¥{{articles.from_channel.price}}</p></div>
@@ -54,7 +54,7 @@
       <div class="download" @click="openChannel(articles.from_channel.id)">
         <a id='btnOpenApp'>点此购买</a>
       </div>
-    </footer>
+    </footer> -->
     <div class="qr_code_pc_inner">
       <div class="qr_code_pc">
         <img id="js_pc_qr_code_img" class="qr_code_pc_img" src="https://www.kofuf.com/static/images/code.png">
@@ -138,6 +138,7 @@
       this.fetchData(id);
     },
     mounted(){
+      console.log( document.querySelector('a#btnOpenApp'));
       new Mlink({
         mlink: "https://ah88dj.mlinks.cc/AK8f?id="+this.id,
         button: document.querySelector('a#btnOpenApp'),

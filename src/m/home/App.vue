@@ -192,9 +192,4 @@ body{
 .vux-scroller{
   background: #fff;
 }
-
-
-
-
-
 </style>

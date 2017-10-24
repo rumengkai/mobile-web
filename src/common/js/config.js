@@ -42,8 +42,8 @@ if (base=="pro") {
 		return {
 			paytype:"JSAPI",
 			from:"3",
-			gid:localStorage.getItem("gid"),
-			token:localStorage.getItem("token"),
+			gid:"1047501566",//localStorage.getItem("gid"),
+			token:"f32cd7de15144e2b931214730e6ed9f4",//localStorage.getItem("token"),
 		}
 	}
 }

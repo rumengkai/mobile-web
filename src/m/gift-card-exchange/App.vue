@@ -9,8 +9,8 @@
         <p class="p-1">赠送您一张专栏兑换卡</p>
         <p class="p-2">您可兑换以下专栏</p>
       </div>
-      <div class="channel">
-        <div class="channels-item vux-1px-t" @click="toChannel(channelinfo.id)">
+      <div class="channel vux-1px-t">
+        <div class="channels-item" @click="toChannel(channelinfo.id)">
           <div class="headimg">
             <img :src="channelinfo.thumb" alt="" onerror="this.src='http://m.kofuf.com/static/img/default.png'">
           </div>
