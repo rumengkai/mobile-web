@@ -1,28 +1,21 @@
 <template>
-  <div id="channels">
-    <!-- <x-header v-if="showContent" class="vux-1px-b" :left-options="{showBack: false}"><a slot="right" @click="loginout">退出</a> </x-header> -->
-    <scroller v-if="showContent" lock-x ref="scrollerEvent">
-      <div class="wriper">
-        <!-- <div class="header" v-if="channels.user">
-          <div class="headimg">
-            <img :src="channels.user.profile" onerror="this.src='http://m.kofuf.com/static/img/weblogo.png'" alt="">
+  <div id="channels-index">
+    <div class="content vux-1px-b" v-if="showContent">
+      <TitleBar :title="dataInfo.updated_channels.name" more="查看全部" :img="dataInfo.updated_channels.image" line="line" url="/m/channels-sub.html"></TitleBar>
+      <div class="channels-sub">
+        <div class="warp">
+          <div class="box1" ref="box1">
+            <div class="box1-item" v-for="item in dataInfo.updated_channels.items" @click="toChannel(item)">
+              <img :src="item.thumb" alt=""><span>{{item.unread_num}}</span>
+            </div>
           </div>
-          <span class="name">{{channels.user.name}}</span>
-        </div> -->
-        <div class="content vux-1px-b">
-          <div v-if="showsub" class="channels-title vux-1px-t vux-1px-b">
-            <!-- <span></span> -->
-            已订阅
-          </div>
-          <Channels v-if="showsub" :subs="channels.subs"></Channels>
-          <div v-if="channels.unsubs.length" class="channels-title vux-1px-t vux-1px-b">
-            <!-- <span></span> -->
-            推荐订阅
-          </div>
-          <Channels v-if="channels.unsubs.length" :subs="channels.unsubs"></Channels>
         </div>
       </div>
-    </scroller>
+      <TitleBar :title="dataInfo.small_channels.name" more="查看全部" :img="dataInfo.small_channels.image" line="line" url="/m/channels-small.html"></TitleBar>
+      <Channels :subs="dataInfo.small_channels.items" type="small"></Channels>
+      <TitleBar :title="dataInfo.big_channels.name" :img="dataInfo.big_channels.image" line="line"></TitleBar>
+      <Channels :subs="dataInfo.big_channels.items"></Channels>
+    </div>
     <TabBar active="sub"></TabBar>
     <Failed v-if="failedshow" :msg="failedmsg"></Failed>
     <Loading v-model="loadingshow" :text="loadtext"></Loading>
@@ -33,6 +26,7 @@
   import 'common/css/reset.css';
   import 'common/js/config.js';
   import {isWeiXin} from 'common/js/common.js';
+  import TitleBar from "components/TitleBar/TitleBar"
   import AjaxServer from 'common/js/ajaxServer.js';
   import geturlpara from 'common/js/geturlpara.js';
   import Channels from "components/Channels/Channels"
@@ -47,19 +41,11 @@
   Vue.prototype.$geturlpara=geturlpara
 
   export default {
-    name: 'channels',
     data () {
       return {
         loadingshow: true,
         loadtext: 'loading...',
-        channels:{
-          unsubs:[],
-          subs:[],
-          user:{
-            name:"功夫财经",
-            profile:"https://mwimg.mlinks.cc/ms_image_18938_6d17d71962adfbf579928a0a49704002.jpg?imageMogr/v2/thumbnail/300x300",
-          }
-        },
+        dataInfo:{},
         showContent:false,
         showsub:false,
         failedshow:false,
@@ -67,6 +53,7 @@
       }
     },
     components: {
+      TitleBar,
       Icon,
       XHeader,
       Loading,
@@ -83,50 +70,40 @@
     },
     created () {
       this.fetchData();
-      // this.getAjax();
     },
     methods: {
-      //获取专栏数据数据
-      fetchData(cid){
+      fetchData(){
+        var url=HOST+'/api/channels/index.json';
+        var data={};
+        AjaxServer.httpGet(Vue,url,data,this.fetchResult);
+      },
+      fetchResult(res){
         var self=this;
-        // getAuth(cookie,querystring);
-        AjaxServer.httpGet(
-          Vue,
-          HOST+'/api/channels.json',
-          {},
-          (data)=>{
-            //如果登陆过期，清除localStorage,刷新当前页面
-            if (!data.is_login&&isWeiXin()) {
-              localStorage.setItem("gid","");
-              localStorage.clear();
-              clearcookie(cookie);
-              getAuth(cookie,querystring);
-            }else{
-              self.channels=data;
-              if(self.channels.status!=0){
-                self.failedmsg=self.channels.error;
-                self.failedshow=true;
-              } else{
-                if(self.channels.subs!=0){
-                  self.showsub=true;
-                }
-                self.showContent=true;
-                self.loadingshow=false;
-                self.$nextTick(() => {
-                  self.$refs.scrollerEvent.reset()
-                })
-              }
-            }
-          },
-          (err)=>{
-            console.log(err);
+        if (!res.is_login&&isWeiXin()) {
+          localStorage.setItem("gid","");
+          localStorage.clear();
+          clearcookie(cookie);
+          getAuth(cookie,querystring);
+        }else{
+          if(res.status!=0){
+            self.failedmsg=self.channels.error;
+            self.failedshow=true;
+          } else{
+            self.dataInfo=res;
+            self.showContent=true;
             self.loadingshow=false;
-            // self.failedshow=true;
+            setTimeout(()=>{
+              self.$refs.box1.style.width=100*res.updated_channels.items.length+20+"px"
+            },0);
           }
-        );
-        setTimeout(()=>{
-          self.loadingshow=false;
-        },10000);
+        }
+      },
+      toChannel(item){
+        if (item.type==0) {
+          window.location.href="/m/channel.html?id="+id;
+        }else{
+          window.location.href="/m/channel-small.html?id="+id;
+        }
       },
       logErr(err){
         this.$vux.alert.show({
@@ -137,21 +114,6 @@
           onShow () {},
           onHide () {}
         })
-      },
-      loginout(){
-        localStorage.clear();
-        cookie.set('gid', 0,{
-            domain: '.kofuf.com',
-            path: '/',
-            expires: -1
-          });
-        cookie.set('token', 0,{
-            domain: '.kofuf.com',
-            path: '/',
-            expires: -1
-          });
-        WeixinJSBridge.invoke('closeWindow',{},function(res){});
-        // location.reload();
       }
     }
   }
@@ -159,70 +121,63 @@
 
 <style lang="less">
 @import '~vux/src/styles/1px.less';
-body{
+#channels-index{
   background-color: #eee;
+  padding: 1px 0 1.4rem;
+  .content{
+    background: #eee;
+  }
+  .channels-sub{
+    background: #fff;
+  }
 }
-#channels{
-  height: 100%;
+.warp{
+  width: 100%;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+.wrap::-webkit-scrollbar {
+    display: none;
+}
+.box1 {
+  min-width: 7.5rem;
+  height: 100px;
+  box-sizing: border-box;
   background-color: #fff;
-  .header{
-    width: 100%;
-    height: 37px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    background-color: #333;
-    .headimg{
-      margin-left: .3rem;
-      width: 30px;
-      height: 30px;
-      border-radius: 15px;
-      // background-color: #f00;
-      overflow: hidden;
-      img{
-        width: 100%;
-        height: 100%;
-      }
-    }
-    .name{
-      font-size: 12px;
-      color: #ccc;
-      margin-left: .3rem;
-      font-weight: 200;
-    }
+  position: relative;
+  margin: 0 10px;
+}
+.box1-item {
+  width: 100px;
+  height: 110px;
+  background-color: #fff;
+  display:inline-block;
+  float: left;
+  box-sizing: border-box;
+  padding:12px 7px;
+  position: relative;
+  span{
+    width: 15px;
+    height: 15px;
+    border-radius: 8px;
+    background: #f00;
+    text-align: center;
+    color: #fff;
+    font-size: 12px;
+    line-height: 15px;
+    top: 13px;
+    right: 15px;
+    position: absolute;
+    display: block;
+    border: 1px #fff solid;
   }
-  .wriper{
-    height: auto;
-    overflow: hidden;
-    .content{
-      margin-bottom: 100px;
-    }
-  }
-
-  .channels-title{
-    padding-left: 14px;
-    width: 100%;
-    height: .7rem;
-    background-color: #f0f0f0;
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    color: #666;
-    span{
-      display: block;
-      height: 16px;
-      width: 4px;
-      background-color: #ca915c;
-      margin-left: .3rem;
-      margin-right: .15rem;
-    }
-
+  img{
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
   }
 }
-.weui-icon-search:before{
-    font-size:20px;
-    color: #666666;
-}
+
 
 
 </style>

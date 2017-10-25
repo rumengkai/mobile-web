@@ -8,16 +8,22 @@
         </div>
         <div class="channels-info">
           <p class="name">{{item.name}}</p>
-          <span class="view_count" v-if="item.view_count!=0&&phonetype!='small'">{{item.view_count}}人订阅</span>
+          <!-- <span class="view_count" v-if="item.view_count!=0&&phonetype!='small'">{{item.view_count}}人订阅</span> -->
           <p class="author_name"><span>{{item.author_name}}</span><span>{{item.author_field}}</span></p>
           <p class="brief">{{item.brief}}</p>
           <p class="price-co">
-            <span v-if="item.channel_price==-1" class="price">¥ <span>{{item.suites[0].price}}</span>/<span>{{item.price_unit}}</span>
+            <span v-if="item.channel_price==-1" class="price">¥
+              <span v-if='item.suites'>{{item.suites[0].price}}</span>/
+              <span v-if='!item.suites'>{{item.price}}</span>/
+              <span>{{item.price_unit}}</span>
             </span>
             <span v-else>
               <span class="price">{{item.text}} ¥ <span>{{item.channel_price}}</span>/<span>{{item.price_unit}}</span>
               </span>
-              <span class="oldprice"> ¥ <span>{{item.suites[0].price}}</span>/<span>{{item.price_unit}}</span>
+              <span class="oldprice"> ¥
+                <span v-if='item.suites'>{{item.suites[0].price}}</span>/
+                <span v-if='!item.suites'>{{item.price}}</span>/
+                <span>{{item.price_unit}}</span>
               </span>
             </span>
           </p>
@@ -35,7 +41,8 @@
   export default {
     name: 'channels',
     props: {
-      subs:Array
+      subs:Array,
+      type:String
     },
     data () {
       return {
@@ -56,7 +63,11 @@
     },
     methods: {
       channelsDetail(id){
-        window.location.href="channel.html?id="+id;
+        if (this.type=="small") {
+          window.location.href="channel-small.html?id="+id;
+        }else{
+          window.location.href="channel.html?id="+id;
+        }
       }
     }
   }
@@ -65,6 +76,7 @@
 <style lang="less">
 @import '~vux/src/styles/1px.less';
 #channels{
+  background: #fff;
   .channels-item{
     cursor: pointer;
     height: 165px;

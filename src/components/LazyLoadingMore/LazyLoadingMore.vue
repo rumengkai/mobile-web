@@ -19,7 +19,7 @@ import {isWeiXin,getClient,getSubClient,getBody} from 'common/js/common.js';
       return {
         pn:0,
         nonedata:false,
-        commentBottomMsg:"上拉，立即加载更多",
+        commentBottomMsg:"点击，立即加载更多",
         loadmore:true,
         islazyload:true,
         allload:false,//是否加载完毕

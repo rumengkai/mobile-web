@@ -118,7 +118,6 @@
     }
   }
 </script>
-
 <style lang="less">
 @import '~vux/src/styles/1px.less';
 @import "../index/App.less";

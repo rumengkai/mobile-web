@@ -59,12 +59,12 @@
       this.feachData();
     },
     methods: {
-      feachData(){
+      fetchData(){
         var url=HOST+'/api/users/coupon_center';
         var data={};
-        AjaxServer.httpGet(Vue,url,data,this.feachReasult);
+        AjaxServer.httpGet(Vue,url,data,this.fetchResult);
       },
-      feachReasult(res){
+      fetchResult(res){
         if (res.status==0) {
           this.dataCount=res;
         }

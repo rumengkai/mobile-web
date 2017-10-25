@@ -2,13 +2,15 @@
   <div id="home">
     <div v-if="showContent">
       <Banner :bannerlist="indexdata.carousels"></Banner>
-      <TitleBar :title="indexdata.daily_head.title" more="查看全部" :img="indexdata.daily_head.image" url="/m/daily.html"></TitleBar>
-      <AudioList :audiolist="indexdata.daily"></AudioList>
-      <TitleBar :title="indexdata.channel_head.title" more="查看全部" :img="indexdata.channel_head.image" line="line" url="/m/channels.html"></TitleBar>
+      <TitleBar :title="indexdata.daily.name" more="查看全部" :img="indexdata.daily.image" url="/m/daily.html"></TitleBar>
+      <AudioList :audiolist="indexdata.daily.items"></AudioList>
+      <TitleBar :title="indexdata.small_channels.name" more="查看全部" :img="indexdata.small_channels.image" line="line" url="/m/channels-small.html"></TitleBar>
+      <Channels :subs="indexdata.small_channels.items" type="small"></Channels>
+      <TitleBar :title="indexdata.big_channels.name" more="查看全部" :img="indexdata.big_channels.image" line="line" url="/m/daily.html"></TitleBar>
       <div class="channels">
         <div class="warp">
           <div class="box1" ref="box1">
-            <div class="box1-item" v-for="item in indexdata.channels" @click="toChannel(item.id)">
+            <div class="box1-item" v-for="item in indexdata.big_channels.items" @click="toChannel(item.id)">
               <img :src="item.thumb" alt="">
               <p class="title" v-html="item.name"></p>
               <p class="brief" v-html="item.brief"></p>
@@ -16,10 +18,10 @@
           </div>
         </div>
       </div>
-      <TitleBar :title="indexdata.goods_head.title" more="查看全部" :img="indexdata.goods_head.image" url="/m/goods.html"></TitleBar>
-      <AudioList :audiolist="indexdata.goods"></AudioList>
-      <TitleBar :title="indexdata.article_head.title" line="line" :img="indexdata.article_head.image"></TitleBar>
-      <Article :articlelist="indexdata.articles"></Article>
+      <TitleBar :title="indexdata.goods.name" more="查看全部" :img="indexdata.goods.image" url="/m/goods.html"></TitleBar>
+      <AudioList :audiolist="indexdata.goods.items"></AudioList>
+      <TitleBar :title="indexdata.articles.name" line="line" :img="indexdata.articles.image"></TitleBar>
+      <Article :articlelist="indexdata.articles.items"></Article>
       <div class="load">
         <LazyLoadingMore url="/api/articles/list.json" v-on:getData="loadList" params="articles"></LazyLoadingMore>
       </div>
@@ -63,7 +65,7 @@
         showContent:false,
         failedshow:false,
         failedmsg:"服务请求失败，请刷新重试",
-        indexdata:{},
+        indexdata:{small_channels:{items:[]}},
       }
     },
     components: {
@@ -93,27 +95,20 @@
     methods: {
       //获取首页数据
       fetchData(){
+        var url=HOST+'/api/index2.json';
+        var data={};
+        AjaxServer.httpGet(Vue,url,data,this.fetchResult);
+      },
+      fetchResult(res){
         var self=this;
-        AjaxServer.httpGet(
-          Vue,
-          HOST+'/api/index.json',
-          {},
-          (data)=>{
-            if (data.status==0) {
-              this.loadingshow=false;
-              this.showContent=true;
-              self.indexdata=data;
-              setTimeout(()=>{
-                self.$refs.box1.style.width=150*self.indexdata.channels.length+20+"px"
-              },0);
-            }
-          },
-          (err)=>{
-            console.log(err);
-            self.loadingshow=false;
-            self.failedshow=true;
-          }
-        );
+        if (res.status==0) {
+          this.loadingshow=false;
+          this.showContent=true;
+          self.indexdata=res;
+          setTimeout(()=>{
+            self.$refs.box1.style.width=150*self.indexdata.big_channels.items.length+20+"px"
+          },0);
+        }
         setTimeout(()=>{
           self.loadingshow=false;
         },10000);
@@ -122,74 +117,13 @@
         window.location.href="/m/channel.html?id="+id;
       },
       loadList(data){
-        this.indexdata.articles=this.indexdata.articles.concat(data);
+        this.indexdata.articles.items=this.indexdata.articles.items.concat(data);
       }
     }
   }
 </script>
-
 <style lang="less">
 @import '~vux/src/styles/1px.less';
-body{
-  background-color: #eee;
-}
-#home{
-  height: 100%;
-}
-.channels{
-  background: #fff;
-}
-.warp{
-  width: 100%;
-  overflow: scroll;
-  -webkit-overflow-scrolling: touch;
-}
-.wrap::-webkit-scrollbar {
-    display: none;
-}
-.box1 {
-  width: 1000px;
-  min-width: 800px;
-  height: 222px;
-  box-sizing: border-box;
-  background-color: #fff;
-  position: relative;
-  margin: 0 10px;
-}
-.box1-item {
-  width: 150px;
-  height: 200px;
-  background-color: #fff;
-  display:inline-block;
-  float: left;
-  box-sizing: border-box;
-  padding:12px 7px;
-  position: relative;
-  img{
-    width: 136px;
-    height: 136px;
-  }
-  .title{
-    margin-top: 8px;
-    height: 20px;
-    line-height: 20px;
-    white-space:nowrap;
-    overflow: hidden;
-    text-overflow:ellipsis;
-    color: #333;
-    font-size: 14px;
-  }
-  .brief{
-    margin-top: 4px;
-    line-height: 14px;
-    color: #999;
-  }
-}
-.load{
-  height: 120px;
-  width: 100%;
-}
-.vux-scroller{
-  background: #fff;
-}
+@import "../index/App.less";
+@import './App.less';
 </style>
