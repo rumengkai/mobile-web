@@ -1,3 +1,5 @@
+import Vue from 'vue'
+
 export default{
   ajaxPost:function (url,data,success,error) {
     $.ajax({
@@ -34,7 +36,7 @@ export default{
       var res=JSON.parse(res);
       success(res);
     },(err)=>{
-      error(err)
+      error(err)||console.log(err);
     });
   },
   httpGet:function (Vue,url,params,success,error) {
@@ -57,7 +59,7 @@ export default{
       var res=JSON.parse(res);
       success(res);
     },(err)=>{
-      error(err)
+      error(err)||console.log(err);
     });
   }
 }

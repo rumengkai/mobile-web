@@ -112,7 +112,7 @@
               if (data.status!=0) {
                 this.$vux.alert.show({
                   title: '提示',
-                  content: "创建订单失败",
+                  content:data.error,
                   dialogTransition:"",
                   maskTransition:"",
                   onHide (){
@@ -169,7 +169,7 @@
             }else{
               // alert("购买成功")
               // location.reload();
-              location.href="/m/channels.html";
+              location.href="/m/gift-card-list.html";
             }
           }
         );

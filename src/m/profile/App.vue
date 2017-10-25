@@ -11,9 +11,6 @@
         <cell title="微信" v-if='myInfo.user.weixin'>{{myInfo.user.weixin}}</cell>
         <cell title="微博" v-if='myInfo.user.weibo'>{{myInfo.user.weibo}}</cell>
       </group>
-      <group class="group">
-        <cell title="兑换码" is-link @click.native="toCode"></cell>
-      </group>
     </div>
     <Failed v-if="failedshow" :msg="failedmsg"></Failed>
     <Loading v-model="loadingshow" :text="loadtext"></Loading>
@@ -86,9 +83,6 @@
         setTimeout(()=>{
           self.loadingshow=false;
         },10000);
-      },
-      toCode(){
-        window.location.href="/m/code-active.html"
       }
     }
   }

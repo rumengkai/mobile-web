@@ -90,7 +90,11 @@
       } catch (e) {
         this.id = 0;
       }
-      this.codevalue = this.$geturlpara.getUrlKey("code");
+      try {
+        this.codevalue = this.$geturlpara.getUrlKey("code");
+      } catch (e) {
+        this.codevalue =  0;
+      }
       // 授权
       // if (isWeiXin()) {
         getAuth(cookie,querystring,"gift-card-exchange.html?code="+this.codevalue);
@@ -116,8 +120,7 @@
               localStorage.setItem("gid","");
               localStorage.clear();
               clearcookie(cookie);
-              var id = this.$geturlpara.getUrlKey("id");
-              getAuth(cookie,querystring,"gift-card-exchange.html?id="+this.id+"&code="+this.codevalue);
+              getAuth(cookie,querystring,"gift-card-exchange.html?code="+this.codevalue);
             }
           },
           (err)=>{

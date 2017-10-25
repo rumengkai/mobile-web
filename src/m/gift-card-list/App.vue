@@ -1,25 +1,31 @@
 <template>
   <div id="gift-card-list">
     <div class="content" v-if="showContent">
-      <div class="card-2">
+      <p class="title">您的礼品卡</p>
+      <div class="card" v-for="item in dataInfo" v-if="!item.state">
         <img class="code-bg" src="./images/code-bg.png" alt="">
         <div class="name">
-          大笑说A股
+          {{item.name}}
         </div>
-        <p class="price">¥ 150</p>
-        <p class="text">已兑换</p>
-      </div>
-      <div class="card">
-        <img class="code-bg" src="./images/code-bg.png" alt="">
-        <div class="name">
-          大笑说A股
-        </div>
-        <p class="price">¥ 150</p>
-        <p class="code">NJCNKSBHJMKJN</p>
+        <p class="price">¥ {{item.price}}</p>
+        <p class="code">{{item.code}}</p>
         <div class="line"></div>
         <div class="s-btn" @click.stop="sendFriends(item)">
           <img src="./images/wx.png" alt=""><span>点此赠送给微信好友</span>
         </div>
+      </div>
+      <div class="card-2" v-for="item in dataInfo" v-if="item.state">
+        <img class="code-bg" src="./images/code-bg.png" alt="">
+        <div class="name">
+          {{item.name}}
+        </div>
+        <p class="price">¥ {{item.price}}</p>
+        <p class="text">{{item.state}}</p>
+      </div>
+      <div class="none-card" v-if="!dataInfo.length">
+        <img src="./images/none.png" alt="">
+        <p class="p-1">暂无礼品卡</p>
+        <p class="p-2">您可以进入专栏详情页购买礼品卡</p>
       </div>
     </div>
     <BackHome></BackHome>
@@ -48,7 +54,7 @@
         showContent:true,
         loadingshow: false,
         loadtext: '加载中...',
-        dataInfo:{},
+        dataInfo:[1],
       }
     },
     components: {
@@ -67,7 +73,7 @@
         this.id = 0;
       }
       //授权
-      // getAuth(cookie,querystring,"gift-card-exchange.html?code="+this.codevalue);
+      getAuth(cookie,querystring,"gift-card-list.html");
       this.fetchData();
     },
     methods: {
@@ -79,7 +85,7 @@
           (data)=>{
             console.log(data.status==5&&isWeiXin());
             if (data.status==0) {
-              this.channelinfo=data.channel;
+              this.dataInfo=data.items;
               this.showContent=true;
               this.loadingshow=false;
             }else if(data.status==5&&isWeiXin()){
@@ -103,8 +109,8 @@
         }
         weixinShare(Vue);
         this.$vux.alert.show({
-          title: '提示',
-          content: "已选择当前礼品卡，点击右上角分享给朋友！",
+          title: '',
+          content: "已选择当前礼品卡<br><br>点击右上角分享给您的朋友！",
           dialogTransition:"",
           maskTransition:"",
         });

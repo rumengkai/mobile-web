@@ -8,6 +8,20 @@
         <x-button type="primary" @click.native="code" class="primary">兑换</x-button>
       </div>
       <p class="coderule" @click="coderule"><img src="./images/question_mark.png" alt="">兑换规则</p>
+      <group class="group">
+        <cell title="礼品卡" is-link @click.native="toSkip('gift-card-list.html')">
+          <img slot="icon" width="20" style="display:block;margin-right:5px;" src="./images/gift-icon.png">
+          <span class="tp" v-if="dataCount.gift_count!=0">
+            <span class="tp1">{{dataCount.gift_count}}</span>
+          </span>
+        </cell>
+        <cell title="优惠券" is-link @click.native="toSkip('coupons.html')">
+          <img slot="icon" width="20" style="display:block;margin-right:5px;" src="./images/coupons-icon.png">
+          <span class="tp" v-if="dataCount.coupon_count!=0">
+            <span class="tp1">{{dataCount.coupon_count}}</span>
+          </span>
+        </cell>
+      </group>
     </div>
     <Loading v-model="loadingshow" :text="loadtext" ></Loading>
   </div>
@@ -18,7 +32,7 @@
   import 'common/js/config.js';
   import AjaxServer from 'common/js/ajaxServer.js';
   import {isWeiXin} from 'common/js/common.js';
-  import { Group,Loading,cookie,querystring,XButton,XInput,ToastPlugin } from 'vux'
+  import { Group,Cell,Loading,cookie,querystring,XButton,XInput,ToastPlugin } from 'vux'
   import Vue from 'vue'
   Vue.use(ToastPlugin)
   export default {
@@ -29,21 +43,32 @@
         showContent:true,
         loadingshow: false,
         loadtext: '加载中...',
-        codevalue:""
+        codevalue:"",
+        dataCount:{}
       }
     },
     components: {
       Group,
+      Cell,
       Loading,
       XButton,
       XInput
     },
     created () {
-      if(isWeiXin()){
-        getAuth(cookie,querystring);
-      }
+      getAuth(cookie,querystring);
+      this.feachData();
     },
     methods: {
+      feachData(){
+        var url=HOST+'/api/users/coupon_center';
+        var data={};
+        AjaxServer.httpGet(Vue,url,data,this.feachReasult);
+      },
+      feachReasult(res){
+        if (res.status==0) {
+          this.dataCount=res;
+        }
+      },
       code(){
         var self=this;
         this.loadingshow=true;
@@ -81,7 +106,10 @@
       },
       coderule(){
         window.location.href="/m/code-rule.html"
-      }
+      },
+      toSkip(data){
+        window.location.href="/m/"+data;
+      },
     }
   }
 </script>

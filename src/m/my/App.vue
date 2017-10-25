@@ -20,7 +20,7 @@
           <span class="tp tp1" v-if="myInfo.user.level!=0"><span v-if="myInfo.user.privilege_count!=0">{{myInfo.user.privilege_count}}项未兑换</span></span>
         </cell>
         <cell title="收货地址管理" is-link @click.native="toSkip('address.html')"></cell>
-        <cell title="优惠券" is-link @click.native="toSkip('coupons.html')"><span class="tp" v-if="myInfo.user.coupon_count!=0"><span class="tp1">{{myInfo.user.coupon_count}}</span>张待使用</span></cell>
+        <cell title="优惠中心" is-link @click.native="toSkip('code-active.html')"><span class="tp" v-if="myInfo.user.coupon_count!=0"><span class="tp1">{{myInfo.user.coupon_count}}</span>张待使用</span></cell>
       </group>
       <group class="group g1">
         <cell title="个人信息" is-link @click.native="toSkip('profile.html')"></cell>

@@ -6,6 +6,10 @@
         <span class="nstep"></span>
       </p>
       <Coupons :couponData="couponData"></Coupons>
+      <div class="none-card" v-if="!couponData.length">
+        <img src="./images/none.png" alt="">
+        <p class="p-1">暂无优惠券</p>
+      </div>
     </div>
     <Failed v-if="failedshow" :msg="failedmsg"></Failed>
     <Loading v-model="loadingshow" :text="loadtext"></Loading>
@@ -107,6 +111,23 @@
 body{
   background-color: #f5f5f5;
   height: 100%;
+}
+.none-card{
+  img{
+    width: 2rem;
+    margin: auto;
+    margin-top: 2rem;
+    display: block;
+  }
+  .p-1{
+    margin-top: .5rem;
+    color: #999;
+    font-size: 16px;
+  }
+  p{
+    line-height: 30px;
+    text-align: center;
+  }
 }
 #coupons{
   height: 100%;

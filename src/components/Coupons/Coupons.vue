@@ -21,9 +21,9 @@
         </div>
       </div>
     </div>
-    <div class="couponsnone" v-if="!couponD.length">
+    <!-- <div class="couponsnone" v-if="!couponD.length">
       <img src="./images/empty_coupon.png" alt="">
-    </div>
+    </div> -->
   </div>
 </template>
 

@@ -4,6 +4,7 @@
     <!-- <scroller lock-x ref="scrollerEvent" v-show="showContent"> -->
       <div class="content" v-if="showContent">
         <div class="large-img">
+          <!-- <div class="buy-card" @click="toBuyCard()"></div> -->
           <div class="name-brief">
             <p class="name">
               {{channelsinfo.name}}
@@ -265,6 +266,9 @@
     methods: {
       toChannels(){
         window.location.href="/m/home.html"
+      },
+      toBuyCard(){
+        window.location.href="/m/gift-card-buy.html?id="+this.id;
       },
       //获取专栏数据数据
       fetchData(id){
