@@ -27,6 +27,7 @@ import {isWeiXin,getClient,getSubClient,getBody} from 'common/js/common.js';
     },
     props: {
       url:String,
+      pid:String,
       datalist:Array,
       params:String
     },
@@ -57,7 +58,9 @@ import {isWeiXin,getClient,getSubClient,getBody} from 'common/js/common.js';
         AjaxServer.httpGet(
           Vue,
           HOST+this.url+'?pn='+pn,
-          {},
+          {
+            pid:this.pid
+          },
           (data)=>{
             if (data.status==0) {
               self.islazyload=true;

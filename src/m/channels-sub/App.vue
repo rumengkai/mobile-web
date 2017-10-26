@@ -1,7 +1,7 @@
 <template>
   <div id="channels-sub">
     <div class="content vux-1px-b vux-1px-t" v-if="showContent">
-      <Channels :subs="channels_sub"></Channels>
+      <ChannelsSub :subs="channels_sub"></ChannelsSub>
     </div>
     <BackHome></BackHome>
     <Loading v-model="loadingshow" :text="loadtext"></Loading>
@@ -15,7 +15,7 @@
   import {isWeiXin} from 'common/js/common.js';
   import AjaxServer from 'common/js/ajaxServer.js';
   import geturlpara from 'common/js/geturlpara.js';
-  import Channels from "components/Channels/Channels"
+  import ChannelsSub from "components/ChannelsSub/ChannelsSub"
   import Vue from 'vue'
   import {Loading,Icon} from 'vux'
   import VueResource from 'vue-resource'
@@ -39,7 +39,7 @@
       BackHome,
       Icon,
       Loading,
-      Channels
+      ChannelsSub
     },
     beforeCreate(){
       //授权

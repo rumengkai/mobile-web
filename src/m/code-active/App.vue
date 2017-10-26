@@ -36,7 +36,6 @@
   import Vue from 'vue'
   Vue.use(ToastPlugin)
   export default {
-    name: 'code-active',
     data () {
       return {
         id:0,
@@ -56,7 +55,7 @@
     },
     created () {
       getAuth(cookie,querystring);
-      this.feachData();
+      this.fetchData();
     },
     methods: {
       fetchData(){

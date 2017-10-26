@@ -6,7 +6,7 @@
         <div class="warp">
           <div class="box1" ref="box1">
             <div class="box1-item" v-for="item in dataInfo.updated_channels.items" @click="toChannel(item)">
-              <img :src="item.thumb" alt=""><span>{{item.unread_num}}</span>
+              <img :src="item.thumb" alt=""><span v-if="item.unread_num">{{item.unread_num}}</span>
             </div>
           </div>
         </div>
@@ -100,9 +100,9 @@
       },
       toChannel(item){
         if (item.type==0) {
-          window.location.href="/m/channel.html?id="+id;
+          window.location.href="/m/channel.html?id="+item.id;
         }else{
-          window.location.href="/m/channel-small.html?id="+id;
+          window.location.href="/m/channel-small.html?id="+item.id;
         }
       },
       logErr(err){

@@ -1,152 +1,133 @@
 <template>
   <div id="channel-small">
-      <div class="content" v-if="showContent">
-        <div class="large-img">
-          <div class="name-brief">
-            <p class="name">
-              {{channelsinfo.name}}
-            </p>
-            <p class="brief">
-              {{channelsinfo.brief}}
-            </p>
-          </div>
-          <img :src="channelsinfo.large_thumb" onerror="this.src='https://static1.kofuf.com/1508740825405.jpg'" alt="">
-        </div>
-        <div v-if="subscription" class="subtab">
-          <div class="tab">
-            <p><span @click="conList" :class="{focus:isfocus}">内容列表</span></p>
-            <p><span @click="channelInfo" :class="{focus:!isfocus}">专栏介绍</span></p>
-          </div>
-        </div>
-        <div class="buy_member" v-if="!subscription&&channelsinfo.member_prices&&channelsinfo.member_prices.length!=0">
-          <div class="member-list">
-            <p class="member-title">会员折扣价</p>
-            <p class="member-price"><span v-for="item in channelsinfo.member_prices">{{item.name}}¥{{item.price}}</span></p>
-          </div>
-          <p class="buy-now" @click="toActiveMember">
-            &nbsp;&nbsp;立即开通
+    <div class="content" v-if="showContent">
+      <div class="large-img">
+        <div class="name-brief">
+          <p class="name">
+            {{channelsinfo.name}}
+          </p>
+          <p class="brief">
+            {{channelsinfo.brief}}
           </p>
         </div>
-        <ul class="channels-info" v-if="!isfocus||!subscription">
-          <li class="vux-1px-b">
-            <p class="title">专栏介绍</p>
-            <p class="con" v-html="channelsinfo.abstract"></p>
-          </li>
-          <li class="vux-1px-b">
-            <p class="title">适宜人群</p>
-            <p class="con" v-html="channelsinfo.suit_crowds"></p>
-          </li>
-          <li class="vux-1px-b">
-            <p class="title">订阅须知</p>
-            <p class="con" v-html="channelsinfo.information"></p>
-          </li>
-          <li v-if="!subscription">
-            <p class="title">最新更新</p>
-            <ul class="newupdate">
-              <li class="item vux-1px-b" v-for="item in channelsinfo.articles" @click="toDetail(item.id,item.tryout)">
-                <img :src="item.thumb" alt="" onerror="this.src='https://static1.kofuf.com/1508740825405.jpg?imageView2/1/w/200/h/133/q/100|imageslim'">
-                <div v-if="item.tryout" class="try">试 读</div>
-                <p class="title">{{item.name}}</p>
-                <p class="date">{{item.published | formatDate2}}</p>
-              </li>
-            </ul>
-          </li>
-        </ul>
-        <ul class="channel-list" v-if="isfocus&&subscription">
-          <list :datalist="articles.articles"></list>
-          <div v-if='!nonecomment' class="comment-bottom">
-            <p v-if="loadmore" @click="commentLoad">{{commentBottomMsg}}</p>
-            <load-more v-else tip="正在加载">正在加载</load-more>
+        <img :src="channelsinfo.large_thumb" onerror="this.src='https://static1.kofuf.com/1508740825405.jpg'" alt="">
+      </div>
+      <group class="author-info">
+        <cell title="" value="" is-link @click.native="toMoments(channelsinfo.author)">
+          <p class="p-1">{{channelsinfo.author.name}}</p>
+          <p class="p-2">{{channelsinfo.author.brief}}</p>
+          <img slot="icon" :src="channelsinfo.author.photo" alt="头像">
+        </cell>
+      </group>
+      <ul class="channels-info">
+        <li class="vux-1px-b" v-if="channelsinfo.abstract_position=='top'">
+          <p class="title">简介</p>
+          <p class="con" v-html="channelsinfo.abstract"></p>
+        </li>
+        <li>
+          <p class="title" v-show="channelsinfo.articles.length!=0">{{channelsinfo.list_title}}</p>
+          <group v-if="channelsinfo.list_style=='title'">
+            <cell v-for="item in channelsinfo.articles" :title="item.name" value="" is-link @click.native="toDetail(item)"></cell>
+          </group>
+          <div class="newupdate" v-if="channelsinfo.list_style=='abstract'">
+            <li class="item vux-1px-b" v-for="item in channelsinfo.articles" @click="toDetail(item)">
+              <img :src="item.thumb" alt="" onerror="this.src='https://static1.kofuf.com/1508740825405.jpg?imageView2/1/w/200/h/133/q/100|imageslim'">
+              <div v-if="item.tryout" class="try">试 读</div>
+              <p class="title">{{item.name}}</p>
+              <p class="date">{{item.published | formatDate2}}</p>
+            </li>
           </div>
-        </ul>
-        <div class="popup1" v-if="showContent&&!subscription">
-          <popup v-model="showlist" height="100%" position="bottom">
-            <div class="popup12">
-                <p class="p1">可用优惠券</p>
-                <Couponsuse :couponData="channelsinfo.coupons" v-on:getCoupons="CouponsSelected"></Couponsuse>
-                <div v-if="channelsinfo.invalid_coupons">
-                  <p class="p1" v-if="channelsinfo.invalid_coupons.length">不可用优惠券</p>
-                </div>
-                <Couponsuse :couponData="channelsinfo.invalid_coupons" state="3"></Couponsuse>
-              <div class="cancelCoupons">
-                <x-button @click.native="cancelCoupons">暂不使用优惠券</x-button>
+        </li>
+        <li class="vux-1px-b" v-if="channelsinfo.abstract_position=='bottom'">
+          <p class="title">简介</p>
+          <p class="con" v-html="channelsinfo.abstract"></p>
+        </li>
+      </ul>
+      <div class="popup1" v-if="showContent&&!subscription">
+        <popup v-model="showlist" height="100%" position="bottom">
+          <div class="popup12">
+              <p class="p1">可用优惠券</p>
+              <Couponsuse :couponData="channelsinfo.coupons" v-on:getCoupons="CouponsSelected"></Couponsuse>
+              <div v-if="channelsinfo.invalid_coupons">
+                <p class="p1" v-if="channelsinfo.invalid_coupons.length">不可用优惠券</p>
               </div>
+              <Couponsuse :couponData="channelsinfo.invalid_coupons" state="3"></Couponsuse>
+            <div class="cancelCoupons">
+              <x-button @click.native="cancelCoupons">暂不使用优惠券</x-button>
             </div>
-          </popup>
-        </div>
-        <div class="" v-if="showContent&&!subscription&&channelsinfo.composite_channel">
-          <popup v-model="show_composite_channel" max-height="50%" position="bottom">
-            <div class="composite">
-                <p class="p1">
-                  组合专栏优惠价
-                  <span class="com_price">¥{{channelsinfo.composite_channel.channel_price}}
-                  </span><s class="ori_price">&nbsp;¥{{channelsinfo.composite_channel.price}}</s>
-                </p>
-                <ul class="">
-                  <li>
-                    <div class="headimg">
-                      <img :src="channelsinfo.composite_channel.channels[0].thumb" alt="">
-                    </div>
-                    <div class="con_text">
-                      <p class="composite_channel_name">{{channelsinfo.composite_channel.channels[0].name}}<span class="or_price">¥{{channelsinfo.composite_channel.channels[0].price}}</span></p>
-                      <p class="composite_channel_brief">{{channelsinfo.composite_channel.channels[0].brief}}</p>
-                    </div>
-                  </li>
-                  <div class="center_plus">
-                    <img  src="./images/plus_03.png" alt="">
-                  </div>
-                  <li @click="toChannelsTuiJian(channelsinfo.composite_channel.channels[1])">
-                    <div class="headimg">
-                      <img :src="channelsinfo.composite_channel.channels[1].thumb" alt="">
-                      <span class="tuijian">推荐</span>
-                    </div>
-                    <div class="con_text">
-                      <p class="composite_channel_name">{{channelsinfo.composite_channel.channels[1].name}}<span class="or_price">¥{{channelsinfo.composite_channel.channels[1].price}}</span></p>
-                      <p class="composite_channel_brief">{{channelsinfo.composite_channel.channels[1].brief}}</p>
-                    </div>
-                  </li>
-                </ul>
-                <div>
-                  <x-button type="primary" @click.native="oneBuySubscribe">一键拿下</x-button>
-                  <x-button @click.native="readysub">不感兴趣</x-button>
-                </div>
-            </div>
-          </popup>
-        </div>
-        <popup v-model="showpopup" max-height="60%">
-            <div class="popup2">
-              <group>
-                <cell title="您将订阅" :value="channelsinfo.name"></cell>
-                <cell title="支付金额" >¥{{coupon_price}}</cell>
-                <cell :title="couponsname" :value="couponstext" is-link @click.native="showCouponsList"></cell>
-              </group>
-              <div style="padding:20px 15px;">
-                <x-button type="primary" @click.native="subscribe">立即购买</x-button>
-                <x-button @click.native="showpopup = false">取消</x-button>
-              </div>
-            </div>
+          </div>
         </popup>
       </div>
+      <div class="" v-if="showContent&&!subscription&&channelsinfo.composite_channel">
+        <popup v-model="show_composite_channel" max-height="50%" position="bottom">
+          <div class="composite">
+              <p class="p1">
+                组合专栏优惠价
+                <span class="com_price">¥{{channelsinfo.composite_channel.channel_price}}
+                </span><s class="ori_price">&nbsp;¥{{channelsinfo.composite_channel.price}}</s>
+              </p>
+              <ul class="">
+                <li>
+                  <div class="headimg">
+                    <img :src="channelsinfo.composite_channel.channels[0].thumb" alt="">
+                  </div>
+                  <div class="con_text">
+                    <p class="composite_channel_name">{{channelsinfo.composite_channel.channels[0].name}}<span class="or_price">¥{{channelsinfo.composite_channel.channels[0].price}}</span></p>
+                    <p class="composite_channel_brief">{{channelsinfo.composite_channel.channels[0].brief}}</p>
+                  </div>
+                </li>
+                <div class="center_plus">
+                  <img  src="./images/plus_03.png" alt="">
+                </div>
+                <li @click="toChannelsTuiJian(channelsinfo.composite_channel.channels[1])">
+                  <div class="headimg">
+                    <img :src="channelsinfo.composite_channel.channels[1].thumb" alt="">
+                    <span class="tuijian">推荐</span>
+                  </div>
+                  <div class="con_text">
+                    <p class="composite_channel_name">{{channelsinfo.composite_channel.channels[1].name}}<span class="or_price">¥{{channelsinfo.composite_channel.channels[1].price}}</span></p>
+                    <p class="composite_channel_brief">{{channelsinfo.composite_channel.channels[1].brief}}</p>
+                  </div>
+                </li>
+              </ul>
+              <div>
+                <x-button type="primary" @click.native="oneBuySubscribe">一键拿下</x-button>
+                <x-button @click.native="readysub">不感兴趣</x-button>
+              </div>
+          </div>
+        </popup>
+      </div>
+      <popup v-model="showpopup" max-height="60%">
+          <div class="popup2">
+            <group>
+              <cell title="您将订阅" :value="channelsinfo.name"></cell>
+              <cell title="支付金额" >¥{{coupon_price}}</cell>
+              <cell :title="couponsname" :value="couponstext" is-link @click.native="showCouponsList"></cell>
+            </group>
+            <div style="padding:20px 15px;">
+              <x-button type="primary" @click.native="subscribe">立即购买</x-button>
+              <x-button @click.native="showpopup = false">取消</x-button>
+            </div>
+          </div>
+      </popup>
+    </div>
     <!-- 底部弹框 -->
     <footer v-if="showContent&&!subscription">
-        <div class="freeread" @click="freeRead" v-if="unit!='1期'">
-          <span>免费试读</span>
-        </div>
-        <div class="subscribe" @click="composite_readysub" v-if="unit!='1期'">
+        <div class="subscribe" @click="composite_readysub">
           <a>
-            <span v-if="price!='0'">订阅：<span>¥{{price}}/{{unit}}</span></span>
-            <span v-if="price=='0'">免费领取</span></span>
-          </a>
-        </div>
-        <div class="subscribe_one" @click="composite_readysub" v-if="unit=='1期'">
-          <a>
-            <span v-if="price!='0'">订阅专栏：<span>¥{{price}}</span></span>
+            <span v-if="price!='0'">{{channelsinfo.level_name?channelsinfo.level_name+'价':'订阅'}}：<span>¥{{price}}</span></span>
             <span v-if="price=='0'">免费领取</span></span>
           </a>
         </div>
     </footer>
+    <div class="qr_code_pc_inner">
+      <div class="qr_code_pc">
+        <img id="js_pc_qr_code_img" class="qr_code_pc_img" src="https://www.kofuf.com/static/images/code.png">
+        <p>微信扫一扫<br>学财经，长本事</p>
+      </div>
+    </div>
     <dev v-show="showContent&&!(showContent&&!subscription)" class = "openApp">
-      <div class="gfcj" @click="toChannels">
+      <div class="gfcj" @click="toChannels()">
         <img src="http://m.kofuf.com/static/img/logo.png" alt="">
         <div class="gf"><p class="p1">微信登陆APP</p><p class="p2">阅读体验更佳</p></div>
       </div>
@@ -154,13 +135,6 @@
         <a id='btnOpenApp'>打开APP</a>
       </div>
     </dev>
-
-    <div class="qr_code_pc_inner">
-      <div class="qr_code_pc">
-        <img id="js_pc_qr_code_img" class="qr_code_pc_img" src="https://www.kofuf.com/static/images/code.png">
-        <p>微信扫一扫<br>学财经，长本事</p>
-      </div>
-    </div>
     <BackHome></BackHome>
     <Failed v-if="failedshow" :msg="failedmsg"></Failed>
     <Loading v-model="loadingshow" :text="loadtext" ></Loading>
@@ -176,10 +150,9 @@
   import { toPay } from 'common/js/pay.js';
   import Vue from 'vue'
   import { formatDate2 } from 'common/js/date.js';
-  import {Loading,XHeader,Scroller,LoadMore,AlertPlugin,ToastPlugin,querystring,cookie,Popup,XSwitch,Group,Cell,XButton} from 'vux'
+  import {Loading,XHeader,LoadMore,AlertPlugin,ToastPlugin,querystring,cookie,Popup,XSwitch,Group,Cell,XButton} from 'vux'
   import Failed from "components/Failed/Failed"
   import BackHome from "components/BackHome/BackHome"
-  import List from "components/List/List"
   import Couponsuse from "components/Couponsuse/Couponsuse"
   import VueResource from 'vue-resource'
   Vue.use(VueResource)
@@ -224,9 +197,7 @@
       XHeader,
       Loading,
       LoadMore,
-      Scroller,
       Failed,
-      List,
       BackHome,
       Popup,
       Group,
@@ -261,6 +232,9 @@
     methods: {
       toChannels(){
         window.location.href="/m/home.html"
+      },
+      toMoments(item){
+        window.location.href="/m/moments.html?id="+item.id
       },
       toBuyCard(){
         window.location.href="/m/gift-card-buy.html?id="+this.id;
@@ -327,17 +301,21 @@
       share(){
         console.log("share");
       },
-      toDetail(id,tryout){
-        if (!tryout) {
-          this.$vux.toast.show({
-             text: '请订阅后查看',
-            //  position:'bottom',
-             time:3000,
-             width:'10em',
-             type:'text'
-          })
+      toDetail(item){
+        if (this.subscription) {
+          window.location.href="/m/detail.html?id="+item.id;
         }else{
-          window.location.href="/m/detail.html?id="+id;
+          if (!item.tryout) {
+            this.$vux.toast.show({
+              text: '请订阅后查看',
+              position:'bottom',
+              time:3000,
+              width:'10em',
+              type:'text'
+            })
+          }else{
+            window.location.href="/m/detail.html?id="+item.id;
+          }
         }
       },
       freeRead(){
@@ -415,6 +393,7 @@
       subscribe(){
         var self=this;
         self.showpopup=false;
+        console.log(this.disable);
         //已登陆情况
         if (localStorage.getItem("gid")&&this.disable) {
           self.loadtext="加载中..."
@@ -441,6 +420,7 @@
                   maskTransition:"",
                   onHide (){
                     console.log("订单创建失败");
+                    self.disable=true;
                     if(data.status==5){
                       localStorage.clear();
                       clearcookie(cookie);
@@ -468,7 +448,6 @@
               self.loadingshow=false;
             }
           );
-
         }else{
           //未登陆情况，跳转到授权
           getAuth(cookie,querystring,"channel",this.id);

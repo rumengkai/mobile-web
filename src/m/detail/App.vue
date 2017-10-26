@@ -14,7 +14,7 @@
       </div>
       <div class="article">
         <p class="title">{{articles.name}}</p>
-        <div class="info vux-1px-b">
+        <div class="info vux-1px-b" @click="toUserCenter(articles)">
           <img :src="articles.author_pic" alt="" onerror="this.src='http://m.kofuf.com/static/img/logo.png'">
           <span class="author">作者：{{articles.author_name}}</span>
           <span class="created">{{articles.created | formatDate}}</span>
@@ -164,7 +164,7 @@
             if(this.articles.status!=4){
               this.appdownloadshow=true;
             }else{
-              window.location.href="/m/channel.html?id="+this.articles.channel;
+              // window.location.href="/m/channel.html?id="+this.articles.channel;
             }
           }else{
             this.showContent=true;
@@ -267,6 +267,9 @@
       },
       openChannel(id){
         window.location.href="/m/channel.html?id="+id;
+      },
+      toUserCenter(item){
+        window.location.href="/m/moments.html?id="+item.author_id;
       }
     },
     filters: {

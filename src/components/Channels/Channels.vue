@@ -13,7 +13,7 @@
           <p class="brief">{{item.brief}}</p>
           <p class="price-co">
             <span v-if="item.channel_price==-1" class="price">¥
-              <span v-if='item.suites'>{{item.suites[0].price}}</span>/
+              <span v-if='item.suites'>{{item.suites[0].price}}</span>
               <span v-if='!item.suites'>{{item.price}}</span>/
               <span>{{item.price_unit}}</span>
             </span>

@@ -16,7 +16,7 @@
 
 
 
-window.base="dev"
+window.base="pro"
 // 全局变量，配置
 if (base=="pro") {
 	window.VERSION="0.1"
