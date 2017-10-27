@@ -30,10 +30,11 @@
         <div v-if='nonecomment' class="comment-bottom">
           <p>暂无数据</p>
         </div>
-        <div v-if='!nonecomment' class="comment-bottom">
+        <!-- <div v-if='!nonecomment' class="comment-bottom">
           <p v-if="loadmore" @click="commentLoad">{{commentBottomMsg}}</p>
           <load-more v-else tip="正在加载">正在加载</load-more>
-        </div>
+        </div> -->
+        <LazyLoadingMore url="/api/articles/comments.json" v-on:getData="loadList" params="items" :id="id"></LazyLoadingMore>
       </div>
     </div>
 
@@ -74,6 +75,7 @@
   import {formatDate} from 'common/js/date.js';
   import AjaxServer from 'common/js/ajaxServer.js';
   import {isWeiXin,weixinShare} from 'common/js/common.js';
+  import LazyLoadingMore from 'components/LazyLoadingMore/LazyLoadingMore';
   import Comment from "components/Comment/Comment"
   import Audiobox from "components/Audio/Audio"
   import Videobox from "components/Video/Video"
@@ -128,7 +130,8 @@
       AppDownload,
       Failed,
       LoadMore,
-      BackHome
+      BackHome,
+      LazyLoadingMore
     },
     created () {
       var id = this.$geturlpara.getUrlKey("id");
@@ -154,11 +157,12 @@
       fetchData(id){
         this.$http.get(HOST+'/api/articles/'+id+'.json', [])
         .then((data)=>{
+          this.fetchCommentData(id);
           this.loadingshow=false;
           this.articles=JSON.parse(data.bodyText);
           document.title = this.articles.name;
           this.open_channel=!!this.articles.from_channel;
-          console.log(this.open_channel);
+          //请求评论
           if(this.articles.status!=0){
             //返回为4，无权限
             if(this.articles.status!=4){
@@ -177,10 +181,6 @@
               desc:this.articles.name
             }
             weixinShare(Vue);
-            if (this.showComment) {
-              //请求评论
-              this.fetchCommentData(id);
-            }
           }
         }, (err)=>{
           this.loadingshow=false;
@@ -197,7 +197,7 @@
       },
 
       //请求评论数据
-      fetchCommentData(id,pn,last_time){
+      fetchCommentData(id,pn=0,last_time){
         var self=this;
         AjaxServer.httpGet(
           Vue,
@@ -214,18 +214,14 @@
                 return item
               });
               self.commentlist.items=self.commentlist.items.concat(self.datalist.items);
-              if (self.commentlist.items[self.commentlist.items.length-1].postd) {
-                self.last_time=self.commentlist.items[self.commentlist.items.length-1].postd;
-              }
-              if(!self.datalist.has_next){
-                self.commentBottomMsg="没有更多数据";
-              }
-              self.loadmore=true;
+              // if (self.commentlist.items[self.commentlist.items.length-1].postd) {
+              //   self.last_time=self.commentlist.items[self.commentlist.items.length-1].postd;
+              // }
+              // if(!self.datalist.has_next){
+              //   self.commentBottomMsg="没有更多数据";
+              // }
+              // self.loadmore=true;
             }
-          },
-          (err)=>{
-            self.loadingshow=false;
-            console.log(err);
           }
         );
       },
@@ -261,6 +257,9 @@
         this.loadmore=false;
         var id = this.$geturlpara.getUrlKey("id")||"1482";
         this.fetchCommentData(id,++this.pn,this.last_time);
+      },
+      loadList(data){
+        this.commentlist.items=this.commentlist.items.concat(data);
       },
       toChannels(){
         window.location.href="/m/home.html"

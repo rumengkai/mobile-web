@@ -232,7 +232,7 @@
   margin-top: .1rem;
   font-size: 14px;
   line-height: .4rem;
-  color: #9e9d9d;
+  // color: #9e9d9d;
 }
 #comment .comment-box .zan{
   font-size: #949494;

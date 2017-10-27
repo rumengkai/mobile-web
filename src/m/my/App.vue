@@ -6,7 +6,7 @@
           <img class="mark" src="./images/vip_question_mark.png" alt="">
           特权说明
         </div>
-        <div class="headimg">
+        <div class="headimg" @click="toUserCenter(myInfo.user)">
           <img :src="myInfo.user.photo" alt="头像" class="head">
           <img class="level" v-if="myInfo.user.level!=0" :src="myInfo.user.vip_icon" alt="会员">
           <p v-html="myInfo.user.name"></p>
@@ -130,6 +130,9 @@
           window.location.href="/m/member-center.html";
         }
       },
+      toUserCenter(data){
+        window.location.href="/m/moments.html?id="+data.id;
+      }
     }
   }
 </script>

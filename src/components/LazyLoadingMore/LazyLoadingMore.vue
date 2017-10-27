@@ -29,7 +29,8 @@ import {isWeiXin,getClient,getSubClient,getBody} from 'common/js/common.js';
       url:String,
       pid:String,
       datalist:Array,
-      params:String
+      params:String,
+      id:String
     },
     components: {
       LoadMore
@@ -59,7 +60,8 @@ import {isWeiXin,getClient,getSubClient,getBody} from 'common/js/common.js';
           Vue,
           HOST+this.url+'?pn='+pn,
           {
-            pid:this.pid
+            pid:this.pid,
+            id:this.id
           },
           (data)=>{
             if (data.status==0) {

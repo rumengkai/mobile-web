@@ -6,7 +6,7 @@
       <AudioList :audiolist="indexdata.daily.items"></AudioList>
       <TitleBar :title="indexdata.small_channels.name" more="查看全部" :img="indexdata.small_channels.image" line="line" url="/m/channels-small.html"></TitleBar>
       <Channels :subs="indexdata.small_channels.items" type="small"></Channels>
-      <TitleBar :title="indexdata.big_channels.name" more="查看全部" :img="indexdata.big_channels.image" line="line" url="/m/daily.html"></TitleBar>
+      <TitleBar :title="indexdata.big_channels.name" more="查看全部" :img="indexdata.big_channels.image" line="line" url="/m/channels.html"></TitleBar>
       <div class="channels">
         <div class="warp">
           <div class="box1" ref="box1">

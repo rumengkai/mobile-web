@@ -54,7 +54,7 @@
       XInput
     },
     created () {
-      getAuth(cookie,querystring);
+      // getAuth(cookie,querystring);
       this.fetchData();
     },
     methods: {
