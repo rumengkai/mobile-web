@@ -4,7 +4,9 @@
     <!-- <scroller lock-x ref="scrollerEvent" v-show="showContent"> -->
       <div class="content" v-if="showContent">
         <div class="large-img">
-          <!-- <div class="buy-card" @click="toBuyCard()"></div> -->
+          <div class="buy-card" @click="toBuyCard()">
+            <img src="./images/gift.png" alt="">
+          </div>
           <div class="name-brief">
             <p class="name">
               {{channelsinfo.name}}
@@ -278,7 +280,10 @@
           HOST+'/api/channels/'+id+'.json',
           {},
           (data)=>{
-            if (!data.is_login&&data.is_login!=undefined&&isWeiXin()&&localStorage.getItem("gid")) {
+            console.log(data);
+            if (data.type==1) {
+              window.location.href="/m/channel-small.html?id="+this.id;
+            }else if (!data.is_login&&data.is_login!=undefined&&isWeiXin()&&localStorage.getItem("gid")) {
               localStorage.setItem("gid","");
               localStorage.clear();
               clearcookie(cookie);

@@ -11,7 +11,7 @@
       <dev v-for="(item, i) in dataInfo">
         <div v-if="i==index">
           <div v-if="item.length!=0">
-            <OrderList :datalist="item" v-on:on-updateDate="fetchData()"></OrderList>
+            <OrderList :datalist="item" v-on:updateDate="onUpdate"></OrderList>
           </div>
           <div v-if="item.length==0" class="empty">
             <p><img src="./images/order_empty.png" alt=""></p>
@@ -70,6 +70,15 @@
       this.fetchData();
     },
     methods: {
+      onUpdate(obj){
+        console.log(obj);
+        if (obj.type===1) {
+          this.fetchData();
+        }else{
+          //弹出订单详情
+          console.log(obj.item);
+        }
+      },
       fetchData(id){
         AjaxServer.httpGet(
           Vue,
@@ -77,9 +86,10 @@
           {},
           (data)=>{
             if (data.status==0) {
-              this.dataInfo[0]=data.items;
+              Vue.set(this.dataInfo, 0, data.items)
               this.loadingshow=false;
               this.showContent=true;
+              this.index=0;
             }
           },
           (err)=>{
@@ -90,7 +100,6 @@
       onItemClick (index) {
         this.index=index;
         this.loadingshow=true;
-        this.showContent=false;
         AjaxServer.httpGet(
           Vue,
           HOST+'/pay/orders/my',
@@ -101,7 +110,8 @@
             if (data.status==0) {
               this.loadingshow=false;
               this.showContent=true;
-              this.dataInfo[index]=data.items;
+              Vue.set(this.dataInfo, index, data.items)
+              // this.dataInfo[index]=data.items;
             }
           },
           (err)=>{

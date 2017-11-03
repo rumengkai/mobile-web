@@ -26,7 +26,7 @@
         </div>
       </div>
       <div class="btn" v-if="state==0||state==1">
-        <x-button type="primary" class="primary" @click.native="confireBtn">确认兑换</x-button>
+        <x-button type="primary" class="primary" @click.native="confireBtnConfirm">确认兑换</x-button>
       </div>
       <div class="btn" v-if="state==2">
         <x-button type="" class="btn-none" >已兑换</x-button>
@@ -57,9 +57,10 @@
   import geturlpara from 'common/js/geturlpara.js';
   import {isWeiXin,weixinShare} from 'common/js/common.js';
   import { toPay } from 'common/js/pay.js';
-  import { Group,Cell,Loading,AlertPlugin,cookie,querystring,XButton,ToastPlugin } from 'vux'
+  import { ConfirmPlugin,Group,Cell,Loading,AlertPlugin,cookie,querystring,XButton,ToastPlugin } from 'vux'
   Vue.prototype.$geturlpara=geturlpara
   Vue.use(AlertPlugin)
+  Vue.use(ConfirmPlugin)
   Vue.use(ToastPlugin)
   export default {
     data () {
@@ -127,6 +128,25 @@
             console.log(err);
           });
       },
+      confireBtnConfirm(){
+        var self=this;
+        this.$vux.confirm.show({
+          title: '提示',
+          content: '确认兑换？',
+          onShow () {
+            console.log('plugin show')
+          },
+          onHide () {
+            console.log('plugin hide')
+          },
+          onCancel () {
+            console.log('plugin cancel')
+          },
+          onConfirm () {
+            self.confireBtn();
+          }
+        })
+      },
       confireBtn(){
         AjaxServer.httpPost(
           Vue,
@@ -144,6 +164,7 @@
                  width:'10em',
                  type:'text'
               })
+              this.loadingshow=true;
               setTimeout(()=>{
                 window.location.href="/m/channel.html?id="+this.channelinfo.id
               },2000)
@@ -163,10 +184,10 @@
         )
       },
       toChannel(id){
-        window.location.href=HOST+"/m/channel.html?id="+id;
+        window.location.href="/m/channel.html?id="+id;
       },
       toWeixin(){
-        window.location.href=HOST+"/m";
+        window.location.href="/m/home.html";
       },
       toApp(){
         window.location.href="https://ah88dj.mlinks.cc/AK8j";

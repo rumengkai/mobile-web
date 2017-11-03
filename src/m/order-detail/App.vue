@@ -40,8 +40,8 @@
     beforeCreate(){
       //授权
       if (isWeiXin()) {
-        getAuth(cookie,querystring,"member.html");
       }
+      getAuth(cookie,querystring,"member.html");
     },
     created () {
       this.fetchData();

@@ -1,6 +1,6 @@
 <template>
   <div id="order-list">
-   <li v-for="item in datalist" @click="toDetail(item.id)">
+   <li v-for="item in datalist" @click="toDetail(item)">
      <div class="top vux-1px-b">
        <span class="title">
          订单编号：{{item.order_no}}
@@ -10,6 +10,9 @@
        </span>
        <span class="state" v-if="item.state=='L'">
          待收货
+       </span>
+       <span class="state" v-if="item.state=='s'">
+         待发货
        </span>
      </div>
      <div class="order_detail vux-1px-b" v-for="item2 in item.order_detail.items">
@@ -30,6 +33,9 @@
        </div>
        <div class="btn btn-del" v-if="item.state=='O'" @click.stop="del(item)">
          删除订单
+       </div>
+       <div class="btn btn-confire" v-if="item.state=='s'" @click.stop="cuidan(item)">
+         催单
        </div>
      </div>
    </li>
@@ -65,55 +71,38 @@ Vue.use(ConfirmPlugin)
       }
     },
     methods: {
-      toDetail(id){
-        console.log(id);
-        location.href="/m/order-detail.html?id="+id;
+      toDetail(item){
+        // location.href="/m/order-detail.html?id="+id;
+        this.$emit("updateDate",{"type":2,"item":item});
       },
       confire(item){
-        var self=this
-        this.$vux.confirm.show({
-          onCancel () {
-          },
-          onConfirm () {
-            AjaxServer.httpPost(
-              Vue,
-              HOST+'/pay/orders/confirm_receipt',
-              {id:item.id},
-              (data)=>{
-                if (data.status==0) {
-                  self.toast("收货成功")
-                  self.$emit("updateDate");
-                }
-              },
-              (err)=>{
-                console.log(err);
-              }
-            );
-          }
-        })
+        this.confirm('确认收货？',HOST+'/pay/orders/confirm_receipt',item,1,"收货成功");
+      },
+      del(item){
+        this.confirm('确认删除此订单？',HOST+'/pay/orders/cancel',item,2,"删除成功");
+      },
+      cuidan(){
+        this.toast('催单成功！');
       },
       // 查看物流
       logistics(item){
+        location.href="/m/logistics.html?id="+item.id;
         console.log(item.id);
       },
-      del(item){
+      confirm(text,url,item,type,toast){
         var self=this
         this.$vux.confirm.show({
-          onCancel () {
+          title: '提示',
+          content: text,
+          onShow () {
+            console.log('plugin show')
           },
           onConfirm () {
-            AjaxServer.httpPost(
-              Vue,
-              HOST+'/pay/orders/cancel',
-              {id:item.id},
-              (data)=>{
+            AjaxServer.httpPost( Vue, url, {id:item.id}, (data)=>{
                 if (data.status==0) {
-                  self.toast("删除成功")
-                  self.$emit("updateDate");
+                  self.toast(toast)
+                  self.$emit("updateDate",{"type":1});
                 }
-              },
-              (err)=>{
-                console.log(err);
               }
             );
           }

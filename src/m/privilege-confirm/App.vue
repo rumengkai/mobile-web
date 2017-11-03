@@ -117,7 +117,7 @@ export default {
               dialogTransition:"",
               maskTransition:"",
               onHide (){
-                location.href="/m/member-center.html";
+                location.href="/m/order.html";//应该改为跳转到订单
               }
             });
           }

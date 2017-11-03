@@ -7,23 +7,23 @@
           <span class="tip" v-if="item.unread_num!=0"><span>{{item.unread_num}}</span></span>
         </div>
         <div class="channels-info">
-          <p class="name">{{item.name}}</p>
+          <p class="name ell">{{item.name}}</p>
           <!-- <span class="view_count" v-if="item.view_count!=0&&phonetype!='small'">{{item.view_count}}人订阅</span> -->
-          <p class="author_name"><span>{{item.author_name}}</span><span>{{item.author_field}}</span></p>
-          <p class="brief">{{item.brief}}</p>
+          <p class="author_name ell"><span>{{item.author_name}}</span><span>{{item.author_field}}</span></p>
+          <p class="brief ell">{{item.brief}}</p>
           <p class="price-co">
-            <span v-if="item.channel_price==-1" class="price">¥
+            <span v-if="item.channel_price==-1" class="price ell">¥
               <span v-if='item.suites'>{{item.suites[0].price}}</span>
               <span v-if='!item.suites'>{{item.price}}</span>/
               <span>{{item.price_unit}}</span>
             </span>
-            <span v-else>
-              <span class="price">{{item.text}} ¥ <span>{{item.channel_price}}</span>/<span>{{item.price_unit}}</span>
+            <span v-else class="ell">
+              <span class="price">{{item.text}}¥<span>{{item.channel_price}}</span>/<span>{{item.price_unit}}</span>
               </span>
-              <span class="oldprice"> ¥
-                <span v-if='item.suites'>{{item.suites[0].price}}</span>
-                <span v-if='!item.suites'>{{item.price}}</span>/
-                <span>{{item.price_unit}}</span>
+              <span class="oldprice">
+                <span v-if='item.suites'>¥{{item.suites[0].price}}</span>
+                <span v-if='!item.suites'>¥{{item.price}}</span>
+                <span>/{{item.price_unit}}</span>
               </span>
             </span>
           </p>
@@ -130,13 +130,10 @@
         font-weight: bold;
         color: #333;
         line-height: 33px;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
       }
       .author_name{
         color: #666;
-        font-size: 15px;
+        font-size: 13px;
         line-height: 33px;
         span{
           margin-right: 8px;
@@ -144,7 +141,7 @@
       }
       .brief{
         color: #888;
-        font-size: 14px;
+        font-size: 13px;
         line-height:20px;
         // width: 98%;
         overflow: hidden;
@@ -156,10 +153,10 @@
         font-size: 10px;
         font-size: 14px;
         .price{
-          font-size: 14px;
+          font-size: 13px;
           color: #ca915c;
           span{
-            font-size: 14px;
+            font-size: 13px;
             font-weight: bold;
           }
         }

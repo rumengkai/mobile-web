@@ -21,18 +21,16 @@
         </div>
         <div class="detail" v-html="itemsinfo.detail"></div>
       </div>
-    <footer v-show="showContent&&type==''">
-      <a id="btnOpenApp" class="left" >
+    <footer v-show="showContent">
+      <!-- <a id="btnOpenApp" class="left" >
         <span>加入购物车</span>
-      </a>
-      <a id="btnOpenApp1" class="right" >
+      </a> -->
+      <div class="duihuan" @click="confirm"  v-if="itemsinfo.price==0">
+        <span>免费领取</span>
+      </div>
+      <a v-else id="btnOpenApp1" class="buy">
         <span>立即购买</span>
       </a>
-    </footer>
-    <footer v-show="showContent&&type=='dh'">
-      <div class="duihuan" @click="confirm">
-        <span>兑换</span>
-      </div>
     </footer>
     <div class="qr_code_pc_inner">
       <div class="qr_code_pc">
@@ -108,10 +106,6 @@
         mlink: "https://ah88dj.mlinks.cc/Acej?id="+this.id,
         button: document.querySelector('a#btnOpenApp1'),
         autoLaunchApp : false,
-      },{
-        mlink: "https://ah88dj.mlinks.cc/Acej?id="+this.id,
-        button: document.querySelector('a#btnOpenApp'),
-        autoLaunchApp : false,
       }]);
     },
     methods: {
@@ -168,40 +162,41 @@
         })
       },
       confirm(){
-        console.log(this.id);
-        var self=this;
-        this.loadingshow=true;
-        var url="/pay/orders/pay_free";
-        AjaxServer.httpPost(
-          Vue,
-          HOST+url,
-          {
-            type: config()['paytype'],
-            items: this.id,
-            order_type:8,
-            receive_id:this.itemsinfo.receiver.uuid
-          },
-          (data)=>{
-            this.loadingshow=false;
-            if (data.status!=0) {
-              self.$vux.alert.show({
-                title: '提示',
-                content: data.error,
-                dialogTransition:"",
-                maskTransition:"",
-              });
-            }else{
-              self.$vux.alert.show({
-                title: '提示',
-                content: "恭喜您，兑换成功",
-                dialogTransition:"",
-                maskTransition:"",
-                onHide (){
-                  location.href="/m/member-center.html";
-                }
-              });
-            }
-          })
+        window.location.href="/m/privilege-confirm.html?id="+this.id;
+        // console.log(this.id);
+        // var self=this;
+        // this.loadingshow=true;
+        // var url="/pay/orders/pay_free";
+        // AjaxServer.httpPost(
+        //   Vue,
+        //   HOST+url,
+        //   {
+        //     type: config()['paytype'],
+        //     items: this.id,
+        //     order_type:8,
+        //     receive_id:this.itemsinfo.receiver.uuid
+        //   },
+        //   (data)=>{
+        //     this.loadingshow=false;
+        //     if (data.status!=0) {
+        //       self.$vux.alert.show({
+        //         title: '提示',
+        //         content: data.error,
+        //         dialogTransition:"",
+        //         maskTransition:"",
+        //       });
+        //     }else{
+        //       self.$vux.alert.show({
+        //         title: '提示',
+        //         content: "恭喜您，兑换成功",
+        //         dialogTransition:"",
+        //         maskTransition:"",
+        //         onHide (){
+        //           location.href="/m/member-center.html";
+        //         }
+        //       });
+        //     }
+        //   })
       }
     },
     filters: {
@@ -223,98 +218,6 @@
 
 <style lang="less">
 @import '~vux/src/styles/1px.less';
-body{
-  // background-color: #eee;
-}
-#good{
-  height: 100%;
-  background-color: #fff;
-  .content{
-    .vux-swiper{
-      height: 4.8rem !important;
-      img{
-        width: 100%;
-        height: 100%;
-      }
-    }
-    .vux-slider > .vux-indicator > a > .vux-icon-dot.active{
-      background-color: #fff;
-    }
-    .header{
-      margin: 14px .32rem;
-      .name{
-        font-size: 16px;
-        line-height: 26px;
-      }
-      .info{
-        color: #ca915c;
-        line-height: 50px;
-        .price{
-          font-size:20px;
-        }
-        .count{
-          display: block;
-          margin-right: 0;
-          margin-top: 15px;
-          width: auto;
-          line-height: 21px;
-          box-sizing: border-box;
-          border-radius: 3px;
-          border: 1px solid #ca915c;
-          padding: 0 5px;
-          float: right;
-        }
-      }
-    }
-    .detail{
-      width: auto;
-      padding: 0 .32rem 100px;
-      box-shadow: 0 5px 5px #dedede;
-      background-color: #fff;
-      overflow: hidden;
-      img{
-        width: 100%;
-      }
-    }
-  }
-  footer{
-    height: 46px;
-    width: 100%;
-    max-width: 680px;
-    background-color: #fff;
-    box-shadow: rgba(0,0,0,.2) 0 0 10px;
-    position: fixed;
-    bottom: 0;
-    padding: 0;
-    z-index: 1000;
-    display: -webkit-box;
-    -webkit-box-align: center;
-    font-size: 20px;
-    a{
-      display: block;
-    }
-    .left{
-      color: #fbfbfb;
-      width: 50%;
-      text-align: center;
-      background-color: #757475;
-      height: 100%;
-      line-height: 46px;
-    }
-    .right{
-      width: 50%;
-      color: #fbfbfb;
-      line-height: 46px;
-      text-align: center;
-      background-color: #ca915c;
-    }
-    .duihuan{
-      width: 100%;
-      color: #fbfbfb;
-      line-height: 46px;
-      text-align: center;
-      background-color: #ca915c;
-    }
-  }
-}
+@import "../index/App.less";
+@import './App.less';
 </style>
