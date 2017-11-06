@@ -68,9 +68,10 @@
         }
       }
       .title{
-        margin: 16px 0;
-        font-size: 13px;
+        margin: .32rem 0;
+        font-size: 14px;
         overflow : hidden;
+        width: 4.3rem;
         // text-overflow: ellipsis;
         // display: -webkit-box;
         // -webkit-line-clamp: 2;
@@ -96,7 +97,7 @@
         flex-direction: row;
         align-items: center;
         position: absolute;
-        bottom: .27rem;
+        bottom: .3rem;
         width: 4.2rem;
         .author_pic{
           margin-right: 5px;
