@@ -34,7 +34,7 @@
                 <span>¥{{item.channel_price}}</span>
                 <s class="del"> ¥{{item.price}}</s>
               </p>
-              <div class="btn" v-bind:class="{ btnd:item.followed||!item.followed&&dataInfo.items[flag].state==0}" @click="subscribe(item)">
+              <div class="btn" v-bind:class="{ btnd:item.followed||!item.followed&&dataInfo.items[flag].state==0}" @click.stop="subscribe(item)">
                 <span v-if="item.followed">已订</span>
                 <span v-else-if="dataInfo.items[flag].state!=0">订阅</span>
                 <span v-else>未开始</span>
