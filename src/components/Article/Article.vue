@@ -57,14 +57,14 @@
       overflow: hidden;
       position: relative;
       // color: #f00;
-      height: 2rem;
+      height: 2.4rem;
       .thumb{
         float: right;
         margin-top: .33rem;
         img{
           border-radius: 3px;
-          width: 2rem;
-          height: 1.33rem;
+          width: 2.5rem;
+          height: 1.73rem;
         }
       }
       .title{
@@ -97,7 +97,7 @@
         align-items: center;
         position: absolute;
         bottom: .27rem;
-        width: 4.5rem;
+        width: 4.2rem;
         .author_pic{
           margin-right: 5px;
           width: 20px;

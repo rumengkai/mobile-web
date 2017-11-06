@@ -3,7 +3,7 @@
 	var _w = document.documentElement.clientWidth||document.body.clientWidth;
 	_w=_w>640?640:_w;
 	var _size=_w/750*100;
-	_size=_size<50?_size:50;
+	_size=_size<60?_size:60;
 	document.documentElement.style.fontSize=_size+"px";
 	if (_w<350) {
 		window.phonetype="small";
