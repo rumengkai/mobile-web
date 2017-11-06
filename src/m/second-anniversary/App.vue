@@ -1,6 +1,6 @@
 <template>
   <div id="second-anniversary">
-    <div class="con" v-show="showContent&&active">
+    <div class="con" v-if="showContent&&active">
       <div class="header">
         <img src="./images/bg-1.png" alt="">
       </div>
