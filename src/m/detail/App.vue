@@ -168,9 +168,9 @@
             if(this.articles.status!=4){
               this.appdownloadshow=true;
             }else{
-              if (this.type===0) {
+              if (this.articles.type===0) {
                 window.location.href="/m/channel.html?id="+this.articles.channel;
-              }else if(this.type==1){
+              }else if(this.articles.type==1){
                 window.location.href="/m/channel-small.html?id="+this.articles.channel;
               }
             }

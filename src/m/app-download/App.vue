@@ -45,10 +45,12 @@
 body{
   text-align:center;
   margin:0;
+  height: 100% !important;
   background:#232323;
   font-family:'微软雅黑'
 }
 #app-download{
+  height: 100%;
   .content{
     text-align:center;
     width:100%;
@@ -77,7 +79,7 @@ body{
   .load{
     background: #ca915c;
     background-size: 100% 100%;
-    margin-bottom: 40px;
+    margin-bottom: 15px;
     border: 0px;
     color: #fff;
     font-size: 14px;
