@@ -55,6 +55,9 @@ select {
 del {
     text-decoration: line-through;
 }
+a[href*="www.cnzz.com/stat/website.php"] {
+  display: none;
+}
 .float-left {
     float: left;
 }

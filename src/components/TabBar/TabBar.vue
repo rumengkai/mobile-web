@@ -17,6 +17,14 @@
         <img src="./images/tabbar_subscripe.png" alt="">
         <span>讲武堂</span>
       </li>
+      <li @click="tab('books')" v-if="active=='books'" class="focus">
+        <img src="./images/tabbar_books_select.png" alt="">
+        <span>书房</span>
+      </li>
+      <li @click="tab('books')" v-else>
+        <img src="./images/tabbar_books.png" alt="">
+        <span>书房</span>
+      </li>
       <li @click="tab('my')" v-if="active=='my'" class="focus">
         <img src="./images/tabbar_profile_select.png" alt="">
         <span>我的</span>
@@ -54,6 +62,9 @@
         }
         if (focus=="my") {
           window.location.href='/m/my.html';
+        }
+        if (focus=="books") {
+          window.location.href='/m/books.html';
         }
       }
     }

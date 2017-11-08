@@ -12,9 +12,9 @@
 	}
 })();
 
-
-
-
+//公共js
+//友盟统计
+document.write('<script src=\"https\:\/\/s19.cnzz.com\/z_stat.php\?id=1262435637\&web_id=1262435637\" language=\"JavaScript\"><\/script>')
 
 window.base="pro"
 // 全局变量，配置

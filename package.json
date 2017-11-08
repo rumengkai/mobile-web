@@ -10,6 +10,7 @@
     "test": "node build/test.js"
   },
   "dependencies": {
+    "axios": "^0.17.0",
     "vue": "^2.0.1",
     "vux": "^2.2.1"
   },
