@@ -157,3 +157,6 @@ body {
   text-overflow:ellipsis;
   white-space: nowrap;
 }
+.weui-cell{
+  font-size: 12px;
+}

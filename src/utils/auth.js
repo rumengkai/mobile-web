@@ -28,7 +28,7 @@ export function removeGid() {
 }
 
 export function getFrom() {
-  return localStorage.getItem(From)
+  return localStorage.getItem(From)||3
 }
 
 export function setFrom(from) {

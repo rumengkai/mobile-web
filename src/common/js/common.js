@@ -1,3 +1,5 @@
+import fetch from 'src/utils/fetch'
+
 export function isWeiXin(){
 	var ua = window.navigator.userAgent.toLowerCase();
 	if(ua.match(/MicroMessenger/i) == 'micromessenger'){
@@ -26,17 +28,19 @@ export function getBody(){
  //
 export function weixinShare(Vue,data){
 	var url=HOST+"/api/session/share_weixin_config?url="+encodeURIComponent(window.location.href.split('#')[0]);
-	Vue.http.get(url)
-	.then((res)=>{return res.bodyText;})
-	.then((data)=>{
-		var data=JSON.parse(data);
+	fetch({
+    url: url,
+    method: 'get',
+    params:{}
+  }).then((res)=>{
+		// var res=JSON.parse(data);
 		wx.config({
 			debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，
 			//参数信息会通过log打出，仅在pc端时才会打印。
-			appId: data.appId, // 必填，公众号的唯一标识
-			timestamp: data.timestamp, // 必填，生成签名的时间戳
-			nonceStr: data.nonceStr, // 必填，生成签名的随机串
-			signature: data.signature,// 必填，签名，见附录1
+			appId: res.appId, // 必填，公众号的唯一标识
+			timestamp: res.timestamp, // 必填，生成签名的时间戳
+			nonceStr: res.nonceStr, // 必填，生成签名的随机串
+			signature: res.signature,// 必填，签名，见附录1
 			jsApiList: [
 				'checkJsApi',
 				'onMenuShareTimeline',
@@ -45,11 +49,32 @@ export function weixinShare(Vue,data){
 				'onMenuShareWeibo'
 			] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
 		});
-	},(err)=>{
-		error(err)
-	});
+	})
+	// Vue.http.get(url)
+	// .then((res)=>{return res.bodyText;})
+	// .then((data)=>{
+	// 	var data=JSON.parse(data);
+	// 	wx.config({
+	// 		debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，
+	// 		//参数信息会通过log打出，仅在pc端时才会打印。
+	// 		appId: data.appId, // 必填，公众号的唯一标识
+	// 		timestamp: data.timestamp, // 必填，生成签名的时间戳
+	// 		nonceStr: data.nonceStr, // 必填，生成签名的随机串
+	// 		signature: data.signature,// 必填，签名，见附录1
+	// 		jsApiList: [
+	// 			'checkJsApi',
+	// 			'onMenuShareTimeline',
+	// 			'onMenuShareAppMessage',
+	// 			'onMenuShareQQ',
+	// 			'onMenuShareWeibo'
+	// 		] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+	// 	});
+	// },(err)=>{
+	// 	error(err)
+	// });
 	wx.ready(function(){
     // 分享到到朋友圈
+		// if (data) shareData=data
     var title=shareData.title;
     var link=shareData.link;
     var imgUrl=shareData.imgUrl;

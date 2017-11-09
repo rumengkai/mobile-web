@@ -1,7 +1,15 @@
 <template>
   <div id="books">
-    <div v-if="show_content">
-
+    <div v-if="contentshow">
+      <div class="mybookshelf" v-if="dataInfo.bookshelf.items.length>0">
+        <title-bar :title="dataInfo.bookshelf.name" more="更多" :img="dataInfo.bookshelf.image" line="line" url="/m/books-my.html"></title-bar>
+        <div class="bookshelf vux-1px-b">
+          <li v-for="(item,index) in dataInfo.bookshelf.items" v-if="index<3" @click="skip('book-detail.html?id='+item.id)">
+            <img :src="item.thumb">
+          </li>
+        </div>
+      </div>
+      <books-list :dataList="dataInfo.booklist.items"></books-list>
     </div>
     <tab-bar active="books"></tab-bar>
     <loading v-model="loadingshow" :text="loadtext"></loading>
@@ -13,6 +21,7 @@
   import { getBooks } from 'src/api/books';
   import { isWeiXin } from 'common/js/common.js';
   import TabBar from "components/TabBar/TabBar"
+  import BooksList from "components/Books/BooksList"
   import TitleBar from "components/TitleBar/TitleBar"
   import LazyLoadingMore from "components/LazyLoadingMore/LazyLoadingMore"
   import Vue from 'vue'
@@ -22,10 +31,10 @@
     data () {
       return {
         sc:false,
-        loading_show: true,
-        loadtext: 'loading...',
-        show_content:false,
-        data_info:{small_channels:{items:[]}},
+        loadingshow: true,
+        loadtext: '加载中...',
+        contentshow:false,
+        dataInfo:{},
       }
     },
     components: {
@@ -35,6 +44,7 @@
       TabBar,
       TitleBar,
       LazyLoadingMore,
+      BooksList
     },
     beforeCreate(){
       //授权
@@ -54,10 +64,17 @@
         })
       },
       fetchResult(res){
+        console.log(res);
         if (res.status==0) {
-          this.showContent=true;
-          self.dataInfo=res;
+          this.dataInfo=res;
+          this.contentshow=true;
         }
+      },
+      skip(name){
+        window.location.href="/m/"+name;
+      },
+      loadList(data){
+        this.dataInfo.booklist.items=this.dataInfo.booklist.items.concat(data);
       }
     }
   }

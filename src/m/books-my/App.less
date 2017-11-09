@@ -1,0 +1,50 @@
+#books-my{
+  padding-bottom: 1.3rem;
+  .mybookshelf{
+    .bookshelf{
+      padding: .3rem;
+      height: 3rem;
+      box-sizing: border-box;
+      display: flex;
+      flex-wrap: wrap;
+      background: #fff;
+      li{
+        width: 33.3%;
+      }
+      .box{
+        height: auto;
+        max-width:1.8rem;
+        display: inline-block;
+        text-align: left;
+        img{
+          height: 2.4rem;
+          max-width:1.8rem;
+          display: inline-block;
+        }
+        p{
+          text-align: justify;
+          margin: .1rem 0;
+          height: 2.6em;
+          line-height: 1.3em;
+          overflow: hidden;
+          position: relative;
+          span{
+            background: #fff;
+            display: block;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 1em;
+            overflow: hidden;
+          }
+        }
+      }
+    }
+    .bookshelf li:nth-child(3n+2){
+      text-align: center;
+    }
+    .bookshelf li:nth-child(3n+3){
+      text-align: right;
+    }
+  }
+}

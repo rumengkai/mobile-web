@@ -1,3 +1,5 @@
+// import Vue from 'vue';
+// Vue.prototype.$loadingshow = true;
 //rem 布局
 (function initSize() {
 	var _w = document.documentElement.clientWidth||document.body.clientWidth;
@@ -15,8 +17,9 @@
 //公共js
 //友盟统计
 document.write('<script src=\"https\:\/\/s19.cnzz.com\/z_stat.php\?id=1262435637\&web_id=1262435637\" language=\"JavaScript\"><\/script>')
+document.write('<script src=\"http\:\/\/res.wx.qq.com\/open\/js\/jweixin-1.2.0.js\" charset=\"utf-8\"><\/script>')
 
-window.base="pro"
+window.base="dev"
 // 全局变量，配置
 if (base=="pro") {
 	window.VERSION="0.1"
@@ -24,10 +27,11 @@ if (base=="pro") {
 	window.HOSTM="https://m.kofuf.com"// 线上地址，分享时用
 	window.HOSTA="https://api.kofuf.com"// 授权使用
 	window.appid="wx05e842991e5fa0b2"
+	localStorage.setItem("from","3")
 	window.config=function () {
 		return {
 			paytype:"JSAPI",
-			from:"3",
+			from:localStorage.getItem("from"),
 			gid:localStorage.getItem("gid"),
 			token:localStorage.getItem("token"),
 		}
@@ -38,12 +42,15 @@ if (base=="pro") {
 	window.HOSTM="http://dev.kofuf.com"// 分享时用
 	window.HOSTA="http://123.57.35.40"// 授权使用
 	window.appid="wx0a542ef9d4d41cef"
+	localStorage.setItem("from","3")
+	localStorage.setItem("gid","1047501566")
+	localStorage.setItem("token","f32cd7de15144e2b931214730e6ed9f4")
 	window.config=function () {
 		return {
 			paytype:"JSAPI",
-			from:"3",
-			gid:"1047501566",//localStorage.getItem("gid"),
-			token:"f32cd7de15144e2b931214730e6ed9f4",//localStorage.getItem("token"),
+			from:localStorage.getItem("from"),
+			gid:localStorage.getItem("gid"),
+			token:localStorage.getItem("token"),
 		}
 	}
 }

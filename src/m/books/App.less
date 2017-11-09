@@ -1,6 +1,29 @@
 body{
-  background-color: #eee;
+  background-color: #F6F6F6;
 }
 #books{
-  height: 100%;
+  padding-bottom: 1.3rem; 
+  .mybookshelf{
+    .bookshelf{
+      padding: .3rem;
+      height: 3rem;
+      box-sizing: border-box;
+      display: flex;
+      background: #fff;
+      li{
+        width: 33.3%;
+      }
+      img{
+        height: 2.4rem;
+        max-width:1.8rem;
+        display: inline-block;
+      }
+    }
+    .bookshelf li:nth-child(2){
+      text-align: center;
+    }
+    .bookshelf li:nth-child(3){
+      text-align: right;
+    }
+  }
 }
