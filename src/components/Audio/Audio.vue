@@ -1,6 +1,6 @@
 <template>
   <div id="audiobox" class="vux-1px">
-    <audio :src="music" ref="musicplay" id="audio">
+    <audio :src="music" ref="musicplay" id="audio" >
       您的浏览器不支持audio
     </audio>
     <div id="audioplayer" >
@@ -37,9 +37,7 @@ export default {
       x:0
     }
   },
-  components: {
-    Range
-  },
+  components: { Range },
   mounted () {
     this.inits();
     var pin=document.getElementById("progress-pin");
@@ -105,8 +103,14 @@ export default {
         pButton.className = "";
         pButton.className = "play";
         //在这里加上暂停统计请求
-        
       }
+    },
+    onlyplay(){
+      this.$refs.musicplay.play();
+      pButton.className = "";
+      pButton.className = "pause";
+      this.$refs.musicplay.currentTime=0;
+      this.$refs.musicplay.addEventListener('timeupdate', this.updateProgress);
     },
     clickslider(e){
       var cw=e.offsetX;
@@ -147,7 +151,7 @@ audio{
 #audiobox{
   width: 99%;
   height: 50px;
-  margin: 10px auto 20px auto;
+  margin: 10px auto 20px;
   #audioplayer{
     height: 100%;
     display: flex;
@@ -174,7 +178,7 @@ audio{
       justify-content: space-between;
       align-items: center;
       margin-left: .2rem;
-      margin-right: 24px;
+      margin-right: .48rem;
       span {
         cursor: default;
       }

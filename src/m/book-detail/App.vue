@@ -1,5 +1,6 @@
 <template>
   <div id="book-detail">
+    <audio src=""> </audio>
     <div v-if="contentshow">
       <div class="book-detail-header">
         <div class="book-img">
@@ -16,8 +17,12 @@
       <p class="brief" ref="brief">{{dataInfo.brief}}</p>
       <p v-if="flag" class="zhankai" @click="zhankai(1)">展开</p>
       <p v-else class="zhankai" @click="zhankai(0)">收起</p>
+      <div v-bind:class="{'audio-box-active':music!='','audio-box':music==''}" v-if="music!=''" ref="audiodev">
+        <p class="p-title">正在播放：<span>{{audioname}}</span></p>
+        <audiobox :music="music" ref="audiobox"></audiobox>
+      </div>
       <group>
-        <cell v-for="item in dataInfo.items" :title="item.title" is-link>
+        <cell v-for="item in dataInfo.items" :title="item.title" is-link @click.native="play(item)">
           <span class="tryout" v-if="item.tryout">试听</span>{{item.audio_length | audioFormat}}
         </cell>
       </group>
@@ -38,6 +43,7 @@
   import { createOrder , weixinCheck } from 'src/api/pay';
   import { toPay } from 'common/js/pay.js';
   import { audioFormat } from 'src/utils/';
+  import Audiobox from "components/Audio/Audio"
   import BackHome from "components/BackHome/BackHome"
   import { isWeiXin , weixinShare} from 'common/js/common.js';
   import TitleBar from "components/TitleBar/TitleBar"
@@ -53,14 +59,16 @@
         loadtext: '加载中...',
         contentshow:false,
         dataInfo:{},
-        flag:true
+        flag:true,
+        music:'',
+        audioname:''
       }
     },
-    components: { Icon, XHeader, Loading, TitleBar, LazyLoadingMore, BackHome, Group, Cell },
+    components: { Icon, XHeader, Loading, TitleBar, LazyLoadingMore, BackHome, Group, Cell , Audiobox},
     beforeCreate(){
-      //授权
       if(isWeiXin()){
-        getAuth(cookie,querystring);
+        var path=location.pathname.replace('/m/','')
+        getAuth(cookie,querystring,path)
       }
     },
     created () {
@@ -160,6 +168,27 @@
           })
         }
       },
+      zhankai(flag){
+        if (flag) {
+          this.$refs.brief.style.height="auto"
+        }else{
+          console.log(0);
+          this.$refs.brief.style.height="1.1rem"
+        }
+        this.flag=!this.flag;
+      },
+      play(item){
+        if (!item.tryout&&item.audio==="") {
+          this.toast("请订阅后收听")
+        }else{
+          this.music = item.audio
+          this.audioname=item.title
+          setTimeout(()=>{
+            this.$refs.audiobox.inits()
+            this.$refs.audiobox.onlyplay()
+          },0)
+        }
+      },
       toast(text){
         this.$vux.toast.show({
             text: text,
@@ -168,16 +197,6 @@
             type:"text",
             position:'bottom'
         })
-      },
-      zhankai(flag){
-        if (flag) {
-          console.log(this.$refs.brief.style.height);
-          this.$refs.brief.style.height="auto"
-        }else{
-          console.log(0);
-          this.$refs.brief.style.height="1.1rem"
-        }
-        this.flag=!this.flag;
       }
     }
   }

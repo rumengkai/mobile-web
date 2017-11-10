@@ -57,10 +57,14 @@ body{
   }
   .zhankai{
     background: #fff;
-    line-height: .5rem;
+    line-height: .8rem;
     text-align: center;
     font-size: 12px;
-    color: #eee;
+    color: #ccc;
+    margin-bottom: .4rem;
+  }
+  .weui-cells{
+    margin-top: 0;
   }
 }
 .weui-cell__ft{
@@ -96,4 +100,28 @@ body{
     line-height: .92rem;
     background: @base_color;
   }
+}
+.p-title{
+  line-height: .6rem;
+  color: #999;
+  span{
+    color: @base_color;
+  }
+}
+.audio-box{
+  transition: .3s;
+  height: 0;
+  padding:0 .4rem 0;
+  background: #fff;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.audio-box-active{
+  transition: .3s;
+  height: 120px;
+  padding:10px .4rem .01rem;
+  margin-bottom: .4rem;
+  background: #fff;
+  overflow: hidden;
+  box-sizing: border-box;
 }

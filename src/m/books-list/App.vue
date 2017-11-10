@@ -57,7 +57,8 @@
     beforeCreate(){
       //授权
       if(isWeiXin()){
-        getAuth(cookie,querystring);
+        var path=location.pathname.replace('/m/','')
+        getAuth(cookie,querystring,path)
       }
     },
     created () {
