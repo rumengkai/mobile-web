@@ -66,13 +66,13 @@
     },
     components: { Icon, XHeader, Loading, TitleBar, LazyLoadingMore, BackHome, Group, Cell , Audiobox},
     beforeCreate(){
-      if(isWeiXin()){
-        var path=location.pathname.replace('/m/','')
-        getAuth(cookie,querystring,path)
-      }
     },
     created () {
       this.id=querystring.parse()['id']
+      if(isWeiXin()){
+        var path=location.pathname.replace('/m/','')
+        getAuth(cookie,querystring,path+"?id="+this.id)
+      }
       this.fetchData();
       setTimeout(()=>{
         this.loadingshow = false
