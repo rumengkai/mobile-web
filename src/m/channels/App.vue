@@ -1,8 +1,8 @@
 <template>
   <div id="channels-index">
     <div class="content vux-1px-b" v-if="showContent">
-      <TitleBar :title="dataInfo.updated_channels.name" more="查看全部" :img="dataInfo.updated_channels.image" line="line" url="/m/channels-sub.html"></TitleBar>
-      <div class="channels-sub">
+      <TitleBar v-if="dataInfo.updated_channels.items.length>0" :title="dataInfo.updated_channels.name" more="查看全部" :img="dataInfo.updated_channels.image" line="line" url="/m/channels-sub.html"></TitleBar>
+      <div class="channels-sub" v-if="dataInfo.updated_channels.items.length>0">
         <div class="warp">
           <div class="box1" ref="box1">
             <div class="box1-item" v-for="item in dataInfo.updated_channels.items" @click="toChannel(item)">

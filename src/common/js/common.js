@@ -138,3 +138,35 @@ export function weixinShare(Vue,data){
     });
 	});
 }
+
+
+
+export function isMobile(){
+	var u = navigator.userAgent;
+	var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+	var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+	if(isAndroid||isiOS){
+		return true;
+	}else{
+		return false;
+	}
+}
+
+export function isAndroid(){
+	var u = navigator.userAgent;
+	var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+	if(isAndroid){
+		return true;
+	}else{
+		return false;
+	}
+}
+export function isiOS(){
+	var u = navigator.userAgent;
+	var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+	if(isiOS){
+		return true;
+	}else{
+		return false;
+	}
+}

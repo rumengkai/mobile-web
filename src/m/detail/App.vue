@@ -20,7 +20,7 @@
           <span class="created">{{articles.created | formatDate}}</span>
         </div>
         <div v-if="articles.sub_type==='R'">
-          <Audiobox :music="articles.banner"></Audiobox>
+          <Audiobox :music="articles.banner" :id="id"></Audiobox>
         </div>
         <div class="content" id="contenthtml" ref="contenthtml" v-html="articles.content" > </div>
       </div>
@@ -72,6 +72,7 @@
   import 'common/css/reset.css';
   import 'common/js/config.js';
   import geturlpara from 'common/js/geturlpara.js';
+  import { logs } from 'src/api/logs';
   import {formatDate} from 'common/js/date.js';
   import AjaxServer from 'common/js/ajaxServer.js';
   import {isWeiXin,weixinShare} from 'common/js/common.js';
@@ -141,18 +142,27 @@
       this.fetchData(id);
     },
     mounted(){
-      console.log( document.querySelector('a#btnOpenApp'));
+      // console.log( document.querySelector('a#btnOpenApp'));
       new Mlink({
         mlink: "https://ah88dj.mlinks.cc/AK8f?id="+this.id,
         button: document.querySelector('a#btnOpenApp'),
         autoLaunchApp : false,
       });
+      // 埋点统计
+      let params={
+        id:this.id,
+        action:'item_detail',
+        end_pos:''
+      }
+      logs(params).then(response => {
+        this.loadingshow = false
+        this.fetchResult(response)
+      })
     },
     methods: {
       openApp(){
         this.getPhoneType();
       },
-
       //获取数据
       fetchData(id){
         this.$http.get(HOST+'/api/articles/'+id+'.json', [])

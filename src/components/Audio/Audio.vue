@@ -20,9 +20,12 @@
 
 <script>
 import { Range } from 'vux'
+import { logs } from 'src/api/logs';
+
 export default {
   name: 'audiobox',
   props: {
+    id:String,
     music:String
   },
   data () {
@@ -50,12 +53,11 @@ export default {
       this.$refs.musicplay.play();
       pButton.className = "pause";
       this.$refs.musicplay.addEventListener('timeupdate', this.updateProgress);
-
-        this.sdrag = false;
-        var cw=e.target.offsetLeft;
-        var w=e.target.parentElement.parentElement.clientWidth;
-        var audio=document.getElementById("audio");
-        audio.currentTime=audio.duration*cw/w;
+      this.sdrag = false;
+      var cw=e.target.offsetLeft;
+      var w=e.target.parentElement.parentElement.clientWidth;
+      var audio=document.getElementById("audio");
+      audio.currentTime=audio.duration*cw/w;
     },
     selectmouse(e){
        this.isdrag = true;
@@ -91,19 +93,44 @@ export default {
     },
     play() {
       this.$refs.musicplay.addEventListener('timeupdate', this.updateProgress);
+      var self = this
       // start music
       if (this.$refs.musicplay.paused) {
         this.$refs.musicplay.play();
         // remove play, add pause
         pButton.className = "";
         pButton.className = "pause";
+        // 埋点统计
+        setTimeout(function(){
+          let params={
+            id:self.id,
+            action:'audio',
+            end_pos:'0.5'
+          }
+          logs(params).then(response => {
+            this.loadingshow = false
+            this.fetchResult(response)
+          })
+        },60*1000)
       } else { // pause music
         this.$refs.musicplay.pause();
         // remove pause, add play
         pButton.className = "";
         pButton.className = "play";
         //在这里加上暂停统计请求
+        setTimeout(function(){
+          let params={
+            id:self.id,
+            action:'audio',
+            end_pos:(self.current/self.duration).toFixed(2)
+          }
+          logs(params).then(response => {
+            this.loadingshow = false
+            this.fetchResult(response)
+          })
+        },0)
       }
+      
     },
     onlyplay(){
       this.$refs.musicplay.play();
@@ -119,6 +146,7 @@ export default {
     },
     updateProgress() {
       var current = this.$refs.musicplay.currentTime;
+      this.current = current;
       var percent = current / this.$refs.musicplay.duration * 100;
       this.$refs.progress.style.width = percent + '%';
       var w=this.$refs.slider.offsetWidth;

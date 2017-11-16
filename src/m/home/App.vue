@@ -4,8 +4,6 @@
       <Banner :bannerlist="indexdata.carousels"></Banner>
       <TitleBar :title="indexdata.daily.name" more="查看全部" :img="indexdata.daily.image" url="/m/daily.html"></TitleBar>
       <AudioList :audiolist="indexdata.daily.items"></AudioList>
-      <TitleBar :title="indexdata.small_channels.name" more="查看全部" :img="indexdata.small_channels.image" line="line" url="/m/channels-small.html"></TitleBar>
-      <Channels :subs="indexdata.small_channels.items" type="small"></Channels>
       <TitleBar :title="indexdata.big_channels.name" more="查看全部" :img="indexdata.big_channels.image" line="line" url="/m/channels.html"></TitleBar>
       <div class="channels">
         <div class="warp">
@@ -18,6 +16,14 @@
           </div>
         </div>
       </div>
+      <!-- 学者书房 -->
+      <TitleBar v-if="!!indexdata.teacher_books" :title="indexdata.teacher_books.name" more="查看全部" :img="indexdata.teacher_books.image" line="line" url="/m/teacher-books.html"></TitleBar>
+      <books-list v-if="!!indexdata.teacher_books" :dataList="indexdata.teacher_books.items"></books-list>
+      <!-- 书房 -->
+      <TitleBar v-if="!!indexdata.books" :title="indexdata.books.name" more="查看全部" :img="indexdata.books.image" line="line" url="/m/books.html"></TitleBar>
+      <books-list v-if="!!indexdata.books" :dataList="indexdata.books.items"></books-list>
+      <TitleBar :title="indexdata.small_channels.name" more="查看全部" :img="indexdata.small_channels.image" line="line" url="/m/channels-small.html"></TitleBar>
+      <Channels :subs="indexdata.small_channels.items" type="small"></Channels>
       <TitleBar :title="indexdata.goods.name" more="查看全部" :img="indexdata.goods.image" url="/m/goods.html"></TitleBar>
       <AudioList :audiolist="indexdata.goods.items"></AudioList>
       <TitleBar :title="indexdata.articles.name" line="line" :img="indexdata.articles.image"></TitleBar>
@@ -43,6 +49,7 @@
   import Banner from "components/Banner/Banner"
   import TitleBar from "components/TitleBar/TitleBar"
   import Article from "components/Article/Article"
+  import BooksList from "components/Books/BooksList"
   import AudioList from "components/AudioList/AudioList"
   import LoadingMore from "components/LoadingMore/LoadingMore"
   import LazyLoadingMore from "components/LazyLoadingMore/LazyLoadingMore"
@@ -81,7 +88,8 @@
       LoadingMore,
       LazyLoadingMore,
       Scroller,
-      Failed
+      Failed,
+      BooksList
     },
     beforeCreate(){
       //授权

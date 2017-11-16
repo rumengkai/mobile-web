@@ -12,7 +12,6 @@
         </div>
       </div>
     </div>
-    <tab-bar active="books"></tab-bar>
     <loading v-model="loadingshow" :text="loadtext"></loading>
   </div>
 </template>
@@ -21,7 +20,6 @@
   import 'common/js/config.js';
   import { getMyBooks } from 'src/api/books';
   import { isWeiXin } from 'common/js/common.js';
-  import TabBar from "components/TabBar/TabBar"
   import BooksList from "components/Books/BooksList"
   import LazyLoadingMore from "components/LazyLoadingMore/LazyLoadingMore"
   import Vue from 'vue'
@@ -41,7 +39,6 @@
       Icon,
       XHeader,
       Loading,
-      TabBar,
       BooksList
     },
     beforeCreate(){

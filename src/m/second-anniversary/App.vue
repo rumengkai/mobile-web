@@ -82,7 +82,7 @@
   import 'common/css/reset.css';
   import 'common/js/config.js';
   import Vue from 'vue';
-  import {isWeiXin , weixinShare} from 'common/js/common.js';
+  import {isMobile , isWeiXin , weixinShare} from 'common/js/common.js';
   import {Loading,querystring,cookie,AlertPlugin} from 'vux'
   import AjaxServer from 'common/js/ajaxServer.js';
   import { toPay } from 'common/js/pay.js';
@@ -112,8 +112,12 @@
         }
         weixinShare(Vue);
       }
-      //授权
-      getAuth(cookie,querystring,"second-anniversary.html");
+      if(isMobile()&&!isWeiXin()){
+        window.location.href='/h5/html/second-anniversary.html'
+      }else{
+        //授权
+        getAuth(cookie,querystring,"second-anniversary.html");
+      }
     },
     mounted () {
       this.fetchData();

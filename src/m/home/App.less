@@ -1,5 +1,5 @@
 body{
-  background-color: #eee;
+  background-color: #f6f6f6;
 }
 #home{
   height: 100%;
@@ -29,7 +29,7 @@ body{
   height: 200px;
   background-color: #fff;
   display:inline-block;
-  float: left;
+  float:left;
   box-sizing: border-box;
   padding:12px 7px;
   position: relative;
@@ -59,4 +59,13 @@ body{
 }
 .vux-scroller{
   background: #fff;
+}
+.vux-no-group-title{
+  margin-top: 0px !important;
+}
+.weui-cells:before{
+  border-top: none !important;
+}
+.vux-slider > .vux-indicator > a > .vux-icon-dot.active, .vux-slider .vux-indicator-right > a > .vux-icon-dot.active{
+  background-color: @base_color !important;
 }
