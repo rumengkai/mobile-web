@@ -113,7 +113,9 @@
           (data)=>{
             if (data.status==0) {
               this.personinfo=data.person;
-              this.channelinfo=data.channel;
+              // 此处待改成items
+              this.channelinfo=data.item;
+              // this.channelinfo=data.channel;
               this.state=data.state;
               this.showContent=true;
               this.loadingshow=false;
