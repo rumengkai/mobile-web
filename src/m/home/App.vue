@@ -94,7 +94,7 @@
     beforeCreate(){
       //授权
       if(isWeiXin()){
-        getAuth(cookie,querystring);
+        // getAuth(cookie,querystring);
       }
     },
     created () {
