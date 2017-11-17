@@ -23,9 +23,9 @@ window.base="pro"
 // 全局变量，配置
 if (base=="pro") {
 	window.VERSION="0.1"
-	window.HOST="https://api.kofuf.com"// 线上地址
-	window.HOSTM="https://m.kofuf.com"// 线上地址，分享时用
-	window.HOSTA="https://api.kofuf.com"// 授权使用
+	window.HOST="http://api.51xy8.com"// 线上地址
+	window.HOSTM="http://m.51xy8.com"// 线上地址，分享时用
+	window.HOSTA="http://api.51xy8.com"// 授权使用
 	window.appid="wx05e842991e5fa0b2"
 	localStorage.setItem("from","3")
 	window.config=function () {
