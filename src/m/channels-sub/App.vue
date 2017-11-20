@@ -83,12 +83,12 @@
       loginout(){
         localStorage.clear();
         cookie.set('gid', 0,{
-            domain: '.kofuf.com',
+            domain: '.51xy8.com',
             path: '/',
             expires: -1
           });
         cookie.set('token', 0,{
-            domain: '.kofuf.com',
+            domain: '.51xy8.com',
             path: '/',
             expires: -1
           });

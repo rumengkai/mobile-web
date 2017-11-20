@@ -106,8 +106,8 @@
       if(isWeiXin()){
         window.shareData={
           title:'两周年 · 功夫财经',
-          link:'http://m.kofuf.com/m/second-anniversary.html',
-          imgUrl:'http://m.kofuf.com/static/img_h5/h5_logo.png',
+          link:'http://m.51xy8.com/m/second-anniversary.html',
+          imgUrl:'http://m.51xy8.com/static/img_h5/h5_logo.png',
           desc:"功夫·两周年  限时劲省4225元！"
         }
         weixinShare(Vue);
@@ -131,7 +131,7 @@
             dialogTransition:"",
             maskTransition:"",
           });
-        }else if(HOSTM=="http://dev.kofuf.com"){
+        }else if(HOSTM=="http://dev.51xy8.com"){
           window.location.href="/m/good.html?id=1215";
         }else{
           window.location.href="/m/good.html?id=3167";

@@ -83,7 +83,7 @@
           window.shareData={
             title:res.name,
             link:location.href,
-            imgUrl:'http://m.kofuf.com/static/img_h5/h5_logo.png',
+            imgUrl:'http://m.51xy8.com/static/img_h5/h5_logo.png',
             desc:res.brief
           }
           weixinShare();

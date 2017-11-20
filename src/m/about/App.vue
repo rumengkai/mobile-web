@@ -10,7 +10,7 @@
       <group class="group">
         <cell title="TEL:"><a href="tel:+4009667718">400-966-7718</a></cell>
         <cell title="QQ:">2949103867</cell>
-        <cell title="E-mail:">app@kofuf.com</cell>
+        <cell title="E-mail:">app@51xy8.com</cell>
         <cell title="微信公众号:">搜索"功夫财经"</cell>
         <cell title="微博:">@功夫财经</cell>
       </group>

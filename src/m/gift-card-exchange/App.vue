@@ -12,7 +12,7 @@
       <div class="channel vux-1px-t">
         <div class="channels-item" @click="toChannel(channelinfo.id)">
           <div class="headimg">
-            <img :src="channelinfo.thumb" alt="" onerror="this.src='http://m.kofuf.com/static/img/default.png'">
+            <img :src="channelinfo.thumb" alt="" onerror="this.src='http://m.51xy8.com/static/img/default.png'">
           </div>
           <div class="channels-info">
             <p class="name">{{channelinfo.name}}</p>

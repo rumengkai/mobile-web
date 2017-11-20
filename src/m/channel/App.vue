@@ -15,7 +15,7 @@
               {{channelsinfo.brief}}
             </p>
           </div>
-          <img :src="channelsinfo.large_thumb" onerror="this.src='https://static1.kofuf.com/1508740825405.jpg'" alt="">
+          <img :src="channelsinfo.large_thumb" onerror="this.src='https://image.51xy8.com/1508740825405.jpg'" alt="">
         </div>
         <div v-if="subscription" class="subtab">
           <div class="tab">
@@ -49,7 +49,7 @@
             <p class="title">最新更新</p>
             <ul class="newupdate">
               <li class="item vux-1px-b" v-for="item in channelsinfo.articles" @click="toDetail(item.id,item.tryout)">
-                <img :src="item.thumb" alt="" onerror="this.src='https://static1.kofuf.com/1508740825405.jpg?imageView2/1/w/200/h/133/q/100|imageslim'">
+                <img :src="item.thumb" alt="" onerror="this.src='https://image.51xy8.com/1508740825405.jpg?imageView2/1/w/200/h/133/q/100|imageslim'">
                 <div v-if="item.tryout" class="try">试 读</div>
                 <p class="title">{{item.name}}</p>
                 <p class="date">{{item.published | formatDate2}}</p>
@@ -153,7 +153,7 @@
     </footer>
     <dev v-show="showContent&&!(showContent&&!subscription)" class = "openApp">
       <div class="gfcj" @click="toChannels">
-        <img src="http://m.kofuf.com/static/img/logo.png" alt="">
+        <img src="http://m.51xy8.com/static/img/logo.png" alt="">
         <div class="gf"><p class="p1">微信登陆APP</p><p class="p2">阅读体验更佳</p></div>
       </div>
       <div class="download">
@@ -163,7 +163,7 @@
 
     <div class="qr_code_pc_inner">
       <div class="qr_code_pc">
-        <img id="js_pc_qr_code_img" class="qr_code_pc_img" src="https://www.kofuf.com/static/images/code.png">
+        <img id="js_pc_qr_code_img" class="qr_code_pc_img" src="https://www.51xy8.com/static/images/code.png">
         <p>微信扫一扫<br>学财经，长本事</p>
       </div>
     </div>
@@ -322,7 +322,7 @@
                 window.shareData={
                   title:data.name,
                   link:HOSTM+'/m/channel.html?id='+data.id+'',
-                  imgUrl:'http://m.kofuf.com/static/img_h5/h5_logo.png',
+                  imgUrl:'http://m.51xy8.com/static/img_h5/h5_logo.png',
                   desc:data.brief
                 }
                 weixinShare(Vue);

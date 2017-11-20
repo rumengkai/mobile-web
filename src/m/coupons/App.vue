@@ -58,7 +58,7 @@
       window.shareData={
         title:'功夫财经-优惠券',
         link:HOSTM+'/m/coupons.html',
-        imgUrl:'http://m.kofuf.com/static/img_h5/h5_logo.png',
+        imgUrl:'http://m.51xy8.com/static/img_h5/h5_logo.png',
         desc:"功夫财经优惠券"
       }
       weixinShare(Vue);

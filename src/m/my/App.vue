@@ -154,7 +154,7 @@ body{
     height: 4.24rem;
     width: 100%;
     text-align: center;
-    background: url(http://static1.kofuf.com/1505881780454.png);
+    background: url(http://image.51xy8.com/1505881780454.png);
     background-size: 100% auto;
     overflow: hidden;
     position: relative;
