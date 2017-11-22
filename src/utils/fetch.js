@@ -9,7 +9,6 @@ const service = axios.create({
   timeout: 15000,                  // 请求超时时间
   headers:{'Content-Type':'application/x-www-form-urlencoded'}
 })
-
 // request拦截器
 service.interceptors.request.use(config => {
   config.headers['token'] = getToken()

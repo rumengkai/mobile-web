@@ -1,10 +1,8 @@
 <template>
   <div id="channel">
-    <!-- <x-header v-if="showContent"><a slot="right" @click="share"></a></x-header> -->
-    <!-- <scroller lock-x ref="scrollerEvent" v-show="showContent"> -->
       <div class="content" v-if="showContent">
         <div class="large-img">
-          <div class="buy-card" @click="toBuyCard()">
+          <div class="buy-card" @click="toBuyCard()" v-if="channelsinfo.can_buy">
             <img src="./images/gift.png" alt="">
           </div>
           <div class="name-brief">
@@ -15,7 +13,7 @@
               {{channelsinfo.brief}}
             </p>
           </div>
-          <img :src="channelsinfo.large_thumb" onerror="this.src='https://image.51xy8.com/1508740825405.jpg'" alt="">
+          <img :src="channelsinfo.large_thumb" onerror="this.src='http://image.51xy8.com/1508740825405.jpg'" alt="">
         </div>
         <div v-if="subscription" class="subtab">
           <div class="tab">
@@ -49,7 +47,7 @@
             <p class="title">最新更新</p>
             <ul class="newupdate">
               <li class="item vux-1px-b" v-for="item in channelsinfo.articles" @click="toDetail(item.id,item.tryout)">
-                <img :src="item.thumb" alt="" onerror="this.src='https://image.51xy8.com/1508740825405.jpg?imageView2/1/w/200/h/133/q/100|imageslim'">
+                <img :src="item.thumb" alt="" onerror="this.src='http://image.51xy8.com/1508740825405.jpg?imageView2/1/w/200/h/133/q/100|imageslim'">
                 <div v-if="item.tryout" class="try">试 读</div>
                 <p class="title">{{item.name}}</p>
                 <p class="date">{{item.published | formatDate2}}</p>
@@ -160,10 +158,9 @@
         <a id='btnOpenApp'>打开APP</a>
       </div>
     </dev>
-
     <div class="qr_code_pc_inner">
       <div class="qr_code_pc">
-        <img id="js_pc_qr_code_img" class="qr_code_pc_img" src="https://www.51xy8.com/static/images/code.png">
+        <img id="js_pc_qr_code_img" class="qr_code_pc_img" src="http://www.51xy8.com/static/images/code.png">
         <p>微信扫一扫<br>学财经，长本事</p>
       </div>
     </div>
@@ -181,6 +178,7 @@
   import geturlpara from 'common/js/geturlpara.js';
   import { toPay } from 'common/js/pay.js';
   import Vue from 'vue'
+  import { message , toast} from 'common/js/assembly.js';
   import { formatDate2 } from 'common/js/date.js';
   import {Loading,XHeader,Scroller,LoadMore,AlertPlugin,ToastPlugin,querystring,cookie,Popup,XSwitch,Group,Cell,XButton} from 'vux'
   import Failed from "components/Failed/Failed"
@@ -225,6 +223,7 @@
         couponsname:"优惠券",
         show_composite_channel:false,
         order_type:"",
+        can_buy:true
       }
     },
     components: {
@@ -249,7 +248,6 @@
         getAuth(cookie,querystring,"channel",id);
       }
     },
-
     created () {
       var id = this.$geturlpara.getUrlKey("id");
       this.id=id;
@@ -305,20 +303,11 @@
                 data.suit_crowds=data.suit_crowds.replace(/[\n]/g,"<br/>") ;
                 //正则匹配，处理information
                 data.information=data.information.replace(/[\n]/g,"<br/>") ;
-                //加载完成后，重置scroll
-                // setTimeout(function () {
-                //   self.$nextTick(() => {
-                //     self.$refs.scrollerEvent.reset()
-                //   })
-                // },500);
-                // if(!data.has_next){
-                //   this.commentBottomMsg="没有更多数据";
-                // }
-                this.loadingshow=false;
                 document.title = "专栏-"+data.name;
+                self.loadingshow=false;
                 self.subscription=data.followed;
                 self.unit=data.price_unit;
-                this.showContent=true;
+                self.showContent=true;
                 window.shareData={
                   title:data.name,
                   link:HOSTM+'/m/channel.html?id='+data.id+'',
@@ -348,13 +337,7 @@
       },
       toDetail(id,tryout){
         if (!tryout) {
-          this.$vux.toast.show({
-             text: '请订阅后查看',
-            //  position:'bottom',
-             time:3000,
-             width:'10em',
-             type:'text'
-          })
+          toast("请订阅后查看")
         }else{
           window.location.href="/m/detail.html?id="+id;
         }
@@ -365,6 +348,10 @@
       },
       //订阅支付
       composite_readysub(){
+        if(!this.channelsinfo.can_buy){
+          message("该商品已下架！")
+          return
+        }
         var self=this;
         getAuth(cookie,querystring,"channel",this.id);
         //如果价格为0，则免费领取
@@ -379,22 +366,9 @@
             },
             (data)=>{
               if (data.status!=0) {
-                self.$vux.alert.show({
-                  title: '提示',
-                  content: "服务器维护中，您的订单已支付成功，请勿重复支付。如有疑问请联系客服：400-966-7718",
-                  dialogTransition:"",
-                  maskTransition:"",
-                });
+                message("服务器维护中，您的订单已支付成功，请勿重复支付。如有疑问请联系客服：400-966-7718")
               }else{
-                self.$vux.alert.show({
-                  title: '提示',
-                  content: "恭喜您，领取成功",
-                  dialogTransition:"",
-                  maskTransition:"",
-                  onHide (){
-                    location.href="/m/channels.html";
-                  }
-                });
+                message("恭喜您，领取成功","提示",()=>{location.href="/m/channels.html"})
               }
             })
         }else{
@@ -453,20 +427,14 @@
             (data)=>{
               self.loadingshow=false;
               if (data.status!=0) {
-                this.$vux.alert.show({
-                  title: '提示',
-                  content: "创建订单失败",
-                  dialogTransition:"",
-                  maskTransition:"",
-                  onHide (){
-                    console.log("订单创建失败");
-                    if(data.status==5){
-                      localStorage.clear();
-                      clearcookie(cookie);
-                      getAuth(cookie,querystring,"channel",id);
-                    }
+                message("创建订单失败","提示",function (params) {
+                  console.log("订单创建失败");
+                  if(data.status==5){
+                    localStorage.clear();
+                    clearcookie(cookie);
+                    getAuth(cookie,querystring,"channel",id);
                   }
-                });
+                })
               }else{
                 self.loadingshow=false;
                 console.log("订单创建成功。。");
@@ -476,14 +444,8 @@
             },
             (err)=>{
               self.disable=true;
-              console.log(err);
               console.log("订单创建失败");
-              this.$vux.alert.show({
-                title: '提示',
-                content: "网络异常，请稍后重试",
-                dialogTransition:"",
-                maskTransition:"",
-              });
+              message("网络异常，请稍后重试")
               self.loadingshow=false;
             }
           );
@@ -505,29 +467,13 @@
           (data)=>{
             // alert(JSON.stringify(data));
             if (data.status!=0) {
-              self.$vux.alert.show({
-                title: '提示',
-                content: "服务器维护中，您的订单已支付成功，请勿重复支付。如有疑问请联系客服：400-966-7718",
-                dialogTransition:"",
-                maskTransition:"",
-              });
+              message("服务器维护中，您的订单已支付成功，请勿重复支付。如有疑问请联系客服：400-966-7718")
             }else{
-              // alert("购买成功")
-              // location.reload();
+              //购买成功
               location.href="/m/channels.html";
             }
           }
         );
-      },
-      logErr(err){
-        this.$vux.alert.show({
-          title: '提示',
-          content: err,
-          dialogTransition:"",
-          maskTransition:"",
-          onShow () {},
-          onHide () {}
-        })
       },
       commentLoad(){
         this.loadmore=false;
@@ -551,7 +497,6 @@
                   }
                   self.articles.articles=self.articles.articles.concat(data.articles);
                   self.articles.has_next=data.has_next;
-                  // self.$refs.scrollerEvent.reset()
                 }
               }
             );

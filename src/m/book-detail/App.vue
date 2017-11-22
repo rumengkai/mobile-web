@@ -140,7 +140,7 @@
         })
       },
       message(content,title='提示',callback){
-        self.$vux.alert.show({
+        this.$vux.alert.show({
           title: title,
           content: content,
           dialogTransition:"",
