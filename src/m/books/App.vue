@@ -12,8 +12,8 @@
         </div>
       </div>
       <!-- 学者书单 -->
-      <title-bar :title="dataInfo.teacher_booklist.name" more="更多" :img="dataInfo.teacher_booklist.image" url=""></title-bar>
-      <books-list :dataList="dataInfo.booklist.items"></books-list>
+      <title-bar :title="dataInfo.teacher_booklist.name" more="更多" :img="dataInfo.teacher_booklist.image" url="books-list-teacher.html"></title-bar>
+      <books-list-teacher :dataList="dataInfo.teacher_booklist.items"></books-list-teacher>
       <!-- 书单 -->
       <title-bar :title="dataInfo.booklist.name" more="" :img="dataInfo.booklist.image" url=""></title-bar>
       <books-list :dataList="dataInfo.booklist.items"></books-list>

@@ -1,8 +1,8 @@
 <template>
   <div id="books-list">
     <group>
-      <li v-for="(item,index) in dataList" @click="todetail(item.id)" key="index" v-bind:class="{'vux-1px-b':(dataList.lenght-1)!=index}">
-        <img :src="item.thumb" alt="">
+      <li v-for="(item,index) in dataList" @click="todetail(item.id)" :key="index" v-bind:class="{'vux-1px-b':(dataList.lenght-1)!=index}">
+        <img class="headimg" :src="item.thumb" alt="">
         <div class="right">
           <p class="name"> {{item.name}}</p>
           <p class="brief" v-html="stringBr(item.brief)"></p>
@@ -14,7 +14,7 @@
 
 <script>
   import Vue from 'vue'
-  // import { stringBr } from 'src/utils/';
+  import { stringBr } from 'src/common/js/assembly';
   import { Group } from 'vux'
   export default {
     props: {
@@ -28,18 +28,13 @@
       }
     },
     components: { Group },
-    // filters: {
-    //   stringBr:stringBr
-    // },
     mounted(){
     },
     methods: {
       todetail(id){
         window.location.href="/m/books-list.html?id="+id;
       },
-      stringBr (str) {
-       return str.replace(/\n/g,"<br/>")
-     }
+      stringBr
     }
   }
 </script>
@@ -55,7 +50,7 @@
   li{
     padding: .3rem .3rem .3rem 0;
     display: flex;
-    img{
+    .headimg{
       width: 2rem;
       height: 2rem;
       display: block;

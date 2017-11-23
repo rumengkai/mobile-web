@@ -24,4 +24,16 @@ export function toast(content, time = 3000, position = 'bottom') {
 		position: position
 	})
 }
-
+export function stringBr(str) {
+	return str.replace(/\n/g, "<br/>")
+}
+export function shareData(name='功夫财经',href='http://m.51xy8.com/m/home.html',share_thumb='http://m.51xy8.com/static/img_h5/h5_logo.png',brief='国民财商提升者') {
+	console.log(window);
+	window.shareData={
+		title:name,
+		link:href,
+		imgUrl:share_thumb,
+		desc:brief
+	}
+	return
+}
