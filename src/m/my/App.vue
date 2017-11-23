@@ -191,7 +191,7 @@ body{
     }
     p{
       color: #666;
-      font-size: 18px;
+      font-size: 16px;
       margin-top: 10px;
     }
   }
