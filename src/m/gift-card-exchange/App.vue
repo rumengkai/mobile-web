@@ -6,12 +6,12 @@
           <img :src="personinfo.photo" alt="头像">
         </div>
         <p class="p-0">{{personinfo.name}}</p>
-        <p class="p-1">赠送您一张专栏兑换卡</p>
+        <p class="p-1">赠送您一张礼品卡</p>
         <p class="p-2">您可兑换以下专栏</p>
       </div>
       <div class="channel vux-1px-t">
         <div class="channels-item" @click="toChannel(channelinfo.id)">
-          <div class="headimg">
+          <div class="headimg" v-bind:class="[{ 'headimg-1': dataInfo.type==1},{'headimg-2': dataInfo.type==2},{'headimg-2': dataInfo.type==3 }]">
             <img :src="channelinfo.thumb" alt="" onerror="this.src='http://m.51xy8.com/static/img/default.png'">
           </div>
           <div class="channels-info">
@@ -115,7 +115,7 @@
               this.personinfo=data.person;
               // 此处待改成items
               this.channelinfo=data.item;
-              // this.channelinfo=data.channel;
+              this.dataInfo=data;
               this.state=data.state;
               this.showContent=true;
               this.loadingshow=false;
