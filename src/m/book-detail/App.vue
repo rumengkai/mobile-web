@@ -31,7 +31,7 @@
       <div v-else class="teacher">
         <div class="teacher-aricle vux-1px-t">
           <p class="title">目录</p>
-          <li class="vux-1px-b" v-for="(item,index) in dataInfo.items" :key="index" @click="skip('detail.html?id='+item.id)">
+          <li class="vux-1px-b" v-for="(item,index) in dataInfo.items" :key="index" @click="skipDetail('detail.html?id='+item.id)">
             <img :src="item.thumb" alt="">
             <p>{{item.name}}</p>
           </li>
@@ -61,7 +61,7 @@
   import { toPay } from 'common/js/pay.js';
   import { audioFormat } from 'src/utils/';
   import {
-    stringBr , toast , shareData
+    stringBr , toast , shareData ,message
   } from 'src/common/js/assembly';
   import Audiobox from "components/Audio/Audio"
   import BackHome from "components/BackHome/BackHome"
@@ -69,6 +69,9 @@
   import TitleBar from "components/TitleBar/TitleBar"
   import LazyLoadingMore from "components/LazyLoadingMore/LazyLoadingMore"
   import Vue from 'vue'
+  import geturlpara from 'common/js/geturlpara.js';
+  Vue.prototype.$geturlpara=geturlpara
+
   import {Loading,XHeader,Group,Cell,Icon,Scroller,AlertPlugin,querystring,cookie} from 'vux'
   Vue.use(AlertPlugin)
   export default {
@@ -88,7 +91,7 @@
     beforeCreate(){
     },
     created () {
-      this.id=querystring.parse()['id']
+      this.id=this.$geturlpara.getUrlKey("id")//querystring.parse()['id']
       if(isWeiXin()){
         var path=location.pathname.replace('/m/','')
         getAuth(cookie,querystring,path+"?id="+this.id)
@@ -155,19 +158,15 @@
           this.createOrderResult(response)
         })
       },
-      message(content,title='提示',callback){
-        this.$vux.alert.show({
-          title: title,
-          content: content,
-          dialogTransition:"",
-          maskTransition:"",
-          onHide (){
-            callback()
-          }
-        });
-      },
       skip(name){
         window.location.href="/m/"+name;
+      },
+      skipDetail(name){
+        if(!this.dataInfo.subed){
+          toast("请购买后阅读")
+        }else {
+          window.location.href="/m/"+name;
+        }
       },
       shelf(){
         if (!this.dataInfo.followed) {

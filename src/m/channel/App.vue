@@ -24,7 +24,7 @@
         <div class="buy_member" v-if="!subscription&&channelsinfo.member_prices&&channelsinfo.member_prices.length!=0">
           <div class="member-list">
             <p class="member-title">会员折扣价</p>
-            <p class="member-price"><span v-for="item in channelsinfo.member_prices">{{item.name}}¥{{item.price}}</span></p>
+            <p class="member-price"><span v-for="(item,index) in channelsinfo.member_prices" :key="index">{{item.name}}¥{{item.price}}</span></p>
           </div>
           <p class="buy-now" @click="toActiveMember">
             &nbsp;&nbsp;立即开通
@@ -46,7 +46,7 @@
           <li v-if="!subscription">
             <p class="title">最新更新</p>
             <ul class="newupdate">
-              <li class="item vux-1px-b" v-for="item in channelsinfo.articles" @click="toDetail(item.id,item.tryout)">
+              <li class="item vux-1px-b" v-for="(item,index) in channelsinfo.articles" :key="index" @click="toDetail(item.id,item.tryout)">
                 <img :src="item.thumb" alt="" onerror="this.src='http://image.51xy8.com/1508740825405.jpg?imageView2/1/w/200/h/133/q/100|imageslim'">
                 <div v-if="item.tryout" class="try">试 读</div>
                 <p class="title">{{item.name}}</p>
@@ -385,12 +385,15 @@
         this.buy_id=this.channelsinfo.composite_channel.id;
         this.coupon_id='';
         this.order_type=3;
+        this.disable=true;
         this.subscribe();
       },
       readysub(){
         var self=this;
         self.show_composite_channel=false;
         self.showpopup=true;
+        self.buy_id=self.id;
+        this.order_type="";        
         self.couponstext=self.channelsinfo.coupons.length+"张券可用"
         if(self.channelsinfo.coupons.length){
           self.coupon_id=self.channelsinfo.coupons[0].id;
@@ -426,6 +429,7 @@
             },
             (data)=>{
               self.loadingshow=false;
+              self.disable=true;
               if (data.status!=0) {
                 message("创建订单失败","提示",function (params) {
                   console.log("订单创建失败");

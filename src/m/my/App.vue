@@ -16,6 +16,7 @@
         <cell title="我的收藏" is-link @click.native="toSkip('collect.html')"></cell>
         <cell title="我的订单" is-link @click.native="toSkip('order.html')"></cell>
         <cell v-if="gid=='1047501566'" title="两周年庆" is-link @click.native="toSkip('second-anniversary.html')"></cell>
+        <cell v-if="gid=='1047501566'" title="购买会员" is-link @click.native="toSkip('member.html')"></cell>
         <cell title="会员中心" is-link @click.native="tomember" v-if="myInfo.user.privilege_count!=-1||myInfo.user.show_privilege">
           <span class="tp tp1" v-if="myInfo.user.level==0">开通会员</span>
           <span class="tp tp1" v-if="myInfo.user.level!=0"><span v-if="myInfo.user.privilege_count!=0">{{myInfo.user.privilege_count}}项未兑换</span></span>
