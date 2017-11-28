@@ -5,8 +5,8 @@ body{
   padding-bottom: 1.3rem; 
   .mybookshelf{
     .bookshelf{
-      padding: .3rem;
-      height: 3rem;
+      padding: .3rem .1rem;
+      height: 2.6rem;
       box-sizing: border-box;
       display: flex;
       background: #fff;
@@ -14,19 +14,27 @@ body{
         width: 33.3%;
       }
       img{
-        height: 2.4rem;
-        max-width:1.8rem;
+        height: 2.0rem;
+        max-width:1.5rem;
         display: inline-block;
       }
+    }
+    .bookshelf li:nth-child(1){
+      text-align: center;
     }
     .bookshelf li:nth-child(2){
       text-align: center;
     }
     .bookshelf li:nth-child(3){
-      text-align: right;
+      text-align: center;
+    }
+    .bookshelf li:nth-child(4){
+      text-align: center;
     }
   }
+
 }
 .vux-no-group-title{
   margin-top: 0 !important;
 }
+

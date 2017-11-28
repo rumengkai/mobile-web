@@ -6,7 +6,7 @@
         <title-bar :title="dataInfo.bookshelf.name" v-if="dataInfo.bookshelf.update_count" :more='dataInfo.bookshelf.update_count+"本书更新"' color="red" :img="dataInfo.bookshelf.image" line="line" url="/m/books-my.html"></title-bar>
         <title-bar :title="dataInfo.bookshelf.name" v-else more='更多' :img="dataInfo.bookshelf.image" line="line" url="/m/books-my.html"></title-bar>
         <div class="bookshelf vux-1px-b">
-          <li v-for="(item,index) in dataInfo.bookshelf.items" v-if="index<3" @click="skip('book-detail.html?id='+item.id)" :key="index">
+          <li v-for="(item,index) in dataInfo.bookshelf.items" v-if="index<4" @click="skip('book-detail.html?id='+item.id)" :key="index">
             <img :src="item.thumb">
           </li>
         </div>

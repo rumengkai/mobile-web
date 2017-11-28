@@ -115,6 +115,7 @@
       fetchResult(res){
         if (res.status==0) {
           this.dataInfo=res;
+          if(res.type==1) document.title = "书籍推荐";
           this.contentshow=true;
           /* 分享设置 */
           shareData(res.name,location.href,res.share_thumb,res.brief)

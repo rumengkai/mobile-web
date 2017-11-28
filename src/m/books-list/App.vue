@@ -5,7 +5,7 @@
         <img :src="dataInfo.head" alt="">
       </div>
       <p class="title" v-if="dataInfo.type===0">{{dataInfo.name}}</p>
-      <p class="title" v-else-if="dataInfo.type===1" v-html="dataInfo.brief"></p>
+      <p class="title" v-else-if="dataInfo.type===1" v-html="stringBr(dataInfo.brief)"></p>
       <p class="title" v-else>{{dataInfo.name}}</p>
       <book-list :dataList="dataInfo.items"></book-list>
     </div>
@@ -36,6 +36,9 @@
   import TitleBar from "components/TitleBar/TitleBar"
   import LazyLoadingMore from "components/LazyLoadingMore/LazyLoadingMore"
   import Vue from 'vue'
+  import {
+    stringBr
+  } from 'src/common/js/assembly';
   import {Loading,XHeader,Icon,Scroller,AlertPlugin,querystring,cookie} from 'vux'
   Vue.use(AlertPlugin)
   Vue.prototype.$geturlpara=geturlpara
@@ -144,7 +147,8 @@
       },
       skip(name){
         window.location.href="/m/"+name;
-      }
+      },
+      stringBr
     }
   }
 </script>

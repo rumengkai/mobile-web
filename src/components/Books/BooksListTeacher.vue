@@ -83,10 +83,11 @@
       }
       .brief {
         line-height: .4rem;
-        max-height: 1.4rem;
         overflow: hidden;
         font-size: 12px;
         color: #666;
+        max-height: .8rem;
+        text-align: justify;
       }
       .bookname {
         p {
