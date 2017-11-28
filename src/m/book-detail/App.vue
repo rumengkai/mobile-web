@@ -14,18 +14,35 @@
           <p class="price">¥{{dataInfo.channel_price}} <span class="oldprice">¥{{dataInfo.price}}</span></p>
         </div>
       </div>
-      <p class="brief" ref="brief">{{dataInfo.brief}}</p>
-      <p v-if="flag" class="zhankai" @click="zhankai(1)">展开</p>
-      <p v-else class="zhankai" @click="zhankai(0)">收起</p>
-      <div v-bind:class="{'audio-box-active':music!='','audio-box':music==''}" v-if="music!=''" ref="audiodev">
-        <p class="p-title">正在播放：<span>{{audioname}}</span></p>
-        <audiobox :music="music" ref="audiobox"></audiobox>
+      <div v-if="dataInfo.type==0">
+        <p class="brief" ref="brief">{{dataInfo.brief}}</p>
+        <p v-if="flag" class="zhankai" @click="zhankai(1)">展开</p>
+        <p v-else class="zhankai" @click="zhankai(0)">收起</p>
+        <div v-bind:class="{'audio-box-active':music!='','audio-box':music==''}" v-if="music!=''" ref="audiodev">
+          <p class="p-title">正在播放：<span>{{audioname}}</span></p>
+          <audiobox :music="music" ref="audiobox"></audiobox>
+        </div>
+        <group>
+          <cell v-for="(item,index) in dataInfo.items" :title="item.title" is-link @click.native="play(item)" :key="index">
+            <span class="tryout" v-if="item.tryout">试听</span>{{item.audio_length | audioFormat}}
+          </cell>
+        </group>
       </div>
-      <group>
-        <cell v-for="item in dataInfo.items" :title="item.title" is-link @click.native="play(item)">
-          <span class="tryout" v-if="item.tryout">试听</span>{{item.audio_length | audioFormat}}
-        </cell>
-      </group>
+      <div v-else class="teacher">
+        <div class="teacher-aricle vux-1px-t">
+          <p class="title">目录</p>
+          <li class="vux-1px-b" v-for="(item,index) in dataInfo.items" :key="index" @click="skipDetail('detail.html?id='+item.id)">
+            <img :src="item.thumb" alt="">
+            <p>{{item.name}}</p>
+          </li>
+        </div>
+        <div>
+          <div class="teacher-brief">
+            <p class="title">简介</p>
+            <p class="con" v-html="stringBr(dataInfo.brief)"></p>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="bottom-btn" v-show="contentshow">
       <div class="bookshelf" v-if="!dataInfo.followed" @click="shelf()">放入书架</div>
@@ -43,12 +60,18 @@
   import { createOrder , weixinCheck } from 'src/api/pay';
   import { toPay } from 'common/js/pay.js';
   import { audioFormat } from 'src/utils/';
+  import {
+    stringBr , toast , shareData ,message
+  } from 'src/common/js/assembly';
   import Audiobox from "components/Audio/Audio"
   import BackHome from "components/BackHome/BackHome"
   import { isWeiXin , weixinShare} from 'common/js/common.js';
   import TitleBar from "components/TitleBar/TitleBar"
   import LazyLoadingMore from "components/LazyLoadingMore/LazyLoadingMore"
   import Vue from 'vue'
+  import geturlpara from 'common/js/geturlpara.js';
+  Vue.prototype.$geturlpara=geturlpara
+
   import {Loading,XHeader,Group,Cell,Icon,Scroller,AlertPlugin,querystring,cookie} from 'vux'
   Vue.use(AlertPlugin)
   export default {
@@ -68,7 +91,7 @@
     beforeCreate(){
     },
     created () {
-      this.id=querystring.parse()['id']
+      this.id=this.$geturlpara.getUrlKey("id")//querystring.parse()['id']
       if(isWeiXin()){
         var path=location.pathname.replace('/m/','')
         getAuth(cookie,querystring,path+"?id="+this.id)
@@ -92,13 +115,10 @@
       fetchResult(res){
         if (res.status==0) {
           this.dataInfo=res;
+          if(res.type==1) document.title = "书籍推荐";
           this.contentshow=true;
-          window.shareData={
-            title:res.name,
-            link:location.href,
-            imgUrl:'http://m.51xy8.com/static/img_h5/h5_logo.png',
-            desc:res.brief
-          }
+          /* 分享设置 */
+          shareData(res.name,location.href,res.share_thumb,res.brief)
           weixinShare(Vue);
         }
       },
@@ -139,31 +159,27 @@
           this.createOrderResult(response)
         })
       },
-      message(content,title='提示',callback){
-        self.$vux.alert.show({
-          title: title,
-          content: content,
-          dialogTransition:"",
-          maskTransition:"",
-          onHide (){
-            callback()
-          }
-        });
-      },
       skip(name){
         window.location.href="/m/"+name;
+      },
+      skipDetail(name){
+        if(!this.dataInfo.subed){
+          toast("请购买后阅读")
+        }else {
+          window.location.href="/m/"+name;
+        }
       },
       shelf(){
         if (!this.dataInfo.followed) {
           addShelf({id:this.id}).then(response => {
             this.loadingshow = false
-            this.toast('添加成功')
+            toast('添加成功')
             this.fetchData()
           })
         }else{
           delShelf({id:this.id}).then(response => {
             this.loadingshow = false
-            this.toast('移除成功')
+            toast('移除成功')
             this.fetchData()
           })
         }
@@ -179,7 +195,7 @@
       },
       play(item){
         if (!item.tryout&&item.audio==="") {
-          this.toast("请订阅后收听")
+          toast("请订阅后收听")
         }else{
           this.music = item.audio
           this.audioname=item.title
@@ -189,15 +205,7 @@
           },0)
         }
       },
-      toast(text){
-        this.$vux.toast.show({
-            text: text,
-            time:3000,
-            width:'auto',
-            type:"text",
-            position:'bottom'
-        })
-      }
+      stringBr
     }
   }
 </script>

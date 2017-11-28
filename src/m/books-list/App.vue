@@ -4,7 +4,9 @@
       <div class="banner">
         <img :src="dataInfo.head" alt="">
       </div>
-      <p class="title">{{dataInfo.name}}</p>
+      <p class="title" v-if="dataInfo.type===0">{{dataInfo.name}}</p>
+      <p class="title" v-else-if="dataInfo.type===1" v-html="stringBr(dataInfo.brief)"></p>
+      <p class="title" v-else>{{dataInfo.name}}</p>
       <book-list :dataList="dataInfo.items"></book-list>
     </div>
     <footer v-if="contentshow&&!dataInfo.followed">
@@ -28,13 +30,19 @@
   import { createOrder , weixinCheck } from 'src/api/pay';
   import { toPay } from 'common/js/pay.js';
   import BackHome from "components/BackHome/BackHome"
+  import geturlpara from 'common/js/geturlpara.js';
   import { isWeiXin , weixinShare } from 'common/js/common.js';
   import BookList from "components/Books/BookList"
   import TitleBar from "components/TitleBar/TitleBar"
   import LazyLoadingMore from "components/LazyLoadingMore/LazyLoadingMore"
   import Vue from 'vue'
+  import {
+    stringBr
+  } from 'src/common/js/assembly';
   import {Loading,XHeader,Icon,Scroller,AlertPlugin,querystring,cookie} from 'vux'
   Vue.use(AlertPlugin)
+  Vue.prototype.$geturlpara=geturlpara
+
   export default {
     data () {
       return {
@@ -58,7 +66,7 @@
       //授权
     },
     created () {
-      this.id=querystring.parse()['id']
+      this.id=this.$geturlpara.getUrlKey("id")//;querystring.parse()['id']
       if(isWeiXin()){
         var path=location.pathname.replace('/m/','')
         getAuth(cookie,querystring,path+"?id="+this.id)
@@ -139,7 +147,8 @@
       },
       skip(name){
         window.location.href="/m/"+name;
-      }
+      },
+      stringBr
     }
   }
 </script>

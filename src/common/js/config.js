@@ -19,7 +19,7 @@
 document.write('<script src=\"https\:\/\/s19.cnzz.com\/z_stat.php\?id=1262435637\&web_id=1262435637\" language=\"JavaScript\"><\/script>')
 document.write('<script src=\"http\:\/\/res.wx.qq.com\/open\/js\/jweixin-1.2.0.js\" charset=\"utf-8\"><\/script>')
 
-window.base="pro"
+window.base="dev"
 // 全局变量，配置
 if (base=="pro") {
 	window.VERSION="0.1"
@@ -44,7 +44,7 @@ if (base=="pro") {
 	window.appid="wx0a542ef9d4d41cef"
 	localStorage.setItem("from","3")
 	localStorage.setItem("gid","1047501566")
-	localStorage.setItem("token","f32cd7de15144e2b931214730e6ed9f4")
+	localStorage.setItem("token","97b416d0fe144c8aacfae881ad291add")
 	window.config=function () {
 		return {
 			paytype:"JSAPI",

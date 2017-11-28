@@ -23,6 +23,14 @@ export function getBooksList(params) {
     params
   })
 }
+// 学者书单
+export function getTeacherBooklists(params) {
+  return fetch({
+    url: '/api/books/teacher_booklists',
+    method: 'get',
+    params
+  })
+}
 // 书籍详情
 export function getBooksDetail(params) {
   return fetch({

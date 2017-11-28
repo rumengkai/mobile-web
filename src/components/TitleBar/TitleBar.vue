@@ -3,7 +3,7 @@
     <div class="con">
       <img v-if="img" class="img" :src="img" alt=".">
       <span v-html="title"></span>
-      <span v-html="more" class="more" v-if="more" @click="toskip"></span>
+      <span v-html="more" :style="{color:color}" class="more" v-if="more" @click="toskip"></span>
       <span class="nstep" v-if="more"></span>
     </div>
     <div class="line vux-1px-b" v-if="line"></div>
@@ -19,7 +19,8 @@
       more:String,
       url:String,
       line:String,
-      img:String
+      img:String,
+      color:String
     },
     data () {
       return {

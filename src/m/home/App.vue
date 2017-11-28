@@ -8,7 +8,7 @@
       <div class="channels">
         <div class="warp">
           <div class="box1" ref="box1">
-            <div class="box1-item" v-for="item in indexdata.big_channels.items" @click="toChannel(item.id)">
+            <div class="box1-item" v-for="(item,index) in indexdata.big_channels.items" @click="toChannel(item.id)" :key="index">
               <img :src="item.thumb" alt="">
               <p class="title" v-html="item.name"></p>
               <p class="brief" v-html="item.brief"></p>
@@ -17,8 +17,8 @@
         </div>
       </div>
       <!-- 学者书房 -->
-      <TitleBar v-if="!!indexdata.teacher_books" :title="indexdata.teacher_books.name" more="查看全部" :img="indexdata.teacher_books.image" line="line" url="/m/teacher-books.html"></TitleBar>
-      <books-list v-if="!!indexdata.teacher_books" :dataList="indexdata.teacher_books.items"></books-list>
+      <TitleBar v-if="!!indexdata.teacher_books" :title="indexdata.teacher_books.name" more="查看全部" :img="indexdata.teacher_books.image" line="line" url="/m/books-list-teacher.html"></TitleBar>
+      <books-list-teacher v-if="!!indexdata.teacher_books" :dataList="indexdata.teacher_books.items"></books-list-teacher>
       <!-- 书房 -->
       <TitleBar v-if="!!indexdata.books" :title="indexdata.books.name" more="查看全部" :img="indexdata.books.image" line="line" url="/m/books.html"></TitleBar>
       <books-list v-if="!!indexdata.books" :dataList="indexdata.books.items"></books-list>
@@ -50,6 +50,7 @@
   import TitleBar from "components/TitleBar/TitleBar"
   import Article from "components/Article/Article"
   import BooksList from "components/Books/BooksList"
+  import BooksListTeacher from "components/Books/BooksListTeacher"
   import AudioList from "components/AudioList/AudioList"
   import LoadingMore from "components/LoadingMore/LoadingMore"
   import LazyLoadingMore from "components/LazyLoadingMore/LazyLoadingMore"
@@ -89,7 +90,8 @@
       LazyLoadingMore,
       Scroller,
       Failed,
-      BooksList
+      BooksList,
+      BooksListTeacher
     },
     beforeCreate(){
       //授权

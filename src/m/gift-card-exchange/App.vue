@@ -6,12 +6,12 @@
           <img :src="personinfo.photo" alt="头像">
         </div>
         <p class="p-0">{{personinfo.name}}</p>
-        <p class="p-1">赠送您一张专栏兑换卡</p>
-        <p class="p-2">您可兑换以下专栏</p>
+        <p class="p-1">赠送您一张礼品卡</p>
+        <p class="p-2">您可兑换以下内容</p>
       </div>
       <div class="channel vux-1px-t">
         <div class="channels-item" @click="toChannel(channelinfo.id)">
-          <div class="headimg">
+          <div class="headimg" v-bind:class="[{ 'headimg-1': dataInfo.type==1},{'headimg-2': dataInfo.type==2},{'headimg-2': dataInfo.type==3 }]">
             <img :src="channelinfo.thumb" alt="" onerror="this.src='http://m.51xy8.com/static/img/default.png'">
           </div>
           <div class="channels-info">
@@ -52,6 +52,9 @@
   import 'common/css/reset.css';
   import 'common/js/config.js';
   // import BackHome from "components/BackHome/BackHome"
+  import {
+    stringBr , toast , shareData ,message
+  } from 'src/common/js/assembly';
   import Vue from 'vue'
   import AjaxServer from 'common/js/ajaxServer.js';
   import geturlpara from 'common/js/geturlpara.js';
@@ -115,7 +118,7 @@
               this.personinfo=data.person;
               // 此处待改成items
               this.channelinfo=data.item;
-              // this.channelinfo=data.channel;
+              this.dataInfo=data;
               this.state=data.state;
               this.showContent=true;
               this.loadingshow=false;
@@ -167,8 +170,9 @@
                  type:'text'
               })
               this.loadingshow=true;
+              var self=this
               setTimeout(()=>{
-                window.location.href="/m/channel.html?id="+this.channelinfo.id
+                self.toChannel(self.dataInfo.item.id)
               },2000)
             }else{
               this.$vux.toast.show({
@@ -185,8 +189,21 @@
           }
         )
       },
-      toChannel(id){
-        window.location.href="/m/channel.html?id="+id;
+      toChannel(id) {
+        switch (this.dataInfo.type) {
+          case 1:
+            window.location.href = "/m/channel.html?id=" + id;
+            break;
+          case 2:
+            window.location.href = "/m/book-detail.html?id=" + id;
+            break;
+          case 3:
+            window.location.href = "/m/books-list.html?id=" + id;
+            break;
+          default:
+            window.location.href = "/m/channels.html";
+            break;
+        }
       },
       toWeixin(){
         window.location.href="/m/home.html";

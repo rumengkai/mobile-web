@@ -93,7 +93,7 @@
             self.showContent=true;
             self.loadingshow=false;
             setTimeout(()=>{
-              self.$refs.box1.style.width=100*res.updated_channels.items.length+20+"px"
+              self.$refs.box1.style.width=75*res.updated_channels.items.length+20+"px"
             },0);
           }
         }
@@ -141,15 +141,15 @@
 }
 .box1 {
   min-width: 7.5rem;
-  height: 100px;
+  height: 85px;
   box-sizing: border-box;
   background-color: #fff;
   position: relative;
   margin: 0 10px;
 }
 .box1-item {
-  width: 100px;
-  height: 110px;
+  width: 75px;
+  height: 80px;
   background-color: #fff;
   display:inline-block;
   float: left;
@@ -172,8 +172,8 @@
     border: 1px #fff solid;
   }
   img{
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     border-radius: 40px;
   }
 }

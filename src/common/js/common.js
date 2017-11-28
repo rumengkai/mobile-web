@@ -139,7 +139,23 @@ export function weixinShare(Vue,data){
 	});
 }
 
-
+export function getOrderType(order_type){
+	let ORDER_TYPE = {
+		ORDER_TYPE_COMPOISITE_CHANNEL : 3,
+		ORDER_TYPE_CHANNEL_GOODS : 4,
+		ORDER_TYPE_WALLET : 6,
+		ORDER_TYPE_MEMBER : 7,
+		ORDER_TYPE_MEMBER_GOODS : 8,
+		ORDER_TYPE_SMALL_CHANNEL : 9,
+		ORDER_TYPE_GIFT : 10,
+		ORDER_TYPE_BOOK : 11,
+		ORDER_TYPE_BOOKLIST : 12,
+		ORDER_TYPE_LEVEL_UPDATE : 13,
+		ORDER_TYPE_TEACHER_BOOK : 14,
+		ORDER_TYPE_TEACHER_BOOKLIST : 15,
+	}
+	return ORDER_TYPE[order_type]
+}
 
 export function isMobile(){
 	var u = navigator.userAgent;

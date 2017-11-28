@@ -1,7 +1,7 @@
 <template>
   <div id="book-list">
     <group>
-      <li v-for="(item,index) in dataList" @click="todetail(item.id)" key="index" v-bind:class="{'vux-1px-b':(dataList.lenght-1)!=index}">
+      <li v-for="(item,index) in dataList" @click="todetail(item)" key="index" v-bind:class="{'vux-1px-b':(dataList.lenght-1)!=index}">
         <img :src="item.thumb" alt="">
         <div class="right">
           <p class="name ell"> {{item.name}}</p>
@@ -15,6 +15,7 @@
 
 <script>
   import Vue from 'vue'
+  import { toast } from 'common/js/assembly'
   import { Group } from 'vux'
   export default {
     props: {
@@ -31,8 +32,12 @@
     mounted(){
     },
     methods: {
-      todetail(id){
-        window.location.href="/m/book-detail.html?id="+id;
+      todetail(item){
+        if (item.finished) {
+          window.location.href="/m/book-detail.html?id="+item.id;
+        }else{
+          toast("请完结后查看")
+        }
       }
     }
   }
