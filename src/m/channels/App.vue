@@ -165,8 +165,8 @@
     color: #fff;
     font-size: 12px;
     line-height: 15px;
-    top: 13px;
-    right: 15px;
+    top: 12px;
+    right: 8px;
     position: absolute;
     display: block;
     border: 1px #fff solid;
