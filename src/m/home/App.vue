@@ -116,7 +116,7 @@
           this.showContent=true;
           self.indexdata=res;
           setTimeout(()=>{
-            self.$refs.box1.style.width=150*self.indexdata.big_channels.items.length+20+"px"
+            self.$refs.box1.style.width=120*self.indexdata.big_channels.items.length+20+"px"
           },0);
         }
         setTimeout(()=>{
