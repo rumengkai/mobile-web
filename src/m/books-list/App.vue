@@ -37,7 +37,7 @@
   import LazyLoadingMore from "components/LazyLoadingMore/LazyLoadingMore"
   import Vue from 'vue'
   import {
-    stringBr
+    stringBr ,shareData
   } from 'src/common/js/assembly';
   import {Loading,XHeader,Icon,Scroller,AlertPlugin,querystring,cookie} from 'vux'
   Vue.use(AlertPlugin)
@@ -88,12 +88,7 @@
         if (res.status==0) {
           this.dataInfo=res;
           this.contentshow=true;
-          window.shareData={
-            title:res.name,
-            link:location.href,
-            imgUrl:'http://m.51xy8.com/static/img_h5/h5_logo.png',
-            desc:res.brief
-          }
+          shareData(res.name,location.href,res.share_thumb,res.brief)
           weixinShare();
         }
       },

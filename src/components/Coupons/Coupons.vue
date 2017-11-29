@@ -147,8 +147,8 @@
         line-height: .47rem;
       }
       .explain{
-        position: relative;
-        bottom: -.8rem;
+        position: absolute;
+        bottom: 0;
         margin-bottom: 20px;
         z-index: 999;
         color: #ccc;

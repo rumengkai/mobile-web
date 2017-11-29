@@ -3,7 +3,7 @@
     <div v-if="showContent">
       <div class="con">
         <img src="./images/card.png" alt="">
-        <p class="title">
+        <p class="title ell">
           <span>{{couponData.name}}</span>
         </p>
         <p class="tip">
