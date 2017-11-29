@@ -128,7 +128,7 @@
       width: 4.69rem;
       float: left;
       color: #333;
-      padding: .4rem .2rem;
+      padding: .4rem .2rem .2rem;
       box-sizing: border-box;
       height: 100%;
       position: relative;
