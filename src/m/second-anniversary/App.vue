@@ -92,7 +92,7 @@
     data () {
       return {
         loadingshow:true,
-        active:true,
+        active:false,
         loadtext:"加载中。。。",
         showContent:false,
         dataInfo:{},
