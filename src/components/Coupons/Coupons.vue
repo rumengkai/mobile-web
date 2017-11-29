@@ -149,7 +149,7 @@
       .explain{
         position: absolute;
         bottom: 0;
-        margin-bottom: 20px;
+        margin-bottom: 3px;
         z-index: 999;
         color: #ccc;
         .period{
