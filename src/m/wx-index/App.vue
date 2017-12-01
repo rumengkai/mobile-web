@@ -25,7 +25,6 @@
         </div>
       </div>
     </div>
-    <!--<loading v-model="loadingshow" :text="loadtext"></loading>-->
   </div>
 </template>
 
