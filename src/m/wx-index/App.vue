@@ -82,7 +82,7 @@
             url: "http://image.51xy8.com/1512029374044.png",
             name: "胡润",
             brief: "跟土豪讲Engliese的琅琊榜榜爷",
-            linkurl: ""
+            linkurl: "http://mp.weixin.qq.com/mp/homepage?__biz=MzIzOTA3NTA5Mg==&hid=17&sn=abccc94c53daa9fd299ae199174348b1#wechat_redirect"
           }
         ]
       }
