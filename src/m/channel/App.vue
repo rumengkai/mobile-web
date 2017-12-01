@@ -27,7 +27,7 @@
             <p class="member-price"><span v-for="(item,index) in channelsinfo.member_prices" :key="index">{{item.name}}¥{{item.price}}</span></p>
           </div>
           <p class="buy-now" @click="toActiveMember">
-            &nbsp;&nbsp;立即开通
+            &nbsp;&nbsp;购买会员
           </p>
         </div>
         <ul class="channels-info" v-if="!isfocus||!subscription">
