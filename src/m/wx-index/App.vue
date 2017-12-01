@@ -102,6 +102,7 @@
     methods: {
       linkIndex: function (linkurl) {
         window.location.href = linkurl
+        
       }
     }
   }

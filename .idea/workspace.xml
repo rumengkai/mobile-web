@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c30ac95a-f7ed-4a4f-a10a-8c8aa72b1d2e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/m/wx-index/App.vue" afterPath="$PROJECT_DIR$/src/m/wx-index/App.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -52,8 +51,8 @@
       <file leaf-file-name="App.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/m/wx-index/App.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="395">
-              <caret line="100" column="6" lean-forward="true" selection-start-line="100" selection-start-column="6" selection-end-line="100" selection-end-column="6" />
+            <state relative-caret-position="455">
+              <caret line="104" column="8" lean-forward="false" selection-start-line="104" selection-start-column="8" selection-end-line="104" selection-end-column="8" />
               <folding>
                 <element signature="e#1152#1181#0" expanded="true" />
               </folding>
@@ -162,8 +161,8 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="118" />
-    <option name="y" value="70" />
+    <option name="x" value="72" />
+    <option name="y" value="23" />
     <option name="width" value="1440" />
     <option name="height" value="829" />
   </component>
@@ -299,15 +298,16 @@
       <workItem from="1512093570635" duration="1533000" />
       <workItem from="1512096451775" duration="372000" />
       <workItem from="1512097120666" duration="259000" />
-      <workItem from="1512112075457" duration="755000" />
+      <workItem from="1512112075457" duration="905000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10806000" />
+    <option name="totallyTimeSpent" value="10956000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="118" y="70" width="1440" height="829" extended-state="0" />
+    <frame x="72" y="23" width="1440" height="829" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24947146" sideWeight="0.70668954" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -746,8 +746,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/m/wx-index/App.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="395">
-          <caret line="100" column="6" lean-forward="true" selection-start-line="100" selection-start-column="6" selection-end-line="100" selection-end-column="6" />
+        <state relative-caret-position="455">
+          <caret line="104" column="8" lean-forward="false" selection-start-line="104" selection-start-column="8" selection-end-line="104" selection-end-column="8" />
           <folding>
             <element signature="e#1152#1181#0" expanded="true" />
           </folding>
