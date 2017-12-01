@@ -6,7 +6,7 @@
           <img class="header-img" src="http://image.51xy8.com/1512025219138.png"/>
         </div>
         <div class="con-list">
-          <li class="con-item position-relative" v-for="(item, index) in links">
+          <li class="con-item position-relative" v-for="(item, index) in links" :key="index">
             <div class="item-content" v-if="item.linkurl != ''" :class="links.length-1 != index ? 'border-bottom' : '' " v-on:click='linkIndex(item.linkurl)' >
               <div class="item-left">
                 <img class="item-img" v-if="item.url != '' " :src="item.url"/>
@@ -25,15 +25,15 @@
         </div>
       </div>
     </div>
-    <loading v-model="loadingshow" :text="loadtext"></loading>
+    <!-- <loading v-model="loadingshow" :text="loadtext"></loading> -->
   </div>
 </template>
 
 <script>
   import 'common/js/config.js';
-  import { isWeiXin } from 'common/js/common.js';
+  import { isWeiXin ,weixinShare} from 'common/js/common.js';
   import Vue from 'vue'
-  import { message } from 'common/js/assembly'
+  import { message ,shareData} from 'common/js/assembly'
   export default {
     data () {
       return {
@@ -97,12 +97,12 @@
       }
     },
     created () {
-
+      shareData("大咖论道",location.href)
+      weixinShare();
     },
     methods: {
       linkIndex: function (linkurl) {
         window.location.href = linkurl
-        
       }
     }
   }
