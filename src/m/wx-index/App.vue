@@ -3,7 +3,7 @@
     <div v-if="contentshow">
       <div class="content">
         <div class="header">
-          <img class="header-img" src="http://image.51xy8.com/1512374352375.png"/>
+          <img class="header-img" src="http://image.51xy8.com/1512377216800.png"/>
         </div>
         <div class="con-list">
           <li class="con-item position-relative" v-for="(item, index) in links" :key="index">
