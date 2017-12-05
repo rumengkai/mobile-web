@@ -26,7 +26,7 @@
       </div>
     </div>
   </div>
-    <!-- <loading v-model="loadingshow" :text="loadtext"></loading> -->
+  <!-- <loading v-model="loadingshow" :text="loadtext"></loading> -->
 </template>
 
 <script>
@@ -132,8 +132,8 @@
   }
 </script>
 <style lang="less">
-@import '../../common/css/reset.css';
-@import '~vux/src/styles/1px.less';
-@import "../index/App.less";
-@import './App.less';
+  @import '../../common/css/reset.css';
+  @import '~vux/src/styles/1px.less';
+  @import "../index/App.less";
+  @import './App.less';
 </style>
