@@ -6,8 +6,8 @@
           <img class="header-img" src="http://image.51xy8.com/1512377216800.png"/>
         </div>
         <div class="con-list">
-          <li class="con-item position-relative" v-for="(item, index) in links" :key="index">
-            <div class="item-content border-bottom" v-if="item.linkurl != ''" v-on:click='linkIndex(item.linkurl)' >
+          <li class="con-item position-relative" v-for="(item, index) in links" :key="index" v-if="item.linkurl != ''">
+            <div class="item-content border-bottom"  v-on:click='linkIndex(item.linkurl)' >
               <div class="item-left">
                 <img class="item-img" v-if="item.url != '' " :src="item.url"/>
                 <img class="item-img" v-else :src="defaultimg"/>
