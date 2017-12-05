@@ -44,19 +44,19 @@
         defaultimg: 'http://image.51xy8.com/1496311047717.jpg',
         links:[
           {
-            url: "http://image.51xy8.com/1512372212583.png",
+            url: "http://image.51xy8.com/1512470272714.png",
             name: "如松",
             brief: "独立经济理论和经济趋势研究者",
             linkurl: "http://mp.weixin.qq.com/mp/homepage?__biz=MzIzOTA3NTA5Mg==&hid=13&sn=0392a79156a23767c594c533810768dc#wechat_redirect"
           },
           {
-            url: "http://image.51xy8.com/1512372281229.png",
+            url: "http://image.51xy8.com/1512470359481.png",
             name: "老端",
             brief: "网红投资大神",
             linkurl: "http://mp.weixin.qq.com/mp/homepage?__biz=MzIzOTA3NTA5Mg==&hid=14&sn=c3d5247a26442835659409e37b59ffb0#wechat_redirect"
           },
           {
-            url: "http://image.51xy8.com/1512372322411.png",
+            url: "http://image.51xy8.com/1512470409739.png",
             name: "财经麻辣姐",
             brief: "前东方出版社经济编辑部主任",
             linkurl: "http://mp.weixin.qq.com/mp/homepage?__biz=MzIzOTA3NTA5Mg==&hid=15&sn=9e4c2f3339a67cf652d018bae77f6718#wechat_redirect"
@@ -71,7 +71,7 @@
             url: "http://image.51xy8.com/1512372399018.png",
             name: "欧神",
             brief: "楼市投资大神 奥派经济学者",
-            linkurl: "http://mp.weixin.qq.com/mp/homepage?__biz=MzIzOTA3NTA5Mg==&hid=16&sn=8b73deac498df522b4033ffc49b356a5#wechat_redirect\n"
+            linkurl: ""
           },
           {
             url: "http://image.51xy8.com/1512372485858.png",
@@ -104,7 +104,7 @@
             linkurl: ""
           },
           {
-            url: "http://image.51xy8.com/1512466130911.png",
+            url: "http://image.51xy8.com/1512470439622.png",
             name: "X嘉宾",
             brief: "百家争鸣，一鸣惊人",
             linkurl: "http://mp.weixin.qq.com/mp/homepage?__biz=MzIzOTA3NTA5Mg==&hid=6&sn=d73abd5932e0bc43b56e23fbac298707#wechat_redirect"

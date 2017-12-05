@@ -4,9 +4,6 @@
     <list default="true" id="c30ac95a-f7ed-4a4f-a10a-8c8aa72b1d2e" name="Default" comment="update">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/m/wx-index/App.less" afterPath="$PROJECT_DIR$/src/m/wx-index/App.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/m/wx-index/App.vue" afterPath="$PROJECT_DIR$/src/m/wx-index/App.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/m/wx-new/App.less" afterPath="$PROJECT_DIR$/src/m/wx-new/App.less" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/m/wx-new/App.vue" afterPath="$PROJECT_DIR$/src/m/wx-new/App.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -21,11 +18,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="App.vue" pinned="false" current-in-tab="false">
+      <file leaf-file-name="App.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/m/books/App.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="161">
-              <caret line="69" column="13" lean-forward="false" selection-start-line="69" selection-start-column="13" selection-end-line="69" selection-end-column="13" />
+            <state relative-caret-position="122">
+              <caret line="69" column="8" lean-forward="false" selection-start-line="69" selection-start-column="8" selection-end-line="69" selection-end-column="18" />
               <folding>
                 <marker date="1512016752000" expanded="true" signature="2279:2285" ph="{&quot;Icon&quot;: Icon...}" />
               </folding>
@@ -43,10 +40,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="fetch.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="fetch.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/utils/fetch.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-52">
+            <state relative-caret-position="-157">
               <caret line="5" column="6" lean-forward="false" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
@@ -80,21 +77,9 @@
       <file leaf-file-name="App.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/m/wx-new/App.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-645">
-              <caret line="8" column="118" lean-forward="false" selection-start-line="8" selection-start-column="118" selection-end-line="8" selection-end-column="118" />
-              <folding>
-                <marker date="1512466261000" expanded="true" signature="1319:4311" ph="{...}" />
-                <marker date="1512466261000" expanded="true" signature="1333:3991" ph="{...}" />
-                <marker date="1512466261000" expanded="true" signature="1348:3985" ph="{&quot;loadtext&quot;: '加载中...'...}" />
-                <marker date="1512466261000" expanded="true" signature="1530:3977" ph="[...]" />
-                <marker date="1512466261000" expanded="true" signature="1542:1751" ph="{&quot;name&quot;: &quot;如松&quot;...}" />
-                <marker date="1512466261000" expanded="true" signature="3938:3967" ph="{&quot;name&quot;: &quot;盛夏&quot;...}" />
-                <marker date="1512466261000" expanded="true" signature="4036:4117" ph="{...}" />
-                <marker date="1512466261000" expanded="true" signature="4070:4111" ph="{...}" />
-                <marker date="1512466261000" expanded="true" signature="4134:4200" ph="{...}" />
-                <marker date="1512466261000" expanded="true" signature="4215:4307" ph="{...}" />
-                <marker date="1512466261000" expanded="true" signature="4253:4301" ph="{...}" />
-              </folding>
+            <state relative-caret-position="335">
+              <caret line="73" column="22" lean-forward="false" selection-start-line="73" selection-start-column="22" selection-end-line="73" selection-end-column="22" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -134,7 +119,7 @@
       <file leaf-file-name="App.less" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/m/wx-new/App.less">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="22">
+            <state relative-caret-position="75">
               <caret line="5" column="13" lean-forward="true" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
               <folding />
             </state>
@@ -166,9 +151,9 @@
         <option value="$PROJECT_DIR$/src/m/index/App.less" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/m/wx-index/App.vue" />
-        <option value="$PROJECT_DIR$/src/m/wx-new/App.vue" />
         <option value="$PROJECT_DIR$/src/m/wx-index/App.less" />
         <option value="$PROJECT_DIR$/src/m/wx-new/App.less" />
+        <option value="$PROJECT_DIR$/src/m/wx-new/App.vue" />
       </list>
     </option>
   </component>
@@ -184,8 +169,8 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="34" />
-    <option name="y" value="25" />
+    <option name="x" value="72" />
+    <option name="y" value="23" />
     <option name="width" value="1440" />
     <option name="height" value="785" />
   </component>
@@ -325,7 +310,7 @@
       <workItem from="1512120939726" duration="280000" />
       <workItem from="1512205725198" duration="2107000" />
       <workItem from="1512374927139" duration="1722000" />
-      <workItem from="1512446843020" duration="1822000" />
+      <workItem from="1512446843020" duration="3826000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1512374738932</created>
@@ -348,22 +333,29 @@
       <option name="project" value="LOCAL" />
       <updated>1512377805983</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="江湖新秀">
+      <created>1512466373051</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1512466373051</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="18710000" />
+    <option name="totallyTimeSpent" value="20714000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="34" y="25" width="1440" height="785" extended-state="0" />
+    <frame x="72" y="23" width="1440" height="785" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24947146" sideWeight="0.76237625" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24947146" sideWeight="0.87326735" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21934605" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24947146" sideWeight="0.23762377" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24947146" sideWeight="0.12673268" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26811594" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -385,7 +377,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="update" />
-    <option name="LAST_COMMIT_MESSAGE" value="update" />
+    <MESSAGE value="江湖新秀" />
+    <option name="LAST_COMMIT_MESSAGE" value="江湖新秀" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -759,26 +752,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/m/wx-new/App.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-645">
-          <caret line="8" column="118" lean-forward="false" selection-start-line="8" selection-start-column="118" selection-end-line="8" selection-end-column="118" />
-          <folding>
-            <marker date="1512466261000" expanded="true" signature="1319:4311" ph="{...}" />
-            <marker date="1512466261000" expanded="true" signature="1333:3991" ph="{...}" />
-            <marker date="1512466261000" expanded="true" signature="1348:3985" ph="{&quot;loadtext&quot;: '加载中...'...}" />
-            <marker date="1512466261000" expanded="true" signature="1530:3977" ph="[...]" />
-            <marker date="1512466261000" expanded="true" signature="1542:1751" ph="{&quot;name&quot;: &quot;如松&quot;...}" />
-            <marker date="1512466261000" expanded="true" signature="3938:3967" ph="{&quot;name&quot;: &quot;盛夏&quot;...}" />
-            <marker date="1512466261000" expanded="true" signature="4036:4117" ph="{...}" />
-            <marker date="1512466261000" expanded="true" signature="4070:4111" ph="{...}" />
-            <marker date="1512466261000" expanded="true" signature="4134:4200" ph="{...}" />
-            <marker date="1512466261000" expanded="true" signature="4215:4307" ph="{...}" />
-            <marker date="1512466261000" expanded="true" signature="4253:4301" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/m/wx-index/App.less">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -789,19 +762,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/m/wx-new/App.less">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
+        <state relative-caret-position="75">
           <caret line="5" column="13" lean-forward="true" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/m/books/App.vue">
+    <entry file="file://$PROJECT_DIR$/src/m/wx-new/App.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="69" column="13" lean-forward="false" selection-start-line="69" selection-start-column="13" selection-end-line="69" selection-end-column="13" />
-          <folding>
-            <marker date="1512016752000" expanded="true" signature="2279:2285" ph="{&quot;Icon&quot;: Icon...}" />
-          </folding>
+        <state relative-caret-position="335">
+          <caret line="73" column="22" lean-forward="false" selection-start-line="73" selection-start-column="22" selection-end-line="73" selection-end-column="22" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -815,10 +786,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/utils/fetch.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-52">
+        <state relative-caret-position="-157">
           <caret line="5" column="6" lean-forward="false" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/m/books/App.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="122">
+          <caret line="69" column="8" lean-forward="false" selection-start-line="69" selection-start-column="8" selection-end-line="69" selection-end-column="18" />
+          <folding>
+            <marker date="1512016752000" expanded="true" signature="2279:2285" ph="{&quot;Icon&quot;: Icon...}" />
           </folding>
         </state>
       </provider>
