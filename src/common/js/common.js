@@ -153,6 +153,7 @@ export function getOrderType(order_type){
 		ORDER_TYPE_LEVEL_UPDATE : 13,
 		ORDER_TYPE_TEACHER_BOOK : 14,
 		ORDER_TYPE_TEACHER_BOOKLIST : 15,
+		ORDER_TYPE_ : 16,//组合商品
 	}
 	return ORDER_TYPE[order_type]
 }
