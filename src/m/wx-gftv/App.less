@@ -1,0 +1,84 @@
+body{
+  background-color: #FFFFFF;
+  height: 100%;
+}
+#wx-gftv {
+  width: 100%;
+  height: 100%;
+  .content {
+    width: 100%;
+    height: 100%;
+    .tv-img {
+      width: 100%;
+      display: block;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+    }
+    .bottom-img {
+      position: absolute;
+      bottom: 0px;
+      left: 0px;
+      width: 100%;
+      display: block;
+    }
+    .tv-section {
+      position: absolute;
+      top: 6rem;
+      left: 0px;
+      width: 79%;
+      height: 2.88rem;
+      z-index: 1;
+      margin: 0 .3rem;
+      padding: .4rem .51rem .25rem;
+      //background: rgba(200,200,200,.5);
+      background: url("http://image.51xy8.com/1512558659413.png");
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .tv-item {
+        width: 1.73rem;
+        height: 2.88rem;
+        //background: #f00;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        border-radius: 10px;
+        .tv-top {
+          width: 100%;
+          height: 80%;
+          -webkit-border-radius: 8px;
+          -moz-border-radius: 8px;
+          border-radius: 8px;
+        }
+        .tv-bottom {
+          width: 100%;
+          height: 16%;
+          border-radius: 6px;
+          margin-top: .05rem;
+        }
+      }
+    }
+  }
+  .position-relative {
+    position: relative;
+  }
+  .border-bottom::before {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    border-bottom: 1px solid #e5e5e5;
+    -webkit-transform: scaleY(.5);
+    -ms-transform: scaleY(.5);
+    -o-transform: scaleY(.5);
+    transform: scaleY(.5);
+    -webkit-transform-origin: 0 0;
+    -ms-transform-origin: 0 0;
+    -o-transform-origin: 0 0;
+    transform-origin: 0 0;
+  }
+}
+
+
