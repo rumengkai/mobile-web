@@ -11,7 +11,7 @@
       </div>
     </div>
   </div>
-    <!-- <loading v-model="loadingshow" :text="loadtext"></loading> -->
+  <!-- <loading v-model="loadingshow" :text="loadtext"></loading> -->
 </template>
 
 <script>
