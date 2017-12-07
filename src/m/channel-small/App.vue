@@ -122,7 +122,7 @@
     </footer>
     <div class="qr_code_pc_inner">
       <div class="qr_code_pc">
-        <img id="js_pc_qr_code_img" class="qr_code_pc_img" src="https://www.51xy8.com/static/images/code.png">
+        <img id="js_pc_qr_code_img" class="qr_code_pc_img" src="http://www.51xy8.com/static/images/code.png">
         <p>微信扫一扫<br>学财经，长本事</p>
       </div>
     </div>
