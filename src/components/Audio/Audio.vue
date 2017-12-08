@@ -124,6 +124,7 @@ export default {
             action:'audio',
             end_pos:(self.current/self.duration).toFixed(2)
           }
+          if (isNaN(params.end_pos)) params.end_pos=0.5
           logs(params).then(response => {
             this.loadingshow = false
             this.fetchResult(response)
