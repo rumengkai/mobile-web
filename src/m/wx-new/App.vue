@@ -106,7 +106,7 @@
           {
             url: "http://image.51xy8.com/1512470439622.png",
             name: "X嘉宾",
-            brief: "百家争鸣，一鸣惊人",
+            brief: "近期特邀：杨红旭、徐斌、财经麻辣姐",
             linkurl: "http://mp.weixin.qq.com/mp/homepage?__biz=MzIzOTA3NTA5Mg==&hid=6&sn=d73abd5932e0bc43b56e23fbac298707#wechat_redirect"
           }
         ]
