@@ -59,7 +59,7 @@
             url: "http://image.51xy8.com/1512470409739.png",
             name: "财经麻辣姐",
             brief: "前东方出版社经济编辑部主任",
-            linkurl: "http://mp.weixin.qq.com/mp/homepage?__biz=MzIzOTA3NTA5Mg==&hid=15&sn=9e4c2f3339a67cf652d018bae77f6718#wechat_redirect"
+            linkurl: ""
           },
           {
             url: "http://image.51xy8.com/1512372368218.png",
@@ -71,7 +71,7 @@
             url: "http://image.51xy8.com/1512372399018.png",
             name: "欧神",
             brief: "楼市投资大神 奥派经济学者",
-            linkurl: ""
+            linkurl: "http://mp.weixin.qq.com/mp/homepage?__biz=MzIzOTA3NTA5Mg==&hid=15&sn=9e4c2f3339a67cf652d018bae77f6718#wechat_redirect"
           },
           {
             url: "http://image.51xy8.com/1512372485858.png",
