@@ -1,4 +1,4 @@
-<template>
+  <template>
   <div id="good">
       <div class="content" v-show="showContent">
         <swiper  loop dots-position="center" height="480px">
