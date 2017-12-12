@@ -126,7 +126,7 @@
           }else{
             this.message('您可在书架查看已拥有的书籍','恭喜您获得一本有声书',()=>{location.href="/m/home.html";})
           }
-          this.createOrderResult(response)
+          // this.createOrderResult(response)
         })
       },
       message(content,title='提示',callback){
