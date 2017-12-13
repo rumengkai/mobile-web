@@ -7,7 +7,7 @@
         <cell title="收货地址：" value-align="left">{{item.addressName}}&nbsp;{{item.addressDetail}}
         </cell>
         <cell value-align="left" class="cz">
-          <check-icon :value="item.is_default" :dataItem="item" v-on:on-change="onCheck(item)">设为默认地址</check-icon>
+          <check-icon :value.sync="item.is_default" :dataItem="item" v-on:on-change="onCheck(item)">设为默认地址</check-icon>
           <span class="edit" @click.stop="edit(item)"><img src="./images/edit.png" alt="">编辑</span>
           <span class="del" @click.stop="del(item)"><img src="./images/delete.png" alt="">删除</span>
         </cell>
@@ -262,8 +262,8 @@
         })
       },
       clickAddress(data){
-        this.onCheck(data);
         if (this.reid&&this.reurl) {
+          this.onCheck(data);
           window.location.href="/m/"+this.reurl+".html?id="+this.reid;
         }
       }
