@@ -11,7 +11,7 @@
             <div class="box1-item" v-for="(item,index) in indexdata.big_channels.items" @click="toChannel(item.id)" :key="index">
               <img :src="item.thumb" alt="">
               <p class="title" v-html="item.name"></p>
-              <p class="brief" v-html="item.brief"></p>
+              <p class="brief ell-2" v-html="item.brief"></p>
             </div>
           </div>
         </div>

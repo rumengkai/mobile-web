@@ -161,7 +161,7 @@ export default {
       this.buyParams.coupon_id = "";
       this.buyParams.order_type = 16;
       this.disable = true;
-      if (this.composite.has_goods>0) {
+      if (this.composite.has_goods) {
         /* 订单确认页 */
         window.location.href="/m/order-confirm.html?id="+this.composite.id+"&type=16"
       }else{

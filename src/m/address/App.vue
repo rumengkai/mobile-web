@@ -82,7 +82,8 @@
       XTextarea,
     },
     created () {
-      this.reid=this.$geturlpara.getUrlKey("type");
+      this.reid=querystring.parse().id;
+      this.reurl=querystring.parse().type;
       if(isWeiXin()){
         getAuth(cookie,querystring);
       }
