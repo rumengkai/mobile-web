@@ -262,6 +262,7 @@
         })
       },
       clickAddress(data){
+        this.onCheck(data);
         if (this.reid&&this.reurl) {
           window.location.href="/m/"+this.reurl+".html?id="+this.reid;
         }
