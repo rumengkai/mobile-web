@@ -1,7 +1,7 @@
 <template>
   <div id="address">
     <div class="content" v-if="showContent">
-      <group class="header" v-for="item in addressDate" @click.native="clickAddress(item)">
+      <group class="header" v-for="(item,index) in addressDate" @click.native="clickAddress(item)" :key="index">
         <cell :title="item.name" :value="item.phone" value-align="left">
         </cell>
         <cell title="收货地址：" value-align="left">{{item.addressName}}&nbsp;{{item.addressDetail}}
