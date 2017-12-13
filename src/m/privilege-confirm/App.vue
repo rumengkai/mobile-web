@@ -43,7 +43,7 @@ export default {
       showContent:true,
       loadingshow: false,
       loadtext: '加载中...',
-      dataInfo:{receiver:{name:"",phone:""}},
+      dataInfo:{receiver:{name:"",phone:"",uuid:""}},
       addresseAll:"",
       gooddata:[],
       haveAddress:false
@@ -51,6 +51,7 @@ export default {
   },
   created () {
     this.id=this.$geturlpara.getUrlKey("id");
+    this.dataInfo.receiver.uuid = querystring.parse().uuid
     if (isWeiXin()) {
     }
     this.fetchData(this.id);
@@ -61,7 +62,8 @@ export default {
         Vue,
         HOST+'/api/items/'+id+'.json',
         {
-          id:id
+          "id":id,
+          "uuid":this.dataInfo.receiver.uuid
         },
         (data)=>{
           this.loadingshow=false;

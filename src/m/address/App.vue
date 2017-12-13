@@ -264,7 +264,7 @@
       clickAddress(data){
         if (this.reid&&this.reurl) {
           this.onCheck(data);
-          window.location.href="/m/"+this.reurl+".html?id="+this.reid;
+          window.location.href="/m/"+this.reurl+".html?id="+this.reid+"&uuid="+data.uuid;
         }
       }
     }

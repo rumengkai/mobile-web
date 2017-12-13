@@ -54,24 +54,25 @@ export default {
       showContent:false,
       loadingshow: true,
       loadtext: '加载中...',
-      dataInfo:{receiver:{name:"",phone:""}},
+      dataInfo:{receiver:{name:"",phone:"",uuid:""}},
       price:"",
       addresseAll:"",
       gooddata:[],
       haveAddress:false,
-      order_type:""
+      order_type:"",
     }
   },
   created () {
     this.id=this.$geturlpara.getUrlKey("id");
     this.order_type=this.$geturlpara.getUrlKey("type");
+    this.dataInfo.receiver.uuid = querystring.parse().uuid
     if (isWeiXin()) {
       this.fetchData(this.id);
     }
   },
   methods: {
     fetchData(id){
-      getCheckComposite({"id":id}).then(res=>{
+      getCheckComposite({"id":id,"uuid":this.dataInfo.receiver.uuid}).then(res=>{
         this.gooddata = res.composite.items;
         res.composite.channel_price>0?this.price=res.composite.channel_price:this.price=res.composite.price
         this.dataInfo.receiver = res.receiver;
