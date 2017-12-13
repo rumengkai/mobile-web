@@ -7,7 +7,7 @@
           <img :src="dataInfo.thumb" alt="">
         </div>
         <div class="right">
-          <p class="ell">{{dataInfo.name}}</p>
+          <p class="ell-2">{{dataInfo.name}}</p>
           <p class="author_name">{{dataInfo.author_name}}</p>
           <p class="wj" v-if="dataInfo.finished">未完结</p>
           <p class="wj" v-else>已完结</p>

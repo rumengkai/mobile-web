@@ -7,7 +7,7 @@
         </div>
         <div class="right">
           <p class="name"> {{item.name}}</p>
-          <p class="brief" v-html="stringBr(item.brief)"></p>
+          <p class="brief ell-2" v-html="stringBr(item.brief)"></p>
           <div class="bookname">
             <p v-for="(item2,index) in item.items" :key="index">
               <img class="img-1" src="./images/book.png" alt="">

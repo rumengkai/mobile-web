@@ -3,10 +3,10 @@
     <div v-if="contentshow">
       <div class="mybookshelf">
         <div class="bookshelf">
-          <li v-for="(item,index) in dataInfo.items" @click="skip('book-detail.html?id='+item.id)">
+          <li v-for="(item,index) in dataInfo.items" @click="skip('book-detail.html?id='+item.id)" :key="index">
             <div class="box">
               <img :src="item.thumb">
-              <p>{{item.name}}<span v-if="item.name.length>14">...</span></p>
+              <p class="ell-2">{{item.name}}</p>
             </div>
           </li>
         </div>

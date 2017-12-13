@@ -167,3 +167,9 @@ body {
   overflow: hidden;
   -webkit-box-orient: vertical !important;
 }
+.ell-3{
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  -webkit-box-orient: vertical !important;
+}
