@@ -15,7 +15,7 @@ export function message(content, title = '提示', callback) {
 		}
 	});
 }
-export function toast(content, time = 3000, position = 'bottom') {
+export function toast(content, time = 5000, position = 'bottom') {
 	Vue.$vux.toast.show({
 		text: content,
 		time: time,

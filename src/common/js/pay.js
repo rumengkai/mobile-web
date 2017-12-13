@@ -1,6 +1,6 @@
 export function toPay(data,success,self){
   console.log("发起微信支付");
-  if (typeof WeixinJSBridge == "undefined") {
+  if (typeof window.WeixinJSBridge == "undefined") {
     if( document.addEventListener ){
       document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
     }else if (document.attachEvent){
@@ -9,13 +9,13 @@ export function toPay(data,success,self){
     }
     self.$vux.alert.show({
       title: '提示',
-      content: "请在微信中打开",
+      content: "请稍后再试",
       dialogTransition:"",
       maskTransition:"",
       onShow () {},
       onHide () {}
     })
-    self.disable=true;
+    self.disable = true;
   }else{
     onBridgeReady(data,success,self);
   }
