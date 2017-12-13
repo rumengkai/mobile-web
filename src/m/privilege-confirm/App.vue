@@ -69,7 +69,6 @@ export default {
             this.dataInfo=data;
             if (data.receiver) {
               this.haveAddress=true;
-              console.log();
               this.addresseAll=data.receiver.address.replace(/@/g," ");
             }
             this.gooddata.push({
@@ -124,7 +123,7 @@ export default {
         })
     },
     toAddress(){
-      window.location.href="/m/address.html?type="+this.id;
+      window.location.href="/m/address.html?id="+this.id+"&type=privilege-confirm";
     },
   }
 }

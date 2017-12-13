@@ -261,9 +261,8 @@
         })
       },
       clickAddress(data){
-        console.log(this.reid);
-        if (this.reid) {
-          window.location.href="/m/privilege-confirm.html?id="+this.reid;
+        if (this.reid&&this.reurl) {
+          window.location.href="/m/"+this.reurl+".html?id="+this.reid;
         }
       }
     }

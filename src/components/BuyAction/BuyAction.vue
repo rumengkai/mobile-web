@@ -16,7 +16,7 @@
       </popup>
     </div>
     <div class="" v-if="composite.items.length">
-      <popup v-model="buyParams.show_composite" max-height="50%" position="bottom">
+      <popup v-model="buyParams.show_composite" max-height="100%" position="bottom">
         <div class="composite">
             <p class="p1">
               组合优惠价
@@ -161,7 +161,12 @@ export default {
       this.buyParams.coupon_id = "";
       this.buyParams.order_type = 16;
       this.disable = true;
-      this.subscribe();
+      if (this.composite.has_goods>0) {
+        /* 订单确认页 */
+        window.location.href="/m/order-confirm.html?id="+this.composite.id+"&type=16"
+      }else{
+        this.subscribe();
+      }
     },
     /* 购买前选择优惠券 */
     readysub() {

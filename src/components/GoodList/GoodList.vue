@@ -1,13 +1,13 @@
 <template>
-  <div id="goodslist">
+  <div id="goodlist">
     <div v-if="items.length!=0">
       <div class="con">
-        <div class="good " v-class="{'vux-1px-b':line}" v-for="item in items" @click="toGood(item,'dh')">
+        <div class="good" v-bind:class="{'vux-1px-b':line&&index!=items.length-1}" v-for="(item,index) in items" @click="toGood(item,'dh')" :key="index">
           <div class="img">
             <img :src="item.thumb" alt="">
           </div>
           <div class="info">
-            <p v-html="item.name"></p>
+            <p v-html="item.name" class="ell-2"></p>
             <p class="price">原价：<span>¥</span>{{item.price}}</p>
             <div class="dh" @click.stop="toConfirm(item)" v-if="dh!=''">
               兑换
@@ -21,10 +21,13 @@
 
 <script>
   export default {
-    name: 'channels',
+    name: 'goodlist',
     props: {
       items:Array,
-      line:String,
+      line:{
+        type:String,
+        default:true
+      },
       dh:String,
     },
     data () {
@@ -34,7 +37,7 @@
       }
     },
     mounted(){
-      console.log(this.items);
+      console.log(this.line);
     },
     components: {
     },
@@ -43,7 +46,20 @@
         window.location.href="channel.html?id="+id;
       },
       toGood(data){
-        window.location.href="good.html?id="+data.id+"&type=dh";
+        // switch (data.type) {
+        //   case 0:
+        //     window.location.href="channel.html?id="+data.id+"&type=dh";
+        //     break;
+        //   case 1:
+        //     window.location.href="channel-small.html?id="+data.id+"&type=dh";
+        //     break;
+        //   case 2:
+        //     window.location.href="channel.html?id="+data.id+"&type=dh";
+        //     break;
+        //   default:
+        //     window.location.href="good.html?id="+data.id+"&type=dh";
+        //     break;
+        // }
       },
       toConfirm(data){
         window.location.href="privilege-confirm.html?id="+data.id;
@@ -54,9 +70,9 @@
 
 <style lang="less">
 @import '~vux/src/styles/1px.less';
-#goodslist{
+#goodlist{
   .con{
-    padding:0 .4rem .4rem;
+    padding:0 .4rem 0;
     background: #fff;
     box-sizing: border-box;
     margin-top: .4rem;
@@ -77,12 +93,13 @@
         margin-left: 1.82rem;
         position: relative;
         height: 100%;
+        font-size: 14px;
         .price{
           position: absolute;
-          bottom: 0;
+          bottom: 3px;
           line-height: 20px;
           font-size: 14px;
-          color: #999;
+          color: #666;
         }
         .dh{
           position: absolute;

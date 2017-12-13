@@ -160,3 +160,10 @@ body {
 .weui-cell{
   font-size: 13px;
 }
+
+.ell-2{
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  -webkit-box-orient: vertical !important;
+}
