@@ -147,7 +147,7 @@ export default {
       })
     },
     toAddress(){
-      window.location.href="/m/address.html?id="+this.id+"&type=order-confirm";
+      window.location.href="/m/address.html?id="+this.id+"&type=order-confirm"+"&order_type="+this.order_type;
     },
   }
 }

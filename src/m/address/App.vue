@@ -63,7 +63,8 @@
             "phone":"",
             "name":"",
             "is_default":false,
-            "uuid":""
+            "uuid":"",
+            "order_type":""
         },
         show:false,
         addressData:ChinaAddressV3Data,
@@ -84,6 +85,7 @@
     created () {
       this.reid=querystring.parse().id;
       this.reurl=querystring.parse().type;
+      this.order_type=querystring.parse().order_type;
       if(isWeiXin()){
         getAuth(cookie,querystring);
       }
@@ -181,7 +183,7 @@
           "phone":"",
           "name":"",
           "is_default":false,
-          "uuid":""
+          "uuid":"",
         };
         this.editor=true;
       },
@@ -264,7 +266,7 @@
       clickAddress(data){
         if (this.reid&&this.reurl) {
           this.onCheck(data);
-          window.location.href="/m/"+this.reurl+".html?id="+this.reid+"&uuid="+data.uuid;
+          window.location.href="/m/"+this.reurl+".html?id="+this.reid+"&order_type="+this.order_type+"&uuid="+data.uuid;
         }
       }
     }
