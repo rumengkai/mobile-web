@@ -149,9 +149,6 @@
         }
       },
       callback(data){
-        message(data.toString())
-        message(data.id)
-        message(data.status)
         weixinCheck({ id: data.id }).then(response => {
           this.loadingshow = false;
           if (response.status != 0) {

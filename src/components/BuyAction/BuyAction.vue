@@ -218,7 +218,7 @@ export default {
     /* 调起支付 */
     createOrderResult(res) {
       if (res.status != 0) {
-        this.message(res.error, "提示", res => {
+        message(res.error, "提示", res => {
           if (res.status == 5) {
             this.$emit("errorFun","");
           }
@@ -234,7 +234,7 @@ export default {
       weixinCheck({ id: data.id }).then(response => {
         this.loadingshow = false;
         if (response.status != 0) {
-          this.message("服务器维护中，您的订单已支付成功，请勿重复支付。如有疑问请联系客服：400-966-7718");
+          message("服务器维护中，您的订单已支付成功，请勿重复支付。如有疑问请联系客服：400-966-7718");
         } else {
           toast("购买成功");
           setTimeout(() => {
