@@ -149,9 +149,11 @@
         }
       },
       callback(data){
+        this.message(data.toString())
+        this.message(data.id)
+        this.message(data.status)
         weixinCheck({id:data.id}).then((data) => {
           this.loadingshow = false
-          this.message(data.toString())
           if (data.status!=0) {
             this.message('服务器维护中，您的订单已支付成功，请勿重复支付。如有疑问请联系客服：400-966-7718')
           }else{
