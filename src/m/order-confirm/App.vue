@@ -72,7 +72,7 @@ export default {
   },
   methods: {
     fetchData(id){
-      getCheckComposite({"id":id,"uuid":this.dataInfo.receiver.uuid}).then(res=>{
+      getCheckComposite({"id":id,"receiver_id":this.dataInfo.receiver.uuid}).then(res=>{
         this.gooddata = res.composite.items;
         res.composite.channel_price>0?this.price=res.composite.channel_price:this.price=res.composite.price
         this.dataInfo.receiver = res.receiver;

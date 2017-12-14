@@ -63,7 +63,7 @@ export default {
         HOST+'/api/items/'+id+'.json',
         {
           "id":id,
-          "uuid":this.dataInfo.receiver.uuid
+          "receiver_id":this.dataInfo.receiver.uuid
         },
         (data)=>{
           this.loadingshow=false;
