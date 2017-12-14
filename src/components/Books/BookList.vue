@@ -32,9 +32,13 @@
     mounted(){
     },
     methods: {
-      todetail(item){
-        if (item.finished) {
-          window.location.href="/m/book-detail.html?id="+item.id;
+      todetail(data){
+        if (data.finished) {
+          if (data.article_id&&data.article_id>0) {
+            window.location.href="/m/detail.html?id="+data.article_id;
+          }else{
+            window.location.href="/m/book-detail.html?id="+data.id;
+          }
         }else{
           toast("请完结后查看")
         }

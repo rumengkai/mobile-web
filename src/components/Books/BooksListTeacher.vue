@@ -1,7 +1,7 @@
 <template>
   <div id="books-list-teacher">
     <group>
-      <li v-for="(item,index) in dataList" @click="toDetail(item)" :key="index" v-bind:class="{'vux-1px-b':(dataList.lenght-1)!=index}">
+      <li v-for="(item,index) in dataList" @click="todetail(item.id)" :key="index" v-bind:class="{'vux-1px-b':(dataList.lenght-1)!=index}">
         <div class="left">
           <img class="headimg" :src="item.author_photo" alt="">
         </div>
