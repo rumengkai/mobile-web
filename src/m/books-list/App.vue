@@ -121,10 +121,11 @@
       callback(data){
         weixinCheck({id:data.id}).then(response => {
           this.loadingshow = false
+          this.message(response.toString())
           if (response.status!=0) {
             this.message('服务器维护中，您的订单已支付成功，请勿重复支付。如有疑问请联系客服：400-966-7718')
           }else{
-            this.message('您可在书架查看已拥有的书籍','恭喜您获得一本有声书',()=>{location.href="/m/home.html";})
+            this.message('您可在书架查看已拥有的书籍','恭喜您获得一本有声书',()=>{location.href="/m/books-my.html";})
           }
           // this.createOrderResult(response)
         })
