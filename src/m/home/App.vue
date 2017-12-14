@@ -27,7 +27,7 @@
       <TitleBar :title="indexdata.goods.name" more="查看全部" :img="indexdata.goods.image" url="/m/goods.html"></TitleBar>
       <AudioList :audiolist="indexdata.goods.items"></AudioList>
       <TitleBar :title="indexdata.articles.name" line="line" :img="indexdata.articles.image"></TitleBar>
-      <Article :articlelist="indexdata.articles.items"></Article>
+      <article :articlelist="indexdata.articles.items"></article>
       <div class="load">
         <LazyLoadingMore url="/api/articles/list.json" v-on:getData="loadList" params="articles"></LazyLoadingMore>
       </div>

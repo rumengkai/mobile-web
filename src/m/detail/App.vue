@@ -156,7 +156,6 @@
       }
       logs(params).then(response => {
         this.loadingshow = false
-        this.fetchResult(response)
       })
     },
     methods: {
