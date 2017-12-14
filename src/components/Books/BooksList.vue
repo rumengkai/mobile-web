@@ -1,7 +1,7 @@
 <template>
   <div id="books-list">
     <group>
-      <li v-for="(item,index) in dataList" @click="todetail(item.id)" :key="index" v-bind:class="{'vux-1px-b':(dataList.lenght-1)!=index}">
+      <li v-for="(item,index) in dataList" @click="toDetail(item)" :key="index" v-bind:class="{'vux-1px-b':(dataList.lenght-1)!=index}">
         <img class="headimg" :src="item.thumb" alt="">
         <div class="right">
           <p class="name"> {{item.name}}</p>
@@ -31,8 +31,12 @@
     mounted(){
     },
     methods: {
-      todetail(id){
-        window.location.href="/m/books-list.html?id="+id;
+      toDetail(data){
+        if (data.article_id&&data.article_id>0) {
+          window.location.href="/m/detail.html"+data.article_id;
+        }else{
+          window.location.href="/m/book-detail.html?id="+data.id;
+        }
       },
       stringBr
     }

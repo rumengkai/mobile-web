@@ -3,7 +3,7 @@
     <div v-if="contentshow">
       <div class="mybookshelf">
         <div class="bookshelf">
-          <li v-for="(item,index) in dataInfo.items" @click="skip('book-detail.html?id='+item.id)" :key="index">
+          <li v-for="(item,index) in dataInfo.items" @click="toDetail(item)" :key="index">
             <div class="box">
               <img :src="item.thumb">
               <p class="ell-2">{{item.name}}</p>
@@ -67,6 +67,13 @@
       },
       skip(name){
         window.location.href="/m/"+name;
+      },
+      toDetail(data){
+        if (data.article_id&&data.article_id>0) {
+          window.location.href="/m/detail.html"+data.article_id;
+        }else{
+          window.location.href="/m/book-detail.html?id="+data.id;
+        }
       }
     }
   }
