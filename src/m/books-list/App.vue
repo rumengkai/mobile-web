@@ -37,7 +37,7 @@
   import LazyLoadingMore from "components/LazyLoadingMore/LazyLoadingMore"
   import Vue from 'vue'
   import {
-    stringBr ,shareData
+    stringBr ,shareData ,message , toast
   } from 'src/common/js/assembly';
   import {Loading,XHeader,Icon,Scroller,AlertPlugin,querystring,cookie} from 'vux'
   Vue.use(AlertPlugin)
@@ -106,7 +106,7 @@
       },
       createOrderResult(res){
         if (res.status!=0) {
-          this.message(res.error,'提示',(res)=>{
+          message(res.error,'提示',(res)=>{
             if(res.status==5){
               localStorage.clear();
               clearcookie(cookie);
@@ -119,25 +119,15 @@
         }
       },
       callback(data){
-        weixinCheck({id:data.id}).then((data) => {
-          this.loadingshow = false
-          this.message(data.toString())
-          if (data.status!=0) {
-            this.message('服务器维护中，您的订单已支付成功，请勿重复支付。如有疑问请联系客服：400-966-7718')
-          }else{
-            this.message('您可在书架查看已拥有的书籍','恭喜您获得一本有声书',()=>{location.href="/m/books-my.html";})
-          }
-          // this.createOrderResult(response)
-        })
-      },
-      message(content,title='提示',callback){
-        self.$vux.alert.show({
-          title: title,
-          content: content,
-          dialogTransition:"",
-          maskTransition:"",
-          onHide (){
-            callback()
+        weixinCheck({ id: data.id }).then(response => {
+          this.loadingshow = false;
+          if (response.status != 0) {
+            message("服务器维护中，您的订单已支付成功，请勿重复支付。如有疑问请联系客服：400-966-7718");
+          } else {
+            toast("购买成功");
+            setTimeout(() => {
+              location.href="/m/books-my.html";
+            }, 1000);
           }
         });
       },

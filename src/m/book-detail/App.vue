@@ -149,17 +149,20 @@
         }
       },
       callback(data){
-        this.message(data.toString())
-        this.message(data.id)
-        this.message(data.status)
-        weixinCheck({id:data.id}).then((data) => {
-          this.loadingshow = false
-          if (data.status!=0) {
-            this.message('服务器维护中，您的订单已支付成功，请勿重复支付。如有疑问请联系客服：400-966-7718')
-          }else{
-            this.message('您可在书架查看已拥有的书籍','恭喜您获得一本有声书',()=>{location.href="/m/books-my.html";})
+        message(data.toString())
+        message(data.id)
+        message(data.status)
+        weixinCheck({ id: data.id }).then(response => {
+          this.loadingshow = false;
+          if (response.status != 0) {
+            message("服务器维护中，您的订单已支付成功，请勿重复支付。如有疑问请联系客服：400-966-7718");
+          } else {
+            toast("购买成功");
+            setTimeout(() => {
+              location.href="/m/books-my.html";
+            }, 1000);
           }
-        })
+        });
       },
       skip(name){
         window.location.href="/m/"+name;
