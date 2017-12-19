@@ -69,7 +69,7 @@
       }
       .title{
         margin: .32rem 0;
-        font-size: 14px;
+        font-size: 16px;
         overflow : hidden;
         width: 4.3rem;
         // text-overflow: ellipsis;
