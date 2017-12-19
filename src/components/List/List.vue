@@ -6,7 +6,7 @@
        {{item.name}}
      </div>
      <div class="img vux-1px-b">
-       <img :src="item.thumb" alt="" onerror="this.src='http://image.51xy8.com/1493739178223.jpg?imageView2/1/w/200/h/133/q/100|imageslim'">
+       <img :src="item.thumb" alt="" onerror="this.src='http://image.kofuf.com/1493739178223.jpg?imageView2/1/w/200/h/133/q/100|imageslim'">
        <div class="hint" v-show="freeshow">
          试读
        </div>

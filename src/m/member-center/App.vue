@@ -86,7 +86,7 @@
       window.shareData={
         title:'功夫财经英雄招募令',
         link:HOSTM+'/m/member-center.html',
-        imgUrl:'http://m.51xy8.com/static/img_h5/h5_logo.png',
+        imgUrl:'http://m.kofuf.com/static/img_h5/h5_logo.png',
         desc:"订阅专栏折扣、功夫佳酿、功夫盛典现场门票、超值课程礼包、全国各地线下活动与大咖零距离交流~现在就来加伙吧！"
       }
       if (isWeiXin()) {

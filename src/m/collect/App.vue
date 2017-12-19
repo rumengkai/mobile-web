@@ -65,7 +65,7 @@
       window.shareData={
         title:'功夫财经',
         link:HOSTM+'/m/',
-        imgUrl:'http://m.51xy8.com/static/img_h5/h5_logo.png',
+        imgUrl:'http://m.kofuf.com/static/img_h5/h5_logo.png',
         desc:"国民财商提升者"
       }
       weixinShare(Vue);

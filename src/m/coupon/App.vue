@@ -102,7 +102,7 @@
               window.shareData={
                 title:data.name+'-功夫财经',
                 link:HOSTM+'/m/coupon.html?id='+this.id,
-                imgUrl:'http://m.51xy8.com/static/img_h5/h5_logo.png',
+                imgUrl:'http://m.kofuf.com/static/img_h5/h5_logo.png',
                 desc:data.use_scope
               }
               weixinShare(Vue);
