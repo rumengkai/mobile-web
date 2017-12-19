@@ -10,7 +10,7 @@
             {{channelsinfo.brief}}
           </p>
         </div>
-        <img :src="channelsinfo.large_thumb" onerror="this.src='http://image.kofuf.com/1508740825405.jpg'" alt="">
+        <img :src="channelsinfo.large_thumb" onerror="this.src='http://static1.kofuf.com/1508740825405.jpg'" alt="">
       </div>
       <group class="author-info">
         <cell title="" value="" is-link @click.native="toMoments(channelsinfo.author)">
@@ -31,7 +31,7 @@
           </group>
           <div class="newupdate" v-if="channelsinfo.list_style=='abstract'">
             <li class="item vux-1px-b" v-for="item in channelsinfo.articles" @click="toDetail(item)">
-              <img :src="item.thumb" alt="" onerror="this.src='http://image.kofuf.com/1508740825405.jpg?imageView2/1/w/200/h/133/q/100|imageslim'">
+              <img :src="item.thumb" alt="" onerror="this.src='http://static1.kofuf.com/1508740825405.jpg?imageView2/1/w/200/h/133/q/100|imageslim'">
               <div v-if="item.tryout" class="try">试 读</div>
               <p class="title">{{item.name}}</p>
               <p class="date">{{item.published | formatDate2}}</p>

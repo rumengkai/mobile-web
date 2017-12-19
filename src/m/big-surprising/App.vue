@@ -8,12 +8,12 @@
         <div class="welcome">
           <p>欢迎您来到功夫财经年中盛典“炼金之夜”</p>
           <p>今夜，我们为您特别奉献一份功夫大礼&nbsp;&nbsp;&nbsp; </p>
-          <img src="http://image.kofuf.com/1501061930563.png" alt="">
+          <img src="http://static1.kofuf.com/1501061930563.png" alt="">
           <p class="endtime">活动优惠价截至2017年7月30日12:00前有效</p>
           <p><span><img class="san" src="./images/san_03.png" alt=""></span></p>
         </div>
         <div class="title-d" v-if="show_bigbang">
-          <img src="http://image.kofuf.com/1501064668580.png" alt="">
+          <img src="http://static1.kofuf.com/1501064668580.png" alt="">
         </div>
         <div class="big-gift" v-if="show_bigbang">
           <p class="g-title">功夫宝典大礼包内含功夫财经精选的5门学者课程</p>
@@ -41,7 +41,7 @@
       </div>
       <div class="buy-one">
         <div class="title-d">
-          <img src="http://image.kofuf.com/1501064668589.png" alt="">
+          <img src="http://static1.kofuf.com/1501064668589.png" alt="">
         </div>
         <div class="sub-list vux-1px-b" v-for="item in bigOneList">
           <div class="img">
@@ -111,11 +111,11 @@
         bigOneList:[],
         orderInfo:"",
         headlist:[
-          {id:2087,img: "http://image.kofuf.com/1501058350889.png"},
-          {id:2086,img: "http://image.kofuf.com/1500972298710.png"},
-          {id:2085,img: "http://image.kofuf.com/1500972298752.png"},
-          {id:1919,img: "http://image.kofuf.com/1500972298727.png"},
-          {id:1632,img: "http://image.kofuf.com/1500972299706.png"}
+          {id:2087,img: "http://static1.kofuf.com/1501058350889.png"},
+          {id:2086,img: "http://static1.kofuf.com/1500972298710.png"},
+          {id:2085,img: "http://static1.kofuf.com/1500972298752.png"},
+          {id:1919,img: "http://static1.kofuf.com/1500972298727.png"},
+          {id:1632,img: "http://static1.kofuf.com/1500972299706.png"}
         ]
       }
     },
@@ -356,7 +356,7 @@ html,body{
   // overflow: hidden;
   background-size:100% auto;
   .con{
-    background: url(http://image.kofuf.com/1501061436257.png) no-repeat;
+    background: url(http://static1.kofuf.com/1501061436257.png) no-repeat;
     width: 100%;
     height: auto;
     overflow: hidden;
