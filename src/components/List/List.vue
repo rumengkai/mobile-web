@@ -12,7 +12,7 @@
        </div>
      </div>
      <span class="date">{{item.published|formatDate}}</span>
-     <span class="view"><img src="./images/read.png" alt="">{{item.view_count}} 人看过</span>
+     <!-- <span class="view"><img src="./images/read.png" alt="">{{item.view_count}} 人看过</span> -->
    </li>
   </div>
 </template>
