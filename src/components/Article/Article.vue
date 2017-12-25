@@ -3,10 +3,10 @@
     <ul>
       <li class="vux-1px-b" v-bind:class="{ large: item.view_mode=='L', small: item.view_mode=='T' }" v-for="(item,index) in articlelist" @click="todetail(item.item)" :key="index">
         <div v-if="item.picture" class="thumb">
-          <img :src="item.picture" alt="picture" onerror="this.src='http://m.kofuf.com/static/img/default.png'">
+          <img :src="item.picture" alt="picture" onerror="this.src='https://m.kofuf.com/static/img/default.png'">
         </div>
         <div v-else class="thumb">
-          <img :src="item.thumb" alt="picture" onerror="this.src='http://m.kofuf.com/static/img/default.png'">
+          <img :src="item.thumb" alt="picture" onerror="this.src='https://m.kofuf.com/static/img/default.png'">
         </div>
         <p class="title" v-html="item.item_name"></p>
         <div class="author">

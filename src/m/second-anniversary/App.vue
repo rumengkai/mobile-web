@@ -106,8 +106,8 @@
       if(isWeiXin()){
         window.shareData={
           title:'两周年 · 功夫财经',
-          link:'http://m.kofuf.com/m/second-anniversary.html',
-          imgUrl:'http://m.kofuf.com/static/img_h5/h5_logo.png',
+          link:'https://m.kofuf.com/m/second-anniversary.html',
+          imgUrl:'https://m.kofuf.com/static/img_h5/h5_logo.png',
           desc:"功夫·两周年  限时劲省4225元！"
         }
         weixinShare(Vue);

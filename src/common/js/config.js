@@ -58,7 +58,7 @@ if (base=="pro") {
 window.shareData={
 	title:'功夫财经',
 	link:HOSTM+'/m/home.html',
-	imgUrl:'http://m.kofuf.com/static/img_h5/h5_logo.png',
+	imgUrl:'https://m.kofuf.com/static/img_h5/h5_logo.png',
 	desc:"功夫财经致力于联动最出色的财经学者，提供最优质的原创内容，打造中国规模最大的、粘性最高的财富命运共同体，以新型金融服务平台为终极己任，解决中产焦虑，提升国民财商。 "
 }
 

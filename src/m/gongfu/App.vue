@@ -15,7 +15,7 @@
       <div class="article">
         <p class="title">{{articles.name}}</p>
         <div class="info vux-1px-b">
-          <img :src="articles.author_pic" alt="" onerror="this.src='http://m.kofuf.com/static/img/logo.png'">
+          <img :src="articles.author_pic" alt="" onerror="this.src='https://m.kofuf.com/static/img/logo.png'">
           <span class="author">作者：{{articles.author_name}}</span>
           <span class="created">{{articles.created | formatDate}}</span>
         </div>
@@ -39,7 +39,7 @@
 
     <footer v-show="showContent">
       <div class="gfcj" @click="toChannels">
-        <img src="http://m.kofuf.com/static/img/logo.png" alt="">
+        <img src="https://m.kofuf.com/static/img/logo.png" alt="">
         <div class="gf"><p class="p1">功夫财经</p><p class="p2">学财经&nbsp;&nbsp;&nbsp;长本事</p></div>
       </div>
       <div class="download">

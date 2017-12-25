@@ -128,8 +128,8 @@
       }
       window.shareData={
         title:'功夫财经-炼金之夜-大礼包',
-        link:'http://m.kofuf.com/m/big-surprising.html',
-        imgUrl:'http://m.kofuf.com/static/img_h5/h5_logo.png',
+        link:'https://m.kofuf.com/m/big-surprising.html',
+        imgUrl:'https://m.kofuf.com/static/img_h5/h5_logo.png',
         desc:"【功夫财经，搞大事情】7月29日，北京奥体中心体育馆，财经界半壁江山归一！最炙手可热的经济学者，你最关注的财经话题，炼金之夜，尽情呈献给你！红毯、礼服、摇滚、财经，最跨界的组合，最意想不到的惊喜！729，北京奥体中心，第一波招募，开启！戳链接，我们等你"
       }
       weixinShare(Vue);

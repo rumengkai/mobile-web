@@ -89,7 +89,7 @@
     </footer>
     <div v-show="showContent&&!(showContent&&!subscription)" class = "openApp">
       <div class="gfcj" @click="toChannels">
-        <img src="http://m.kofuf.com/static/img/logo.png" alt="">
+        <img src="https://m.kofuf.com/static/img/logo.png" alt="">
         <div class="gf"><p class="p1">微信登陆APP</p><p class="p2">阅读体验更佳</p></div>
       </div>
       <div class="download">

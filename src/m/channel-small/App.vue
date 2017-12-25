@@ -128,7 +128,7 @@
     </div>
     <dev v-show="showContent&&!(showContent&&!subscription)" class = "openApp">
       <div class="gfcj" @click="toChannels()">
-        <img src="http://m.kofuf.com/static/img/logo.png" alt="">
+        <img src="https://m.kofuf.com/static/img/logo.png" alt="">
         <div class="gf"><p class="p1">微信登陆APP</p><p class="p2">阅读体验更佳</p></div>
       </div>
       <div class="download">
@@ -277,7 +277,7 @@
                 window.shareData={
                   title:data.name,
                   link:HOSTM+'/m/channel.html?id='+data.id+'',
-                  imgUrl:'http://m.kofuf.com/static/img_h5/h5_logo.png',
+                  imgUrl:'https://m.kofuf.com/static/img_h5/h5_logo.png',
                   desc:data.brief
                 }
                 weixinShare(Vue);

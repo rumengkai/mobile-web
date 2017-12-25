@@ -15,7 +15,7 @@
       <div class="article">
         <p class="title">{{articles.name}}</p>
         <div class="info vux-1px-b" @click="toUserCenter(articles)">
-          <img :src="articles.author_pic" alt="" onerror="this.src='http://m.kofuf.com/static/img/logo.png'">
+          <img :src="articles.author_pic" alt="" onerror="this.src='https://m.kofuf.com/static/img/logo.png'">
           <span class="author">作者：{{articles.author_name}}</span>
           <span class="created">{{articles.created | formatDate}}</span>
         </div>
@@ -40,7 +40,7 @@
 
     <footer v-show="showContent&&!open_channel">
       <div class="gfcj" @click="toChannels">
-        <img src="http://m.kofuf.com/static/img/logo.png" alt="">
+        <img src="https://m.kofuf.com/static/img/logo.png" alt="">
         <div class="gf"><p class="p1">微信登陆APP</p><p class="p2">阅读体验更佳</p></div>
       </div>
       <div class="download">
@@ -190,7 +190,7 @@
             window.shareData={
               title:'功夫财经'+this.articles.name,
               link:HOSTM+'/m/detail.html?id='+this.id+'',
-              imgUrl:'http://m.kofuf.com/static/img_h5/h5_logo.png',
+              imgUrl:'https://m.kofuf.com/static/img_h5/h5_logo.png',
               desc:this.articles.name
             }
             weixinShare(Vue);
