@@ -8,12 +8,12 @@
         <div class="welcome">
           <p>欢迎您来到功夫财经年中盛典“炼金之夜”</p>
           <p>今夜，我们为您特别奉献一份功夫大礼&nbsp;&nbsp;&nbsp; </p>
-          <img src="http://image.51xy8.com/1501061930563.png" alt="">
+          <img src="http://static1.kofuf.com/1501061930563.png" alt="">
           <p class="endtime">活动优惠价截至2017年7月30日12:00前有效</p>
           <p><span><img class="san" src="./images/san_03.png" alt=""></span></p>
         </div>
         <div class="title-d" v-if="show_bigbang">
-          <img src="http://image.51xy8.com/1501064668580.png" alt="">
+          <img src="http://static1.kofuf.com/1501064668580.png" alt="">
         </div>
         <div class="big-gift" v-if="show_bigbang">
           <p class="g-title">功夫宝典大礼包内含功夫财经精选的5门学者课程</p>
@@ -41,7 +41,7 @@
       </div>
       <div class="buy-one">
         <div class="title-d">
-          <img src="http://image.51xy8.com/1501064668589.png" alt="">
+          <img src="http://static1.kofuf.com/1501064668589.png" alt="">
         </div>
         <div class="sub-list vux-1px-b" v-for="item in bigOneList">
           <div class="img">
@@ -111,11 +111,11 @@
         bigOneList:[],
         orderInfo:"",
         headlist:[
-          {id:2087,img: "http://image.51xy8.com/1501058350889.png"},
-          {id:2086,img: "http://image.51xy8.com/1500972298710.png"},
-          {id:2085,img: "http://image.51xy8.com/1500972298752.png"},
-          {id:1919,img: "http://image.51xy8.com/1500972298727.png"},
-          {id:1632,img: "http://image.51xy8.com/1500972299706.png"}
+          {id:2087,img: "http://static1.kofuf.com/1501058350889.png"},
+          {id:2086,img: "http://static1.kofuf.com/1500972298710.png"},
+          {id:2085,img: "http://static1.kofuf.com/1500972298752.png"},
+          {id:1919,img: "http://static1.kofuf.com/1500972298727.png"},
+          {id:1632,img: "http://static1.kofuf.com/1500972299706.png"}
         ]
       }
     },
@@ -128,8 +128,8 @@
       }
       window.shareData={
         title:'功夫财经-炼金之夜-大礼包',
-        link:'http://m.51xy8.com/m/big-surprising.html',
-        imgUrl:'http://m.51xy8.com/static/img_h5/h5_logo.png',
+        link:'https://m.kofuf.com/m/big-surprising.html',
+        imgUrl:'https://m.kofuf.com/static/img_h5/h5_logo.png',
         desc:"【功夫财经，搞大事情】7月29日，北京奥体中心体育馆，财经界半壁江山归一！最炙手可热的经济学者，你最关注的财经话题，炼金之夜，尽情呈献给你！红毯、礼服、摇滚、财经，最跨界的组合，最意想不到的惊喜！729，北京奥体中心，第一波招募，开启！戳链接，我们等你"
       }
       weixinShare(Vue);
@@ -356,7 +356,7 @@ html,body{
   // overflow: hidden;
   background-size:100% auto;
   .con{
-    background: url(http://image.51xy8.com/1501061436257.png) no-repeat;
+    background: url(http://static1.kofuf.com/1501061436257.png) no-repeat;
     width: 100%;
     height: auto;
     overflow: hidden;

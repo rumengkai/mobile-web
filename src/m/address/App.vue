@@ -265,8 +265,12 @@
       },
       clickAddress(data){
         if (this.reid&&this.reurl) {
-          this.onCheck(data);
-          window.location.href="/m/"+this.reurl+".html?id="+this.reid+"&type="+this.order_type+"&uuid="+data.uuid;
+					if (this.reid=="mengqi") {
+						window.location.href="/mengqi/#/order/confirm?uuid="+data.uuid;
+					}else{
+						this.onCheck(data);
+						window.location.href="/m/"+this.reurl+".html?id="+this.reid+"&type="+this.order_type+"&uuid="+data.uuid;
+					}
         }
       }
     }
