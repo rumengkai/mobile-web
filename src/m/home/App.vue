@@ -2,6 +2,8 @@
   <div id="home">
     <div v-if="showContent">
       <Banner :bannerlist="indexdata.carousels"></Banner>
+      <TitleBar :title="indexdata.activities.name" more="查看全部" :img="indexdata.activities.image" url="/mengqi/#/activity/list"></TitleBar>
+			<activities-list :dataList="indexdata.activities.items"></activities-list>
       <TitleBar :title="indexdata.daily.name" more="查看全部" :img="indexdata.daily.image" url="/m/daily.html"></TitleBar>
       <AudioList :audiolist="indexdata.daily.items"></AudioList>
       <TitleBar :title="indexdata.big_channels.name" more="查看全部" :img="indexdata.big_channels.image" line="line" url="/m/channels.html"></TitleBar>
@@ -55,6 +57,7 @@
   import LoadingMore from "components/LoadingMore/LoadingMore"
   import LazyLoadingMore from "components/LazyLoadingMore/LazyLoadingMore"
   import Failed from "components/Failed/Failed"
+  import ActivitiesList from "components/ActivitiesList/ActivitiesList"
   import Vue from 'vue'
   import {Loading,XHeader,Icon,Scroller} from 'vux'
   import VueResource from 'vue-resource'
@@ -91,7 +94,8 @@
       Scroller,
       Failed,
       BooksList,
-      BooksListTeacher
+      BooksListTeacher,
+      ActivitiesList
     },
     beforeCreate(){
       //授权
