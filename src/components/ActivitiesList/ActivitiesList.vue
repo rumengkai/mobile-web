@@ -5,7 +5,7 @@
         <span class="list-ol"></span>
         <span class="list-line" v-if="index != dataList.length - 1"></span>
         <p class="list-top ell">
-          <span class="list-address">{{ item.start_time | parseTime("{y}-{m}-{d}") }} ·  {{item.address}}</span>
+          <span class="list-address">{{ item.start_time | parseTime("{m}月{d}日") }} ·  {{item.address}}</span>
           <span class="list-tip" v-bind:class="{ 'list-tip-red': item.state==7,'list-tip-g':item.state==8,'list-tip-blur':item.state==11,'list-tip-green':item.state==4||item.state==5 }">{{ item.state_val }}</span>
         </p>
         <p class="name ell"> {{item.intro}}</p>
