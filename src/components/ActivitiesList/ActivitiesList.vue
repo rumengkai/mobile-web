@@ -48,7 +48,8 @@
 <style lang="less">
 @import '~vux/src/styles/1px.less';
 #activities{
-  background: #fff;
+	background: #fff;
+	padding: 10px 0;
   height: auto;
   .list{
     height: 60px;

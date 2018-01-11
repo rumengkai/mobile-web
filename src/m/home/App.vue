@@ -3,7 +3,9 @@
     <div v-if="showContent">
       <Banner :bannerlist="indexdata.carousels"></Banner>
       <TitleBar :title="indexdata.activities.name" more="查看全部" :img="indexdata.activities.image" line="line" url="/mengqi/#/activity/list"></TitleBar>
-			<activities-list :dataList="indexdata.activities.items"></activities-list>
+      <div v-if="indexdata.activities">
+        <activities-list :dataList="indexdata.activities.items"></activities-list>
+      </div>
       <TitleBar :title="indexdata.daily.name" more="查看全部" :img="indexdata.daily.image" url="/m/daily.html"></TitleBar>
       <AudioList :audiolist="indexdata.daily.items"></AudioList>
       <TitleBar :title="indexdata.big_channels.name" more="查看全部" :img="indexdata.big_channels.image" line="line" url="/m/channels.html"></TitleBar>
