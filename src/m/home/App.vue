@@ -2,8 +2,8 @@
   <div id="home">
     <div v-if="showContent">
       <Banner :bannerlist="indexdata.carousels"></Banner>
-      <TitleBar :title="indexdata.activities.name" more="查看全部" :img="indexdata.activities.image" line="line" url="/mengqi/#/activity/list"></TitleBar>
       <div v-if="indexdata.activities">
+        <TitleBar :title="indexdata.activities.name" more="查看全部" :img="indexdata.activities.image" line="line" url="/mengqi/#/activity/list"></TitleBar>
         <activities-list :dataList="indexdata.activities.items"></activities-list>
       </div>
       <TitleBar :title="indexdata.daily.name" more="查看全部" :img="indexdata.daily.image" url="/m/daily.html"></TitleBar>
