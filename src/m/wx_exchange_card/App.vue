@@ -147,7 +147,6 @@
         exchangeGiftCard(this.giftGiftQuery).then(response => {
           if (response.status === 0) {
             this.showAlertTip(response.message)
-            window.location.href = "/m/home.html"
           } else {
             this.showAlertTip(response.error)
           }
@@ -183,7 +182,9 @@
           dialogTransition:"",
           maskTransition:"",
           onShow () {},
-          onHide () {}
+          onHide () {
+            window.location.href = "/m/home.html"
+          }
         })
       },
       getQueryString: function(name) {
