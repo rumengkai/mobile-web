@@ -129,7 +129,7 @@
         var code = this.getQueryString('code')
         this.giftGiftQuery = Object.assign({}, this.giftGiftQuery,
           {
-            id: id,
+            item_id: id,
             code: code
           }
         )
