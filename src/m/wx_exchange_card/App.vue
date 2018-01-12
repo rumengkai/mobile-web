@@ -110,7 +110,7 @@
     beforeCreate(){
       //授权
       if(isWeiXin()){
-        getAuth(cookie,querystring);
+        getAuth(cookie,querystring, location.pathname + location.hash);
       }
 //      if(!isWeiXin()){
 //        message("请关注'功夫财经'公众号")
