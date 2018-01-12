@@ -111,7 +111,7 @@
         var code = this.getQueryString('code')
         var url = location.href
         url = url.replace('2018_card','wx_exchange_card')
-        window.location.href = url + '&item_id=' + id
+        window.location.href = url + '&id=' + id
       },
       getQueryString: function(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
