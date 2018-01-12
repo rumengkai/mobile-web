@@ -87,7 +87,7 @@
 			font-size: 12px;
 			margin-left: .2rem;
 			padding: 0px 8px;
-			color: #000;
+			color: #fff;
 			background: #C5C5C5;
 		}
 		.list-top-address{
