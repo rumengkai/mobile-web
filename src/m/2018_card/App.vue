@@ -57,25 +57,25 @@
             url: "http://image.51xy8.com/1512470359481.png",
             name: "老端",
             brief: "老端的投资秘籍第二季",
-            id: 3775
+            id: 2964
           },
           {
             url: "http://image.51xy8.com/1512374527173.png",
             name: "胡润",
             brief: "富及贵—带你打入精英圈",
-            id: 2964
+            id: 2085
           },
           {
             url: "http://image.51xy8.com/1512470409739.png",
             name: "麻辣姐",
             brief: "麻辣姐书单",
-            id: 7
+            id: 2622
           },
           {
             url: "http://image.51xy8.com/1512374510391.png",
             name: "肖锋",
             brief: "肖锋书单",
-            id: 6
+            id: 2086
           }
         ],
         clientHeight: '0px'
@@ -111,7 +111,7 @@
         var code = this.getQueryString('code')
         var url = location.href
         url = url.replace('2018_card','wx_exchange_card')
-        window.location.href = url + '&id=' + id
+        window.location.href = url + '&item_id=' + id
       },
       getQueryString: function(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
