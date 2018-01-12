@@ -1,0 +1,101 @@
+body{
+  background-color: #FFFFFF;
+}
+#wx_gift_card {
+  .content {
+    width: 100%;
+    min-height: 100%;
+    background: #010000;
+    .header {
+      width: 100%;
+      height: 7.2rem;
+      overflow: hidden;
+      .header-img {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      .header-title {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        //height: 4.4rem;
+        height: 56%;
+      }
+    }
+    .con-list {
+      width: 94%;
+      height: auto;
+      margin-left: 6%;
+      margin-top: -3rem;
+      .con-item {
+        width: 33.3333333%;
+        height: 100%;
+        display: inline-block;
+        .item-content {
+          width: 2.3rem;
+          height: 100%;
+          .item-bg {
+            width: 2.3rem;
+            height: 2.17rem;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            z-index: 1;
+          }
+          .item-img {
+            position: absolute;
+            top: 1px;
+            left: 1px;
+            width: 1.7rem;
+            height: 1.7rem;
+            -webkit-border-radius: 0.9rem;
+            -moz-border-radius: 0.9rem;
+            border-radius: 0.9rem;
+          }
+          .item-text {
+            font-size: 12px;
+            font-weight: 100;
+            color: #FFE3BE;
+            padding: 2.1rem 0.62rem 0 0;
+            text-align: center;
+            height: 1rem;
+            line-height: 0.33rem;
+            overflow: hidden;
+          }
+        }
+      }
+    }
+    .footer {
+      width: 100%;
+      padding-bottom: 0.3rem;
+      .footer-img {
+        width: 100%;
+        height:100%;
+      }
+    }
+  }
+  .position-relative {
+    position: relative;
+  }
+  .border-bottom::before {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    border-bottom: 1px solid #e5e5e5;
+    -webkit-transform: scaleY(.5);
+    -ms-transform: scaleY(.5);
+    -o-transform: scaleY(.5);
+    transform: scaleY(.5);
+    -webkit-transform-origin: 0 0;
+    -ms-transform-origin: 0 0;
+    -o-transform-origin: 0 0;
+    transform-origin: 0 0;
+  }
+}
+
+
