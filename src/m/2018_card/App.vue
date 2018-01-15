@@ -55,7 +55,7 @@
           },
           {
             url: "http://image.51xy8.com/1512470359481.png",
-            name: "老端",
+            name: "端宏斌",
             brief: "老端的投资秘籍第二季",
             id: 2964
           },
@@ -67,13 +67,13 @@
           },
           {
             url: "http://image.51xy8.com/1512470409739.png",
-            name: "麻辣姐",
+            name: "财经麻辣姐",
             brief: "麻辣姐书单",
             id: 2622
           },
           {
             url: "http://image.51xy8.com/1512374510391.png",
-            name: "肖锋",
+            name: "闫肖锋",
             brief: "肖锋书单",
             id: 2086
           }
