@@ -94,7 +94,7 @@
 //      }
     },
     created () {
-      shareData("功夫秘籍礼品卡兑换",location.href)
+      shareData("功夫财经甄选专栏",location.href,'','2018功夫财经官方VIP甄选礼品卡')
       weixinShare();
     },
     mounted() {

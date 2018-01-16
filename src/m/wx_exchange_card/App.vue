@@ -117,8 +117,9 @@
 //      }
     },
     created () {
-      shareData(this.name,location.href)
-      weixinShare();
+      shareData("功夫财经甄选专栏",location.href,'','2018功夫财经官方VIP甄选礼品卡')
+//      shareData(this.name,location.href)
+      weixinShare()
     },
     mounted () {
       this.fetchData()
