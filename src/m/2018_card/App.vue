@@ -18,7 +18,7 @@
           </li>
         </div>
         <div class="footer">
-          <img class="footer-img" src="https://static2.kofuf.com/1515644695479.png"/>
+          <img class="footer-img" src="https://static2.kofuf.com/1516100733588.png"/>
         </div>
       </div>
     </div>
