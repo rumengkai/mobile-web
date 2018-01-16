@@ -18,7 +18,7 @@
           </li>
         </div>
         <div class="footer">
-          <img class="footer-img" src="https://static2.kofuf.com/1515644695479.png"/>
+          <img class="footer-img" src="https://static2.kofuf.com/1516100733588.png"/>
         </div>
       </div>
     </div>
@@ -94,7 +94,7 @@
 //      }
     },
     created () {
-      shareData("功夫秘籍礼品卡兑换",location.href)
+      shareData("功夫财经甄选专栏",location.href,'','2018功夫财经官方VIP甄选礼品卡')
       weixinShare();
     },
     mounted() {
