@@ -19,10 +19,10 @@
 document.write('<script src=\"https\:\/\/s19.cnzz.com\/z_stat.php\?id=1262435637\&web_id=1262435637\" language=\"JavaScript\"><\/script>')
 document.write('<script src=\"http\:\/\/res.wx.qq.com\/open\/js\/jweixin-1.2.0.js\" charset=\"utf-8\"><\/script>')
 
-window.base="dev"
+window.base="pro"
 // 全局变量，配置
 if (base=="pro") {
-	window.VERSION=""
+	window.VERSION="2.8.0"
 	window.HOST="https://api.kofuf.com"// 线上地址
 	window.HOSTM="https://m.kofuf.com"// 线上地址，分享时用
 	window.HOSTA="https://api.kofuf.com"// 授权使用
@@ -37,7 +37,7 @@ if (base=="pro") {
 		}
 	}
 }else{
-	window.VERSION=""
+	window.VERSION="2.8.0"
 	window.HOST="http://123.57.35.40"// 	测试地址
 	window.HOSTM="http://dev.kofuf.com"// 分享时用
 	window.HOSTA="http://dev.kofuf.com"// 授权使用
