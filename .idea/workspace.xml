@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c30ac95a-f7ed-4a4f-a10a-8c8aa72b1d2e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/api/gift_card.js" afterPath="$PROJECT_DIR$/src/api/gift_card.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/m/2018_card/App.vue" afterPath="$PROJECT_DIR$/src/m/2018_card/App.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/m/wx_exchange_card/App.vue" afterPath="$PROJECT_DIR$/src/m/wx_exchange_card/App.vue" />
     </list>
@@ -21,11 +21,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="App.vue" pinned="false" current-in-tab="false">
+      <file leaf-file-name="App.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/m/2018_card/App.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-33">
-              <caret line="91" column="0" lean-forward="true" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
+            <state relative-caret-position="234">
+              <caret line="103" column="14" lean-forward="false" selection-start-line="103" selection-start-column="14" selection-end-line="103" selection-end-column="14" />
               <folding>
                 <element signature="e#1115#1144#0" expanded="true" />
               </folding>
@@ -85,11 +85,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="App.vue" pinned="false" current-in-tab="true">
+      <file leaf-file-name="App.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/m/wx_exchange_card/App.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="74">
-              <caret line="120" column="0" lean-forward="false" selection-start-line="120" selection-start-column="0" selection-end-line="120" selection-end-column="42" />
+            <state relative-caret-position="169">
+              <caret line="119" column="65" lean-forward="false" selection-start-line="119" selection-start-column="65" selection-end-line="119" selection-end-column="65" />
               <folding>
                 <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="e#1623#1652#0" expanded="true" />
@@ -187,8 +187,8 @@
         <option value="$PROJECT_DIR$/src/m/about/App.vue" />
         <option value="$PROJECT_DIR$/src/api/gift_card.js" />
         <option value="$PROJECT_DIR$/src/m/gift-card-list/App.vue" />
-        <option value="$PROJECT_DIR$/src/m/2018_card/App.vue" />
         <option value="$PROJECT_DIR$/src/m/wx_exchange_card/App.vue" />
+        <option value="$PROJECT_DIR$/src/m/2018_card/App.vue" />
       </list>
     </option>
   </component>
@@ -378,7 +378,7 @@
       <workItem from="1515751457660" duration="4005000" />
       <workItem from="1515984468709" duration="5703000" />
       <workItem from="1516157674538" duration="301000" />
-      <workItem from="1516172971910" duration="5704000" />
+      <workItem from="1516172971910" duration="5971000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1512374738932</created>
@@ -454,7 +454,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="53080000" />
+    <option name="totallyTimeSpent" value="53347000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="37" width="1440" height="829" extended-state="0" />
@@ -896,23 +896,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/m/2018_card/App.vue">
+    <entry file="file://$PROJECT_DIR$/src/m/wx_exchange_card/App.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-33">
-          <caret line="91" column="0" lean-forward="true" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
+        <state relative-caret-position="169">
+          <caret line="119" column="65" lean-forward="false" selection-start-line="119" selection-start-column="65" selection-end-line="119" selection-end-column="65" />
           <folding>
-            <element signature="e#1115#1144#0" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#1623#1652#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/m/wx_exchange_card/App.vue">
+    <entry file="file://$PROJECT_DIR$/src/m/2018_card/App.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="74">
-          <caret line="120" column="0" lean-forward="false" selection-start-line="120" selection-start-column="0" selection-end-line="120" selection-end-column="42" />
+        <state relative-caret-position="234">
+          <caret line="103" column="14" lean-forward="false" selection-start-line="103" selection-start-column="14" selection-end-line="103" selection-end-column="14" />
           <folding>
-            <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#1623#1652#0" expanded="true" />
+            <element signature="e#1115#1144#0" expanded="true" />
           </folding>
         </state>
       </provider>
