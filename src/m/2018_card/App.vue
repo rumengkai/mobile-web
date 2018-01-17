@@ -32,13 +32,14 @@
   import Vue from 'vue'
   import { message ,shareData} from 'common/js/assembly'
   import { querystring, cookie } from 'vux'
+  import AjaxServer from 'common/js/ajaxServer.js';
   export default {
     data () {
       return {
         sc: false,
         loadingshow: false,
         loadtext: '加载中...',
-        contentshow: true,
+        contentshow: false,
         defaultimg: 'http://image.51xy8.com/1496311047717.jpg',
         links:[
           {
@@ -96,17 +97,38 @@
     created () {
       shareData("功夫财经甄选专栏",location.href,'','2018功夫财经官方VIP甄选礼品卡')
       weixinShare();
+      this.fetchData()
     },
     mounted() {
-      var height = parseInt(document.getElementById('content').scrollHeight) + 62
-      var clientHeight = parseInt(document.documentElement.clientHeight)
-      if (clientHeight > height) {
-        this.clientHeight = clientHeight + 'px'
-      } else {
-        this.clientHeight = height + 'px'
-      }
+//      this.fetchData()
     },
     methods: {
+      fetchData: function () {
+        AjaxServer.httpGet(
+          Vue,
+          HOST+'/api/codes/my_gift_cards',
+          {},
+          (data)=>{
+            if (data.status==0) {
+              this.contentshow = true;
+              if (this.contentshow) {
+                this.designCSS()
+              }
+            }
+          },
+          (err)=>{
+            console.log(err);
+          });
+      },
+      designCSS: function () {
+        var height = parseInt(document.getElementById('content').scrollHeight) + 62
+        var clientHeight = parseInt(document.documentElement.clientHeight)
+        if (clientHeight > height) {
+          this.clientHeight = clientHeight + 'px'
+        } else {
+          this.clientHeight = height + 'px'
+        }
+      },
       linkIndex: function (id) {
         var code = this.getQueryString('code')
         var url = location.href

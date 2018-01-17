@@ -46,7 +46,7 @@
       return {
         loadingshow: false,
         loadtext: '加载中...',
-        contentshow: true,
+        contentshow: false,
         links:[
           {
             url: "https://static1.kofuf.com/1501052704487.png",
@@ -148,6 +148,7 @@
         exchangeGiftCard(this.giftGiftQuery).then(response => {
           if (response.status === 0) {
             this.showAlertTip(response.message)
+            this.contentshow = true
           } else {
             this.showAlertTip(response.error)
           }
