@@ -7,3 +7,10 @@ export function exchangeGiftCard(params) {
     params
   })
 }
+export function getGiftCard(params) {
+  return fetch({
+    url: '/api/codes/my_gift_cards',
+    method: 'get',
+    params
+  })
+}
