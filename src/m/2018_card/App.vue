@@ -39,7 +39,7 @@
         sc: false,
         loadingshow: false,
         loadtext: '加载中...',
-        contentshow: false,
+        contentshow: true,
         defaultimg: 'http://image.51xy8.com/1496311047717.jpg',
         links:[
           {
@@ -89,37 +89,15 @@
       if(isWeiXin()){
         getAuth(cookie,querystring,location.pathname + location.hash);
       }
-
-//      if(!isWeiXin()){
-//        message("请关注'功夫财经'公众号")
-//      }
     },
     created () {
       shareData("功夫财经甄选专栏",location.href,'','2018功夫财经官方VIP甄选礼品卡')
       weixinShare();
-      this.fetchData()
     },
     mounted() {
-//      this.fetchData()
+      this.designCSS()
     },
     methods: {
-      fetchData: function () {
-        AjaxServer.httpGet(
-          Vue,
-          HOST+'/api/codes/my_gift_cards',
-          {},
-          (data)=>{
-            if (data.status==0) {
-              this.contentshow = true;
-              if (this.contentshow) {
-                this.designCSS()
-              }
-            }
-          },
-          (err)=>{
-            console.log(err);
-          });
-      },
       designCSS: function () {
         var height = parseInt(document.getElementById('content').scrollHeight) + 62
         var clientHeight = parseInt(document.documentElement.clientHeight)
