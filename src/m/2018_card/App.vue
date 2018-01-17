@@ -89,10 +89,6 @@
       if(isWeiXin()){
         getAuth(cookie,querystring,location.pathname + location.hash);
       }
-
-//      if(!isWeiXin()){
-//        message("请关注'功夫财经'公众号")
-//      }
     },
     created () {
       shareData("功夫财经甄选专栏",location.href,'','2018功夫财经官方VIP甄选礼品卡')
