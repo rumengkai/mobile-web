@@ -19,9 +19,9 @@
 document.write('<script src=\"https\:\/\/s19.cnzz.com\/z_stat.php\?id=1262435637\&web_id=1262435637\" language=\"JavaScript\"><\/script>')
 document.write('<script src=\"http\:\/\/res.wx.qq.com\/open\/js\/jweixin-1.2.0.js\" charset=\"utf-8\"><\/script>')
 
-window.base=process.env.env_config
+window.base=process.env.ENV_CONFIG
 console.log(window.base);
-console.log(process.env.env_config);
+console.log(process.env.ENV_CONFIG);
 console.log(base=="prod");
 // 全局变量，配置
 if (base=="prod") {
