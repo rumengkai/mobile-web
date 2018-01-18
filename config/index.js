@@ -3,6 +3,8 @@ var path = require('path')
 
 module.exports = {
   build: {
+		sitEnv: require('./sit.env'),
+    prodEnv: require('./prod.env'),
     env: require('./prod.env'),
     assetsRoot: path.resolve(__dirname, '../dist/'),
     index: path.resolve(__dirname, '../dist/m/index.html'),
