@@ -74,10 +74,15 @@
     }
     .list-pr{
       padding-left: 20px;
-      position: relative;
+			position: relative;
+			.name{
+				font-size: 15px;
+				line-height: 25px;
+			}
     }
   }
   .list-top{
+		font-size: 13px;
 		line-height: 25px;
 		color: #333;
     .list-address{

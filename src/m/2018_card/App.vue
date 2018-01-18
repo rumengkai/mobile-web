@@ -18,7 +18,7 @@
           </li>
         </div>
         <div class="footer">
-          <img class="footer-img" src="https://static2.kofuf.com/1515644695479.png"/>
+          <img class="footer-img" src="https://static2.kofuf.com/1516100733588.png"/>
         </div>
       </div>
     </div>
@@ -32,6 +32,7 @@
   import Vue from 'vue'
   import { message ,shareData} from 'common/js/assembly'
   import { querystring, cookie } from 'vux'
+  import AjaxServer from 'common/js/ajaxServer.js';
   export default {
     data () {
       return {
@@ -55,27 +56,27 @@
           },
           {
             url: "http://image.51xy8.com/1512470359481.png",
-            name: "老端",
+            name: "端宏斌",
             brief: "老端的投资秘籍第二季",
-            id: 2964
+            id: 3775
           },
           {
             url: "http://image.51xy8.com/1512374527173.png",
             name: "胡润",
             brief: "富及贵—带你打入精英圈",
-            id: 2085
+            id: 2964
           },
           {
             url: "http://image.51xy8.com/1512470409739.png",
-            name: "麻辣姐",
+            name: "财经麻辣姐",
             brief: "麻辣姐书单",
-            id: 2622
+            id: 7
           },
           {
             url: "http://image.51xy8.com/1512374510391.png",
-            name: "肖锋",
+            name: "闫肖锋",
             brief: "肖锋书单",
-            id: 2086
+            id: 6
           }
         ],
         clientHeight: '0px'
@@ -88,30 +89,33 @@
       if(isWeiXin()){
         getAuth(cookie,querystring,location.pathname + location.hash);
       }
-
-//      if(!isWeiXin()){
-//        message("请关注'功夫财经'公众号")
-//      }
     },
     created () {
-      shareData("功夫秘籍礼品卡兑换",location.href)
+      shareData("功夫财经甄选专栏",location.href,'http://m.51xy8.com/static/img_h5/h5_logo.png','2018功夫财经官方VIP甄选礼品卡')
       weixinShare();
     },
     mounted() {
-      var height = parseInt(document.getElementById('content').scrollHeight) + 62
-      var clientHeight = parseInt(document.documentElement.clientHeight)
-      if (clientHeight > height) {
-        this.clientHeight = clientHeight + 'px'
-      } else {
-        this.clientHeight = height + 'px'
-      }
+      this.designCSS()
     },
     methods: {
+      designCSS: function () {
+        var height = parseInt(document.getElementById('content').scrollHeight) + 62
+        var clientHeight = parseInt(document.documentElement.clientHeight)
+        if (clientHeight > height) {
+          this.clientHeight = clientHeight + 'px'
+        } else {
+          this.clientHeight = height + 'px'
+        }
+      },
       linkIndex: function (id) {
         var code = this.getQueryString('code')
         var url = location.href
         url = url.replace('2018_card','wx_exchange_card')
-        window.location.href = url + '&id=' + id
+        if (code !== null) {
+          window.location.href = url + '&id=' + id
+        } else {
+          message('该链接已失效')
+        }
       },
       getQueryString: function(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
