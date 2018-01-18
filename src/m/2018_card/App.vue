@@ -91,7 +91,7 @@
       }
     },
     created () {
-      shareData("功夫财经甄选专栏",location.href,'','2018功夫财经官方VIP甄选礼品卡')
+      shareData("功夫财经甄选专栏",location.href,'http://m.51xy8.com/static/img_h5/h5_logo.png','2018功夫财经官方VIP甄选礼品卡')
       weixinShare();
     },
     mounted() {
