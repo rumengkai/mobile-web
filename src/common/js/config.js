@@ -21,7 +21,7 @@ document.write('<script src=\"http\:\/\/res.wx.qq.com\/open\/js\/jweixin-1.2.0.j
 
 window.base=process.env.env_config
 // 全局变量，配置
-if (base=="pro") {
+if (base=="prod") {
 	window.VERSION="2.8.0"
 	window.HOST="https://api.kofuf.com"// 线上地址
 	window.HOSTM="https://m.kofuf.com"// 线上地址，分享时用
