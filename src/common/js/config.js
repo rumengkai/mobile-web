@@ -20,6 +20,9 @@ document.write('<script src=\"https\:\/\/s19.cnzz.com\/z_stat.php\?id=1262435637
 document.write('<script src=\"http\:\/\/res.wx.qq.com\/open\/js\/jweixin-1.2.0.js\" charset=\"utf-8\"><\/script>')
 
 window.base=process.env.env_config
+console.log(window.base);
+console.log(process.env.env_config);
+console.log(base=="prod");
 // 全局变量，配置
 if (base=="prod") {
 	window.VERSION="2.8.0"
