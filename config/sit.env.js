@@ -1,5 +1,5 @@
 module.exports = {
 	NODE_ENV: '"production"',
-	ENV_CONFIG: "sit",
+	ENV_CONFIG: '"sit"',
   BASE_API: '"http://dev.kofuf.com"'
 }
