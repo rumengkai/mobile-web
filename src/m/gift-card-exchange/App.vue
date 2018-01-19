@@ -16,7 +16,7 @@
           </div>
           <div class="channels-info">
             <p class="name">{{channelinfo.name}}</p>
-            <p class="author_name"><span>{{channelinfo.author_name}}</span><span>{{channelinfo.author_field}}</span></p>
+            <p class="author_name ell-2"><span>{{channelinfo.author_name}}</span><span>{{channelinfo.author_field}}</span></p>
             <p class="brief ell">{{channelinfo.brief}}</p>
             <p class="price-co">
               <span class="price">¥ <span>{{channelinfo.price}}</span>
