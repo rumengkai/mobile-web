@@ -107,6 +107,9 @@
     },
     methods: {
       fetchData(id){
+        if (location.hostname.indexOf('dev') > -1) {
+          HOST = 'http://dev.kofuf.com'
+        }
         AjaxServer.httpGet(
           Vue,
           HOST+'/api/codes/show',
