@@ -194,7 +194,7 @@
       this.id=id;
       this.buy_params.buy_id=id;
       this.fetchData(id);
-      this.commentLoad(id);
+      this.commentLoad(id,'init');
     },
     mounted(){
       //唤起app
@@ -257,7 +257,7 @@
         var id = this.$geturlpara.getUrlKey("id");
         window.location.href="/m/freeread.html?id="+id;
       },
-      commentLoad(){
+      commentLoad(i,isInit){
         this.loadmore=false;
         var id = this.$geturlpara.getUrlKey("id");
         if (id) {
@@ -271,9 +271,16 @@
                   this.commentBottomMsg="没有更多数据";
                 }else{
                   this.pn++;
-                }
-                this.channelsinfo.articles=this.channelsinfo.articles.concat(res.articles);
-                this.articles.articles=this.articles.articles.concat(res.articles);
+								}
+								if (isInit=='init') {
+									this.channelsinfo.articles=[];
+									this.articles.articles=[];
+									this.channelsinfo.articles=res.articles;
+									this.articles.articles=res.articles;
+								}else{
+									this.channelsinfo.articles=this.channelsinfo.articles.concat(res.articles);
+									this.articles.articles=this.articles.articles.concat(res.articles);
+								}
                 this.articles.has_next=res.has_next;
               }
             })
