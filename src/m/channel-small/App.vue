@@ -213,7 +213,7 @@
           couponsname:"优惠券",
           order_type:"",
 				},
-				backurl:"/m/channel-small.html"
+				backurl:"/m/channel.html"
       }
     },
     components: {
