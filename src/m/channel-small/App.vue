@@ -27,10 +27,10 @@
         <li>
           <p class="title" v-show="channelsinfo.articles.length!=0">{{channelsinfo.list_title}}</p>
           <group v-if="channelsinfo.list_style=='title'">
-            <cell v-for="item in channelsinfo.articles" :title="item.name" value="" is-link @click.native="toDetail(item)"></cell>
+            <cell v-for="(item,index) in channelsinfo.articles" :title="item.name" value="" is-link @click.native="toDetail(item)" :key="index"></cell>
           </group>
           <div class="newupdate" v-if="channelsinfo.list_style=='abstract'">
-            <li class="item vux-1px-b" v-for="item in channelsinfo.articles" @click="toDetail(item)">
+            <li class="item vux-1px-b" v-for="(item,index) in channelsinfo.articles" @click="toDetail(item)" :key="index">
               <img :src="item.thumb" alt="" onerror="this.src='http://static1.kofuf.com/1508740825405.jpg?imageView2/1/w/200/h/133/q/100|imageslim'">
               <div v-if="item.tryout" class="try">试 读</div>
               <p class="title">{{item.name}}</p>
@@ -43,7 +43,7 @@
           <p class="con" v-html="channelsinfo.abstract"></p>
         </li>
       </ul>
-      <div class="popup1" v-if="showContent&&!subscription">
+      <!-- <div class="popup1" v-if="showContent&&!subscription">
         <popup v-model="showlist" height="100%" position="bottom">
           <div class="popup12">
               <p class="p1">可用优惠券</p>
@@ -109,7 +109,9 @@
               <x-button @click.native="showpopup = false">取消</x-button>
             </div>
           </div>
-      </popup>
+      </popup> -->
+			<!-- 支付行为 -->
+			<buy-action v-if="showContent&&!subscription" ref="buy_action" :name="channelsinfo.name" :buyParams="buy_params" :coupons="channelsinfo.coupons" :invalidCoupons="channelsinfo.invalid_coupons" :composite="channelsinfo.composite" :backurl="backurl" v-on:errorFun="errorFun"> </buy-action>
     </div>
     <!-- 底部弹框 -->
     <footer v-if="showContent&&!subscription">
@@ -126,7 +128,7 @@
         <p>微信扫一扫<br>学财经，长本事</p>
       </div>
     </div>
-    <dev v-show="showContent&&!(showContent&&!subscription)" class = "openApp">
+    <div v-show="showContent&&!(showContent&&!subscription)" class = "openApp">
       <div class="gfcj" @click="toChannels()">
         <img src="https://m.kofuf.com/static/img/logo.png" alt="">
         <div class="gf"><p class="p1">微信登陆APP</p><p class="p2">阅读体验更佳</p></div>
@@ -134,7 +136,7 @@
       <div class="download">
         <a id='btnOpenApp'>打开APP</a>
       </div>
-    </dev>
+    </div>
     <BackHome></BackHome>
     <Failed v-if="failedshow" :msg="failedmsg"></Failed>
     <Loading v-model="loadingshow" :text="loadtext" ></Loading>
@@ -154,7 +156,9 @@
   import Failed from "components/Failed/Failed"
   import BackHome from "components/BackHome/BackHome"
   import Couponsuse from "components/Couponsuse/Couponsuse"
-  import VueResource from 'vue-resource'
+	import VueResource from 'vue-resource'
+	import BuyAction from "components/BuyAction/BuyAction"
+
   Vue.use(VueResource)
   Vue.use(ToastPlugin)
   Vue.use(AlertPlugin)
@@ -168,7 +172,11 @@
         loadingshow: true,
         loadtext: 'loading...',
         channelsinfo:{
-          suites:[{price:""}],
+					suites:[{price:""}],
+          articles:[],
+          composite:{
+            items:[]
+          }
         },
         information:"",
         failedshow:false,
@@ -190,7 +198,22 @@
         couponstext:"选择优惠券",
         couponsname:"优惠券",
         show_composite_channel:false,
-        order_type:"",
+				order_type:"",
+				buy_params:{
+          can_buy:true,
+          buy_id:0,
+          coupon_id:"",
+          coupon_price:"",
+          channel_price:"",
+          price:0,
+          showpopup:false,
+          showlist:false,/* 优惠券列表 */
+          show_composite:false,
+          couponstext:"选择优惠券",
+          couponsname:"优惠券",
+          order_type:"",
+				},
+				backurl:"/m/channel-small.html"
       }
     },
     components: {
@@ -204,7 +227,8 @@
       XSwitch,
       Cell,
       Couponsuse,
-      XButton
+			XButton,
+			BuyAction
     },
     beforeCreate(){
       if(isWeiXin()){
@@ -217,7 +241,8 @@
     created () {
       var id = this.$geturlpara.getUrlKey("id");
       this.id=id;
-      this.buy_id=id;
+			this.buy_id=id;
+			this.buy_params.buy_id=id;
       this.fetchData(id);
       this.commentLoad(id);
     },
@@ -254,7 +279,7 @@
               var id = this.$geturlpara.getUrlKey("id");
               getAuth(cookie,querystring,"channel",id);
             }else{
-              this.channelsinfo=data;
+							Object.assign(this.channelsinfo,data);
               this.loadingshow=false;
               if (this.channelsinfo.channel_price>=0) {
                 this.price=this.channelsinfo.channel_price;
@@ -273,7 +298,16 @@
                 document.title = "专栏-"+data.name;
                 self.subscription=data.followed;
                 self.unit=data.price_unit;
-                this.showContent=true;
+								this.showContent=true;
+
+								this.buy_params.can_buy=data.can_buy;
+								this.buy_params.channel_price=data.channel_price;
+								if (this.channelsinfo.channel_price>=0) {
+									this.buy_params.price=this.channelsinfo.channel_price;
+								}else{
+									this.buy_params.price=this.channelsinfo.suites[0].price;
+								}
+
                 window.shareData={
                   title:data.name,
                   link:HOSTM+'/m/channel.html?id='+data.id+'',
@@ -365,120 +399,120 @@
           }
         }
       },
-      oneBuySubscribe(){
-        this.show_composite_channel=false;
-        this.buy_id=this.channelsinfo.composite_channel.id;
-        this.coupon_id='';
-        this.order_type=3;
-        this.subscribe();
-      },
-      readysub(){
-        var self=this;
-        self.show_composite_channel=false;
-        self.showpopup=true;
-        self.couponstext=self.channelsinfo.coupons.length+"张券可用"
-        if(self.channelsinfo.coupons.length){
-          self.coupon_id=self.channelsinfo.coupons[0].id;
-          self.couponsname=self.channelsinfo.coupons[0].name;
-          self.couponstext="已抵扣¥"+self.channelsinfo.coupons[0].discount;
-          self.coupon_price=self.channelsinfo.coupons[0].coupon_price;
-        }else{
-          if (self.channelsinfo.channel_price>=0) {
-            self.coupon_price=self.channelsinfo.channel_price;
-          }else{
-            self.coupon_price=self.channelsinfo.suites[0].price;
-          }
-        }
-      },
-      subscribe(){
-        var self=this;
-        self.showpopup=false;
-        console.log(this.disable);
-        //已登陆情况
-        if (localStorage.getItem("gid")&&this.disable) {
-          self.loadtext="加载中..."
-          self.loadingshow=true;
-          this.disable=false;
-          //发起订单请求
-          var url="/pay/weixin/create_order"
-          AjaxServer.httpPost(
-            Vue,
-            HOST+url,
-            {
-              type: config()['paytype'],
-              items: self.buy_id,
-              coupon_id:self.coupon_id,
-              order_type:self.order_type
-            },
-            (data)=>{
-              self.loadingshow=false;
-              if (data.status!=0) {
-                this.$vux.alert.show({
-                  title: '提示',
-                  content: "创建订单失败",
-                  dialogTransition:"",
-                  maskTransition:"",
-                  onHide (){
-                    console.log("订单创建失败");
-                    self.disable=true;
-                    if(data.status==5){
-                      localStorage.clear();
-                      clearcookie(cookie);
-                      getAuth(cookie,querystring,"channel",id);
-                    }
-                  }
-                });
-              }else{
-                self.loadingshow=false;
-                console.log("订单创建成功。。");
-                self.orderInfo=data;
-                toPay(data,self.callback,self);
-              }
-            },
-            (err)=>{
-              self.disable=true;
-              console.log(err);
-              console.log("订单创建失败");
-              this.$vux.alert.show({
-                title: '提示',
-                content: "网络异常，请稍后重试",
-                dialogTransition:"",
-                maskTransition:"",
-              });
-              self.loadingshow=false;
-            }
-          );
-        }else{
-          //未登陆情况，跳转到授权
-          getAuth(cookie,querystring,"channel",this.id);
-        }
-      },
+      // oneBuySubscribe(){
+      //   this.show_composite_channel=false;
+      //   this.buy_id=this.channelsinfo.composite_channel.id;
+      //   this.coupon_id='';
+      //   this.order_type=3;
+      //   this.subscribe();
+      // },
+      // readysub(){
+      //   var self=this;
+      //   self.show_composite_channel=false;
+      //   self.showpopup=true;
+      //   self.couponstext=self.channelsinfo.coupons.length+"张券可用"
+      //   if(self.channelsinfo.coupons.length){
+      //     self.coupon_id=self.channelsinfo.coupons[0].id;
+      //     self.couponsname=self.channelsinfo.coupons[0].name;
+      //     self.couponstext="已抵扣¥"+self.channelsinfo.coupons[0].discount;
+      //     self.coupon_price=self.channelsinfo.coupons[0].coupon_price;
+      //   }else{
+      //     if (self.channelsinfo.channel_price>=0) {
+      //       self.coupon_price=self.channelsinfo.channel_price;
+      //     }else{
+      //       self.coupon_price=self.channelsinfo.suites[0].price;
+      //     }
+      //   }
+      // },
+      // subscribe(){
+      //   var self=this;
+      //   self.showpopup=false;
+      //   console.log(this.disable);
+      //   //已登陆情况
+      //   if (localStorage.getItem("gid")&&this.disable) {
+      //     self.loadtext="加载中..."
+      //     self.loadingshow=true;
+      //     this.disable=false;
+      //     //发起订单请求
+      //     var url="/pay/weixin/create_order"
+      //     AjaxServer.httpPost(
+      //       Vue,
+      //       HOST+url,
+      //       {
+      //         type: config()['paytype'],
+      //         items: self.buy_id,
+      //         coupon_id:self.coupon_id,
+      //         order_type:self.order_type
+      //       },
+      //       (data)=>{
+      //         self.loadingshow=false;
+      //         if (data.status!=0) {
+      //           this.$vux.alert.show({
+      //             title: '提示',
+      //             content: "创建订单失败",
+      //             dialogTransition:"",
+      //             maskTransition:"",
+      //             onHide (){
+      //               console.log("订单创建失败");
+      //               self.disable=true;
+      //               if(data.status==5){
+      //                 localStorage.clear();
+      //                 clearcookie(cookie);
+      //                 getAuth(cookie,querystring,"channel",id);
+      //               }
+      //             }
+      //           });
+      //         }else{
+      //           self.loadingshow=false;
+      //           console.log("订单创建成功。。");
+      //           self.orderInfo=data;
+      //           toPay(data,self.callback,self);
+      //         }
+      //       },
+      //       (err)=>{
+      //         self.disable=true;
+      //         console.log(err);
+      //         console.log("订单创建失败");
+      //         this.$vux.alert.show({
+      //           title: '提示',
+      //           content: "网络异常，请稍后重试",
+      //           dialogTransition:"",
+      //           maskTransition:"",
+      //         });
+      //         self.loadingshow=false;
+      //       }
+      //     );
+      //   }else{
+      //     //未登陆情况，跳转到授权
+      //     getAuth(cookie,querystring,"channel",this.id);
+      //   }
+      // },
       //支付成功回调
-      callback(data){
-        var self=this;
-        AjaxServer.httpPost(
-          Vue,
-          HOST+"/pay/weixin/check",
-          {
-            id:data.id
-          },
-          (data)=>{
-            // alert(JSON.stringify(data));
-            if (data.status!=0) {
-              self.$vux.alert.show({
-                title: '提示',
-                content: "服务器维护中，您的订单已支付成功，请勿重复支付。如有疑问请联系客服：400-966-7718",
-                dialogTransition:"",
-                maskTransition:"",
-              });
-            }else{
-              // alert("购买成功")
-              // location.reload();
-              location.href="/m/channels.html";
-            }
-          }
-        );
-      },
+      // callback(data){
+      //   var self=this;
+      //   AjaxServer.httpPost(
+      //     Vue,
+      //     HOST+"/pay/weixin/check",
+      //     {
+      //       id:data.id
+      //     },
+      //     (data)=>{
+      //       // alert(JSON.stringify(data));
+      //       if (data.status!=0) {
+      //         self.$vux.alert.show({
+      //           title: '提示',
+      //           content: "服务器维护中，您的订单已支付成功，请勿重复支付。如有疑问请联系客服：400-966-7718",
+      //           dialogTransition:"",
+      //           maskTransition:"",
+      //         });
+      //       }else{
+      //         // alert("购买成功")
+      //         // location.reload();
+      //         location.href="/m/channels.html";
+      //       }
+      //     }
+      //   );
+      // },
       logErr(err){
         this.$vux.alert.show({
           title: '提示',
@@ -518,43 +552,47 @@
           }
         }
       },
-      conList(){
-        this.isfocus=true;
-      },
-      channelInfo(){
-        this.isfocus=false;
-      },
-      showCouponsList(){
-        this.showlist=true;
-        this.showpopup=false;
-      },
-      CouponsSelected(data){
-        this.showpopup=true;
-        this.showlist=false;
-        this.coupon_id=data.id;
-        this.coupon_price=data.coupon_price;
-        this.couponstext="已抵扣¥"+data.discount;;
-        this.couponsname=data.name;;
-      },
-      cancelCoupons(){
-        this.showlist = false;
-        this.showpopup = true;
-        if (this.channelsinfo.channel_price>=0) {
-          this.coupon_price=this.channelsinfo.channel_price;
-        }else{
-          this.coupon_price=this.channelsinfo.suites[0].price;
-        }
-        this.couponstext=this.channelsinfo.coupons.length+"张券可用";
-        this.couponsname="优惠券";
-        this.coupon_id="";
-        this.order_type="";
-      },
+      // showCouponsList(){
+      //   this.showlist=true;
+      //   this.showpopup=false;
+      // },
+      // CouponsSelected(data){
+      //   this.showpopup=true;
+      //   this.showlist=false;
+      //   this.coupon_id=data.id;
+      //   this.coupon_price=data.coupon_price;
+      //   this.couponstext="已抵扣¥"+data.discount;;
+      //   this.couponsname=data.name;;
+      // },
+      // cancelCoupons(){
+      //   this.showlist = false;
+      //   this.showpopup = true;
+      //   if (this.channelsinfo.channel_price>=0) {
+      //     this.coupon_price=this.channelsinfo.channel_price;
+      //   }else{
+      //     this.coupon_price=this.channelsinfo.suites[0].price;
+      //   }
+      //   this.couponstext=this.channelsinfo.coupons.length+"张券可用";
+      //   this.couponsname="优惠券";
+      //   this.coupon_id="";
+      //   this.order_type="";
+      // },
       toChannelsTuiJian(channel){
         window.location.href="/m/channel.html?id="+channel.id;
       },
       toActiveMember(){
         window.location.href="/m/member.html"
-      }
+			},
+			errorFun(){
+        localStorage.clear();
+        clearcookie(cookie);
+        getAuth(cookie, querystring, "channel",this.id);
+      },
+      //订阅支付前，免费领取
+      composite_readysub(){
+        console.log(this.$refs.buy_action);
+        this.$refs.buy_action.composite_readysub()
+      },
     },
     filters: {
       formatDate2:function (time) {
