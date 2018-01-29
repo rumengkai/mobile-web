@@ -1,7 +1,7 @@
 <template>
   <div id="channels">
     <div v-if="subs.length!=0">
-      <div class="channels-item vux-1px-b" ref="list" v-for="item in subs" @click="channelsDetail(item.id)">
+      <div class="channels-item vux-1px-b" ref="list" v-for="(item,index) in subs" @click="channelsDetail(item.id)" :key="index">
         <div class="headimg">
           <img :src="item.thumb" alt="" onerror="this.src='https://m.kofuf.com/static/img/default.png'">
           <span class="tip" v-if="item.unread_num!=0"><span>{{item.unread_num}}</span></span>
@@ -64,9 +64,9 @@
     methods: {
       channelsDetail(id){
         if (this.type=="small") {
-          window.location.href="channel-small.html?id="+id;
+          window.location.href="/m/channel-small.html?id="+id;
         }else{
-          window.location.href="channel.html?id="+id;
+          window.location.href="/m/channel.html?id="+id;
         }
       }
     }
