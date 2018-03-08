@@ -77,13 +77,13 @@
       <div class="subscribe" @click="composite_readysub" v-if="unit!='1期'">
         <a>
           <span v-if="buy_params.price!=0">订阅：<span>¥{{buy_params.price}}/{{unit}}</span></span>
-          <span v-if="buy_params.price==0">免费领取</span></span>
+          <span v-if="buy_params.price==0">免费领取</span>
         </a>
       </div>
       <div class="subscribe_one" @click="composite_readysub" v-if="unit=='1期'">
         <a>
           <span v-if="buy_params.price!=0">订阅专栏：<span>¥{{price}}</span></span>
-          <span v-if="buy_params.price==0">免费领取</span></span>
+          <span v-if="buy_params.price==0">免费领取</span>
         </a>
       </div>
     </footer>

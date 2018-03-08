@@ -310,7 +310,7 @@
 
                 window.shareData={
                   title:data.name,
-                  link:HOSTM+'/m/channel.html?id='+data.id+'',
+                  link: HOSTM+'/m/channel-small.html?id=' + data.id+'',
                   imgUrl:'https://m.kofuf.com/static/img_h5/h5_logo.png',
                   desc:data.brief
                 }

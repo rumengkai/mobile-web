@@ -190,8 +190,8 @@
             window.shareData={
               title:'功夫财经'+this.articles.name,
               link:HOSTM+'/m/detail.html?id='+this.id+'',
-              imgUrl:'https://m.kofuf.com/static/img_h5/h5_logo.png',
-              desc:this.articles.name
+              imgUrl: 'https://m.kofuf.com/static/img_h5/h5_logo.png',//||this.articles.screenshots + '?imageView2/1/w/300/h/300/q/100|imageslim',
+              desc: this.articles.share
             }
             weixinShare(Vue);
           }
