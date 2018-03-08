@@ -73,6 +73,7 @@
 				// 	cover: this.data.cover
 				// });
 				/* 跨域问题 */
+				console.log(flvjs.isSupported());
 				if (flvjs.isSupported()) {
 					var videoElement = document.getElementById('videoElement');
 					var flvPlayer = flvjs.createPlayer({

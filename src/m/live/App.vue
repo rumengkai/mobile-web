@@ -34,7 +34,7 @@
 								<p class="text" v-if="item.type=='text'" v-html="stringBr(item.text)">
 								</p>
 								<div v-if="item.type=='image'" class="content-image">
-									<img :src="item.file.url" alt="" v-bind:style="{width:'2rem',height:item.file.height*2/item.file.width+'rem'}">
+									<img :src="item.file.url" @click="openFile(item.file)" alt="" v-bind:style="{width:'2rem',height:item.file.height*2/item.file.width+'rem'}">
 								</div>
 								<div v-if="item.type=='file'" class="content-file">
 									<div class="file-name" @click="openFile(item.file)"><img src="https://static1.kofuf.com/1519811639811.jpeg" alt="">
