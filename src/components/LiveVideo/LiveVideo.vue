@@ -73,10 +73,16 @@
 				// 	cover: this.data.cover
 				// });
 				/* 跨域问题 */
-				console.log(flvjs.isSupported());
+				setTimeout(()=>{
+					console.log('-----------------------------');
+					console.log(window.flvjs);
+					console.log(window.flvjs.isSupported());
+					console.log('-----------------------------');
+				},2000)
+				console.log(window.flvjs.isSupported());
 				if (flvjs.isSupported()) {
 					var videoElement = document.getElementById('videoElement');
-					var flvPlayer = flvjs.createPlayer({
+					var flvPlayer = window.flvjs.createPlayer({
 						type: 'flv',
 						url: this.data.live_url
 						// url: 'http://live.kofuf.com/kofuf/live2.flv?auth_key=1700495481-0-0-c66c2bbabfe69940496675524fbf241f'
