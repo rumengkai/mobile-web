@@ -67,7 +67,7 @@
           </div>
         </ul>
         <!-- 支付行为 -->
-        <buy-action v-if="showContent&&!subscription" ref="buy_action" :name="channelsinfo.name" :buyParams="buy_params" :coupons="channelsinfo.coupons" :invalidCoupons="channelsinfo.invalid_coupons" :composite="channelsinfo.composite" :backurl="backurl" v-on:errorFun="errorFun"> </buy-action>
+        <buy-action v-if="showContent&&!subscription" ref="buy_action" :shareFrom="shareFrom" :name="channelsinfo.name" :buyParams="buy_params" :coupons="channelsinfo.coupons" :invalidCoupons="channelsinfo.invalid_coupons" :composite="channelsinfo.composite" :backurl="backurl" v-on:errorFun="errorFun"> </buy-action>
       </div>
     <!-- 底部弹框 -->
     <footer v-if="showContent&&!subscription">
@@ -131,7 +131,8 @@
     name: 'channel',
     data () {
       return {
-        id:0,
+				id:0,
+				shareFrom: querystring.parse().share_from,
         showContent:false,
         loadingshow: true,
         loadtext: 'loading...',

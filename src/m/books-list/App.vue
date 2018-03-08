@@ -46,7 +46,8 @@
   export default {
     data () {
       return {
-        id:0,
+				id:0,
+				shareFrom: querystring.parse().share_from,
         loadingshow: true,
         loadtext: '加载中...',
         contentshow:false,
@@ -98,7 +99,10 @@
           type: config()['paytype'],
           items: this.id,
           order_type:"12"
-        }
+				}
+				if ( this.shareFrom &&this.shareFrom != 'undefined') {
+					params.share_from = this.shareFrom
+				}
         createOrder(params).then(response => {
           this.loadingshow = false
           this.createOrderResult(response)
