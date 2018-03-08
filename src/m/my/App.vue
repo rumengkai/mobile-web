@@ -23,6 +23,7 @@
         </cell>
         <cell title="收货地址管理" is-link @click.native="toSkip('address.html')"></cell>
         <cell title="优惠中心" is-link @click.native="toSkip('code-active.html')"><span class="tp" v-if="myInfo.user.coupon_count!=0"><span class="tp1">{{myInfo.user.coupon_count}}</span>张待使用</span></cell>
+        <cell title="我的直播" is-link @click.native="toSkip('my-lives.html')"></cell>
       </group>
       <group class="group g1">
         <cell title="个人信息" is-link @click.native="toSkip('profile.html')"></cell>
