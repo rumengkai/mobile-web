@@ -115,7 +115,11 @@ export default {
         couponsname: "优惠券",
         order_type: ""
       }
-    }
+		},
+		shareFrom: {
+			type: String,
+      default: ""
+		}
   },
   data() {
     return {
@@ -204,8 +208,11 @@ export default {
           type: config()["paytype"],
           items: this.buyParams.buy_id,
           coupon_id: this.buyParams.coupon_id,
-          order_type: this.buyParams.order_type
-        };
+					order_type: this.buyParams.order_type
+				};
+				if ( this.shareFrom &&this.shareFrom != 'undefined') {
+					params.share_from = this.shareFrom
+				}
         createOrder(params).then(response => {
           this.loadingshow = false;
           this.createOrderResult(response);
