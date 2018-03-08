@@ -10,17 +10,17 @@
 				<div v-html="dataInfo.content"></div>
 			</div>
 			<!-- 聊天室区tab -->
-			<tab>
+			<tab v-show="!dataInfo.need_pay">
 				<tab-item selected @on-item-click="onItemClick">交流</tab-item>
 				<tab-item @on-item-click="onItemClick">精华</tab-item>
 			</tab>
 			<!-- 聊天室区 -->
-			<div class="chat-room room" v-show="index==0" ref="chatRoom">
+			<div class="chat-room room" v-show="index==0&&!dataInfo.need_pay" ref="chatRoom">
 				<div class="chat-room-wrap" ref="chatRoomWrap">
 					<div v-show="!chatRoomMsgFlag">
 						<load-more :show-loading="!chatRoomMsgFlag" :tip="chatRoomMsgFlag?'·':'正在加载'" background-color="#fbf9fe"></load-more>
 					</div>
-					<div class="msg-li" v-for="(item,index) in historyMsgs.chat" :key="item.time" v-if="item.type!='notification'">
+					<div class="msg-li" v-for="(item,index) in historyMsgs.chat" :key="index" v-if="item.type!='notification'">
 						<div v-if="item.type=='notification'">
 							<!-- <p class="notification-tip">系统消息&nbsp;{{item.attach.toNick[0]}}&nbsp;{{item.attach.type | attachAction}}</p> -->
 						</div>
