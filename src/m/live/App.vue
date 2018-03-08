@@ -242,7 +242,7 @@
 			/* 请求成功后 */
 			fetchMsg(data) {
 				this.nim = SDK.NIM.getInstance({
-					debug: true,
+					debug: false,
 					appKey: process.env.NIM_App_Key,
 					account: data.id,
 					token: data.token,
@@ -315,7 +315,7 @@
 				/* 初始化聊天 */
 				if (!error) {
 					this.chatroomGood = SDK.Chatroom.getInstance({
-						debug: true,
+						debug: false,
 						appKey: process.env.NIM_App_Key,
 						account: this.yunxinInfo.id,
 						token: this.yunxinInfo.token,
@@ -411,7 +411,7 @@
 				this.room.chat = obj
 				if (!error) {
 					this.chatroomChat = SDK.Chatroom.getInstance({
-						debug: true,
+						debug: false,
 						appKey: process.env.NIM_App_Key,
 						account: this.yunxinInfo.id,
 						token: this.yunxinInfo.token,
@@ -545,7 +545,7 @@
 			writeMessage() {
 				console.log('准备写消息');
 				if (isiOS()) {
-					toast('弹起键盘')
+					// toast('弹起键盘')
 				}
 			},
 			/* 发送消息 */

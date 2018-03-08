@@ -78,6 +78,7 @@
 					var flvPlayer = flvjs.createPlayer({
 						type: 'flv',
 						url: this.data.live_url
+						// url: 'http://live.kofuf.com/kofuf/live2.flv?auth_key=1700495481-0-0-c66c2bbabfe69940496675524fbf241f'
 					});
 					flvPlayer.attachMediaElement(videoElement);
 					flvPlayer.load();
