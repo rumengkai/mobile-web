@@ -104,7 +104,7 @@ window.getAuth=function (cookie,querystring,type,id){
 			}else{
 				params=type;
 			}
-			params=params?params:"";
+			params=params?params:(location.pathname + location.hash)
 			// return
 			window.location.href=getAuthLink(params);
 		}

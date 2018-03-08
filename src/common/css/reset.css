@@ -68,13 +68,13 @@ a[href*="www.cnzz.com/stat/website.php"] {
     clear: both;
 }
 /* == clearfix == */
-.clearfix:after {
+/* .clearfix:after {
     content: “.”;
     display: block;
     height: 0;
     clear: both;
     visibility: hidden;
-}
+} */
 .clearfix {display: inline-block;}
 * html .clearfix {height: 1%;}
 .clearfix {display: block;}
