@@ -12,7 +12,8 @@
 			</div>
 		</div>
 		<div v-if="data.state==4&&!data.need_pay">
-			<video class="prism-player" id="videoElement"></video>
+			<!-- <video class="prism-player" id="videoElement"></video> -->
+			<img class="cover" :src="data.cover" alt="">
 			<!-- <div class="prism-player" id="J_prismPlayer" style=""></div> -->
 		</div>
 		<div v-else-if="data.state==3&&data.announce_url!=''&&!data.need_pay">
@@ -73,16 +74,9 @@
 				// 	cover: this.data.cover
 				// });
 				/* 跨域问题 */
-				setTimeout(()=>{
-					console.log('-----------------------------');
-					console.log(window.flvjs);
-					console.log(window.flvjs.isSupported());
-					console.log('-----------------------------');
-				},2000)
-				console.log(window.flvjs.isSupported());
 				if (flvjs.isSupported()) {
 					var videoElement = document.getElementById('videoElement');
-					var flvPlayer = window.flvjs.createPlayer({
+					var flvPlayer = flvjs.createPlayer({
 						type: 'flv',
 						url: this.data.live_url
 						// url: 'http://live.kofuf.com/kofuf/live2.flv?auth_key=1700495481-0-0-c66c2bbabfe69940496675524fbf241f'
@@ -117,6 +111,10 @@
 			},
 			advance() {
 				if (this.data.advance_state == 1) {
+					if (!this.data.has_mobile) {
+						window.location.href = "/m/bind-phone.html";
+						return
+					}
 					advanceLive({
 						live_id: this.id
 					}).then(res => {

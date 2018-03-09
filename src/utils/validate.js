@@ -3,8 +3,8 @@
  */
 
 export function isvalidUsername(str) {
-  const valid_map = ['admin', 'editor']
-  return valid_map.indexOf(str.trim()) >= 0
+  const nameregex = /^[A-Za-z0-9]+$/
+  return nameregex.test(str)
 }
 
 /* 合法uri*/
@@ -28,6 +28,18 @@ export function validateUpperCase(str) {
 /* 大小写字母*/
 export function validatAlphabets(str) {
   const reg = /^[A-Za-z]+$/
+  return reg.test(str)
+}
+
+/* 邮箱 */
+export function isEmail(str) {
+  const reg = /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/
+  return reg.test(str)
+}
+
+/* 手机号 */
+export function isPhone(str) {
+  const reg = /^1[3|4|5|8]\d{9}$/
   return reg.test(str)
 }
 
