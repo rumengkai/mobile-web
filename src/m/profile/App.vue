@@ -7,7 +7,7 @@
         <cell title="性别" ><span v-if="myInfo.user.gender=='M'">男</span><span v-else>女</span></cell>
       </group>
       <group class="group">
-        <cell title="手机号" v-if='myInfo.user.has_mobile'>{{myInfo.user.mobile}}</cell>
+        <cell title="手机号" is-link @click.native="toSkip('bind-phone.html')">{{myInfo.user.has_mobile?myInfo.user.mobile:'绑定'}}</cell>
         <cell title="微信" v-if='myInfo.user.weixin'>{{myInfo.user.weixin}}</cell>
         <cell title="微博" v-if='myInfo.user.weibo'>{{myInfo.user.weibo}}</cell>
       </group>
@@ -83,6 +83,9 @@
         setTimeout(()=>{
           self.loadingshow=false;
         },10000);
+			},
+			toSkip(data){
+        window.location.href="/m/"+data;
       }
     }
   }
