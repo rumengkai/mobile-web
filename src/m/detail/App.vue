@@ -206,7 +206,7 @@
             window.shareData={
               title: this.articles.name,
               link: this.articles.share_url?this.articles.share_url:HOSTM+'/m/detail.html?id='+this.id+'',
-              imgUrl: this.articles.large_thumb+'?imageView2/1/w/300/h/300/q/100|imageslim',//||this.articles.screenshots + '?imageView2/1/w/300/h/300/q/100|imageslim',
+              imgUrl: this.articles.large_thumb,//||this.articles.screenshots + '?imageView2/1/w/300/h/300/q/100|imageslim',
               desc: this.articles.share
             }
             weixinShare(Vue);
