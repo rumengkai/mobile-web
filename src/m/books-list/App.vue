@@ -103,10 +103,9 @@
           items: this.id,
           order_type:"12"
 				}
-				if ((!this.shareFrom || this.shareFrom == 'undefined')) {
-					if(this.from()!=0){
-						params.share_from = this.from()
-					}
+				let f = this.from();
+				if ((!this.shareFrom || this.shareFrom == 'undefined')&&f!=0) {
+					params.share_from = f
 				}else if ( this.shareFrom && this.shareFrom != 'undefined') {
 					params.share_from = this.shareFrom
 				}else{
