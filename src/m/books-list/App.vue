@@ -103,8 +103,10 @@
           items: this.id,
           order_type:"12"
 				}
-				if ((!this.shareFrom || this.shareFrom == 'undefined')&&this.from()) {
-					params.share_from = this.from()
+				if ((!this.shareFrom || this.shareFrom == 'undefined')) {
+					if(this.from()!=0){
+						params.share_from = this.from()
+					}
 				}else if ( this.shareFrom && this.shareFrom != 'undefined') {
 					params.share_from = this.shareFrom
 				}else{
@@ -149,7 +151,7 @@
 				}else if(f>5){
 					return "92750265"
 				}else{
-					return false
+					return 0
 				}
 			},
       skip(name){
