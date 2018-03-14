@@ -1,7 +1,7 @@
 <template>
 	<div class="share-money-btn">
-		<div v-if="hasShare" @click="shareFun" class="primary btn">分享赚 <span> ¥</span>{{moneyVal}}</div>
-		<div v-if="hasGift" @click="giftFun" class="bg-btn-red btn">{{number}} 赠品</div>
+		<div v-if="moneyVal > 0" @click="shareFun" class="primary btn">分享赚 <span> ¥</span>{{moneyVal}}</div>
+		<div v-if="number > 0" @click="giftFun" class="bg-btn-red btn">{{number}} 赠品</div>
 	</div>
 </template>
 
@@ -29,7 +29,7 @@
 				default: ""
 			},
 			number: {
-				type: String,
+				type: Number,
 				default: ""
 			},
 			hasShare: {
