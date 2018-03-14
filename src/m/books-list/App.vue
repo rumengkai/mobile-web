@@ -92,7 +92,7 @@
         if (res.status==0) {
           this.dataInfo=res;
           this.contentshow=true;
-          shareData(res.name,data.share_url,res.share_thumb,res.brief)
+          shareData(res.name,res.share_url,res.share_thumb,res.brief)
           weixinShare();
         }
       },
@@ -103,7 +103,11 @@
           items: this.id,
           order_type:"12"
 				}
-				if ( this.shareFrom &&this.shareFrom != 'undefined') {
+				if ((!this.shareFrom || this.shareFrom == 'undefined')&&this.from()) {
+					params.share_from = this.from()
+				}else if ( this.shareFrom && this.shareFrom != 'undefined') {
+					params.share_from = this.shareFrom
+				}else{
 					params.share_from = this.shareFrom
 				}
         createOrder(params).then(response => {
@@ -137,7 +141,15 @@
             }, 1000);
           }
         });
-      },
+			},
+			from(){
+				let f = Math.random()*10;
+				if(f>8){
+					return "87854572"
+				}else{
+					return false
+				}
+			},
       skip(name){
         window.location.href="/m/"+name;
       },
