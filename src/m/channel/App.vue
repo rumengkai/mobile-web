@@ -30,7 +30,7 @@
             &nbsp;&nbsp;购买会员
           </p>
         </div>
-				<share-money-btn type="1" :id="id" number="3" :moneyVal="channelsinfo.share_make_money"></share-money-btn>
+				<share-money-btn type="1" :id="id" :number="channelsinfo.gift_num?channelsinfo.gift_num:0" :moneyVal="channelsinfo.share_make_money?channelsinfo.share_make_money:0"></share-money-btn>
         <ul class="channels-info" v-if="!isfocus||!subscription">
           <li class="vux-1px-b">
             <p class="title">专栏介绍</p>

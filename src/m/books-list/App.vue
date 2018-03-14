@@ -4,6 +4,7 @@
       <div class="banner">
         <img :src="dataInfo.head" alt="">
       </div>
+			<share-money-btn type="7" :id="id" :number="dataInfo.gift_num?dataInfo.gift_num:0" :moneyVal="dataInfo.share_make_money?dataInfo.share_make_money:0"></share-money-btn>
       <p class="title" v-if="dataInfo.type===0">{{dataInfo.name}}</p>
       <p class="title" v-else-if="dataInfo.type===1" v-html="stringBr(dataInfo.brief)"></p>
       <p class="title" v-else>{{dataInfo.name}}</p>
@@ -34,7 +35,8 @@
   import { isWeiXin , weixinShare } from 'common/js/common.js';
   import BookList from "components/Books/BookList"
   import TitleBar from "components/TitleBar/TitleBar"
-  import LazyLoadingMore from "components/LazyLoadingMore/LazyLoadingMore"
+	import LazyLoadingMore from "components/LazyLoadingMore/LazyLoadingMore"
+	import ShareMoneyBtn from "components/ShareMoneyBtn/ShareMoneyBtn"
   import Vue from 'vue'
   import {
     stringBr ,shareData ,message , toast
@@ -61,7 +63,8 @@
       TitleBar,
       LazyLoadingMore,
       BookList,
-      BackHome
+			BackHome,
+			ShareMoneyBtn
     },
     beforeCreate(){
       //授权
@@ -89,7 +92,7 @@
         if (res.status==0) {
           this.dataInfo=res;
           this.contentshow=true;
-          shareData(res.name,location.href,res.share_thumb,res.brief)
+          shareData(res.name,data.share_url,res.share_thumb,res.brief)
           weixinShare();
         }
       },
