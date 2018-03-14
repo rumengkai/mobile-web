@@ -27,6 +27,9 @@
 	import Failed from "components/Failed/Failed"
 	import Vue from 'vue'
 	import {
+		getBooksList
+	} from 'src/api/books';
+	import {
 		getChannelInfo
 	} from 'src/api/channel';
 	import {
@@ -75,7 +78,7 @@
 		methods: {
 			//获取首页数据
 			fetchData() {
-				if (this.type==1) {
+				if (this.type == 1) {
 					getChannelInfo({
 						id: this.id
 					}).then(res => {
@@ -86,11 +89,11 @@
 								weixinShare();
 							}
 						} catch (error) {
-		
+	
 						}
 						this.loadingshow = false
 					})
-				}else if(this.type==7){
+				} else if (this.type == 7) {
 					getBooksList({
 						id: this.id
 					}).then(res => {
@@ -101,7 +104,7 @@
 								weixinShare();
 							}
 						} catch (error) {
-		
+	
 						}
 						this.loadingshow = false
 					})
