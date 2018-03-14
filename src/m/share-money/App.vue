@@ -106,7 +106,6 @@
 						} catch (error) {
 	
 						}
-						this.loadingshow = false
 					})
 				}
 				getShareMoneyImage({
@@ -117,6 +116,10 @@
 						if (res.status == 0) {
 							this.imgInfo = res
 							this.showContent = true
+							var _self = this
+							setTimeout(()=>{
+								_self.loadingshow = false
+							},1000)
 							console.log(res);
 						}
 					} catch (error) {
