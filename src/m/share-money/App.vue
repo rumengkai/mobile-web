@@ -100,7 +100,7 @@
 						try {
 							if (res.status == 0) {
 								this.dataInfo = res
-								shareData(res.name, res.share_url, res.thumb, res.share)
+								shareData(res.name, res.share_url, res.share_thumb, res.share)
 								weixinShare();
 							}
 						} catch (error) {
