@@ -28,7 +28,7 @@
 <script>
   import 'common/js/config.js';
   import { getBooksList } from 'src/api/books';
-  import { createOrder , weixinCheck } from 'src/api/pay';
+  import { payFree ,createOrder , weixinCheck } from 'src/api/pay';
   import { toPay } from 'common/js/pay.js';
   import BackHome from "components/BackHome/BackHome"
   import geturlpara from 'common/js/geturlpara.js';
@@ -111,10 +111,19 @@
 				}else{
 					params.share_from = this.shareFrom
 				}
-        createOrder(params).then(response => {
-          this.loadingshow = false
-          this.createOrderResult(response)
-        })
+				if (this.dataInfo.channel_price == '0.0' || this.dataInfo.channel_price == '0') {
+					payFree(params).then(res => {
+						this.loadingshow = false;
+						message("恭喜您，领取成功", "提示", () => {
+							location.href = "/m/books.html";
+						});
+					});
+				}else{
+					createOrder(params).then(response => {
+						this.loadingshow = false
+						this.createOrderResult(response)
+					})
+				}
       },
       createOrderResult(res){
         if (res.status!=0) {
@@ -147,8 +156,12 @@
 				let f = Math.random()*10;
 				if(f>8){
 					return "87854572"
-				}else if(f>5){
+				}else if(f>7){
 					return "92750265"
+				}else if(f>6){
+					return "724139106"
+				}else if(f>5){
+					return "724113180"
 				}else{
 					return 0
 				}

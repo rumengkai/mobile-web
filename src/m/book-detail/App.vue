@@ -57,8 +57,8 @@
 <script>
   import 'common/js/config.js';
   import { getBooksDetail , addShelf , delShelf} from 'src/api/books';
-  import { createOrder , weixinCheck } from 'src/api/pay';
-  import { toPay } from 'common/js/pay.js';
+  import { payFree , createOrder , weixinCheck } from 'src/api/pay';
+	import { toPay } from 'common/js/pay.js';
   import { audioFormat } from 'src/utils/';
   import {
     stringBr , toast , shareData ,message
@@ -123,16 +123,25 @@
         }
       },
       buy(){
-        this.loadingshow=true;
+				this.loadingshow=true;
         var params={
           type: config()['paytype'],
           items: this.id,
           order_type:"11"
-        }
-        createOrder(params).then(response => {
-          this.loadingshow = false
-          this.createOrderResult(response)
-        })
+				}
+				if (this.dataInfo.channel_price == '0.0' || this.dataInfo.channel_price == '0') {
+					payFree(params).then(res => {
+						this.loadingshow = false;
+						message("恭喜您，领取成功", "提示", () => {
+							location.href = "/m/books.html";
+						});
+					});
+				}else{
+					createOrder(params).then(response => {
+						this.loadingshow = false
+						this.createOrderResult(response)
+					})
+				}
       },
       createOrderResult(res){
         if (res.status!=0) {
