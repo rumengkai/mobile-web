@@ -30,6 +30,7 @@
             &nbsp;&nbsp;购买会员
           </p>
         </div>
+				<share-money-btn type="1" :id="id" number="3" :moneyVal="channelsinfo.share_make_money"></share-money-btn>
         <ul class="channels-info" v-if="!isfocus||!subscription">
           <li class="vux-1px-b">
             <p class="title">专栏介绍</p>
@@ -122,7 +123,8 @@
   import BackHome from "components/BackHome/BackHome"
   import List from "components/List/List"
   import Couponsuse from "components/Couponsuse/Couponsuse"
-  import BuyAction from "components/BuyAction/BuyAction"
+	import BuyAction from "components/BuyAction/BuyAction"
+	import ShareMoneyBtn from "components/ShareMoneyBtn/ShareMoneyBtn"
   import {
     stringBr ,shareData
   } from 'src/common/js/assembly';
@@ -131,7 +133,7 @@
     name: 'channel',
     data () {
       return {
-				id:0,
+				id: this.$geturlpara.getUrlKey("id"),
 				shareFrom: querystring.parse().share_from,
         showContent:false,
         loadingshow: true,
@@ -181,7 +183,8 @@
       XSwitch,
       Couponsuse,
       XButton,
-      BuyAction
+			BuyAction,
+			ShareMoneyBtn
     },
     beforeCreate(){
       if(isWeiXin()){
@@ -243,7 +246,7 @@
           this.subscription=data.followed;
           this.unit=data.price_unit;
           this.showContent=true;
-          shareData(data.name,location.href,data.thumb,data.share)
+          shareData(data.name,data.share_url,data.thumb,data.share)
           weixinShare();
         }
       },
