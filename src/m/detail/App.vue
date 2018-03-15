@@ -304,7 +304,11 @@
         window.location.href="/m/channel.html?id="+id;
 			},
 			toBuyChannel(){
-				window.location.href="/m/channel.html?id="+this.articles.channel;
+				if (this.articles.channel) {
+					window.location.href="/m/channel.html?id="+this.articles.channel?this.articles.channel:this.articles.book;
+				}else if(this.articles.book){
+					window.location.href="/m/book-detail.html?id="+this.articles.channel?this.articles.channel:this.articles.book;
+				}
 			},
       toUserCenter(item){
         window.location.href="/m/moments.html?id="+item.author_id;
