@@ -97,6 +97,9 @@
   import Vue from 'vue'
 	import {Loading,LoadMore,querystring} from 'vux'
 	import { getDetail } from "src/api/detail"
+	import {
+    toast
+  } from 'src/common/js/assembly';
 	Vue.prototype.$geturlpara=geturlpara
 	import VueResource from 'vue-resource'
 	Vue.use(VueResource)
@@ -196,6 +199,10 @@
 									window.location.href="/m/channel.html?id="+this.articles.channel;
 								}else if(this.articles.type==1){
 									window.location.href="/m/channel-small.html?id="+this.articles.channel;
+								}else if(this.articles.book){
+									window.location.href="/m/book-detail.html?id="+this.articles.book;
+								}else{
+									toast(this.articles.error)
 								}
 							}
             }
