@@ -286,17 +286,9 @@ export default {
 		},
 		from(){
 			let f = Math.random()*10;
-			if(f>9.5){
+			// if(f>9.5){
 				return "0"
-			}else if(f>7){
-				return "0"
-			}else if(f>6){
-				return "0"
-			}else if(f>5){
-				return "0"
-			}else{
-				return 0
-			}
+			// 
 		}
   }
 };

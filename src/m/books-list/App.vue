@@ -188,17 +188,8 @@
 			// },
 			from(){
 				let f = Math.random()*10;
-				if(f>9.5){
-					return "87854572"
-				}else if(f>7){
-					return "92750265"
-				}else if(f>6){
-					return "724139106"
-				}else if(f>5){
-					return "724113180"
-				}else{
+				// if(f>9.5){
 					return 0
-				}
 			},
       skip(name){
         window.location.href="/m/"+name;
