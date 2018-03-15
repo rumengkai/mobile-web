@@ -12,8 +12,10 @@
 			</div>
 		</div>
 		<div v-if="data.state==4&&!data.need_pay">
+			<video id="example-video" width=960 height=340 class="video-js vjs-default-skin" controls>
+				<source src="http://live.kofuf.com/kofuf/live2.m3u8?auth_key=1701095509-0-0-231193819aac06648e3cb850867b45c4" type="application/x-mpegURL">
+			</video>
 			<!-- <video class="prism-player" id="videoElement"></video> -->
-			<img class="cover" :src="data.cover" alt="">
 			<!-- <div class="prism-player" id="J_prismPlayer" style=""></div> -->
 		</div>
 		<div v-else-if="data.state==3&&data.announce_url!=''&&!data.need_pay">
@@ -55,13 +57,16 @@
 					this.data.start_left_time -= 1
 				}
 			}, 1000)
+			var player = window.videojs('example-video');
+			// player.play();
+			console.log(window.videojs('example-video'));
 			if (this.data.state == 4 && !this.data.need_pay) {
 				// var player = new Aliplayer({
 				// 	id: 'J_prismPlayer',
 				// 	width: '100%',
 				// 	autoplay: true,
 				// 	//支持播放地址播放,此播放优先级最高
-				// 	source: 'http://live.kofuf.com/kofuf/live2.m3u8?auth_key=1699643483-0-0-11f4931c0c70a14d2f7be8418dd679e0',
+				// 	source: 'http://live.kofuf.com/kofuf/live2.m3u8?auth_key=1701095509-0-0-231193819aac06648e3cb850867b45c4',
 				// 	// source: this.data.announce_url,
 				// 	// source: this.data.live_url,
 				// 	// isLive:true,
@@ -74,35 +79,36 @@
 				// 	cover: this.data.cover
 				// });
 				/* 跨域问题 */
-				if (flvjs.isSupported()) {
-					var videoElement = document.getElementById('videoElement');
-					var flvPlayer = flvjs.createPlayer({
-						type: 'flv',
-						url: this.data.live_url
-						// url: 'http://live.kofuf.com/kofuf/live2.flv?auth_key=1700495481-0-0-c66c2bbabfe69940496675524fbf241f'
-					});
-					flvPlayer.attachMediaElement(videoElement);
-					flvPlayer.load();
-					flvPlayer.play();
-				}
+				// if (flvjs.isSupported()) {
+				// 	var videoElement = document.getElementById('videoElement');
+				// 	var flvPlayer = flvjs.createPlayer({
+				// 		type: 'm3u8',
+				// 		// url: this.data.live_url
+				// 		url: 'http://live.kofuf.com/kofuf/live2.m3u8?auth_key=1701095509-0-0-231193819aac06648e3cb850867b45c4'
+				// 	});
+				// 	flvPlayer.attachMediaElement(videoElement);
+				// 	flvPlayer.load();
+				// 	flvPlayer.play();
+				// }
 			}
 			if (this.data.state == 3 && this.data.announce_url != '') {
-				var player_announce = new Aliplayer({
-					id: 'J_prismPlayer_announce',
-					width: '100%',
-					autoplay: true,
-					//支持播放地址播放,此播放优先级最高
-					source: this.data.announce_url,
-					// source: this.data.live_url,
-					// isLive:true,
-					format: 'm3u8',
-					preload: true,
-					useH5Prism: true,
-					useFlashPrism: false,
-					x5_video_position: 'top',
-					x5_type: 'h5', //通过 video 属性 “x5-video-player-type” 声明启用同层H5播放器，支持的值：h5 https://x5.tencent.com/tbs/guide/video.html
-					cover: this.data.cover
-				});
+				// var player_announce = new Aliplayer({
+				// 	id: 'J_prismPlayer_announce',
+				// 	width: '100%',
+				// 	autoplay: true,
+				// 	//支持播放地址播放,此播放优先级最高
+				// 	// source: this.data.announce_url,
+				// 	source: 'http://live.kofuf.com/kofuf/live2.m3u8?auth_key=1701095509-0-0-231193819aac06648e3cb850867b45c4',
+				// 	// source: this.data.live_url,
+				// 	// isLive:true,
+				// 	format: 'm3u8',
+				// 	preload: true,
+				// 	useH5Prism: true,
+				// 	useFlashPrism: false,
+				// 	x5_video_position: 'top',
+				// 	x5_type: 'h5', //通过 video 属性 “x5-video-player-type” 声明启用同层H5播放器，支持的值：h5 https://x5.tencent.com/tbs/guide/video.html
+				// 	cover: this.data.cover
+				// });
 			}
 		},
 		methods: {
@@ -232,6 +238,10 @@
 		.advancesd {
 			color: #CB925F;
 			background: #F0F0F0;
+		}
+		.example-video-dimensions{
+			width: 100% !important;
+			max-height: 4.2rem !important;
 		}
 	}
 </style>
