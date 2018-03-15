@@ -304,7 +304,6 @@
       },
       //订阅支付前，免费领取
       composite_readysub(){
-        console.log(this.$refs.buy_action);
         this.$refs.buy_action.composite_readysub()
       },
       toActiveMember(){

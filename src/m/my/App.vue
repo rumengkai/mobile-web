@@ -19,7 +19,7 @@
 				</div>
 				<img class="bottom-img" src="https://static2.kofuf.com/1520934481076.png" alt="">
 			</div>
-			<div class="member-items">
+			<div class="member-items vux-1px-b">
 				<li @click="toMessage()">
 					<div>{{myInfo.user.wallet_money}}</div>
 					<p>功夫币</p>

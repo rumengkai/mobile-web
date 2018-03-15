@@ -101,6 +101,7 @@
 					try {
 						if (res.status==0) {
 							toast('提现成功')
+							window.location.href = "/m/my.html"
 						}
 					} catch (error) {
 					}

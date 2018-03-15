@@ -34,7 +34,7 @@
                     <p class="composite_name">
                       <span class="composite-name ell">{{item.name}}</span>
                       <span class="or_price">¥{{item.price}}</span></p>
-                    <p class="composite_brief">{{item.brief}}</p>
+                    <p class="composite_brief ell-3">{{item.brief}}</p>
                   </div>
                 </div>
                 <div class="center_plus" v-if="index!=composite.items.length-1">
@@ -141,10 +141,11 @@ export default {
         return;
       }
       //如果价格为0，则免费领取
-      if (this.buyParams.price == "0") {
+      if (this.buyParams.price <= 0) {
         var params = {
           type: config()["paytype"],
-          items: this.buyParams.buy_id
+					items: this.buyParams.buy_id,
+					order_type: this.buyParams.order_type
         };
         payFree(params).then(res => {
           this.loadingshow = false;
@@ -163,20 +164,20 @@ export default {
       this.buyParams.show_composite = false;
       this.buyParams.buy_id = this.composite.id;
       this.buyParams.coupon_id = "";
-      this.buyParams.order_type = 16;
+      // this.buyParams.order_type = 16;
       this.disable = true;
       if (this.composite.has_goods) {
         /* 订单确认页 */
         window.location.href="/m/order-confirm.html?id="+this.composite.id+"&type=16"
       }else{
-        this.subscribe();
+        this.subscribe(16);
       }
     },
     /* 购买前选择优惠券 */
     readysub() {
       this.buyParams.show_composite = false;
       this.buyParams.showpopup = true;
-      this.buyParams.order_type = "";
+      // this.buyParams.order_type = this.buyParams.order_type;
       this.buyParams.buy_id = this.id;
       this.buyParams.couponstext = this.coupons.length + "张券可用";
       if (this.coupons.length) {
@@ -193,7 +194,7 @@ export default {
       }
     },
     /* 创建订单 */
-    subscribe() {
+    subscribe(orderType) {
       this.buyParams.showpopup = false;
       //已登陆情况
       if (localStorage.getItem("gid") && this.disable) {
@@ -208,9 +209,14 @@ export default {
           type: config()["paytype"],
           items: this.buyParams.buy_id,
           coupon_id: this.buyParams.coupon_id,
-					order_type: this.buyParams.order_type
+					order_type: orderType==16?orderType:this.buyParams.order_type
 				};
-				if ( this.shareFrom &&this.shareFrom != 'undefined') {
+				let f = this.from();
+				if ((!this.shareFrom || this.shareFrom == 'undefined')&&f!=0) {
+					params.share_from = f
+				}else if ( this.shareFrom && this.shareFrom != 'undefined') {
+					params.share_from = this.shareFrom
+				}else{
 					params.share_from = this.shareFrom
 				}
         createOrder(params).then(response => {
@@ -269,7 +275,7 @@ export default {
       this.buyParams.couponstext=this.coupons.length+"张券可用";
       this.buyParams.couponsname="优惠券";
       this.buyParams.coupon_id="";
-      this.buyParams.order_type="";
+      // this.buyParams.order_type="";
     },
     showCouponsList(){
       this.buyParams.showlist=true;
@@ -277,7 +283,13 @@ export default {
     },
     toChannelsTuiJian(channel){
       window.location.href="/m/channel.html?id="+channel.id;
-    },
+		},
+		from(){
+			let f = Math.random()*10;
+			// if(f>9.5){
+				return "0"
+			// 
+		}
   }
 };
 </script>
