@@ -1,6 +1,10 @@
 <template>
   <div id="member-center">
     <div class="content" v-if="showContent">
+			<group class="header">
+				<cell title="特权说明" is-link @click.native="memberExExplain()">
+				</cell>
+			</group>
       <div v-for="i in dataInfo.items">
         <div v-if="i.type=='goods'">
           <group class="header" v-for="item in i.items">
@@ -140,7 +144,10 @@
           (err)=>{
             console.log(err);
           }
-      },
+			},
+			memberExExplain(){
+        window.location.href="/m/privilege.html";
+			},
       toChannel(data){
         window.location.href="/m/channel.html?id="+data.id;
       },

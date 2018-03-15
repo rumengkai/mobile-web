@@ -14,8 +14,8 @@
 					<span v-html="myInfo.user.name"></span>
 				</div>
 				<div class="member-entry" @click="tomember">
-					<p class="title">会员中心</p>
-					<p class="con">{{myInfo.user.privilege_count}}项特权待兑换</p>
+					<p class="title">{{myInfo.user.level>0?'会员中心':'开通会员'}}</p>
+					<p class="con">{{myInfo.user.level>0?myInfo.user.privilege_count+"项特权待兑换":"享受"+myInfo.user.privilege_count+"项特权"}}</p>
 				</div>
 				<img class="bottom-img" src="https://static2.kofuf.com/1520934481076.png" alt="">
 			</div>
