@@ -12,6 +12,7 @@
 			</div>
 		</div>
 		<div v-if="data.state==4&&!data.need_pay">
+			<!-- <video-player :options="videoOptions"></video-player> -->
 			<video id="example-video" width=960 height=340 class="video-js vjs-default-skin" controls>
 				<source src="http://live.kofuf.com/kofuf/live2.m3u8?auth_key=1701095509-0-0-231193819aac06648e3cb850867b45c4" type="application/x-mpegURL">
 			</video>
@@ -31,12 +32,21 @@
 
 <script>
 	import Vue from 'vue'
+	// import VideoPlayer from 'vue-video-player'
+	import videojs from'video.js'
+	import videojsHLS from 'videojs-contrib-hls'
 	import {
 		advanceLive
 	} from 'src/api/live'
 	import {
 		toast
 	} from 'src/common/js/assembly'
+	// Vue.use(VideoPlayer)
+	// VideoPlayer.config({
+	// 	youtube: true,
+	// 	switcher: true,
+	// 	hls: true
+	// })
 	export default {
 		name: 'live-video',
 		props: {
@@ -46,7 +56,19 @@
 			}
 		},
 		data() {
-			return {}
+			return {
+				videoOptions: {
+					source: {
+						type: "application/x-mpegURL",
+						src: 'http://live.kofuf.com/kofuf/live2.m3u8?auth_key=1701095509-0-0-231193819aac06648e3cb850867b45c4',
+						withCredentials: false
+					},
+					language: 'zh-CN',
+					live: true,
+					autoplay: true,
+					height: 540
+				}
+			}
 		},
 		components: {},
 		mounted() {
@@ -57,9 +79,19 @@
 					this.data.start_left_time -= 1
 				}
 			}, 1000)
-			var player = window.videojs('example-video');
+			var player = videojs('example-video');
 			// player.play();
-			console.log(window.videojs('example-video'));
+			player.ready(function () {
+				player.src({
+					src: "http://live.kofuf.com/kofuf/live2.m3u8?auth_key=1701095509-0-0-231193819aac06648e3cb850867b45c4",
+					type: 'application/x-mpegURL'
+				});
+			})
+			console.log('----------');
+			console.log(player.src);
+			console.log(player);
+			player.play();
+			
 			if (this.data.state == 4 && !this.data.need_pay) {
 				// var player = new Aliplayer({
 				// 	id: 'J_prismPlayer',
