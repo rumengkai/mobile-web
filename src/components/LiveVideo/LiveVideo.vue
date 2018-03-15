@@ -12,12 +12,9 @@
 			</div>
 		</div>
 		<div v-if="data.state==4&&!data.need_pay">
-			<!-- <video-player :options="videoOptions"></video-player> -->
 			<video id="example-video" width=960 height=340 class="video-js vjs-default-skin" controls>
-				<source src="http://live.kofuf.com/kofuf/live2.m3u8?auth_key=1701095509-0-0-231193819aac06648e3cb850867b45c4" type="application/x-mpegURL">
+				<source :src="url" type="application/x-mpegURL">
 			</video>
-			<!-- <video class="prism-player" id="videoElement"></video> -->
-			<!-- <div class="prism-player" id="J_prismPlayer" style=""></div> -->
 		</div>
 		<div v-else-if="data.state==3&&data.announce_url!=''&&!data.need_pay">
 			<div class="prism-player" id="J_prismPlayer_announce" style=""></div>
@@ -32,7 +29,6 @@
 
 <script>
 	import Vue from 'vue'
-	// import VideoPlayer from 'vue-video-player'
 	import videojs from'video.js'
 	import videojsHLS from 'videojs-contrib-hls'
 	import {
@@ -41,12 +37,7 @@
 	import {
 		toast
 	} from 'src/common/js/assembly'
-	// Vue.use(VideoPlayer)
-	// VideoPlayer.config({
-	// 	youtube: true,
-	// 	switcher: true,
-	// 	hls: true
-	// })
+	
 	export default {
 		name: 'live-video',
 		props: {
@@ -57,17 +48,7 @@
 		},
 		data() {
 			return {
-				videoOptions: {
-					source: {
-						type: "application/x-mpegURL",
-						src: 'http://live.kofuf.com/kofuf/live2.m3u8?auth_key=1701095509-0-0-231193819aac06648e3cb850867b45c4',
-						withCredentials: false
-					},
-					language: 'zh-CN',
-					live: true,
-					autoplay: true,
-					height: 540
-				}
+				url:'http://live.kofuf.com/kofuf/live2.m3u8?auth_key=1701095509-0-0-231193819aac06648e3cb850867b45c4'
 			}
 		},
 		components: {},
@@ -79,68 +60,19 @@
 					this.data.start_left_time -= 1
 				}
 			}, 1000)
-			var player = videojs('example-video');
-			// player.play();
-			player.ready(function () {
-				player.src({
-					src: "http://live.kofuf.com/kofuf/live2.m3u8?auth_key=1701095509-0-0-231193819aac06648e3cb850867b45c4",
-					type: 'application/x-mpegURL'
-				});
-			})
-			console.log('----------');
-			console.log(player.src);
-			console.log(player);
-			player.play();
-			
 			if (this.data.state == 4 && !this.data.need_pay) {
-				// var player = new Aliplayer({
-				// 	id: 'J_prismPlayer',
-				// 	width: '100%',
-				// 	autoplay: true,
-				// 	//支持播放地址播放,此播放优先级最高
-				// 	source: 'http://live.kofuf.com/kofuf/live2.m3u8?auth_key=1701095509-0-0-231193819aac06648e3cb850867b45c4',
-				// 	// source: this.data.announce_url,
-				// 	// source: this.data.live_url,
-				// 	// isLive:true,
-				// 	format: 'm3u8',
-				// 	preload: true,
-				// 	useH5Prism: true,
-				// 	useFlashPrism: false,
-				// 	x5_video_position: 'top',
-				// 	x5_type: 'h5', //通过 video 属性 “x5-video-player-type” 声明启用同层H5播放器，支持的值：h5 https://x5.tencent.com/tbs/guide/video.html
-				// 	cover: this.data.cover
-				// });
-				/* 跨域问题 */
-				// if (flvjs.isSupported()) {
-				// 	var videoElement = document.getElementById('videoElement');
-				// 	var flvPlayer = flvjs.createPlayer({
-				// 		type: 'm3u8',
-				// 		// url: this.data.live_url
-				// 		url: 'http://live.kofuf.com/kofuf/live2.m3u8?auth_key=1701095509-0-0-231193819aac06648e3cb850867b45c4'
-				// 	});
-				// 	flvPlayer.attachMediaElement(videoElement);
-				// 	flvPlayer.load();
-				// 	flvPlayer.play();
-				// }
+
+				var player = videojs('example-video');
+				player.ready(function () {
+					player.src({
+						src: "http://live.kofuf.com/kofuf/live2.m3u8?auth_key=1701095509-0-0-231193819aac06648e3cb850867b45c4",
+						type: 'application/x-mpegURL'
+					});
+				})
+				player.play();
 			}
 			if (this.data.state == 3 && this.data.announce_url != '') {
-				// var player_announce = new Aliplayer({
-				// 	id: 'J_prismPlayer_announce',
-				// 	width: '100%',
-				// 	autoplay: true,
-				// 	//支持播放地址播放,此播放优先级最高
-				// 	// source: this.data.announce_url,
-				// 	source: 'http://live.kofuf.com/kofuf/live2.m3u8?auth_key=1701095509-0-0-231193819aac06648e3cb850867b45c4',
-				// 	// source: this.data.live_url,
-				// 	// isLive:true,
-				// 	format: 'm3u8',
-				// 	preload: true,
-				// 	useH5Prism: true,
-				// 	useFlashPrism: false,
-				// 	x5_video_position: 'top',
-				// 	x5_type: 'h5', //通过 video 属性 “x5-video-player-type” 声明启用同层H5播放器，支持的值：h5 https://x5.tencent.com/tbs/guide/video.html
-				// 	cover: this.data.cover
-				// });
+				/* 预热 */
 			}
 		},
 		methods: {
@@ -274,6 +206,7 @@
 		.example-video-dimensions{
 			width: 100% !important;
 			max-height: 4.2rem !important;
+			overflow: hidden;
 		}
 	}
 </style>
