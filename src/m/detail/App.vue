@@ -305,9 +305,9 @@
 			},
 			toBuyChannel(){
 				if (this.articles.channel) {
-					window.location.href="/m/channel.html?id="+this.articles.channel?this.articles.channel:this.articles.book;
+					window.location.href="/m/channel.html?id="+this.articles.channel;
 				}else if(this.articles.book){
-					window.location.href="/m/book-detail.html?id="+this.articles.channel?this.articles.channel:this.articles.book;
+					window.location.href="/m/book-detail.html?id="+this.articles.book;
 				}
 			},
       toUserCenter(item){
