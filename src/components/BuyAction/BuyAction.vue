@@ -109,7 +109,7 @@ export default {
         channel_price:"",
         price:"",
         showpopup: false,
-        showlist: false /* 优惠券列表 */,
+        showlist: false ,/* 优惠券列表 */
         show_composite: false,
         couponstext: "选择优惠券",
         couponsname: "优惠券",

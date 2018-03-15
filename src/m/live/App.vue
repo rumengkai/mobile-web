@@ -34,7 +34,7 @@
 								<p class="text" v-if="item.type=='text'" v-html="stringBr(item.text)">
 								</p>
 								<div v-if="item.type=='image'" class="content-image">
-									<img :src="item.file.url" @click="openFile(item.file)" alt="" v-bind:style="{width:'2rem',height:item.file.height*2/item.file.width+'rem'}">
+									<img :src="item.file.url" alt="" v-bind:style="{width:'2rem',height:item.file.height*2/item.file.width+'rem'}">
 								</div>
 								<div v-if="item.type=='file'" class="content-file">
 									<div class="file-name" @click="openFile(item.file)"><img src="https://static1.kofuf.com/1519811639811.jpeg" alt="">
@@ -105,7 +105,8 @@
 	} from 'common/js/common.js'
 	import {
 		createOrder,
-		weixinCheck
+		weixinCheck,
+		payFree
 	} from 'src/api/pay';
 	import {
 		toPay
@@ -181,7 +182,7 @@
 				chatHistoryFirstMsgs: {},
 				goodHistoryFirstMsgs: {},
 				massageValue: "",
-				firstInGood:''
+				firstInGood: ''
 			}
 		},
 		components: {
@@ -518,7 +519,7 @@
 						setTimeout(() => {
 							this.showNewMsg = false
 						}, 5000)
-					}else{
+					} else {
 						this.getChatroomMember()
 					}
 				}
@@ -536,10 +537,10 @@
 				if (!error) {
 					this.dataInfo.users = obj.members
 				}
-				setTimeout(()=>{
+				setTimeout(() => {
 					var memberlist = document.getElementById('member-list')
-					memberlist.style.width = memberlist.children.length * 28 +"px"
-				},200)
+					memberlist.style.width = memberlist.children.length * 28 + "px"
+				}, 200)
 			},
 			/* 写消息 */
 			writeMessage() {
@@ -572,10 +573,19 @@
 					items: this.id,
 					order_type: "18"
 				}
-				createOrder(params).then(response => {
-					this.loadingshow = false
-					this.createOrderResult(response)
-				})
+				if (this.dataInfo.member_price == '0.0' || this.dataInfo.member_price == '0' || this.dataInfo.member_price<0 && this.dataInfo.price ==0) {
+					payFree(params).then(res => {
+						this.loadingshow = false;
+						message("恭喜您，领取成功", "提示", () => {
+							location.href = "/m/lives.html";
+						});
+					});
+				}else{
+					createOrder(params).then(response => {
+						this.loadingshow = false
+						this.createOrderResult(response)
+					})
+				}
 			},
 			createOrderResult(res) {
 				if (res.status != 0) {
@@ -609,8 +619,8 @@
 			},
 			onItemClick(i) {
 				this.index = i
-				if (i==1&&this.firstInGood=='') {
-					this.firstInGood=1
+				if (i == 1 && this.firstInGood == '') {
+					this.firstInGood = 1
 					this.setGoodRoomScroll()
 				}
 			},
