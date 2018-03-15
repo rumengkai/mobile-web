@@ -287,13 +287,13 @@ export default {
 		from(){
 			let f = Math.random()*10;
 			if(f>9.5){
-				return "87854572"
+				return "0"
 			}else if(f>7){
-				return "92750265"
+				return "0"
 			}else if(f>6){
-				return "724139106"
+				return "0"
 			}else if(f>5){
-				return "724113180"
+				return "0"
 			}else{
 				return 0
 			}
