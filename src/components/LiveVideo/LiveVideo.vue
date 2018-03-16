@@ -154,7 +154,7 @@
 					.wrap {
 						// display: flex;
 						float: left;
-						margin-left: -4px;
+						margin-right: -5px;
 					}
 					img {
 						overflow: hidden;
