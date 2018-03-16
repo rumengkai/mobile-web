@@ -141,7 +141,8 @@
 			}
 			.member-list {
 				margin-left: 30px;
-				li{
+				ul{
+					width: 4rem;
 					padding: 2px 5px;
 					box-sizing: border-box;
 					margin-left: -20px;
@@ -150,6 +151,8 @@
 					// overflow-x: scroll;
 					.wrap {
 						// display: flex;
+						float: left;
+						margin-left: -4px;
 					}
 					img {
 						overflow: hidden;
