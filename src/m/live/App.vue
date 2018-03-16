@@ -219,7 +219,7 @@
 						if (res.status === 0) {
 							/* 设置分享 */
 							if (isWeiXin()) {
-								shareData(res.name, res.share_url, res.thumb, res.share_info)
+								shareData(res.name, res.share_url, res.cover, res.user.name + "邀请您观看" + res.name)
 								weixinShare();
 							}
 							this.showContent = true
