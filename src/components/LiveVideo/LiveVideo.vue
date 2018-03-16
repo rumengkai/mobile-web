@@ -5,10 +5,12 @@
 				<img class="img-photo" :src="data.teacher.photo" alt="">
 				<span class="name ell">{{data.teacher.name}}</span>
 			</div>
-			<div class="member-list" v-for="(item,index) in data.users" :key="index">
-				<div class="wrap" id="member-list">
-					<img :src="item.avatar" alt="">
-				</div>
+			<div class="member-list" >
+				<ul>
+					<div class="wrap" id="member-list" v-for="(item,index) in data.users" :key="index">
+						<img :src="item.avatar" alt="">
+					</div>
+				</ul>
 			</div>
 		</div>
 		<div v-if="data.state==4&&!data.need_pay">
@@ -138,22 +140,30 @@
 				}
 			}
 			.member-list {
-				padding: 2px 10px;
-				box-sizing: border-box;
-				margin-left: 20px;
-				margin-right: 20px;
-				text-align: left;
-				overflow-x: scroll;
-				.wrap {
-					display: flex;
-				}
-				img {
+				margin-left: 30px;
+				ul{
+					width: 4rem;
+					padding: 2px 5px;
+					box-sizing: border-box;
+					margin-left: -20px;
 					overflow: hidden;
-					display: block;
-					width: .6rem;
-					height: .6rem;
-					border-radius: .5rem;
-					margin-left: -.08rem;
+					height: 100%;
+					// margin-right: 20px;
+					text-align: left;
+					// overflow-x: scroll;
+					.wrap {
+						// display: flex;
+						float: left;
+						margin-right: -5px;
+					}
+					img {
+						overflow: hidden;
+						display: block;
+						width: .6rem;
+						height: .6rem;
+						border-radius: .5rem;
+						margin-left: -.08rem;
+					}
 				}
 			}
 		}

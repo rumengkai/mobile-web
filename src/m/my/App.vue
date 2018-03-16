@@ -74,8 +74,8 @@
 				<cell title="个人信息" is-link @click.native="toSkip('profile.html')"><img slot="icon" width="20" style="display:block;margin-right:5px;" src="https://static1.kofuf.com/1520938793679.png" alt=""></cell>
 			</group>
 			<group class="group g1">
-				<cell title="关于我们" is-link @click.native="toSkip('about.html')"><img slot="icon" width="20" style="display:block;margin-right:5px;" src="" alt=""></cell>
-				<cell title="下载APP" is-link @click.native="toApp()"><img slot="icon" width="20" style="display:block;margin-right:5px;" src="" alt=""></cell>
+				<cell title="关于我们" is-link @click.native="toSkip('about.html')"><img slot="icon" width="20" style="display:block;margin-right:5px;" src="https://static2.kofuf.com/1521173726818.png" alt=""></cell>
+				<cell title="下载APP" is-link @click.native="toApp()"><img slot="icon" width="20" style="display:block;margin-right:5px;" src="https://static1.kofuf.com/1521173732969.png" alt=""></cell>
 			</group>
 		</div>
 		<TabBar active="my"></TabBar>
