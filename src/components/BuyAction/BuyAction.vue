@@ -119,6 +119,14 @@ export default {
 		shareFrom: {
 			type: String,
       default: ""
+		},
+		sourceFrom: {
+			type: String,
+      default: ""
+		},
+		isCard: {
+			type: String,
+      default: ""
 		}
   },
   data() {
@@ -216,8 +224,12 @@ export default {
 					params.share_from = f
 				}else if ( this.shareFrom && this.shareFrom != 'undefined') {
 					params.share_from = this.shareFrom
-				}else{
-					params.share_from = this.shareFrom
+				}
+				if (this.sourceFrom && this.sourceFrom != 'undefined') {
+					params.source_from = this.sourceFrom
+				}
+				if (this.isCard && this.isCard != 'undefined') {
+					params.is_card = this.isCard
 				}
         createOrder(params).then(response => {
           this.loadingshow = false;

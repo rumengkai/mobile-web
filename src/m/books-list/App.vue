@@ -11,7 +11,7 @@
       <book-list :dataList="dataInfo.items"></book-list>
     </div>
 		<!-- 支付行为 -->
-		<buy-action v-if="contentshow&&!dataInfo.followed" ref="buy_action" :shareFrom="shareFrom" :name="dataInfo.name" :buyParams="buy_params" :coupons="dataInfo.coupons" :invalidCoupons="dataInfo.invalid_coupons" :composite="dataInfo.composite" :backurl="backurl" v-on:errorFun="errorFun"> </buy-action>
+		<buy-action v-if="contentshow&&!dataInfo.followed" ref="buy_action" :shareFrom="shareFrom" :isCard="isCard" :shareFrom="shareFrom" :name="dataInfo.name" :buyParams="buy_params" :coupons="dataInfo.coupons" :invalidCoupons="dataInfo.invalid_coupons" :composite="dataInfo.composite" :backurl="backurl" v-on:errorFun="errorFun"> </buy-action>
     <footer v-if="contentshow&&!dataInfo.followed">
       <div class="price">
         <span>打包价格： <span> ¥{{dataInfo.channel_price}}</span></span>
@@ -54,6 +54,8 @@
       return {
 				id:0,
 				shareFrom: querystring.parse().share_from,
+				isCard: querystring.parse().is_card,
+				sourceFrom: querystring.parse().source_from,
         loadingshow: true,
         loadtext: '加载中...',
         contentshow:false,
