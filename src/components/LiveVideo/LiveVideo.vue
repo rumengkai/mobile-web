@@ -13,7 +13,7 @@
 		</div>
 		<div v-if="data.state==4&&!data.need_pay">
 			<video id="example-video" width=960 height=340 class="video-js vjs-default-skin" controls>
-				<source :src="url" type="application/x-mpegURL">
+				<source :src="live_url" type="application/x-mpegURL">
 			</video>
 		</div>
 		<div v-else-if="data.state==3&&data.announce_url!=''&&!data.need_pay">
@@ -48,7 +48,7 @@
 		},
 		data() {
 			return {
-				url:'http://live.kofuf.com/kofuf/live2.m3u8?auth_key=1701095509-0-0-231193819aac06648e3cb850867b45c4'
+				live_url:this.data.live_url
 			}
 		},
 		components: {},
@@ -61,11 +61,10 @@
 				}
 			}, 1000)
 			if (this.data.state == 4 && !this.data.need_pay) {
-
 				var player = videojs('example-video');
 				player.ready(function () {
 					player.src({
-						src: "http://live.kofuf.com/kofuf/live2.m3u8?auth_key=1701095509-0-0-231193819aac06648e3cb850867b45c4",
+						src: this.data.live_url,
 						type: 'application/x-mpegURL'
 					});
 				})
