@@ -549,7 +549,7 @@
 				if (isiOS()) {
 					setTimeout(()=>{
 						// if (!this.isElementInViewport(_self.$refs.replyInput)) {
-							document.documentElement = 100 + document.documentElement.scrollTop
+							document.documentElement.scrollTop = 100 + document.documentElement.scrollTop
 						// }
 					},100)
 					// document.activeElement.scrollIntoViewIfNeeded();
