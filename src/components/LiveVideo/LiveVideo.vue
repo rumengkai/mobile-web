@@ -146,6 +146,8 @@
 					padding: 2px 5px;
 					box-sizing: border-box;
 					margin-left: -20px;
+					overflow: hidden;
+					height: 100%;
 					// margin-right: 20px;
 					text-align: left;
 					// overflow-x: scroll;
