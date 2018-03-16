@@ -6,11 +6,11 @@
 				<span class="name ell">{{data.teacher.name}}</span>
 			</div>
 			<div class="member-list" >
-				<li>
+				<ul>
 					<div class="wrap" id="member-list" v-for="(item,index) in data.users" :key="index">
 						<img :src="item.avatar" alt="">
 					</div>
-				</li>
+				</ul>
 			</div>
 		</div>
 		<div v-if="data.state==4&&!data.need_pay">
