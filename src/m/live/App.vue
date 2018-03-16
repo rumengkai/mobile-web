@@ -47,8 +47,8 @@
 						</div>
 					</div>
 				</div>
-				<div class="massage-input">
-					<textarea @focus="writeMessage" @blur="viewDefault" ref="replyInput" rows="1" cols="50" v-model="massageValue" placeholder="发个弹幕 ～"></textarea>
+				<div class="massage-input" ref="replyInput">
+					<textarea @focus="writeMessage" @blur="viewDefault" rows="1" cols="50" v-model="massageValue" placeholder="发个弹幕 ～"></textarea>
 					<div class="send-btn" @click="sendMessage">发送</div>
 				</div>
 				<div class="msg-tip" @click="setChatRoomScroll('1')" v-show="showNewMsg">收到1条新消息</div>
@@ -547,11 +547,16 @@
 			writeMessage() {
 				console.log('准备写消息');
 				if (isiOS()) {
-					document.activeElement.scrollIntoViewIfNeeded();
+					setTimeout(()=>{
+						// if (!this.isElementInViewport(_self.$refs.replyInput)) {
+							document.documentElement = 100 + document.documentElement.scrollTop
+						// }
+					},100)
+					// document.activeElement.scrollIntoViewIfNeeded();
 					// toast('弹起键盘')
-					 this.inputTimer = setInterval( () => {
-								this.$refs.replyInput.scrollIntoView(false);
-						},100);
+					//  this.inputTimer = setInterval( () => {
+					// 			this.$refs.replyInput.scrollIntoView(false);
+					// 	},100);
 				}
 			},
 			viewDefault(){
