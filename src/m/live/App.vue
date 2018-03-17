@@ -48,7 +48,7 @@
 					</div>
 				</div>
 				<div class="massage-input" ref="replyInput">
-					<textarea @focus="writeMessage" @blur="viewDefault" rows="1" cols="50" v-model="massageValue" placeholder="发个弹幕 ～"></textarea>
+					<textarea @focus="writeMessage" @click="writeMessage" @blur="viewDefault" rows="1" cols="50" v-model="massageValue" placeholder="发个弹幕 ～"></textarea>
 					<div class="send-btn" @click="sendMessage">发送</div>
 				</div>
 				<div class="msg-tip" @click="setChatRoomScroll('1')" v-show="showNewMsg">收到1条新消息</div>
