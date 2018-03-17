@@ -35,7 +35,9 @@ function onBridgeReady(data,success,self){
       // alert(JSON.stringify(res))
       console.log(res);
       if(res.err_msg == "get_brand_wcpay_request:ok" ) {
-        success(data);
+				setTimeout(()=>{
+					success(data);
+				},1000)
       }else if(res.err_msg == "get_brand_wcpay_request:fail" ){
         self.disable=true;
         self.$vux.alert.show({
