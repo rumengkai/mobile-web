@@ -192,7 +192,7 @@
       if(isWeiXin()){
         //授权
         var id = this.$geturlpara.getUrlKey("id");
-        getAuth(cookie,querystring,"channel",id);
+        getAuth(cookie,querystring);
       }
     },
     created () {

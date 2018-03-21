@@ -96,7 +96,7 @@
 			this.buy_params.buy_id=this.id;
       if(isWeiXin()){
         var path=location.pathname.replace('/m/','')
-        getAuth(cookie,querystring,path+"?id="+this.id)
+        getAuth(cookie,querystring,path+"?id="+this.id+"&source_from="+this.sourceFrom+"&is_card="+this.isCard)
       }
       this.fetchData();
       setTimeout(()=>{
