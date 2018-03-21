@@ -164,15 +164,7 @@
         button: document.querySelector('a#btnOpenApp'),
         autoLaunchApp : false,
       });
-      // 埋点统计
-      let params={
-        id:this.id,
-        action:'item_detail',
-        end_pos:''
-      }
-      logs(params).then(response => {
-        this.loadingshow = false
-      })
+      
     },
     methods: {
       openApp(){
@@ -212,11 +204,20 @@
             this.showComment=this.articles.need_comments;
             window.shareData={
               title: this.articles.name,
-              link: this.articles.share_url?this.articles.share_url:HOSTM+'/m/detail.html?id='+this.id+'',
+              link: this.articles.share_url?this.articles.share_url:HOSTM+'/m/detail.html?id='+this.id+'&share_from='+this.shareFrom,
               imgUrl: this.articles.large_thumb,//||this.articles.screenshots + '?imageView2/1/w/300/h/300/q/100|imageslim',
               desc: this.articles.share
             }
-            weixinShare(Vue);
+						weixinShare(Vue);
+						// 埋点统计
+						let params={
+							id:this.id,
+							action:'item_detail',
+							end_pos:''
+						}
+						logs(params).then(response => {
+							this.loadingshow = false
+						})
           }
         }, (err)=>{
           this.loadingshow=false;
