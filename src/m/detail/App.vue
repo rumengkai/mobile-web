@@ -153,6 +153,7 @@
     created () {
       var id = this.$geturlpara.getUrlKey("id");
       if(isWeiXin()){
+				getAuth(cookie,querystring)
       }
       this.id=id;
       this.fetchData(id);
@@ -204,7 +205,7 @@
             this.showComment=this.articles.need_comments;
             window.shareData={
               title: this.articles.name,
-              link: this.articles.share_url?this.articles.share_url:HOSTM+'/m/detail.html?id='+this.id+'&share_from='+this.shareFrom,
+              link: this.articles.share_url?this.articles.share_url:HOSTM+'/m/detail.html?id='+this.id,
               imgUrl: this.articles.large_thumb,//||this.articles.screenshots + '?imageView2/1/w/300/h/300/q/100|imageslim',
               desc: this.articles.share
             }

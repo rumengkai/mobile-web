@@ -130,7 +130,7 @@
 			errorFun(){
         localStorage.clear();
         clearcookie(cookie);
-        getAuth(cookie, querystring, "channel",this.id);
+        getAuth(cookie, querystring, path+"?id="+this.id+"&source_from="+this.sourceFrom+"&is_card="+this.isCard);
       },
       // buy(){
       //   this.loadingshow=true;
