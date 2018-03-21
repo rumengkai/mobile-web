@@ -82,6 +82,11 @@ FastClick.attach(document.body)
 //微信授权地址
 window.getAuthLink=function (params){
 	//type:item_(id),channel_(id)
+	/* 转译params */
+	params = params.replace(/\#/g, '%23');
+	params = params.replace(/\?/g, '%3F');
+	params = params.replace(/\&/g, '%26');
+	params = params.replace(/\=/g, '%3D');
 	return "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appid+"&redirect_uri="+HOSTA+"%2Fapi%2Fsession%2Fauth_weixin&response_type=code&scope=snsapi_userinfo&state="+params+"#wechat_redirect"
 }
 //微信登陆授权
