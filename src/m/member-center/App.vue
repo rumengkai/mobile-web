@@ -40,7 +40,7 @@
                 </div>
                 <p>
                   <span class="price" v-if="!item.followed">已订阅</span>
-                  <span class="price" v-if="item.followed">¥{{item.channel_price}}</span><s class="proprice" v-if="item.followed">¥{{item.price}}</s>
+                  <span class="price" v-if="item.followed">¥{{item.channel_price>=0?item.channel_price:item.price}}</span><s class="proprice" v-if="item.followed">¥{{item.price}}</s>
                 </p>
               </li>
             </ul>
