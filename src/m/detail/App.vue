@@ -95,7 +95,7 @@
   import AppDownload from "components/AppDownload/AppDownload"
   import Failed from "components/Failed/Failed"
   import Vue from 'vue'
-	import {Loading,LoadMore,querystring} from 'vux'
+	import {Loading,LoadMore,querystring,cookie} from 'vux'
 	import { getDetail } from "src/api/detail"
 	import {
     toast
