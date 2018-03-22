@@ -19,8 +19,10 @@
 			</video>
 		</div>
 		<div v-else-if="data.state==3&&data.announce_url!=''&&!data.need_pay">
-			<div class="prism-player" id="J_prismPlayer_announce" style=""></div>
 			<video class="cover" :src="data.announce_url"></video>
+		</div>
+		<div v-else-if="data.state==6&&data.replay_url!=''&&!data.need_pay">
+			<video class="cover" :src="data.replay_url"></video>
 		</div>
 		<div v-else>
 			<img class="cover" :src="data.cover" alt="">
@@ -217,5 +219,8 @@
 			max-height: 4.2rem !important;
 			overflow: hidden;
 		}
+	}
+	video{
+		width: 100%;
 	}
 </style>
