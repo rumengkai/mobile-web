@@ -173,11 +173,11 @@
       },
       //获取数据
       fetchData(id){
+				document.title = "加载中。。。";
         getDetail({id:id,share_from:this.shareFrom?this.shareFrom:""}).then(res=>{
           this.fetchCommentData(id);
           this.loadingshow=false;
           this.articles=res;
-          document.title = this.articles.name;
           this.open_channel=!!this.articles.from_channel;
           //请求评论
           if(this.articles.status!=0){
@@ -200,6 +200,7 @@
 							}
             }
           }else{
+						document.title = this.articles.name;
             this.showContent=true;
             //是否展示评论
             this.showComment=this.articles.need_comments;
