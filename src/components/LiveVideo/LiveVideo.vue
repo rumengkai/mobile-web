@@ -222,5 +222,6 @@
 	}
 	video{
 		width: 100%;
+		background: #000;
 	}
 </style>

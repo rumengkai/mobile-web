@@ -10,9 +10,13 @@
 				<div v-html="dataInfo.content"></div>
 			</div>
 			<!-- 聊天室区tab -->
-			<tab v-show="!dataInfo.need_pay">
+			<tab v-show="!dataInfo.need_pay&&dataInfo.state!=6">
 				<tab-item selected @on-item-click="onItemClick">交流</tab-item>
 				<tab-item @on-item-click="onItemClick">精华</tab-item>
+			</tab>
+			<tab v-show="!dataInfo.need_pay&&dataInfo.state==6">
+				<tab-item selected @on-item-click="onItemClick">精华</tab-item>
+				<tab-item @on-item-click="onItemClick">交流</tab-item>
 			</tab>
 			<!-- 聊天室区 -->
 			<div class="chat-room room" v-show="index==0&&!dataInfo.need_pay" ref="chatRoom">
