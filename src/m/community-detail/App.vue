@@ -99,85 +99,85 @@
       shareData("动态",location.href)
       weixinShare();
       this.id = id
-      this.showContent = true
-      this.userInfo = {
-        items: [{
-          id: 1,
-          content: '我我我哦我哦我是基础年级市场部技术背刺记事本出厂价我我我哦我哦我是基础年级市场部技术背刺记事本出厂价',
-          user: {
-            id: 2,
-            photo: 'http://image.51xy8.com/1496311047717.jpg',
-            level_icon: 'http://image.51xy8.com/1496311047717.jpg',
-            time: 1523491200000,
-            name: '地位被保温饭盒地位'
-          }
-        }]
-      }
-      this.dataQuery = [
-        {image: 'https://static1.kofuf.com/1520932798089.png'},
-        {image: 'https://static1.kofuf.com/1520932798089.png'},
-        {image: 'https://static1.kofuf.com/1520932798089.png'},
-        {image: 'https://static1.kofuf.com/1520932798089.png'},
-        {image: 'https://static1.kofuf.com/1520932798089.png'},
-        {image: 'https://static1.kofuf.com/1520932798089.png'},
-        {image: 'https://static1.kofuf.com/1520932798089.png'},
-        {image: 'https://static1.kofuf.com/1520932798089.png'}
-      ]
-      let dataInfo = {
-        items: [{
-          id: 1,
-          content: '我我我哦我哦我是基础年级市场部技术背刺记事本出厂价我我我哦我哦我是基础年级市场部技术背刺记事本出厂价',
-          user: {
-            id: 0,
-            photo: 'http://image.51xy8.com/1496311047717.jpg',
-            level_icon: 'http://image.51xy8.com/1496311047717.jpg',
-            time: 1533300,
-            name: '地位被保温饭盒地位',
-            can_delete: true,
-            count: 30
-          }
-        },{
-          id: 1,
-          content: '我我我哦我哦我是基础年级市场部技术背刺记事本出厂价我我我哦我哦我是基础年级市场部技术背刺记事本出厂价',
-          user: {
-            id: 1,
-            photo: 'http://image.51xy8.com/1496311047717.jpg',
-            level_icon: 'http://image.51xy8.com/1496311047717.jpg',
-            time: 1533300,
-            name: '地位被保温饭盒地位',
-            can_delete: true,
-            count: 40
-          }
-        },{
-          id: 1,
-          content: '我我我哦我哦我是基础年级市场部技术背刺记事本出厂价我我我哦我哦我是基础年级市场部技术背刺记事本出厂价',
-          user: {
-            id: 2,
-            photo: 'http://image.51xy8.com/1496311047717.jpg',
-            level_icon: 'http://image.51xy8.com/1496311047717.jpg',
-            time: 1533300,
-            name: '地位被保温饭盒地位',
-            can_delete: true,
-            count: 20
-          }
-        },{
-          id: 1,
-          content: '我我我哦我哦我是基础年级市场部技术背刺记事本出厂价我我我哦我哦我是基础年级市场部技术背刺记事本出厂价',
-          user: {
-            id: 3,
-            photo: 'http://image.51xy8.com/1496311047717.jpg',
-            level_icon: 'http://image.51xy8.com/1496311047717.jpg',
-            time: 1533300,
-            name: '地位被保温饭盒地位',
-            can_delete: true,
-            count: 80
-          }
-        }]
-      }
-      this.dataInfoList = dataInfo.items
-      this.dataInfo = {items: dataInfo.items.slice(0,2)}
-      console.log(this.dataInfo)
-      // this.fetchData()
+      // this.showContent = true
+      // this.userInfo = {
+      //   items: [{
+      //     id: 1,
+      //     content: '我我我哦我哦我是基础年级市场部技术背刺记事本出厂价我我我哦我哦我是基础年级市场部技术背刺记事本出厂价',
+      //     user: {
+      //       id: 2,
+      //       photo: 'http://image.51xy8.com/1496311047717.jpg',
+      //       level_icon: 'http://image.51xy8.com/1496311047717.jpg',
+      //       time: 1523491200000,
+      //       name: '地位被保温饭盒地位'
+      //     }
+      //   }]
+      // }
+      // this.dataQuery = [
+      //   {image: 'https://static1.kofuf.com/1520932798089.png'},
+      //   {image: 'https://static1.kofuf.com/1520932798089.png'},
+      //   {image: 'https://static1.kofuf.com/1520932798089.png'},
+      //   {image: 'https://static1.kofuf.com/1520932798089.png'},
+      //   {image: 'https://static1.kofuf.com/1520932798089.png'},
+      //   {image: 'https://static1.kofuf.com/1520932798089.png'},
+      //   {image: 'https://static1.kofuf.com/1520932798089.png'},
+      //   {image: 'https://static1.kofuf.com/1520932798089.png'}
+      // ]
+      // let dataInfo = {
+      //   items: [{
+      //     id: 1,
+      //     content: '我我我哦我哦我是基础年级市场部技术背刺记事本出厂价我我我哦我哦我是基础年级市场部技术背刺记事本出厂价',
+      //     user: {
+      //       id: 0,
+      //       photo: 'http://image.51xy8.com/1496311047717.jpg',
+      //       level_icon: 'http://image.51xy8.com/1496311047717.jpg',
+      //       time: 1533300,
+      //       name: '地位被保温饭盒地位',
+      //       can_delete: true,
+      //       count: 30
+      //     }
+      //   },{
+      //     id: 1,
+      //     content: '我我我哦我哦我是基础年级市场部技术背刺记事本出厂价我我我哦我哦我是基础年级市场部技术背刺记事本出厂价',
+      //     user: {
+      //       id: 1,
+      //       photo: 'http://image.51xy8.com/1496311047717.jpg',
+      //       level_icon: 'http://image.51xy8.com/1496311047717.jpg',
+      //       time: 1533300,
+      //       name: '地位被保温饭盒地位',
+      //       can_delete: true,
+      //       count: 40
+      //     }
+      //   },{
+      //     id: 1,
+      //     content: '我我我哦我哦我是基础年级市场部技术背刺记事本出厂价我我我哦我哦我是基础年级市场部技术背刺记事本出厂价',
+      //     user: {
+      //       id: 2,
+      //       photo: 'http://image.51xy8.com/1496311047717.jpg',
+      //       level_icon: 'http://image.51xy8.com/1496311047717.jpg',
+      //       time: 1533300,
+      //       name: '地位被保温饭盒地位',
+      //       can_delete: true,
+      //       count: 20
+      //     }
+      //   },{
+      //     id: 1,
+      //     content: '我我我哦我哦我是基础年级市场部技术背刺记事本出厂价我我我哦我哦我是基础年级市场部技术背刺记事本出厂价',
+      //     user: {
+      //       id: 3,
+      //       photo: 'http://image.51xy8.com/1496311047717.jpg',
+      //       level_icon: 'http://image.51xy8.com/1496311047717.jpg',
+      //       time: 1533300,
+      //       name: '地位被保温饭盒地位',
+      //       can_delete: true,
+      //       count: 80
+      //     }
+      //   }]
+      // }
+      // this.dataInfoList = dataInfo.items
+      // this.dataInfo = {items: dataInfo.items.slice(0,2)}
+      // console.log(this.dataInfo)
+      this.fetchData()
     },
     mounted () {
       window.addEventListener('scroll', this.handleScrollTop)
