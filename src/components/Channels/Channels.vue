@@ -23,7 +23,7 @@
               <span class="oldprice">
                 <span v-if='item.suites'>¥{{item.suites[0].price}}</span>
                 <span v-if='!item.suites'>¥{{item.price}}</span>
-                <span>/{{item.price_unit}}</span>
+                <span v-if="type!='small'">/{{item.price_unit}}</span>
               </span>
             </span>
           </p>
