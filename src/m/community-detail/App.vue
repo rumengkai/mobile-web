@@ -177,9 +177,9 @@
       // this.dataInfoList = dataInfo.items
       // this.dataInfo = {items: dataInfo.items.slice(0,2)}
       // console.log(this.dataInfo)
-      this.fetchData()
     },
     mounted () {
+      this.fetchData();
       window.addEventListener('scroll', this.handleScrollTop)
       this.getResizeWidth();
       this.toApp();
@@ -218,6 +218,9 @@
               }else{
                 this.dataInfo = {items: this.dataInfoList}
               }
+              console.log(this.userInfo)
+              console.log(this.dataInfo)
+              console.log(this.dataQuery)
             }
           } catch(error) {
             toast(error)

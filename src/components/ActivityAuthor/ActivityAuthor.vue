@@ -31,9 +31,6 @@
 
 <script>
   import Vue from 'vue'
-  import {
-    parseTime
-  } from '../../filters/index'
 	export default {
     name: 'activity-author',
 		props: {
