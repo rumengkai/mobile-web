@@ -1,7 +1,7 @@
 <template>
 	<div id="activity-author" class="activity-author">
-    <div class="author_content" v-bind:class="{'position-relative' : item.user.can_delete!=undefined}" v-for="item in dataInfo.items" v-bind:key="item.id">
-      <div v-bind:class="{'border-bottom' : item.user.can_delete!=undefined}">
+    <div class="author_content" v-bind:class="{'position-relative' : item.top!=undefined}" v-for="item in dataInfo.items" v-bind:key="item.id">
+      <div v-bind:class="{'border-bottom' : item.top!=undefined}">
         <div class="flex-start-between">
           <div class="left flex-start">
             <div class="left_1" @click="toAuthorIndex(item.user.id)">
@@ -9,19 +9,19 @@
               <img class="vip" :src="item.user.level_icon" alt="">
             </div>
             <div class="left_2">
-              <p class="name flex-start"><span class="ell" v-bind:class="{ 'user-name' : item.user.name.length>9 }" >{{item.user.name}}</span><span class="place-top">置顶</span></p>
-              <p class="time-number">{{item.user.time | parseTime('{m}/{d} {h}:{i}')}}</p>
+              <p class="name flex-start"><span class="ell" v-bind:class="{ 'user-name' : item.user.name.length>9 }" >{{item.user.name}}</span><span v-show="item.top" class="place-top">置顶</span></p>
+              <p class="time-number">{{item.time | parseTime('{m}/{d} {h}:{i}')}}</p>
             </div>
           </div>
-          <div v-if="item.user.can_delete != undefined" class="right flex-between">
-            <img @click="getDelete(item.user.id)" class="delete" src="https://static1.kofuf.com/1520577759131.png" alt="">
+          <div class="right flex-between">
+            <img @click="getDelete(item.user.id)" v-if="item.can_delete" class="delete" src="https://static1.kofuf.com/1520577759131.png" alt="">
             <img @click="getLiked(item.user.id)" v-if="item.liked" class="liked" src="https://static1.kofuf.com/1513910095553.png" alt="">
-            <img @click="getUnliked(item.user.id)" v-else class="unliked" src="https://static1.kofuf.com/1513910064052.png" alt="">
-            <div class="liked-number">{{item.user.count}}</div>
+            <img @click="getUnliked(item.user.id)" v-if="!item.liked"  class="unliked" src="https://static1.kofuf.com/1513910064052.png" alt="">
+            <div class="liked-number">{{item.like_count}}</div>
           </div>
         </div>
         <div class="activity-section">
-          <div v-if="item.user.can_delete == undefined" class="content dbell" style="-webkit-box-orient: vertical;" >{{item.content}}</div>
+          <div v-if="item.top==undefined" class="content dbell" style="-webkit-box-orient: vertical;" >{{item.content}}</div>
           <div v-else class="content">{{item.content}}</div>
         </div>
       </div>

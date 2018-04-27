@@ -199,11 +199,13 @@
               res.items.map((item) => {
                 item.content = stringBr(item.content)
               })
-              // 处理数据
-              res.user.time = res.last_time
               userItem = {
+                can_delete: res.can_delete,
                 id: res.id,
                 content: res.text,
+                like_count: res.like_count,
+                liked: res.liked,
+                time: res.time,
                 user: res.user
               }
               userList.push(userItem)
@@ -211,7 +213,11 @@
               this.dataQuery = res.images
               // 特殊处理
               this.dataInfoList = dataInfo.items
-              this.dataInfo = {items: dataInfo.items.slice(0,2)}
+              if(dataInfo.items.length>3){
+                this.dataInfo = {items: dataInfo.items.slice(0,2)}
+              }else{
+                this.dataInfo = {items: this.dataInfoList}
+              }
             }
           } catch(error) {
             toast(error)
