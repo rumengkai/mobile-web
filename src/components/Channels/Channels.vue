@@ -18,7 +18,8 @@
               <span v-if="type!='small'">/{{item.price_unit}}</span>
             </span>
             <span v-else class="ell">
-              <span class="price">{{item.text}}¥<span>{{item.channel_price}}</span>/<span>{{item.price_unit}}</span>
+              <span class="price">{{item.text}}¥<span>{{item.channel_price}}</span>
+							<span v-if="type!='small'">/{{item.price_unit}}</span>
               </span>
               <span class="oldprice">
                 <span v-if='item.suites'>¥{{item.suites[0].price}}</span>
