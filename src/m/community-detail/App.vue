@@ -87,18 +87,18 @@
       BackHome
     },
     beforeCreate(){
-      //授权
-      if(!isWeiXin()){
-        message("请关注'功夫财经'公众号")
-      } else {
-        getAuth(cookie,querystring)
-      }
     },
     created () {
       let id = this.$geturlpara.getUrlKey("id");
-      shareData("动态",location.href)
-      weixinShare();
       this.id = id
+      //授权
+      if(isWeiXin()){
+        getAuth(cookie,querystring)
+      } else {
+        message("请关注'功夫财经'公众号")
+      }
+      shareData("动态",location.href, '动态评论')
+      weixinShare();
     },
     mounted () {
       this.fetchData();
