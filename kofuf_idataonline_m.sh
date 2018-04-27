@@ -14,5 +14,5 @@ echo 'REMOVE BACKUPS'
 cp -r ${prodir}${name} ${prodir}backups/${date_dir}
 echo 'BACKUPS SUCCESS'
 rm -rf ${prodir}${name}/*
-cp -r ./dist/* ${prodir}${name}
+cp -r ./dist/m/* ${prodir}${name}
 echo 'UPDATE SUCCESS'
