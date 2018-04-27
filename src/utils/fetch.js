@@ -23,12 +23,16 @@ service.interceptors.request.use(config => {
 service.interceptors.response.use(
   response => {
     const res = response.data
-    if (res.status !== 0) {
+    if (res.status == 0) {
+			// 成功
+      return res
+    } else if(res.status == 4){
+			return res
+      // toast(res.error)
+			// return Promise.reject({'error':res})
+    } else {
       toast(res.error)
       return Promise.reject({'error':res})
-    } else {
-      // 成功
-      return res
     }
   },
   error => {

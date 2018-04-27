@@ -9,7 +9,7 @@
     </div>
     <ul id="comment" v-if="commentlist!=undefined">
       <li v-for="(item , index) in commentlist" class="vux-1px-b">
-        <img @click="toUserCenter(item)" :src="item.author.photo" alt="" onerror="this.src='http://m.51xy8.com/static/img/default.png'">
+        <img @click="toUserCenter(item)" :src="item.author.photo" alt="" onerror="this.src='https://m.kofuf.com/static/img/default.png'">
         <div class="comment-box">
           <p class="username">{{item.author.name}}<span class="top" v-if="item.top">置顶</span></p>
           <p class="date">{{item.postd|formatDate}}</p>

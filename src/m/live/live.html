@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=8">
+  <meta name="author" content="">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-control" content="no-cache">
+  <meta http-equiv="Cache" content="no-cache">
+  <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
+  <title> 直播 </title>
+  <link rel="shortcut icon" type="image/x-icon" href="https://m.kofuf.com/static/img/logo.png" media="screen">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+</head>
+<script>
+	var p = new RegExp("https");
+	if (p.test(window.location.href)) {
+		window.location.href = 'http://'+window.location.host+window.location.pathname+window.location.search
+	}
+</script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js" charset="utf-8"></script>
+<script src="http://apk.kofuf.com/NIM_Web_SDK_v4.7.3.js"></script>
+
+<link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet">
+
+<body>
+  <div id="live"></div>
+</body>
+</html>

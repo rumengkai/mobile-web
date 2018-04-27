@@ -8,7 +8,9 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var CleanPlugin = require('clean-webpack-plugin')//webpack插件，用于清除目录文件
 var glob = require('glob');
-var env = config.build.env
+
+var env = config.build[process.env.env_config+'Env']
+
 
 var webpackConfig = merge(baseWebpackConfig, {
   module: {

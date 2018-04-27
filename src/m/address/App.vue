@@ -1,13 +1,13 @@
 <template>
   <div id="address">
     <div class="content" v-if="showContent">
-      <group class="header" v-for="item in addressDate" @click.native="clickAddress(item)">
+      <group class="header" v-for="(item,index) in addressDate" @click.native="clickAddress(item)" :key="index">
         <cell :title="item.name" :value="item.phone" value-align="left">
         </cell>
         <cell title="收货地址：" value-align="left">{{item.addressName}}&nbsp;{{item.addressDetail}}
         </cell>
         <cell value-align="left" class="cz">
-          <check-icon :value="item.is_default" :dataItem="item" v-on:on-change="onCheck(item)">设为默认地址</check-icon>
+          <check-icon :value.sync="item.is_default" :dataItem="item" v-on:on-change="onCheck(item)">设为默认地址</check-icon>
           <span class="edit" @click.stop="edit(item)"><img src="./images/edit.png" alt="">编辑</span>
           <span class="del" @click.stop="del(item)"><img src="./images/delete.png" alt="">删除</span>
         </cell>
@@ -63,7 +63,8 @@
             "phone":"",
             "name":"",
             "is_default":false,
-            "uuid":""
+            "uuid":"",
+            "order_type":""
         },
         show:false,
         addressData:ChinaAddressV3Data,
@@ -82,7 +83,9 @@
       XTextarea,
     },
     created () {
-      this.reid=this.$geturlpara.getUrlKey("type");
+      this.reid=querystring.parse().id;
+      this.reurl=querystring.parse().type;
+      this.order_type=querystring.parse().order_type;
       if(isWeiXin()){
         getAuth(cookie,querystring);
       }
@@ -180,7 +183,7 @@
           "phone":"",
           "name":"",
           "is_default":false,
-          "uuid":""
+          "uuid":"",
         };
         this.editor=true;
       },
@@ -261,9 +264,13 @@
         })
       },
       clickAddress(data){
-        console.log(this.reid);
-        if (this.reid) {
-          window.location.href="/m/privilege-confirm.html?id="+this.reid;
+        if (this.reid&&this.reurl) {
+					if (this.reid=="mengqi") {
+						window.location.href="/mengqi/#/order/confirm?uuid="+data.uuid;
+					}else{
+						this.onCheck(data);
+						window.location.href="/m/"+this.reurl+".html?id="+this.reid+"&type="+this.order_type+"&uuid="+data.uuid;
+					}
         }
       }
     }

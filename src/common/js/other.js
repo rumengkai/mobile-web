@@ -13,7 +13,7 @@ getAjax() {
     success: function (data) {
     }
   });
-},
+}
 
 
 

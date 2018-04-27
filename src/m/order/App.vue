@@ -8,7 +8,7 @@
         <tab-item :selected="index=== 3" @on-item-click="onItemClick">待收货</tab-item>
       </tab>
       <div class="ht"></div>
-      <dev v-for="(item, i) in dataInfo">
+      <dev v-for="(item, i) in dataInfo" :key="i">
         <div v-if="i==index">
           <div v-if="item.length!=0">
             <OrderList :datalist="item" v-on:updateDate="onUpdate"></OrderList>

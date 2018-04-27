@@ -7,11 +7,11 @@
         </div>
         <div class="right">
           <p class="name"> {{item.name}}</p>
-          <p class="brief" v-html="stringBr(item.brief)"></p>
+          <p class="brief ell-2" v-html="stringBr(item.brief)"></p>
           <div class="bookname">
             <p v-for="(item2,index) in item.items" :key="index">
               <img class="img-1" src="./images/book.png" alt="">
-              <span>{{item2.name}}</span>
+              <span class="ell">{{item2.name}}</span>
               <img v-if="item2.is_new" class="img-2" src="./images/book-new.png" alt="">
             </p>
           </div>
@@ -74,7 +74,7 @@
         }
       }
       .right {
-        max-width: 5rem;
+        max-width: 6rem;
         margin-left: .3rem;
       }
       .name {

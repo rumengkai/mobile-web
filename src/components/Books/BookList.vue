@@ -1,12 +1,12 @@
 <template>
   <div id="book-list">
     <group>
-      <li v-for="(item,index) in dataList" @click="todetail(item)" key="index" v-bind:class="{'vux-1px-b':(dataList.lenght-1)!=index}">
+      <li v-for="(item,index) in dataList" @click="todetail(item)" :key="index" v-bind:class="{'vux-1px-b':(dataList.lenght-1)!=index}">
         <img :src="item.thumb" alt="">
         <div class="right">
-          <p class="name ell"> {{item.name}}</p>
+          <p class="name ell-2"> {{item.name}}</p>
           <p class="author-name"> {{item.author_name}}</p>
-          <p class="brief">{{item.rate}}<span v-if="item.rate.length>19*3">...</span></p>
+          <p class="brief ell-3">{{item.rate}}</p>
         </div>
       </li>
     </group>
@@ -32,9 +32,13 @@
     mounted(){
     },
     methods: {
-      todetail(item){
-        if (item.finished) {
-          window.location.href="/m/book-detail.html?id="+item.id;
+      todetail(data){
+        if (data.finished) {
+          if (data.article_id&&data.article_id>0) {
+            window.location.href="/m/detail.html?id="+data.article_id;
+          }else{
+            window.location.href="/m/book-detail.html?id="+data.id;
+          }
         }else{
           toast("请完结后查看")
         }

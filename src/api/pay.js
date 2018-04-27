@@ -15,3 +15,12 @@ export function weixinCheck(params) {
     params
   })
 }
+
+/* 免费领取 */
+export function payFree(params) {
+  return fetch({
+    url: '/pay/orders/pay_free',
+    method: 'post',
+    params
+  })
+}

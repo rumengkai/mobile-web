@@ -5,18 +5,18 @@
         <div class="head-img">
           <img :src="personinfo.photo" alt="头像">
         </div>
-        <p class="p-0">{{personinfo.name}}</p>
+        <p class="p-0">{{personinfo.name?personinfo.name:"功夫财经"}}</p>
         <p class="p-1">赠送您一张礼品卡</p>
         <p class="p-2">您可兑换以下内容</p>
       </div>
       <div class="channel vux-1px-t">
         <div class="channels-item" @click="toChannel(channelinfo.id)">
-          <div class="headimg" v-bind:class="[{ 'headimg-1': dataInfo.type==1},{'headimg-2': dataInfo.type==2},{'headimg-2': dataInfo.type==3 }]">
-            <img :src="channelinfo.thumb" alt="" onerror="this.src='http://m.51xy8.com/static/img/default.png'">
+          <div class="headimg" v-bind:class="[{ 'headimg-1': dataInfo.type==1},{'headimg-2': dataInfo.type==2},{'headimg-2': dataInfo.type==3 },{'headimg-1': dataInfo.type==11 }]">
+            <img :src="channelinfo.thumb" alt="" onerror="this.src='https://m.kofuf.com/static/img/default.png'">
           </div>
           <div class="channels-info">
             <p class="name">{{channelinfo.name}}</p>
-            <p class="author_name"><span>{{channelinfo.author_name}}</span><span>{{channelinfo.author_field}}</span></p>
+            <p class="author_name ell-2"><span>{{channelinfo.author_name}}</span><span>{{channelinfo.author_field}}</span></p>
             <p class="brief ell">{{channelinfo.brief}}</p>
             <p class="price-co">
               <span class="price">¥ <span>{{channelinfo.price}}</span>

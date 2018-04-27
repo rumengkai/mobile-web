@@ -7,7 +7,7 @@
           <img :src="dataInfo.thumb" alt="">
         </div>
         <div class="right">
-          <p class="ell">{{dataInfo.name}}</p>
+          <p class="ell-2">{{dataInfo.name}}</p>
           <p class="author_name">{{dataInfo.author_name}}</p>
           <p class="wj" v-if="dataInfo.finished">未完结</p>
           <p class="wj" v-else>已完结</p>
@@ -57,8 +57,8 @@
 <script>
   import 'common/js/config.js';
   import { getBooksDetail , addShelf , delShelf} from 'src/api/books';
-  import { createOrder , weixinCheck } from 'src/api/pay';
-  import { toPay } from 'common/js/pay.js';
+  import { payFree , createOrder , weixinCheck } from 'src/api/pay';
+	import { toPay } from 'common/js/pay.js';
   import { audioFormat } from 'src/utils/';
   import {
     stringBr , toast , shareData ,message
@@ -123,16 +123,25 @@
         }
       },
       buy(){
-        this.loadingshow=true;
+				this.loadingshow=true;
         var params={
           type: config()['paytype'],
           items: this.id,
           order_type:"11"
-        }
-        createOrder(params).then(response => {
-          this.loadingshow = false
-          this.createOrderResult(response)
-        })
+				}
+				if (this.dataInfo.channel_price == '0.0' || this.dataInfo.channel_price == '0') {
+					payFree(params).then(res => {
+						this.loadingshow = false;
+						message("恭喜您，领取成功", "提示", () => {
+							location.href = "/m/books.html";
+						});
+					});
+				}else{
+					createOrder(params).then(response => {
+						this.loadingshow = false
+						this.createOrderResult(response)
+					})
+				}
       },
       createOrderResult(res){
         if (res.status!=0) {
@@ -149,15 +158,17 @@
         }
       },
       callback(data){
-        weixinCheck({id:data.id}).then(response => {
-          this.loadingshow = false
-          if (response.status!=0) {
-            this.message('服务器维护中，您的订单已支付成功，请勿重复支付。如有疑问请联系客服：400-966-7718')
-          }else{
-            this.message('您可在书架查看已拥有的书籍','恭喜您获得一本有声书',()=>{location.href="/m/home.html";})
+        weixinCheck({ id: data.id }).then(response => {
+          this.loadingshow = false;
+          if (response.status != 0) {
+            message("服务器维护中，您的订单已支付成功，请勿重复支付。如有疑问请联系客服：400-966-7718");
+          } else {
+            toast("购买成功");
+            setTimeout(() => {
+              location.href="/m/books-my.html";
+            }, 1000);
           }
-          this.createOrderResult(response)
-        })
+        });
       },
       skip(name){
         window.location.href="/m/"+name;

@@ -1,5 +1,6 @@
 module.exports = {
-  NODE_ENV: '"production"',
-  // BASE_API: '"http://dev.51xy8.com"',
-  BASE_API: '"http://api.51xy8.com"',
+	NODE_ENV: '"production"',
+	ENV_CONFIG: '"prod"',
+	BASE_API: '"https://api.kofuf.com"',
+	NIM_App_Key: '"a9fd660d3a0bccbeda8ce8b3f4fc1a59"'
 }

@@ -3,7 +3,7 @@
     <div v-if="subs.length!=0">
       <div class="channels-item vux-1px-b" ref="list" v-for="item in subs" @click="channelsDetail(item.id)">
         <div class="headimg">
-          <img :src="item.thumb" alt="" onerror="this.src='http://m.51xy8.com/static/img/default.png'">
+          <img :src="item.thumb" alt="" onerror="this.src='https://m.kofuf.com/static/img/default.png'">
           <span class="tip" v-if="item.unread_num!=0"><span>{{item.unread_num}}</span></span>
         </div>
         <div class="channels-info">

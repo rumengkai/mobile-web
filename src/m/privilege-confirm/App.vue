@@ -43,7 +43,7 @@ export default {
       showContent:true,
       loadingshow: false,
       loadtext: '加载中...',
-      dataInfo:{receiver:{name:"",phone:""}},
+      dataInfo:{receiver:{name:"",phone:"",uuid:""}},
       addresseAll:"",
       gooddata:[],
       haveAddress:false
@@ -51,6 +51,7 @@ export default {
   },
   created () {
     this.id=this.$geturlpara.getUrlKey("id");
+    this.dataInfo.receiver.uuid = querystring.parse().uuid
     if (isWeiXin()) {
     }
     this.fetchData(this.id);
@@ -61,7 +62,8 @@ export default {
         Vue,
         HOST+'/api/items/'+id+'.json',
         {
-          id:id
+          "id":id,
+          "receiver_id":this.dataInfo.receiver.uuid
         },
         (data)=>{
           this.loadingshow=false;
@@ -69,7 +71,6 @@ export default {
             this.dataInfo=data;
             if (data.receiver) {
               this.haveAddress=true;
-              console.log();
               this.addresseAll=data.receiver.address.replace(/@/g," ");
             }
             this.gooddata.push({
@@ -124,7 +125,7 @@ export default {
         })
     },
     toAddress(){
-      window.location.href="/m/address.html?type="+this.id;
+      window.location.href="/m/address.html?id="+this.id+"&type=privilege-confirm";
     },
   }
 }

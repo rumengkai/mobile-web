@@ -34,6 +34,13 @@
       todetail(id){
         window.location.href="/m/books-list.html?id="+id;
       },
+      toDetail(data){
+        if (data.article_id&&data.article_id>0) {
+          window.location.href="/m/detail.html?id="+data.article_id;
+        }else{
+          window.location.href="/m/book-detail.html?id="+data.id;
+        }
+      },
       stringBr
     }
   }

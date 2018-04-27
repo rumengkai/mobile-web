@@ -1,0 +1,244 @@
+body{
+  background-color: #f6f6f6;
+}
+#live{
+	overflow: hidden;
+	height: 100%;
+	.video-box{
+		width: 100%;
+		max-width: 680px;
+		position: fixed;
+		top: 0;
+	}
+	.live-content{
+		margin-top: 5.1rem;
+		background: #fff;
+		padding: 15px 15px 50px;
+		box-sizing: border-box;
+		img{
+			max-width: 100%;
+		}
+	}
+	.room{
+		position: relative;
+		margin-top: 5.98rem;
+		width: 100%;
+		// overflow-x: hidden;
+		padding: 10px 10px 50px;
+		box-sizing: border-box;
+		height: 7rem;
+		overflow-y: scroll;
+		.user-my{
+			display: block;
+			width: 100%;
+			overflow-y: hidden;
+			margin: 8px 0;
+			.from-avatar{
+				float: right;
+			}
+			.text{
+				margin: 0 8px !important;
+				float: right;
+			}
+			.from-nick{
+				display: none;
+			}
+		}
+		.msg-tip{
+			position: fixed;
+			bottom: 60px;
+			width: 100px;
+			height: 20px;
+			background: rgba(0, 0, 0, 0.5);
+			color: #fff;
+			font-size: 12px;
+			left: 50%;
+			margin-left: -50px;
+			text-align: center;
+			line-height: 20px;
+			border-radius: 5px; 
+		}
+		.msg-li{
+		}
+		.from-avatar{
+			width: .56rem;
+			height: .56rem;
+			display: block;
+			float: left;
+			overflow: hidden;
+			position: relative;
+			.avatar{
+				display: block;
+				width: .56rem;
+				height: .56rem;
+				border-radius: .28rem;
+			}
+			.level_icon{
+				position: absolute;
+				bottom: 0;
+				right: 0;
+				width: 12px;
+				height: 12px;
+				border-radius: 10px;
+			}
+		}
+		.color-admin{
+			.from-nick{
+				span{
+					color: #CB925F;
+				}
+			}
+			.text{
+				color: #fff;
+				background: #CB925F;
+			}
+		}
+		.color-member{
+			.from-nick{
+				span{
+					color: #CC3D3D;
+				}
+			}
+			.text{
+				color: #fff;
+				background: #CC3D3D;
+			}
+		}
+		.color-users{
+			.from-nick{
+				span{
+					color: #999;
+				}
+			}
+			.text{
+				color: #333;
+				background: #ffffff;
+			}
+		}
+		.text{
+			margin: 8px 0;
+			border-radius: 3px;
+			display: inline-block;
+			padding: 10px 8px;
+		}
+		.notification-tip{
+			text-align: center;
+			color: #ccc;
+			font-size: 12px;
+		}
+		.msg-content{
+			margin-left: .8rem;
+			.from-nick{
+				font-size: 12px;
+				color: #999;
+			}
+			.member-nick{
+				font-size: 12px;
+				color: #CB925F;
+			}
+			.content-image{
+				margin: 8px 0;
+				img{
+					display: block;
+					width: 2rem;
+					border-radius: 5px;
+				}
+			}
+			.content-file{
+				margin: 8px 0;
+				height: 45px;
+				max-width: 4rem;
+				padding: 8px;
+				box-sizing: border-box;
+				background: #ffffff;
+				.file-name{
+					display: flex;
+					p{
+						padding:0 10px;
+						box-sizing: border-box;
+						line-height: 29px; 
+						font-size: 16px;
+					}
+				}
+				img{
+					width: 30px;
+					height: 30px;
+				}
+			}
+		}
+	}
+	.buy-live{
+		height: .92rem;
+		width: 100%;
+		max-width: 680px;
+		background-color: #fff;
+		line-height: .92rem;
+		position: fixed;
+		bottom: 0;
+		padding: 0;
+		z-index: 500;
+		display: -webkit-box;
+		-webkit-box-align: center;
+		font-size: 18px;
+		background: #CB925F;
+		text-align: center;
+		color: #fff;
+		p{
+			width: 100%;
+			text-align: center;
+		}
+	}
+	.vux-tab{
+		position: fixed;
+		top: 5.1rem;
+		height: .88rem !important;
+		width: 100%;
+		max-width: 680px;
+		z-index: 1000;
+		.vux-tab-item.vux-tab-selected{
+			border-bottom: 3px solid #CB925F !important;
+			color: #CB925F !important;
+		}
+	}
+	.vux-tab-ink-bar{
+		background-color: #CB925F;
+	}
+	.massage-input{
+		max-width: 680px;
+		margin: auto;
+		display: flex;
+		position: fixed;
+		bottom: 0;
+		background: #fff;
+		height: 45px;
+		width: 100%;
+		left: 0;
+		right: 0;
+		padding: 5px;
+		box-sizing: border-box;
+		align-items: center;
+		textarea{
+			resize: none;
+			border: 1px #ccc solid;
+			border-radius: 5px;
+			height: 30px;
+			display: block;
+			overflow-y: hidden;
+			line-height: 30px;
+			font-size: 13px;
+			margin-right: 5px;
+			padding: 0 5px;
+		}
+		.send-btn{
+			color: #fff;
+			font-size: 15px;
+			text-align: center;
+			background: #80BE3C;
+			display: block;
+			width: 50px;
+			height: 30px;
+			line-height: 30px;
+			border-radius: 5px;
+		}
+	}
+}

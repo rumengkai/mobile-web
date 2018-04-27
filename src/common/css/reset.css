@@ -18,7 +18,7 @@ html,body{
   margin: auto;
   font-size: 12px;
   height: auto;
-  -webkit-touch-callout: none;      /* disables the callout 禁止文件选中*/
+  /* -webkit-touch-callout: none;*/		/* disables the callout 禁止文件选中 */
 }
 html{
   height: 100%;
@@ -68,13 +68,13 @@ a[href*="www.cnzz.com/stat/website.php"] {
     clear: both;
 }
 /* == clearfix == */
-.clearfix:after {
+/* .clearfix:after {
     content: “.”;
     display: block;
     height: 0;
     clear: both;
     visibility: hidden;
-}
+} */
 .clearfix {display: inline-block;}
 * html .clearfix {height: 1%;}
 .clearfix {display: block;}
@@ -83,12 +83,12 @@ strong{
 }
 
 body {
--webkit-touch-callout: none; /* iOS Safari */
--webkit-user-select: none; /* Chrome/Safari/Opera */
--khtml-user-select: none; /* Konqueror */
--moz-user-select: none; /* Firefox */
--ms-user-select: none; /* Internet Explorer/Edge */
-user-select: none; /* Non-prefixed version, currently not supported by any browser */
+	/* -webkit-touch-callout: none; 
+	-webkit-user-select: none; 
+	-khtml-user-select: none;
+	-moz-user-select: none; 
+	-ms-user-select: none; 
+	user-select: none;  */
 }
 
 .nstep{
@@ -159,4 +159,17 @@ user-select: none; /* Non-prefixed version, currently not supported by any brows
 }
 .weui-cell{
   font-size: 13px;
+}
+
+.ell-2{
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  -webkit-box-orient: vertical !important;
+}
+.ell-3{
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  -webkit-box-orient: vertical !important;
 }

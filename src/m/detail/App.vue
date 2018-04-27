@@ -2,20 +2,27 @@
   <div id="detail">
     <Failed v-if="failedshow" :msg="failedmsg"></Failed>
     <div class="contents" v-if="showContent">
-      <div v-if="articles.sub_type=='V'">
-        <Videobox :video="articles.banner" :poster="articles.thumb"></Videobox>
-      </div>
-      <div v-if="articles.sub_type==='R'">
-        <img class="img" :src="articles.thumb" alt="">
-        <!-- <Audiobox :music="articles.banner"></Audiobox> -->
-      </div>
-      <div v-if="articles.sub_type=='A'" class="banner">
-        <img :src="articles.banner" alt="">
-      </div>
+			<div v-if="articles.share_read_index&&articles.share_read_index>0" class="share-free-read">
+				<img class="img-bg" src="https://static2.kofuf.com/1521010995711.png" alt="">
+				<img class="img-dz" src="https://static1.kofuf.com/1521011011648.png" alt="">
+				<p>您是第 <span> {{articles.share_read_index?articles.share_read_index:0}} </span> 个抢到免费试读的读者</p>
+			</div>
+			<div v-else>
+				<div v-if="articles.sub_type=='V'">
+					<Videobox :video="articles.banner" :poster="articles.thumb"></Videobox>
+				</div>
+				<div v-if="articles.sub_type==='R'">
+					<img class="img" :src="articles.thumb" alt="">
+					<!-- <Audiobox :music="articles.banner"></Audiobox> -->
+				</div>
+				<div v-if="articles.sub_type=='A'" class="banner">
+					<img :src="articles.banner" alt="">
+				</div>
+			</div>
       <div class="article">
         <p class="title">{{articles.name}}</p>
         <div class="info vux-1px-b" @click="toUserCenter(articles)">
-          <img :src="articles.author_pic" alt="" onerror="this.src='http://m.51xy8.com/static/img/logo.png'">
+          <img :src="articles.author_pic" alt="" onerror="this.src='https://m.kofuf.com/static/img/logo.png'">
           <span class="author">作者：{{articles.author_name}}</span>
           <span class="created">{{articles.created | formatDate}}</span>
         </div>
@@ -37,16 +44,20 @@
         <LazyLoadingMore url="/api/articles/comments.json" v-on:getData="loadList" params="items" :id="id"></LazyLoadingMore>
       </div>
     </div>
-
-    <footer v-show="showContent&&!open_channel">
-      <div class="gfcj" @click="toChannels">
-        <img src="http://m.51xy8.com/static/img/logo.png" alt="">
-        <div class="gf"><p class="p1">微信登陆APP</p><p class="p2">阅读体验更佳</p></div>
-      </div>
-      <div class="download">
-        <a id='btnOpenApp'>打开APP</a>
-      </div>
-    </footer>
+		<div v-if="articles.share_read_index&&articles.share_read_index>0" class="footer" @click="toBuyChannel">
+			<p>订阅：{{articles.audio_sub_title}}</p>
+		</div>
+		<div v-else>
+			<footer v-show="showContent&&!open_channel">
+				<div class="gfcj" @click="toChannels">
+					<img src="https://m.kofuf.com/static/img/logo.png" alt="">
+					<div class="gf"><p class="p1">微信登陆APP</p><p class="p2">阅读体验更佳</p></div>
+				</div>
+				<div class="download">
+					<a id='btnOpenApp'>打开APP</a>
+				</div>
+			</footer>
+		</div>
     <!-- <footer v-if="open_channel&&showContent" class = "open-channel">
       <div class="gfcj" >
         <img :src="articles.from_channel.thumb" alt="">
@@ -58,7 +69,7 @@
     </footer> -->
     <div class="qr_code_pc_inner">
       <div class="qr_code_pc">
-        <img id="js_pc_qr_code_img" class="qr_code_pc_img" src="http://www.51xy8.com/static/images/code.png">
+        <img id="js_pc_qr_code_img" class="qr_code_pc_img" src="http://www.kofuf.com/static/images/code.png">
         <p>微信扫一扫<br>学财经，长本事</p>
       </div>
     </div>
@@ -84,10 +95,14 @@
   import AppDownload from "components/AppDownload/AppDownload"
   import Failed from "components/Failed/Failed"
   import Vue from 'vue'
-  import {Loading,LoadMore} from 'vux'
-  import VueResource from 'vue-resource'
-  Vue.use(VueResource)
-  Vue.prototype.$geturlpara=geturlpara
+	import {Loading,LoadMore,querystring,cookie} from 'vux'
+	import { getDetail } from "src/api/detail"
+	import {
+    toast
+  } from 'src/common/js/assembly';
+	Vue.prototype.$geturlpara=geturlpara
+	import VueResource from 'vue-resource'
+	Vue.use(VueResource)
   Vue.http.interceptors.push(function(request, next) {
     // modify headers
     request.headers.set('from', '3');
@@ -101,7 +116,8 @@
     name: 'detail',
     data () {
       return {
-        id:0,
+				id:0,
+				shareFrom: querystring.parse().share_from,
         showContent:false,
         paly:0,
         showplay:true,
@@ -137,6 +153,7 @@
     created () {
       var id = this.$geturlpara.getUrlKey("id");
       if(isWeiXin()){
+				getAuth(cookie,querystring)
       }
       this.id=id;
       this.fetchData(id);
@@ -148,16 +165,7 @@
         button: document.querySelector('a#btnOpenApp'),
         autoLaunchApp : false,
       });
-      // 埋点统计
-      let params={
-        id:this.id,
-        action:'item_detail',
-        end_pos:''
-      }
-      logs(params).then(response => {
-        this.loadingshow = false
-        this.fetchResult(response)
-      })
+      
     },
     methods: {
       openApp(){
@@ -165,12 +173,11 @@
       },
       //获取数据
       fetchData(id){
-        this.$http.get(HOST+'/api/articles/'+id+'.json', [])
-        .then((data)=>{
+				document.title = "加载中。。。";
+        getDetail({id:id,share_from:this.shareFrom?this.shareFrom:""}).then(res=>{
           this.fetchCommentData(id);
           this.loadingshow=false;
-          this.articles=JSON.parse(data.bodyText);
-          document.title = this.articles.name;
+          this.articles=res;
           this.open_channel=!!this.articles.from_channel;
           //请求评论
           if(this.articles.status!=0){
@@ -178,23 +185,41 @@
             if(this.articles.status!=4){
               this.appdownloadshow=true;
             }else{
-              if (this.articles.type===0) {
-                window.location.href="/m/channel.html?id="+this.articles.channel;
-              }else if(this.articles.type==1){
-                window.location.href="/m/channel-small.html?id="+this.articles.channel;
-              }
+							if(this.articles.share_read_index&&this.articles.share_read_index>0){
+								/* 分享免费看 */
+							}else{
+								if (this.articles.type===0) {
+									window.location.href="/m/channel.html?id="+this.articles.channel;
+								}else if(this.articles.type==1){
+									window.location.href="/m/channel-small.html?id="+this.articles.channel;
+								}else if(this.articles.book){
+									window.location.href="/m/book-detail.html?id="+this.articles.book;
+								}else{
+									toast(this.articles.error)
+								}
+							}
             }
           }else{
+						document.title = this.articles.name;
             this.showContent=true;
             //是否展示评论
             this.showComment=this.articles.need_comments;
             window.shareData={
-              title:'功夫财经'+this.articles.name,
-              link:HOSTM+'/m/detail.html?id='+this.id+'',
-              imgUrl:'http://m.51xy8.com/static/img_h5/h5_logo.png',
-              desc:this.articles.name
+              title: this.articles.name,
+              link: this.articles.share_url?this.articles.share_url:HOSTM+'/m/detail.html?id='+this.id,
+              imgUrl: this.articles.large_thumb,//||this.articles.screenshots + '?imageView2/1/w/300/h/300/q/100|imageslim',
+              desc: this.articles.share
             }
-            weixinShare(Vue);
+						weixinShare(Vue);
+						// 埋点统计
+						let params={
+							id:this.id,
+							action:'item_detail',
+							end_pos:''
+						}
+						logs(params).then(response => {
+							this.loadingshow = false
+						})
           }
         }, (err)=>{
           this.loadingshow=false;
@@ -280,7 +305,16 @@
       },
       openChannel(id){
         window.location.href="/m/channel.html?id="+id;
-      },
+			},
+			toBuyChannel(){
+				if (this.articles.channel) {
+					window.location.href="/m/channel.html?id="+this.articles.channel;
+				}else if(this.articles.book){
+					window.location.href="/m/book-detail.html?id="+this.articles.book;
+				}else{
+					window.location.href="/m/channel.html?id="+this.articles.channel;
+				}
+			},
       toUserCenter(item){
         window.location.href="/m/moments.html?id="+item.author_id;
       }
@@ -296,165 +330,6 @@
 
 <style lang="less">
 @import '~vux/src/styles/1px.less';
-body{
-  // background-color: #eee;
-}
-.showA{
-  display: none;
-}
-#detail{
-  position: relative;
-  height: 100%;
-  .weui-loading_toast{
-    position: relative;
-    z-index: 1001;
-  }
-  .contents{
-    // box-shadow: 0px 0px 5px #ccc;
-    overflow: hidden;
-    background-color: #fff;
-    padding-bottom: 100px;
-    .img{
-      width: 100%;
-      // height: 4.56rem;
-    }
-  }
-  .banner img{
-    width: 100%;
-  }
-  .article{
-    width: 90%;
-    color: #4f4f4f;
-    margin:14px auto 37px;
-    overflow: hidden;
-    font-size: 15px;
-  }
-  .article .title{
-    font-size: 21px;
-  }
-  .article .info{
-    height: .9rem;
-    overflow: hidden;
-    padding: .3rem 0;
-    margin-bottom: 10px;
-  }
-  .article .info .author{
-    line-height: 45px;
-    margin-left: .3rem;
-    color: #a0a0a0;
-  }
-  .article .info .created{
-    float: right;
-    line-height: 45px;
-    color: #a0a0a0;
-  }
-  .article .info img{
-    width: 45px;
-    height:45px;
-    border-radius: .45rem;
-    float: left;
-  }
-  .article .content{
-    p{
-      text-align: justify;
-    }
-    img{
-      // box-shadow: 0px 0px 5px #ccc;
-      max-width: 100%;
-    }
-  }
-  .comment-bottom{
-    color: #eee;
-    p{
-      text-align: center;
-    }
-  }
-  footer{
-    height: .92rem;
-    width: 100%;
-    max-width: 680px;
-    background-color: #fff;
-    box-shadow: rgba(0,0,0,.2) 0 0 10px;
-    position: fixed;
-    bottom: 0;
-    padding: .16rem 0;
-    z-index: 10002;
-    display: -webkit-box;
-    -webkit-box-align: center;
-    .gfcj{
-      font-size: .4rem;
-      color: #ca915c;
-      width: 60%;
-      img{
-        border-radius: 5px;
-        width: .8rem;
-        height: .8rem;
-        display: block;
-        float: left;
-        margin-left: .3rem;
-      }
-      .gf{
-        width: 2.1rem;
-        float: left;
-        margin-left: .36rem;
-        color: #868686;
-        .p1{
-          font-size: 12px;
-          line-height: .4rem;
-          font-weight: 400;
-        }
-        .p2{
-          line-height: .4rem;
-          font-weight: 100;
-          font-size: 12px;
-        }
-      }
-    }
-    .download{
-      width: 36%;
-      text-align: right;
-      a{
-        // width: 148px;
-        height: .68rem;
-        display: block;
-        color: #ca915c;
-        border: 1px solid #ca915c;
-        border-radius: 5px;
-        text-align: center;
-        line-height: .68rem;
-        background: #fff;
-        font-size: 18px;
-        box-sizing: content-box;
-        margin-right: .2rem;
-        margin-left: auto;
-      }
-    }
-  }
-  .open-channel{
-    .gfcj{
-      .gf{
-        width: 2.87rem;
-        .p1{
-          font-size: .26rem;
-          line-height: .4rem;
-          font-weight: 400;
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-          color: #333;
-        }
-        .p2{
-          line-height: .4rem;
-          font-weight: 100;
-          font-size: 12px;
-          color: #ca915c;
-        }
-      }
-
-    }
-  }
-  strong{
-    font-weight: 900;
-  }
-}
+@import "../index/App.less";
+@import './App.less';
 </style>

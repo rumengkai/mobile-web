@@ -3,6 +3,8 @@ var path = require('path')
 
 module.exports = {
   build: {
+		sitEnv: require('./sit.env'),
+    prodEnv: require('./prod.env'),
     env: require('./prod.env'),
     assetsRoot: path.resolve(__dirname, '../dist/'),
     index: path.resolve(__dirname, '../dist/m/index.html'),
@@ -36,7 +38,7 @@ module.exports = {
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README
-    // (https://github.com/webpack/css-loader#sourcemaps)
+    // (http://github.com/webpack/css-loader#sourcemaps)
     // In our experience, they generally work as expected,
     // just be aware of this issue when enabling this option.
     cssSourceMap: false

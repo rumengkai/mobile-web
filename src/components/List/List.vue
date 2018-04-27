@@ -6,13 +6,13 @@
        {{item.name}}
      </div>
      <div class="img vux-1px-b">
-       <img :src="item.thumb" alt="" onerror="this.src='http://image.51xy8.com/1493739178223.jpg?imageView2/1/w/200/h/133/q/100|imageslim'">
+       <img :src="item.thumb" alt="" onerror="this.src='http://static1.kofuf.com/1493739178223.jpg?imageView2/1/w/200/h/133/q/100|imageslim'">
        <div class="hint" v-show="freeshow">
          试读
        </div>
      </div>
      <span class="date">{{item.published|formatDate}}</span>
-     <span class="view"><img src="./images/read.png" alt="">{{item.view_count}} 人看过</span>
+     <!-- <span class="view"><img src="./images/read.png" alt="">{{item.view_count}} 人看过</span> -->
    </li>
   </div>
 </template>

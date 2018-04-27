@@ -4,7 +4,7 @@
       <li v-for="item in audiolist" class="vux-1px-t vux-1px-b" @click="todetail(item.item)">
         <div class="left">
           <img class="play" src="./images/play.png" alt="播放">
-          <img class="bg" :src="item.picture" alt="picture" onerror='this.src="http://m.51xy8.com/static/img/default.png"'>
+          <img class="bg" :src="item.picture" alt="picture" onerror='this.src="https://m.kofuf.com/static/img/default.png"'>
         </div>
         <div class="right">
           <p v-html="item.title"></p>

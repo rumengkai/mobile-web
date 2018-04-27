@@ -1,9 +1,9 @@
 <template>
   <div id="channels">
     <div v-if="subs.length!=0">
-      <div class="channels-item vux-1px-b" ref="list" v-for="item in subs" @click="channelsDetail(item.id)">
+      <div class="channels-item vux-1px-b" ref="list" v-for="(item,index) in subs" @click="channelsDetail(item.id)" :key="index">
         <div class="headimg">
-          <img :src="item.thumb" alt="" onerror="this.src='http://m.51xy8.com/static/img/default.png'">
+          <img :src="item.thumb" alt="" onerror="this.src='https://m.kofuf.com/static/img/default.png'">
           <span class="tip" v-if="item.unread_num!=0"><span>{{item.unread_num}}</span></span>
         </div>
         <div class="channels-info">
@@ -14,16 +14,17 @@
           <p class="price-co">
             <span v-if="item.channel_price==-1" class="price ell">¥
               <span v-if='item.suites'>{{item.suites[0].price}}</span>
-              <span v-if='!item.suites'>{{item.price}}</span>/
-              <span>{{item.price_unit}}</span>
+              <span v-if='!item.suites'>{{item.price}}</span>
+              <span v-if="type!='small'">/{{item.price_unit}}</span>
             </span>
             <span v-else class="ell">
-              <span class="price">{{item.text}}¥<span>{{item.channel_price}}</span>/<span>{{item.price_unit}}</span>
+              <span class="price">{{item.text}}¥<span>{{item.channel_price}}</span>
+							<span v-if="type!='small'">/{{item.price_unit}}</span>
               </span>
               <span class="oldprice">
                 <span v-if='item.suites'>¥{{item.suites[0].price}}</span>
                 <span v-if='!item.suites'>¥{{item.price}}</span>
-                <span>/{{item.price_unit}}</span>
+                <span v-if="type!='small'">/{{item.price_unit}}</span>
               </span>
             </span>
           </p>
@@ -64,9 +65,9 @@
     methods: {
       channelsDetail(id){
         if (this.type=="small") {
-          window.location.href="channel-small.html?id="+id;
+          window.location.href="/m/channel-small.html?id="+id;
         }else{
-          window.location.href="channel.html?id="+id;
+          window.location.href="/m/channel.html?id="+id;
         }
       }
     }

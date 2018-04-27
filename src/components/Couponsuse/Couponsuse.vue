@@ -1,6 +1,6 @@
 <template>
   <div id="couponsuse">
-    <div class="" v-for="item in couponD" v-if="show">
+    <div class="" v-for="(item,idx) in couponD" v-if="show" :key="idx">
       <div v-bind:class="{coupon_used:state==3,coupon_no:state!=3}" @click="selectCoupons(item)">
         <div class="coupon vux-1px" >
           <img v-if="state!=3" src="./images/coupon_1_03.png" alt="">
@@ -10,7 +10,7 @@
             <span class="use_condition" v-html="item.use_condition"></span>
           </div>
           <div class="right">
-            <p class="name" v-html="item.name"></p>
+            <p class="name ell" v-html="item.name"></p>
             <p class="explain">
               <span class="period" v-bind:class="{red:item.will_expired}" v-html="item.period">有效期至：{{item.end_time}}</span>
               <span class="have" v-if="item.state==1">已使用</span>

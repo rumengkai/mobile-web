@@ -19,13 +19,15 @@
 document.write('<script src=\"https\:\/\/s19.cnzz.com\/z_stat.php\?id=1262435637\&web_id=1262435637\" language=\"JavaScript\"><\/script>')
 document.write('<script src=\"http\:\/\/res.wx.qq.com\/open\/js\/jweixin-1.2.0.js\" charset=\"utf-8\"><\/script>')
 
-window.base="pro"
+window.base=process.env.ENV_CONFIG
+console.log(process.env.ENV_CONFIG)
+console.log(process.env.BASE_API);
 // 全局变量，配置
-if (base=="pro") {
-	window.VERSION="0.1"
-	window.HOST="http://api.51xy8.com"// 线上地址
-	window.HOSTM="http://m.51xy8.com"// 线上地址，分享时用
-	window.HOSTA="http://api.51xy8.com"// 授权使用
+if (base=="prod") {
+	window.VERSION="2.8.0"
+	window.HOST="https://api.kofuf.com"// 线上地址
+	window.HOSTM="https://m.kofuf.com"// 线上地址，分享时用
+	window.HOSTA="https://api.kofuf.com"// 授权使用
 	window.appid="wx05e842991e5fa0b2"
 	localStorage.setItem("from","3")
 	window.config=function () {
@@ -37,14 +39,14 @@ if (base=="pro") {
 		}
 	}
 }else{
-	window.VERSION="0.1"
-	window.HOST="http://123.57.35.40"// 	测试地址
-	window.HOSTM="http://dev.51xy8.com"// 分享时用
-	window.HOSTA="http://123.57.35.40"// 授权使用
+	window.VERSION="2.8.0"
+	window.HOST="http://dev.kofuf.com"// 	测试地址
+	window.HOSTM="http://dev.kofuf.com"// 分享时用
+	window.HOSTA="http://dev.kofuf.com"// 授权使用
 	window.appid="wx0a542ef9d4d41cef"
 	localStorage.setItem("from","3")
-	localStorage.setItem("gid","1047501566")
-	localStorage.setItem("token","97b416d0fe144c8aacfae881ad291add")
+	// localStorage.setItem("gid","1047502699")
+	// localStorage.setItem("token","debdc22f46a64c8885ce0a6f8b4641f6")
 	window.config=function () {
 		return {
 			paytype:"JSAPI",
@@ -58,7 +60,7 @@ if (base=="pro") {
 window.shareData={
 	title:'功夫财经',
 	link:HOSTM+'/m/home.html',
-	imgUrl:'http://m.51xy8.com/static/img_h5/h5_logo.png',
+	imgUrl:'https://m.kofuf.com/static/img_h5/h5_logo.png',
 	desc:"功夫财经致力于联动最出色的财经学者，提供最优质的原创内容，打造中国规模最大的、粘性最高的财富命运共同体，以新型金融服务平台为终极己任，解决中产焦虑，提升国民财商。 "
 }
 
@@ -80,6 +82,11 @@ FastClick.attach(document.body)
 //微信授权地址
 window.getAuthLink=function (params){
 	//type:item_(id),channel_(id)
+	/* 转译params */
+	params = params.replace(/\#/g, '%23');
+	params = params.replace(/\?/g, '%3F');
+	params = params.replace(/\&/g, '%26');
+	params = params.replace(/\=/g, '%3D');
 	return "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appid+"&redirect_uri="+HOSTA+"%2Fapi%2Fsession%2Fauth_weixin&response_type=code&scope=snsapi_userinfo&state="+params+"#wechat_redirect"
 }
 //微信登陆授权
@@ -102,7 +109,7 @@ window.getAuth=function (cookie,querystring,type,id){
 			}else{
 				params=type;
 			}
-			params=params?params:"";
+			params=params?params:(location.pathname + location.search)
 			// return
 			window.location.href=getAuthLink(params);
 		}
@@ -112,12 +119,12 @@ window.getAuth=function (cookie,querystring,type,id){
 window.clearcookie=function (cookie) {
 	localStorage.clear();
 	cookie.set('gid', 0,{
-		domain: '.51xy8.com',
+		domain: '.kofuf.com',
 		path: '/',
 		expires: -1
 	});
 	cookie.set('token', 0,{
-		domain: '.51xy8.com',
+		domain: '.kofuf.com',
 		path: '/',
 		expires: -1
 	});

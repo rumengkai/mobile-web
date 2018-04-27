@@ -1,6 +1,10 @@
 <template>
   <div id="member-center">
     <div class="content" v-if="showContent">
+			<group class="header">
+				<cell title="特权说明" is-link @click.native="memberExExplain()">
+				</cell>
+			</group>
       <div v-for="i in dataInfo.items">
         <div v-if="i.type=='goods'">
           <group class="header" v-for="item in i.items">
@@ -36,7 +40,7 @@
                 </div>
                 <p>
                   <span class="price" v-if="!item.followed">已订阅</span>
-                  <span class="price" v-if="item.followed">¥{{item.channel_price}}</span><s class="proprice" v-if="item.followed">¥{{item.price}}</s>
+                  <span class="price" v-if="item.followed">¥{{item.channel_price>=0?item.channel_price:item.price}}</span><s class="proprice" v-if="item.followed">¥{{item.price}}</s>
                 </p>
               </li>
             </ul>
@@ -86,7 +90,7 @@
       window.shareData={
         title:'功夫财经英雄招募令',
         link:HOSTM+'/m/member-center.html',
-        imgUrl:'http://m.51xy8.com/static/img_h5/h5_logo.png',
+        imgUrl:'https://m.kofuf.com/static/img_h5/h5_logo.png',
         desc:"订阅专栏折扣、功夫佳酿、功夫盛典现场门票、超值课程礼包、全国各地线下活动与大咖零距离交流~现在就来加伙吧！"
       }
       if (isWeiXin()) {
@@ -140,7 +144,10 @@
           (err)=>{
             console.log(err);
           }
-      },
+			},
+			memberExExplain(){
+        window.location.href="/m/privilege.html";
+			},
       toChannel(data){
         window.location.href="/m/channel.html?id="+data.id;
       },
