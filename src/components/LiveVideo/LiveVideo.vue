@@ -14,13 +14,15 @@
 			</div>
 		</div>
 		<div v-if="data.state==4&&!data.need_pay">
-			<video id="example-video" width=960 height=340 class="video-js vjs-default-skin" controls>
+			<video id="example-video" width=960 height=340 class="video-js vjs-default-skin" controls="controls">
 				<source :src="live_url" type="application/x-mpegURL">
 			</video>
 		</div>
 		<div v-else-if="data.state==3&&data.announce_url!=''&&!data.need_pay">
-			<div class="prism-player" id="J_prismPlayer_announce" style=""></div>
-			<video class="cover" :src="data.announce_url"></video>
+			<video class="cover" :src="data.announce_url" controls="controls"></video>
+		</div>
+		<div v-else-if="data.state==6&&data.replay_url!=''&&!data.need_pay">
+			<video class="cover" :src="data.replay_url" controls="controls"></video>
 		</div>
 		<div v-else>
 			<img class="cover" :src="data.cover" alt="">
@@ -217,5 +219,9 @@
 			max-height: 4.2rem !important;
 			overflow: hidden;
 		}
+	}
+	video{
+		width: 100%;
+		background: #000;
 	}
 </style>

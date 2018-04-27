@@ -95,7 +95,7 @@
   import AppDownload from "components/AppDownload/AppDownload"
   import Failed from "components/Failed/Failed"
   import Vue from 'vue'
-	import {Loading,LoadMore,querystring} from 'vux'
+	import {Loading,LoadMore,querystring,cookie} from 'vux'
 	import { getDetail } from "src/api/detail"
 	import {
     toast
@@ -153,6 +153,7 @@
     created () {
       var id = this.$geturlpara.getUrlKey("id");
       if(isWeiXin()){
+				getAuth(cookie,querystring)
       }
       this.id=id;
       this.fetchData(id);
@@ -164,15 +165,7 @@
         button: document.querySelector('a#btnOpenApp'),
         autoLaunchApp : false,
       });
-      // 埋点统计
-      let params={
-        id:this.id,
-        action:'item_detail',
-        end_pos:''
-      }
-      logs(params).then(response => {
-        this.loadingshow = false
-      })
+      
     },
     methods: {
       openApp(){
@@ -180,11 +173,11 @@
       },
       //获取数据
       fetchData(id){
+				document.title = "加载中。。。";
         getDetail({id:id,share_from:this.shareFrom?this.shareFrom:""}).then(res=>{
           this.fetchCommentData(id);
           this.loadingshow=false;
           this.articles=res;
-          document.title = this.articles.name;
           this.open_channel=!!this.articles.from_channel;
           //请求评论
           if(this.articles.status!=0){
@@ -207,16 +200,26 @@
 							}
             }
           }else{
+						document.title = this.articles.name;
             this.showContent=true;
             //是否展示评论
             this.showComment=this.articles.need_comments;
             window.shareData={
               title: this.articles.name,
-              link: this.articles.share_url?this.articles.share_url:HOSTM+'/m/detail.html?id='+this.id+'',
+              link: this.articles.share_url?this.articles.share_url:HOSTM+'/m/detail.html?id='+this.id,
               imgUrl: this.articles.large_thumb,//||this.articles.screenshots + '?imageView2/1/w/300/h/300/q/100|imageslim',
               desc: this.articles.share
             }
-            weixinShare(Vue);
+						weixinShare(Vue);
+						// 埋点统计
+						let params={
+							id:this.id,
+							action:'item_detail',
+							end_pos:''
+						}
+						logs(params).then(response => {
+							this.loadingshow = false
+						})
           }
         }, (err)=>{
           this.loadingshow=false;

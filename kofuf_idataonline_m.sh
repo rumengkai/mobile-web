@@ -1,8 +1,18 @@
 #!/bin/bash
-date_dir=m_`date +%Y_%m_%d`
+name=m
+prodir=/home/gongfu/third/nginx/html/
+date_dir=${name}_`date +%Y_%m_%d`
 echo ${date_dir}
-cp -r /home/gongfu/third/nginx/html/m /home/gongfu/third/nginx/html/backups/${date_dir}
+if [ ! -d ${prodir}${name} ]
+    then
+	mkdir ${prodir}${name}
+    	echo 'mkdir'${name}
+fi
+rm -rf ${prodir}backups/${name}_*
+echo 'REMOVE BACKUPS'
+
+cp -r ${prodir}${name} ${prodir}backups/${date_dir}
 echo 'BACKUPS SUCCESS'
-rm -rf /home/gongfu/third/nginx/html/m/*
-cp -r /home/gongfu/code/mobile_web/dist/m/* /home/gongfu/third/nginx/html/m/
+rm -rf ${prodir}${name}/*
+cp -r ./dist/* ${prodir}${name}
 echo 'UPDATE SUCCESS'

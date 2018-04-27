@@ -4,7 +4,7 @@
       <div class="banner">
         <img :src="dataInfo.head" alt="">
       </div>
-			<share-money-btn type="7" :id="id" :number="dataInfo.gift_num?dataInfo.gift_num:0" :moneyVal="dataInfo.share_make_money?dataInfo.share_make_money:0"></share-money-btn>
+			<share-money-btn type="7" :id="id" :number="dataInfo.gift_tip?dataInfo.gift_tip:0" :moneyVal="dataInfo.share_make_money?dataInfo.share_make_money:0"></share-money-btn>
       <p class="title" v-if="dataInfo.type===0">{{dataInfo.name}}</p>
       <p class="title" v-else-if="dataInfo.type===1" v-html="stringBr(dataInfo.brief)"></p>
       <p class="title" v-else>{{dataInfo.name}}</p>
@@ -96,7 +96,7 @@
 			this.buy_params.buy_id=this.id;
       if(isWeiXin()){
         var path=location.pathname.replace('/m/','')
-        getAuth(cookie,querystring,path+"?id="+this.id)
+        getAuth(cookie,querystring,path+"?id="+this.id+"&source_from="+this.sourceFrom+"&is_card="+this.isCard)
       }
       this.fetchData();
       setTimeout(()=>{
@@ -130,7 +130,7 @@
 			errorFun(){
         localStorage.clear();
         clearcookie(cookie);
-        getAuth(cookie, querystring, "channel",this.id);
+        getAuth(cookie, querystring, path+"?id="+this.id+"&source_from="+this.sourceFrom+"&is_card="+this.isCard);
       },
       // buy(){
       //   this.loadingshow=true;
