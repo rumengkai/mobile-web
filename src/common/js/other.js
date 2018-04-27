@@ -1,5 +1,5 @@
 //此文件用于记录js代码，并不被引用
-getAjax(){
+getAjax() {
   $.ajax({
     url:HOST+'/api/channels.json',
     headers: {
