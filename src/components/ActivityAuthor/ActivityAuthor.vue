@@ -15,8 +15,8 @@
           </div>
           <div class="right flex-between">
             <img @click="getDelete(item.user.id)" v-if="item.can_delete" class="delete" src="https://static1.kofuf.com/1520577759131.png" alt="">
-            <img @click="getLiked(item.user.id)" v-if="item.liked" class="liked" src="https://static1.kofuf.com/1513910095553.png" alt="">
-            <img @click="getUnliked(item.user.id)" v-if="!item.liked"  class="unliked" src="https://static1.kofuf.com/1513910064052.png" alt="">
+            <img @click="getUnLiked(item.user.id)" v-if="item.liked" class="liked" src="https://static1.kofuf.com/1513910095553.png" alt="">
+            <img @click="getLiked(item.user.id)" v-if="!item.liked"  class="unliked" src="https://static1.kofuf.com/1513910064052.png" alt="">
             <div class="liked-number">{{item.like_count}}</div>
           </div>
         </div>
@@ -59,7 +59,7 @@
         console.log(id)
         this.$emit('toLiked', id)
       },
-      getUnliked(id) {
+      getUnLiked(id) {
         console.log(id)
         this.$emit('toUnLiked', id)
       }

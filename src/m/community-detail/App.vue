@@ -1,23 +1,23 @@
 <template>
   <div id="community_detail">
-    <div v-if="showContent">
+    <div>
       <div class="content_1">
         <div class="community_content">
-          <activity-author v-on:toIndex="getAuthor" v-on:toDelete="getDeleteCommunity" v-on:toLiked="getLikedCommunity" v-on:toUnLiked="getUnLikedCommunity" :dataInfo="userInfo"></activity-author>
-          <a class="add_community" id="openApp1">加入大校门查看完整动态> </a>
-          <div class="image_community" v-bind:style="{height : height}" ref="imageCommunity">
-            <activity-images :dataQuery="dataQuery" :width="width"></activity-images>
+          <activity-author v-if="showContent" v-on:toIndex="getAuthor" v-on:toDelete="getDeleteCommunity" v-on:toLiked="getLikedCommunity" v-on:toUnLiked="getUnLikedCommunity" :dataInfo="userInfo"></activity-author>
+          <div>
+            <a class="add_community" id="openApp_1">加入大校门查看完整动态> </a>
           </div>
-          <a class="open_community" id="openApp2">打开功夫财经，打开原文</a>
+          <div class="image_community" v-bind:style="{height : height}" ref="imageCommunity">
+            <activity-images v-if="showContent" :dataQuery="dataQuery" :width="width"></activity-images>
+          </div>
+          <a class="open_community" id="openApp_2">打开功夫财经，打开原文</a>
         </div>
       </div>
-      <div class="content_1 sub_content_1">
+      <div class="content_1 sub_content_1" v-show="dataInfoList.length>0" >
         <div class="community_content">
           <div class="title">评论</div>
-          <div>
-            <activity-author :dataInfo="dataInfo"></activity-author>
-          </div>
-          <a class="open_community" id="openApp3">打开功夫财经，查看更多评论</a>
+          <activity-author v-if="showContent"  v-on:toIndex="getAuthor" v-on:toDelete="getDeleteCommunity" v-on:toLiked="getLikedCommunity" v-on:toUnLiked="getUnLikedCommunity" :dataInfo="dataInfo"></activity-author>
+          <a class="open_community" id="openApp_3">打开功夫财经，查看更多评论</a>
         </div>
       </div>
       <div>
@@ -99,88 +99,10 @@
       shareData("动态",location.href)
       weixinShare();
       this.id = id
-      // this.showContent = true
-      // this.userInfo = {
-      //   items: [{
-      //     id: 1,
-      //     content: '我我我哦我哦我是基础年级市场部技术背刺记事本出厂价我我我哦我哦我是基础年级市场部技术背刺记事本出厂价',
-      //     user: {
-      //       id: 2,
-      //       photo: 'http://image.51xy8.com/1496311047717.jpg',
-      //       level_icon: 'http://image.51xy8.com/1496311047717.jpg',
-      //       time: 1523491200000,
-      //       name: '地位被保温饭盒地位'
-      //     }
-      //   }]
-      // }
-      // this.dataQuery = [
-      //   {image: 'https://static1.kofuf.com/1520932798089.png'},
-      //   {image: 'https://static1.kofuf.com/1520932798089.png'},
-      //   {image: 'https://static1.kofuf.com/1520932798089.png'},
-      //   {image: 'https://static1.kofuf.com/1520932798089.png'},
-      //   {image: 'https://static1.kofuf.com/1520932798089.png'},
-      //   {image: 'https://static1.kofuf.com/1520932798089.png'},
-      //   {image: 'https://static1.kofuf.com/1520932798089.png'},
-      //   {image: 'https://static1.kofuf.com/1520932798089.png'}
-      // ]
-      // let dataInfo = {
-      //   items: [{
-      //     id: 1,
-      //     content: '我我我哦我哦我是基础年级市场部技术背刺记事本出厂价我我我哦我哦我是基础年级市场部技术背刺记事本出厂价',
-      //     user: {
-      //       id: 0,
-      //       photo: 'http://image.51xy8.com/1496311047717.jpg',
-      //       level_icon: 'http://image.51xy8.com/1496311047717.jpg',
-      //       time: 1533300,
-      //       name: '地位被保温饭盒地位',
-      //       can_delete: true,
-      //       count: 30
-      //     }
-      //   },{
-      //     id: 1,
-      //     content: '我我我哦我哦我是基础年级市场部技术背刺记事本出厂价我我我哦我哦我是基础年级市场部技术背刺记事本出厂价',
-      //     user: {
-      //       id: 1,
-      //       photo: 'http://image.51xy8.com/1496311047717.jpg',
-      //       level_icon: 'http://image.51xy8.com/1496311047717.jpg',
-      //       time: 1533300,
-      //       name: '地位被保温饭盒地位',
-      //       can_delete: true,
-      //       count: 40
-      //     }
-      //   },{
-      //     id: 1,
-      //     content: '我我我哦我哦我是基础年级市场部技术背刺记事本出厂价我我我哦我哦我是基础年级市场部技术背刺记事本出厂价',
-      //     user: {
-      //       id: 2,
-      //       photo: 'http://image.51xy8.com/1496311047717.jpg',
-      //       level_icon: 'http://image.51xy8.com/1496311047717.jpg',
-      //       time: 1533300,
-      //       name: '地位被保温饭盒地位',
-      //       can_delete: true,
-      //       count: 20
-      //     }
-      //   },{
-      //     id: 1,
-      //     content: '我我我哦我哦我是基础年级市场部技术背刺记事本出厂价我我我哦我哦我是基础年级市场部技术背刺记事本出厂价',
-      //     user: {
-      //       id: 3,
-      //       photo: 'http://image.51xy8.com/1496311047717.jpg',
-      //       level_icon: 'http://image.51xy8.com/1496311047717.jpg',
-      //       time: 1533300,
-      //       name: '地位被保温饭盒地位',
-      //       can_delete: true,
-      //       count: 80
-      //     }
-      //   }]
-      // }
-      // this.dataInfoList = dataInfo.items
-      // this.dataInfo = {items: dataInfo.items.slice(0,2)}
-      // console.log(this.dataInfo)
     },
     mounted () {
       this.fetchData();
-      window.addEventListener('scroll', this.handleScrollTop)
+      window.addEventListener('scroll', this.handleScrollTop);
       this.getResizeWidth();
       this.toApp();
     },
@@ -191,12 +113,11 @@
         this.showContent = false
         getCommunityDetail({id: this.id}).then((res) => {
           this.showContent = true
+          console.log(res)
           try {
             if (res.status == 0) {
-              console.log(res)
-              let dataInfo = res
               res.text = stringBr(res.text)
-              res.items.map((item) => {
+              res.comments.items.map((item) => {
                 item.content = stringBr(item.content)
               })
               userItem = {
@@ -212,15 +133,19 @@
               this.userInfo = {items: userList}
               this.dataQuery = res.images
               // 特殊处理
-              this.dataInfoList = dataInfo.items
-              if(dataInfo.items.length>3){
-                this.dataInfo = {items: dataInfo.items.slice(0,2)}
+              this.dataInfoList = res.comments.items
+              if(res.comments.items.length>3){
+                this.dataInfo = {items: res.comments.items.slice(0,2)}
               }else{
                 this.dataInfo = {items: this.dataInfoList}
               }
-              console.log(this.userInfo)
-              console.log(this.dataInfo)
-              console.log(this.dataQuery)
+              if (this.dataInfoList.length<=1) {
+                setTimeout(function(){
+                  this.height = 'auto'
+                }.bind(this), 500)
+              }
+            } else {
+              toast(res.error)
             }
           } catch(error) {
             toast(error)
@@ -230,32 +155,33 @@
       toApp: function() {
         new Mlink({
           mlink: "https://ah88dj.mlinks.cc/AK8f?id="+this.id,
-          button: document.querySelector('a#openApp1'),
+          button: document.querySelector('a#openApp_1'),
           autoLaunchApp : false,
         });
         new Mlink({
           mlink: "https://ah88dj.mlinks.cc/AK8f?id="+this.id,
-          button: document.querySelector('a#openApp2'),
+          button: document.querySelector('a#openApp_2'),
           autoLaunchApp : false,
         });
         new Mlink({
           mlink: "https://ah88dj.mlinks.cc/AK8f?id="+this.id,
-          button: document.querySelector('a#openApp3'),
+          button: document.querySelector('a#openApp_3'),
           autoLaunchApp : false,
         });
       },
       getResizeWidth: function() {
         let _self = this;
         window.onresize = (function temp() {
-          if (_self.$refs.imageCommunity !== undefined) {
-            console.log(_self.$refs.imageCommunity.getBoundingClientRect().width)
+          if (_self.$refs.imageCommunity != undefined) {
+            // console.log(_self.$refs.imageCommunity.getBoundingClientRect().width)
             _self.width = (parseInt(_self.$refs.imageCommunity.getBoundingClientRect().width)-46-8)/3+'px'
             _self.height = _self.width
           }
         })();
       },
       getAuthor: function(id) {
-        window.location.href = "/m/live.html?id=" + id;
+        console.log(id)
+        window.location.href = "/m/community-detail.html?id=" + id;
       },
       getDeleteCommunity: function(id) {
         console.log(id)

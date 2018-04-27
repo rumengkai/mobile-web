@@ -1,7 +1,7 @@
 <template>
 	<div id="activity-images" class="activity-images" ref="activityImages">
     <div class="content" v-bind:style="{width: width, height: width}" v-bind:class="{'center' : index%3==1}" v-for="(item,index) in dataQuery" v-bind:key="index">
-      <img class="img" :src="item.url" />
+      <img class="img" v-bind:style="{width: width, height: width}" :src="item.url" />
     </div>
 	</div>
 </template>
@@ -25,6 +25,7 @@
 		},
 		components: {},
 		mounted() {
+      console.log(this.width)
       console.log(this.dataQuery);
 		},
 		methods: {
