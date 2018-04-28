@@ -1,6 +1,6 @@
 <template>
 	<div id="activity-author" class="activity-author">
-    <div class="author_content" v-bind:class="{'position-relative' : item.top!=undefined}" v-for="item in dataInfo.items" v-bind:key="item.id">
+    <div class="author_content" ref="author" v-bind:class="{'position-relative' : item.top!=undefined}" v-for="item in dataInfo.items" v-bind:key="item.id">
       <div v-bind:class="{'border-bottom' : item.top!=undefined}">
         <div class="flex-start-between">
           <div class="left flex-start">
@@ -44,7 +44,9 @@
 		},
 		components: {},
 		mounted() {
+      console.log(this.$refs.author[0].clientHeight)
       console.log(this.dataInfo);
+      this.$emit('toAuthorHeight', this.$refs.author[0].clientHeight)
 		},
 		methods: {
 			toAuthorIndex(id) {

@@ -9,6 +9,7 @@
           </div>
           <div class="image_united" v-bind:style="{height : height}">
             <activity-images :dataQuery="dataQuery" :width="width"></activity-images>
+            <img class="image_bg" v-bind:style="{height: width}" src="https://static2.kofuf.com/1524907490695.png" />
           </div>
           <a class="open_united" id="openApp_2">打开功夫财经，打开原文</a>
         </div>
@@ -16,7 +17,8 @@
       <div class="content_1 sub_content_1" v-show="dataInfoList.length>0" >
         <div class="united_content">
           <div class="title">评论</div>
-          <activity-author v-if="showContent"  v-on:toIndex="getAuthor" v-on:toDelete="getDeleteCommunity" v-on:toLiked="getLikedCommunity" v-on:toUnLiked="getUnLikedCommunity" :dataInfo="dataInfo"></activity-author>
+          <activity-author v-if="showContent" v-on:toAuthorHeight="getAuthorHeight" v-on:toIndex="getAuthor" v-on:toDelete="getDeleteCommunity" v-on:toLiked="getLikedCommunity" v-on:toUnLiked="getUnLikedCommunity" :dataInfo="dataInfo"></activity-author>
+          <img class="image_bg_2" v-bind:style="{height: authorHeight}" src="https://static1.kofuf.com/1524908164856.png" />
           <a class="open_united" id="openApp_3">打开功夫财经，查看更多评论</a>
         </div>
       </div>
@@ -78,6 +80,7 @@
         imageWidth: null,
         width: null,
         height: null,
+        authorHeight: null,
         defaultimg: 'http://image.51xy8.com/1496311047717.jpg',
       }
     },
@@ -143,7 +146,7 @@
               if (this.dataInfoList.length<=1) {
                 setTimeout(function(){
                   this.height = 'auto'
-                }.bind(this), 500)
+                }.bind(this), 0)
               }
             } else {
               toast(res.error)
@@ -179,6 +182,10 @@
             _self.height = _self.width
           }
         })();
+      },
+      getAuthorHeight: function(val) {
+        console.log(val)
+        this.authorHeight = val+'px'
       },
       getAuthor: function(id) {
         console.log(id)
@@ -230,6 +237,7 @@
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
         let selfTop = null
         console.log(scrollTop)
+        console.log(scrollTop>this.imageWidth-7)
         if (scrollTop>this.imageWidth-7) {
           setTimeout(function(){
             this.height = 'auto'
