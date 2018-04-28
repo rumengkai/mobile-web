@@ -1,0 +1,266 @@
+<template>
+  <div id="united_dynamic" ref="imageCommunity">
+    <div v-show="showContent">
+      <div class="content_1">
+        <div class="united_content">
+        
+        </div>
+      </div>
+      <div>
+        <open-app :id="id"></open-app>
+      </div>
+      <div class="qr_code_pc_inner">
+        <div class="qr_code_pc">
+          <img id="js_pc_qr_code_img" class="qr_code_pc_img" src="http://www.kofuf.com/static/images/code.png">
+          <p>微信扫一扫<br>学财经，长本事</p>
+        </div>
+      </div>
+      <back-home></back-home>
+    </div>
+  </div>
+</template>
+
+<script>
+  import 'common/js/config.js';
+  import {
+    isWeiXin,
+		weixinShare,
+		isiOS
+  } from 'common/js/common.js';
+  import geturlpara from 'common/js/geturlpara.js';
+  import Vue from 'vue'
+  import {
+    message,
+    toast,
+    stringBr,
+    shareData
+  } from 'common/js/assembly'
+  import {
+    querystring,
+    cookie
+  } from 'vux'
+  import {
+    getCommunityDetail,
+    getLikedCommunity,
+    getUnLikedCommunity,
+    getDeleteCommunity,
+    getUnitedIndex
+  } from 'src/api/community.js'
+  import ActivityAuthor from 'components/ActivityAuthor/ActivityAuthor'
+  import ActivityImages from 'components/ActivityImages/ActivityImages'
+  import ActivityUnited from 'components/ActivityUnited/ActivityUnited'
+  import openApp from "components/openAPP/openAPP"
+  import BackHome from "components/BackHome/BackHome"
+  import { setTimeout } from 'timers';
+  Vue.prototype.$geturlpara=geturlpara
+  export default {
+    name: 'unitedIndex',
+    data () {
+      return {
+        id: null,
+        showContent: false,
+        // dataInfoList: [],
+        // userInfo: {},
+        dataInfo: {name: ''},
+        // dataQuery: [],
+        // imageWidth: null,
+        // width: null,
+        // height: null,
+        defaultimg: 'http://image.51xy8.com/1496311047717.jpg',
+      }
+    },
+    components: {
+      ActivityUnited,
+      ActivityAuthor,
+      ActivityImages,
+      openApp,
+      BackHome
+    },
+    beforeCreate(){
+      //授权
+      if(!isWeiXin()){
+        message("请关注'功夫财经'公众号")
+      } else {
+        getAuth(cookie,querystring)
+      }
+    },
+    created () {
+      let id = this.$geturlpara.getUrlKey("id");
+      shareData("动态",location.href)
+      weixinShare();
+      this.id = id
+      this.fetchData();
+      // this.fetchData1();
+    },
+    mounted () {
+      // window.addEventListener('scroll', this.handleScrollTop);
+    },
+    methods: {
+      fetchData: function() {
+        this.showContent = false
+        getUnitedIndex({id: this.id}).then((res) => {
+          this.showContent = true
+          try {
+            if (res.status == 0) {
+              console.log(res)
+            }
+          } catch(error) {
+            toast(error)
+          }
+        })
+      },
+      fetchData1: function() {
+        let userItem = {}
+        let userList = []
+        this.showContent = false
+        getCommunityDetail({id: this.id}).then((res) => {
+          this.showContent = true
+          this.toApp();
+          this.getResizeWidth();
+          console.log(res)
+          try {
+            if (res.status == 0) {
+              res.text = stringBr(res.text)
+              res.comments.items.map((item) => {
+                item.content = stringBr(item.content)
+              })
+              userItem = {
+                can_delete: res.can_delete,
+                id: res.id,
+                content: res.text,
+                like_count: res.like_count,
+                liked: res.liked,
+                time: res.time,
+                user: res.user
+              }
+              userList.push(userItem)
+              this.userInfo = {items: userList}
+              this.dataQuery = res.images
+              // 特殊处理
+              this.dataInfoList = res.comments.items
+              if(res.comments.items.length>3){
+                this.dataInfo = {items: res.comments.items.slice(0,2)}
+              }else{
+                this.dataInfo = {items: this.dataInfoList}
+              }
+              if (this.dataInfoList.length<=1) {
+                setTimeout(function(){
+                  this.height = 'auto'
+                }.bind(this), 500)
+              }
+            } else {
+              toast(res.error)
+            }
+          } catch(error) {
+            toast(error)
+          }
+        })
+      },
+      toApp: function() {
+        new Mlink({
+          mlink: "https://ah88dj.mlinks.cc/AK8f?id="+this.id,
+          button: document.querySelector('a#openApp_1'),
+          autoLaunchApp : false,
+        });
+        new Mlink({
+          mlink: "https://ah88dj.mlinks.cc/AK8f?id="+this.id,
+          button: document.querySelector('a#openApp_2'),
+          autoLaunchApp : false,
+        });
+        new Mlink({
+          mlink: "https://ah88dj.mlinks.cc/AK8f?id="+this.id,
+          button: document.querySelector('a#openApp_3'),
+          autoLaunchApp : false,
+        });
+      },
+      getResizeWidth: function() {
+        let _self = this;
+        window.onresize = (function temp() {
+          if (_self.$refs.imageCommunity != undefined) {
+            _self.imageWidth = (parseInt(_self.$refs.imageCommunity.getBoundingClientRect().width)-76-8)/3;
+            _self.width = _self.imageWidth+'px'
+            _self.height = _self.width
+          }
+        })();
+      },
+      getAuthor: function(id) {
+        console.log(id)
+        window.location.href = "/m/united_dynamic.html?id=" + id;
+      },
+      getDeleteCommunity: function(id) {
+        console.log(id)
+        this.showContent = false
+        getDeleteCommunity({id: id}).then((res) => {
+          this.showContent = true
+          try {
+            if (res.status == 0) {
+              this.fetchData()
+            }
+          } catch(error) {
+            toast(error)
+          }
+        })
+      },
+      getLikedCommunity: function(id) {
+        console.log(id)
+        this.showContent = false
+        getLikedCommunity({id: id}).then((res) => {
+          this.showContent = true
+          try {
+            if (res.status == 0) {
+              this.fetchData()
+            }
+          } catch(error) {
+            toast(error)
+          }
+        })
+      },
+      getUnLikedCommunity: function(id) {
+        console.log(id)
+        this.showContent = false
+        getUnLikedCommunity({id: id}).then((res) => {
+          this.showContent = true
+          try {
+            if (res.status == 0) {
+              this.fetchData()
+            }
+          } catch(error) {
+            toast(error)
+          }
+        })
+      },
+      handleScrollTop: function() {
+        let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+        let selfTop = null
+        console.log(scrollTop)
+        if (scrollTop>this.imageWidth-7) {
+          setTimeout(function(){
+            this.height = 'auto'
+          }.bind(this), 500)
+        }
+        if(this.dataQuery.length<=3){
+          selfTop = this.imageWidth
+        }else if(this.dataQuery.length<=6&&this.dataQuery.length>3) {
+          selfTop = this.imageWidth*2
+        }else{
+          selfTop = this.imageWidth*3
+        }
+        if(scrollTop>selfTop){
+          setTimeout(function(){
+            this.dataInfo = {items: this.dataInfoList}
+            this.destroyed();
+          }.bind(this), 500)
+        }
+      },
+      destroyed () {
+        window.removeEventListener('scroll', this.handleScrollTop)
+      }
+    }
+  }
+</script>
+<style lang="less">
+@import '../../common/css/reset.css';
+@import '~vux/src/styles/1px.less';
+@import "../index/App.less";
+@import './App.less';
+</style>

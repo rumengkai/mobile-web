@@ -1,23 +1,23 @@
 <template>
-  <div id="community_detail" ref="imageCommunity">
+  <div id="united_dynamic" ref="imageCommunity">
     <div v-show="showContent">
       <div class="content_1">
-        <div class="community_content">
+        <div class="united_content">
           <activity-author v-if="showContent" v-on:toIndex="getAuthor" v-on:toDelete="getDeleteCommunity" v-on:toLiked="getLikedCommunity" v-on:toUnLiked="getUnLikedCommunity" :dataInfo="userInfo"></activity-author>
           <div>
-            <a class="add_community" id="openApp_1">加入大校门查看完整动态> </a>
+            <a class="add_united" id="openApp_1">加入大校门查看完整动态> </a>
           </div>
-          <div class="image_community" v-bind:style="{height : height}">
+          <div class="image_united" v-bind:style="{height : height}">
             <activity-images :dataQuery="dataQuery" :width="width"></activity-images>
           </div>
-          <a class="open_community" id="openApp_2">打开功夫财经，打开原文</a>
+          <a class="open_united" id="openApp_2">打开功夫财经，打开原文</a>
         </div>
       </div>
       <div class="content_1 sub_content_1" v-show="dataInfoList.length>0" >
-        <div class="community_content">
+        <div class="united_content">
           <div class="title">评论</div>
           <activity-author v-if="showContent"  v-on:toIndex="getAuthor" v-on:toDelete="getDeleteCommunity" v-on:toLiked="getLikedCommunity" v-on:toUnLiked="getUnLikedCommunity" :dataInfo="dataInfo"></activity-author>
-          <a class="open_community" id="openApp_3">打开功夫财经，查看更多评论</a>
+          <a class="open_united" id="openApp_3">打开功夫财经，查看更多评论</a>
         </div>
       </div>
       <div>
@@ -66,7 +66,7 @@
   import { setTimeout } from 'timers';
   Vue.prototype.$geturlpara=geturlpara
   export default {
-    name: 'communityDetail',
+    name: 'unitedDynamic',
     data () {
       return {
         id: null,
@@ -97,7 +97,7 @@
     },
     created () {
       let id = this.$geturlpara.getUrlKey("id");
-      shareData("动态",location.href, '社群动态')
+      shareData("动态",location.href, '门派动态')
       weixinShare();
       this.id = id
       this.fetchData();
@@ -182,7 +182,7 @@
       },
       getAuthor: function(id) {
         console.log(id)
-        window.location.href = "/m/community-detail.html?id=" + id;
+        window.location.href = "/m/united_dynamic.html?id=" + id;
       },
       getDeleteCommunity: function(id) {
         console.log(id)

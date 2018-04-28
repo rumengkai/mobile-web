@@ -9,7 +9,7 @@ Object.keys(filters).forEach(key => {
 })
 
 new Vue({
-  el: '#community_detail',
+  el: '#united_index',
   template: '<App/>',
   components: { App },
 })

@@ -30,3 +30,10 @@ export function getDeleteCommunity(params) {
     params
   })
 }
+
+export function getUnitedIndex(params) {
+  return fetch({
+    url: '/api/communities/detail/'+params.id,
+    method: 'post'
+  })
+}
