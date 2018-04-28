@@ -26,7 +26,7 @@ export function getBody(){
 	return {'top':t,'height':h} ;
 }
  //
-export function weixinShare(Vue,data){
+export function weixinShare(Vue,data,shareType={}){
 	var url=HOST+"/api/session/share_weixin_config?url="+encodeURIComponent(window.location.href.split('#')[0]);
 	fetch({
     url: url,
@@ -98,8 +98,8 @@ export function weixinShare(Vue,data){
       desc:desc, // 分享描述
       link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
       imgUrl: imgUrl, // 分享图标
-      type: 'link', // 分享类型,music、video或link，不填默认为link
-      // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+      type: shareType?shareType:'link', // 分享类型,music、video或link，不填默认为link
+      dataUrl: shareType?shareType.link:'', // 如果type是music或video，则要提供数据链接，默认为空
       success: function () {
         // alert("分享成功")
           // 用户确认分享后执行的回调函数
