@@ -97,7 +97,7 @@
     },
     created () {
       let id = this.$geturlpara.getUrlKey("id");
-      shareData("动态",location.href)
+      shareData("动态",location.href, '社群动态')
       weixinShare();
       this.id = id
       this.fetchData();
