@@ -26,7 +26,7 @@ export function getBody(){
 	return {'top':t,'height':h} ;
 }
  //
-export function weixinShare(Vue,data,shareType={}){
+export function weixinShare(Vue,shareType={}){
 	var url=HOST+"/api/session/share_weixin_config?url="+encodeURIComponent(window.location.href.split('#')[0]);
 	fetch({
     url: url,
