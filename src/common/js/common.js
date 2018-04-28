@@ -98,7 +98,7 @@ export function weixinShare(Vue,shareType={}){
       desc:desc, // 分享描述
       link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
       imgUrl: imgUrl, // 分享图标
-      type: shareType?shareType:'link', // 分享类型,music、video或link，不填默认为link
+      type: shareType?shareType.type:'link', // 分享类型,music、video或link，不填默认为link
       dataUrl: shareType?shareType.link:'', // 如果type是music或video，则要提供数据链接，默认为空
       success: function () {
         // alert("分享成功")

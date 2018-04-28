@@ -212,7 +212,7 @@
 						}
 						let shareType = {}
 						if (this.articles.sub_type == 'R') {
-							shareType = {link:this.articles.banner}
+							shareType = {type:'music',link:this.articles.banner}
 						}
 						weixinShare(Vue,shareType);
 						// 埋点统计
