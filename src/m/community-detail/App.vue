@@ -1,14 +1,14 @@
 <template>
-  <div id="community_detail">
-    <div>
+  <div id="community_detail" ref="imageCommunity">
+    <div v-show="showContent">
       <div class="content_1">
         <div class="community_content">
           <activity-author v-if="showContent" v-on:toIndex="getAuthor" v-on:toDelete="getDeleteCommunity" v-on:toLiked="getLikedCommunity" v-on:toUnLiked="getUnLikedCommunity" :dataInfo="userInfo"></activity-author>
           <div>
             <a class="add_community" id="openApp_1">加入大校门查看完整动态> </a>
           </div>
-          <div class="image_community" v-bind:style="{height : height}" ref="imageCommunity">
-            <activity-images v-if="showContent" :dataQuery="dataQuery" :width="width"></activity-images>
+          <div class="image_community" v-bind:style="{height : height}">
+            <activity-images :dataQuery="dataQuery" :width="width"></activity-images>
           </div>
           <a class="open_community" id="openApp_2">打开功夫财经，打开原文</a>
         </div>
@@ -75,6 +75,7 @@
         userInfo: {},
         dataInfo: {},
         dataQuery: [],
+        imageWidth: null,
         width: null,
         height: null,
         defaultimg: 'http://image.51xy8.com/1496311047717.jpg',
@@ -87,24 +88,22 @@
       BackHome
     },
     beforeCreate(){
+      //授权
+      if(!isWeiXin()){
+        message("请关注'功夫财经'公众号")
+      } else {
+        getAuth(cookie,querystring)
+      }
     },
     created () {
       let id = this.$geturlpara.getUrlKey("id");
-      this.id = id
-      //授权
-      if(isWeiXin()){
-        getAuth(cookie,querystring)
-      } else {
-        message("请关注'功夫财经'公众号")
-      }
-      shareData("动态",location.href, '动态评论')
+      shareData("动态",location.href)
       weixinShare();
+      this.id = id
+      this.fetchData();
     },
     mounted () {
-      this.fetchData();
       window.addEventListener('scroll', this.handleScrollTop);
-      this.getResizeWidth();
-      this.toApp();
     },
     methods: {
       fetchData: function() {
@@ -113,6 +112,8 @@
         this.showContent = false
         getCommunityDetail({id: this.id}).then((res) => {
           this.showContent = true
+          this.toApp();
+          this.getResizeWidth();
           console.log(res)
           try {
             if (res.status == 0) {
@@ -173,8 +174,8 @@
         let _self = this;
         window.onresize = (function temp() {
           if (_self.$refs.imageCommunity != undefined) {
-            // console.log(_self.$refs.imageCommunity.getBoundingClientRect().width)
-            _self.width = (parseInt(_self.$refs.imageCommunity.getBoundingClientRect().width)-46-8)/3+'px'
+            _self.imageWidth = (parseInt(_self.$refs.imageCommunity.getBoundingClientRect().width)-76-8)/3;
+            _self.width = _self.imageWidth+'px'
             _self.height = _self.width
           }
         })();
@@ -229,17 +230,17 @@
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
         let selfTop = null
         console.log(scrollTop)
-        if (scrollTop>90) {
+        if (scrollTop>this.imageWidth-7) {
           setTimeout(function(){
             this.height = 'auto'
           }.bind(this), 500)
         }
         if(this.dataQuery.length<=3){
-          selfTop = 140
+          selfTop = this.imageWidth
         }else if(this.dataQuery.length<=6&&this.dataQuery.length>3) {
-          selfTop = 210
+          selfTop = this.imageWidth*2
         }else{
-          selfTop = 270
+          selfTop = this.imageWidth*3
         }
         if(scrollTop>selfTop){
           setTimeout(function(){
