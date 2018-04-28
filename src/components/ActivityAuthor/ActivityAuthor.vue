@@ -1,6 +1,6 @@
 <template>
 	<div id="activity-author" class="activity-author">
-    <div class="author_content" ref="author" v-bind:class="{'position-relative' : item.top!=undefined}" v-for="item in dataInfo.items" v-bind:key="item.id">
+    <div v-show="dataInfo.items.length>0" class="author_content" ref="author" v-bind:class="{'position-relative' : item.top!=undefined}" v-for="item in dataInfo.items" v-bind:key="item.id">
       <div v-bind:class="{'border-bottom' : item.top!=undefined}">
         <div class="flex-start-between">
           <div class="left flex-start">

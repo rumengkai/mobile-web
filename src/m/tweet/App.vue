@@ -17,7 +17,7 @@
       <div class="content_1 sub_content_1" v-show="dataInfoList.length>0" >
         <div class="united_content">
           <div class="title">评论</div>
-          <activity-author v-if="showContent" v-on:toAuthorHeight="getAuthorHeight" v-on:toIndex="getAuthor" v-on:toDelete="getDeleteCommunity" v-on:toLiked="getLikedCommunity" v-on:toUnLiked="getUnLikedCommunity" :dataInfo="dataInfo"></activity-author>
+          <activity-author v-if="dataInfoList.length>0&&showContent" v-on:toAuthorHeight="getAuthorHeight" v-on:toIndex="getAuthor" v-on:toDelete="getDeleteCommunity" v-on:toLiked="getLikedCommunity" v-on:toUnLiked="getUnLikedCommunity" :dataInfo="dataInfo"></activity-author>
           <img class="image_bg_2" v-bind:style="{height: authorHeight}" src="https://static1.kofuf.com/1524908164856.png" />
           <a class="open_united" id="openApp_3">打开功夫财经，查看更多评论</a>
         </div>
