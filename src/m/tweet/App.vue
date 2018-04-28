@@ -189,7 +189,7 @@
       },
       getAuthor: function(id) {
         console.log(id)
-        window.location.href = "/m/united_dynamic.html?id=" + id;
+        window.location.href = "/m/tweet.html?id=" + id;
       },
       getDeleteCommunity: function(id) {
         console.log(id)
