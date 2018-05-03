@@ -9,7 +9,7 @@ export function getCommunityDetail(params) {
 
 export function getLikedCommunity(params) {
   return fetch({
-    url: '/api/communities/tweets/do_like',
+    url: '/api/communities/tweets/comments/do_like',
     method: 'post',
     params
   })
@@ -17,7 +17,7 @@ export function getLikedCommunity(params) {
 
 export function getUnLikedCommunity(params) {
   return fetch({
-    url: '/api/communities/tweets/cancel_like',
+    url: '/api/communities/tweets/comments/cancel_like',
     method: 'post',
     params
   })
@@ -25,7 +25,7 @@ export function getUnLikedCommunity(params) {
 
 export function getDeleteCommunity(params) {
   return fetch({
-    url: '/api/communities/tweets/delete',
+    url: '/api/communities/tweets/comments/delete',
     method: 'post',
     params
   })
@@ -35,5 +35,29 @@ export function getUnitedIndex(params) {
   return fetch({
     url: '/api/communities/detail/'+params.id,
     method: 'get'
+  })
+}
+
+export function getLikeComment(params) {
+  return fetch({
+    url: '/api/communities/tweets/do_like',
+    method: 'post',
+    params
+  })
+}
+
+export function getUnLikeComment(params) {
+  return fetch({
+    url: '/api/communities/tweets/cancel_like',
+    method: 'post',
+    params
+  })
+}
+
+export function getDeleteComment(params) {
+  return fetch({
+    url: '/api/communities/tweets/delete',
+    method: 'post',
+    params
   })
 }

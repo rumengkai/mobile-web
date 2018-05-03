@@ -1,6 +1,6 @@
 <template>
-	<div id="activity-images" class="activity-images" ref="activityImages">
-    <div class="content" v-bind:style="{width: width, height: width}" v-bind:class="{'center' : index%3==1}" v-for="(item,index) in dataQuery" v-bind:key="index">
+	<div id="activity-images" class="activity-images">
+    <div class="content-images" v-bind:style="{width: width, height: width}" v-bind:class="{'center' : index%3==1}" v-for="(item,index) in dataQuery" v-bind:key="index">
       <img class="img" v-bind:style="{width: width, height: width}" :src="item.url" />
     </div>
 	</div>
@@ -35,11 +35,10 @@
 
 <style lang="less">
 	@import '~vux/src/styles/1px.less';
-	.activity-images {
+	#activity-images {
 		background: #fff;
     height: auto;
-    padding-left: 46px;
-    .content {
+    .content-images {
       display: inline-block;
       .img {
         width: 100%;

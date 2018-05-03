@@ -3,11 +3,25 @@
     <div v-show="showContent">
       <div class="content_1">
         <div class="united_content">
-        
+          <activity-united v-if="showContent" :dataInfo="dataUnited"></activity-united>
         </div>
       </div>
-      <div>
-        <open-app :id="id"></open-app>
+      <div v-if="dataLive != null" class="content_2">
+        <title-bar :title="dataLive.name" more="往期直播" :img="dataLive.image" line="line" url="/m/lives.html"></title-bar>
+        <div v-for="(item,index) in dataLive.items" :key="index">
+					<live-item :liveItem="item"></live-item>
+				</div>
+      </div>
+      <div v-if="dataActivity != null" class="content_3">
+        <title-bar :title="dataActivity.name" more="查看全部" :img="dataActivity.image" line="line" url="/mengqi/#/activity/list"></title-bar>
+				<activities-list :dataList="dataActivity.items"></activities-list>
+      </div>
+      <div v-show="dataTweetsList.length>0" class="content_4">
+        <title-bar :title="dataTweets.name" :img="dataTweets.image" line="line" ></title-bar>
+        <activity-author v-if="showContent" v-on:toIndex="getAuthor" v-on:toComment="getComment" v-on:toDelete="getDeleteComment" v-on:toLiked="getLikedComment" v-on:toUnLiked="getUnLikedComment" :dataInfo="dataTweets"></activity-author>
+        <div class="marginLR15 deMarginT10">
+          <a class="open_united" id="openApp">打开功夫财经，查看更多门派动态</a>
+        </div>
       </div>
       <div class="qr_code_pc_inner">
         <div class="qr_code_pc">
@@ -41,14 +55,16 @@
   } from 'vux'
   import {
     getCommunityDetail,
-    getLikedCommunity,
-    getUnLikedCommunity,
-    getDeleteCommunity,
+    getLikeComment,
+    getUnLikeComment,
+    getDeleteComment,
     getUnitedIndex
   } from 'src/api/community.js'
   import ActivityAuthor from 'components/ActivityAuthor/ActivityAuthor'
-  import ActivityImages from 'components/ActivityImages/ActivityImages'
   import ActivityUnited from 'components/ActivityUnited/ActivityUnited'
+  import TitleBar from 'components/TitleBar/TitleBar'
+  import LiveItem from 'components/LiveItem/LiveItem'
+  import ActivitiesList from 'components/ActivitiesList/ActivitiesList'
   import openApp from "components/openAPP/openAPP"
   import BackHome from "components/BackHome/BackHome"
   import { setTimeout } from 'timers';
@@ -59,20 +75,20 @@
       return {
         id: null,
         showContent: false,
-        // dataInfoList: [],
-        // userInfo: {},
-        dataInfo: {name: ''},
-        // dataQuery: [],
-        // imageWidth: null,
-        // width: null,
-        // height: null,
+        dataUnited: {},
+        dataLive: null,
+        dataActivity: null,
+        dataTweets: {},
+        dataTweetsList: [],
         defaultimg: 'http://image.51xy8.com/1496311047717.jpg',
       }
     },
     components: {
       ActivityUnited,
       ActivityAuthor,
-      ActivityImages,
+      TitleBar,
+      LiveItem,
+      ActivitiesList,
       openApp,
       BackHome
     },
@@ -86,14 +102,12 @@
     },
     created () {
       let id = this.$geturlpara.getUrlKey("id");
-      shareData("动态",location.href)
+      shareData("群主页",location.href)
       weixinShare();
       this.id = id
       this.fetchData();
-      // this.fetchData1();
     },
     mounted () {
-      // window.addEventListener('scroll', this.handleScrollTop);
     },
     methods: {
       fetchData: function() {
@@ -103,53 +117,72 @@
           try {
             if (res.status == 0) {
               console.log(res)
-            }
-          } catch(error) {
-            toast(error)
-          }
-        })
-      },
-      fetchData1: function() {
-        let userItem = {}
-        let userList = []
-        this.showContent = false
-        getCommunityDetail({id: this.id}).then((res) => {
-          this.showContent = true
-          this.toApp();
-          this.getResizeWidth();
-          console.log(res)
-          try {
-            if (res.status == 0) {
-              res.text = stringBr(res.text)
-              res.comments.items.map((item) => {
-                item.content = stringBr(item.content)
-              })
-              userItem = {
-                can_delete: res.can_delete,
+              this.dataUnited = {
+                teacher: res.teacher,
+                member_price: res.member_price,
+                member_size: res.member_size,
+                post_count: res.post_count,
+                price: res.price,
+                followed: res.followed,
                 id: res.id,
-                content: res.text,
-                like_count: res.like_count,
-                liked: res.liked,
-                time: res.time,
-                user: res.user
+                no_read_num: res.no_read_num,
+                name: res.name,
+                push: res.push
               }
-              userList.push(userItem)
-              this.userInfo = {items: userList}
-              this.dataQuery = res.images
-              // 特殊处理
-              this.dataInfoList = res.comments.items
-              if(res.comments.items.length>3){
-                this.dataInfo = {items: res.comments.items.slice(0,2)}
-              }else{
-                this.dataInfo = {items: this.dataInfoList}
+              // res.lives = {
+              //   has_next: true,
+              //   image: "https://static1.kofuf.com/1516182652081.png",
+              //   index:  0,
+              //   items:[{
+              //     id: 27,
+              //     name: "test",
+              //     share_info: "wenan",
+              //     share_url: "http://dev.kofuf.com/m/live.html?id=27",
+              //     state: 1,
+              //     teacher: {name: "brasil", photo: "https://static1.kofuf.com/1496311047717.jpg", id: 0, time: 0},
+              //     thumb: "http://static1.kofuf.com/1520857526666.jpg",
+              //     time: 1521030328000,
+              //     user_count: 28
+              //   }],
+              //   name: "功夫·直播",
+              //   need_login:false
+              // }
+              // res.activities = {
+              //   has_next: true,
+              //   image: "https://static1.kofuf.com/1516182652081.png",
+              //   index: 1,
+              //   items:  [{
+              //     address:  "活动TTTTT",
+              //     article_id: 0,
+              //     banner: "http://static1.kofuf.com/1516696490875.jpg",
+              //     id: 13,
+              //     intro:"一句话结束",
+              //     name:"活动TTTTT",
+              //     start_time:1527147646000,
+              //     state:4,
+              //     state_val:  "报名中",
+              //     type:1,
+              //     type_val:"活动报名",
+              //     url:"http://dev.kofuf.com/mengqi/#/activity/detail/13",
+              //    }],
+              //   name:"功夫·财智会"
+              // }
+              if (res.lives != undefined) {
+                this.dataLive = res.lives
               }
-              if (this.dataInfoList.length<=1) {
-                setTimeout(function(){
-                  this.height = 'auto'
-                }.bind(this), 500)
+              if (res.activities != undefined) {
+                this.dataActivity = res.activities
               }
-            } else {
-              toast(res.error)
+              if (res.tweets != undefined && res.tweets.items.length>0) {
+                res.tweets.items.map((item) => {
+                  item.content = stringBr(item.text)
+                })
+                this.dataTweets = res.tweets
+                this.dataTweetsList = res.tweets.items
+                console.log(this.dataTweetsList)
+                this.toApp();
+              }
+              console.log(this.dataUnited)
             }
           } catch(error) {
             toast(error)
@@ -159,38 +192,37 @@
       toApp: function() {
         new Mlink({
           mlink: "https://ah88dj.mlinks.cc/AK8f?id="+this.id,
-          button: document.querySelector('a#openApp_1'),
-          autoLaunchApp : false,
-        });
-        new Mlink({
-          mlink: "https://ah88dj.mlinks.cc/AK8f?id="+this.id,
-          button: document.querySelector('a#openApp_2'),
-          autoLaunchApp : false,
-        });
-        new Mlink({
-          mlink: "https://ah88dj.mlinks.cc/AK8f?id="+this.id,
-          button: document.querySelector('a#openApp_3'),
+          button: document.querySelector('a#openApp'),
           autoLaunchApp : false,
         });
       },
-      getResizeWidth: function() {
-        let _self = this;
-        window.onresize = (function temp() {
-          if (_self.$refs.imageCommunity != undefined) {
-            _self.imageWidth = (parseInt(_self.$refs.imageCommunity.getBoundingClientRect().width)-76-8)/3;
-            _self.width = _self.imageWidth+'px'
-            _self.height = _self.width
-          }
-        })();
+      getComment: function(id) {
+        window.location.href = "/m/tweet.html?id=" + id;
       },
       getAuthor: function(id) {
         console.log(id)
-        window.location.href = "/m/united_dynamic.html?id=" + id;
+        window.location.href = "/m/moments.html?id="+id+"&type=mid";
       },
-      getDeleteCommunity: function(id) {
+      getDeleteComment: function(id) {
         console.log(id)
         this.showContent = false
-        getDeleteCommunity({id: id}).then((res) => {
+        getDeleteComment({id: id}).then((res) => {
+          this.showContent = true
+          try {
+            if (res.status == 0) {
+              this.fetchData()
+            } else {
+              toast(res.error)
+            }
+          } catch(error) {
+            toast(error)
+          }
+        })
+      },
+      getLikedComment: function(id) {
+        console.log(id)
+        this.showContent = false
+        getLikeComment({id: id}).then((res) => {
           this.showContent = true
           try {
             if (res.status == 0) {
@@ -201,10 +233,10 @@
           }
         })
       },
-      getLikedCommunity: function(id) {
+      getUnLikedComment: function(id) {
         console.log(id)
         this.showContent = false
-        getLikedCommunity({id: id}).then((res) => {
+        getUnLikeComment({id: id}).then((res) => {
           this.showContent = true
           try {
             if (res.status == 0) {
@@ -214,46 +246,6 @@
             toast(error)
           }
         })
-      },
-      getUnLikedCommunity: function(id) {
-        console.log(id)
-        this.showContent = false
-        getUnLikedCommunity({id: id}).then((res) => {
-          this.showContent = true
-          try {
-            if (res.status == 0) {
-              this.fetchData()
-            }
-          } catch(error) {
-            toast(error)
-          }
-        })
-      },
-      handleScrollTop: function() {
-        let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-        let selfTop = null
-        console.log(scrollTop)
-        if (scrollTop>this.imageWidth-7) {
-          setTimeout(function(){
-            this.height = 'auto'
-          }.bind(this), 500)
-        }
-        if(this.dataQuery.length<=3){
-          selfTop = this.imageWidth
-        }else if(this.dataQuery.length<=6&&this.dataQuery.length>3) {
-          selfTop = this.imageWidth*2
-        }else{
-          selfTop = this.imageWidth*3
-        }
-        if(scrollTop>selfTop){
-          setTimeout(function(){
-            this.dataInfo = {items: this.dataInfoList}
-            this.destroyed();
-          }.bind(this), 500)
-        }
-      },
-      destroyed () {
-        window.removeEventListener('scroll', this.handleScrollTop)
       }
     }
   }

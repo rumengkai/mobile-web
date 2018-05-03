@@ -4,14 +4,18 @@
       <div class="content_1">
         <div class="united_content">
           <activity-author v-if="showContent" v-on:toIndex="getAuthor" v-on:toDelete="getDeleteCommunity" v-on:toLiked="getLikedCommunity" v-on:toUnLiked="getUnLikedCommunity" :dataInfo="userInfo"></activity-author>
-          <div>
-            <a class="add_united" id="openApp_1">加入大校门查看完整动态> </a>
+          <div class="marginLR15">
+            <a class="add_united" @click="toCommunity" id="openApp_1">加入大校门查看完整动态> </a>
           </div>
-          <div class="image_united" v-bind:style="{height : height}">
-            <activity-images :dataQuery="dataQuery" :width="width"></activity-images>
-            <img class="image_bg" v-bind:style="{height: width}" src="https://static2.kofuf.com/1524907490695.png" />
+          <div class="marginLR15">
+            <div class="image_united" v-bind:style="{height : height}">
+              <activity-images :dataQuery="dataQuery" :width="width"></activity-images>
+              <img class="image_bg" v-bind:style="{height: width}" src="https://static2.kofuf.com/1524907490695.png" />
+            </div>
           </div>
-          <a class="open_united" id="openApp_2">打开功夫财经，打开原文</a>
+          <div style="margin: 0 15px;">
+            <a class="open_united" @click="toCommunity" id="openApp_2">打开功夫财经，打开原文</a>
+          </div>
         </div>
       </div>
       <div class="content_1 sub_content_1" v-show="dataInfoList.length>0" >
@@ -19,7 +23,9 @@
           <div class="title">评论</div>
           <activity-author v-if="dataInfoList.length>0&&showContent" v-on:toAuthorHeight="getAuthorHeight" v-on:toIndex="getAuthor" v-on:toDelete="getDeleteCommunity" v-on:toLiked="getLikedCommunity" v-on:toUnLiked="getUnLikedCommunity" :dataInfo="dataInfo"></activity-author>
           <img class="image_bg_2" v-bind:style="{height: authorHeight}" src="https://static1.kofuf.com/1524908164856.png" />
-          <a class="open_united" id="openApp_3">打开功夫财经，查看更多评论</a>
+          <div class="marginLR15">
+            <a class="open_united" @click="toCommunity" id="openApp_3">打开功夫财经，查看更多评论</a>
+          </div>
         </div>
       </div>
       <div>
@@ -82,6 +88,10 @@
         height: null,
         authorHeight: null,
         defaultimg: 'http://image.51xy8.com/1496311047717.jpg',
+        share_image: 'http://image.51xy8.com/1496311047717.jpg',
+        share_text: '门派动态',
+        share_title: '动态',
+        share_url: location.href
       }
     },
     components: {
@@ -100,26 +110,33 @@
     },
     created () {
       let id = this.$geturlpara.getUrlKey("id");
-      shareData("动态",location.href, '门派动态')
-      weixinShare();
       this.id = id
       this.fetchData();
+      this.shareWeixin();
     },
     mounted () {
       window.addEventListener('scroll', this.handleScrollTop);
     },
     methods: {
+      shareWeixin: function() {
+        shareData(this.share_title, this.share_url, this.share_text, this.share_image)
+        weixinShare();
+      },
       fetchData: function() {
         let userItem = {}
         let userList = []
         this.showContent = false
         getCommunityDetail({id: this.id}).then((res) => {
           this.showContent = true
-          this.toApp();
           this.getResizeWidth();
           console.log(res)
           try {
             if (res.status == 0) {
+              this.share_title = res.share_title
+              this.share_url = res.share_url
+              this.share_text = res.share_text
+              this.share_image = res.share_image
+              this.shareWeixin()
               res.text = stringBr(res.text)
               res.comments.items.map((item) => {
                 item.content = stringBr(item.content)
@@ -143,7 +160,7 @@
               }else{
                 this.dataInfo = {items: this.dataInfoList}
               }
-              if (this.dataInfoList.length<=1) {
+              if (this.dataInfoList.length<=3) {
                 setTimeout(function(){
                   this.height = 'auto'
                 }.bind(this), 0)
@@ -156,22 +173,8 @@
           }
         })
       },
-      toApp: function() {
-        new Mlink({
-          mlink: "https://ah88dj.mlinks.cc/AK8f?id="+this.id,
-          button: document.querySelector('a#openApp_1'),
-          autoLaunchApp : false,
-        });
-        new Mlink({
-          mlink: "https://ah88dj.mlinks.cc/AK8f?id="+this.id,
-          button: document.querySelector('a#openApp_2'),
-          autoLaunchApp : false,
-        });
-        new Mlink({
-          mlink: "https://ah88dj.mlinks.cc/AK8f?id="+this.id,
-          button: document.querySelector('a#openApp_3'),
-          autoLaunchApp : false,
-        });
+      toCommunity: function() {
+        window.location.href = location.origin+'/m/community.html?id='+this.id
       },
       getResizeWidth: function() {
         let _self = this;
@@ -189,7 +192,8 @@
       },
       getAuthor: function(id) {
         console.log(id)
-        window.location.href = "/m/tweet.html?id=" + id;
+        window.location.href = "/m/moments.html?id="+id+"&type=mid"
+        // window.location.href = "/m/tweet.html?id=" + id;
       },
       getDeleteCommunity: function(id) {
         console.log(id)
@@ -199,6 +203,8 @@
           try {
             if (res.status == 0) {
               this.fetchData()
+            } else {
+              toast(res.error)
             }
           } catch(error) {
             toast(error)
@@ -213,6 +219,8 @@
           try {
             if (res.status == 0) {
               this.fetchData()
+            } else {
+              toast(res.error)
             }
           } catch(error) {
             toast(error)
@@ -227,6 +235,8 @@
           try {
             if (res.status == 0) {
               this.fetchData()
+            } else {
+              toast(res.error)
             }
           } catch(error) {
             toast(error)
