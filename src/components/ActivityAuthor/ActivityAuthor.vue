@@ -13,7 +13,7 @@
               <p class="time-number">{{item.time | parseTime('{m}/{d} {h}:{i}')}}</p>
             </div>
           </div>
-          <div class="right flex-between">
+          <div class="right flex-between" v-show="false">
             <div @click="getComment(item.id)" v-if="item.comment_count != undefined" class="comment">
               <img class="comment-img" src="https://static1.kofuf.com/1525254905356.png" alt="">
               <div class="liked-number">{{item.comment_count}}</div>
@@ -76,15 +76,16 @@
       Audiobox
     },
 		mounted() {
-      // console.log(this.$refs.author[0].clientHeight)
-      // console.log(this.$refs.author[0].clientWidth)
-      // console.log(this.dataInfo);
+      console.log(this.$refs.author[0].clientHeight)
+      console.log(this.$refs.author[0].clientWidth)
+      console.log(this.dataInfo);
       // console.log(this.width)
-      // console.log(this.$refs.eightell[0])
+      console.log(this.$refs.eightell[0])
       if (this.$refs.eightell[0].clientHeight >= 160) {
         this.eightStatus = true
       }
       this.width = (this.$refs.author[0].clientWidth-30-46-8)/3+'px'
+      console.log(this.width)
       this.$emit('toAuthorHeight', this.$refs.author[0].clientHeight-39)
 		},
 		methods: {

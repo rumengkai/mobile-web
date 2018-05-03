@@ -22,9 +22,11 @@
         <div class="united_content">
           <div class="title">评论</div>
           <activity-author v-if="dataInfoList.length>0&&showContent" v-on:toAuthorHeight="getAuthorHeight" v-on:toIndex="getAuthor" v-on:toDelete="getDeleteCommunity" v-on:toLiked="getLikedCommunity" v-on:toUnLiked="getUnLikedCommunity" :dataInfo="dataInfo"></activity-author>
-          <img class="image_bg_2" v-bind:style="{height: authorHeight}" src="https://static1.kofuf.com/1524908164856.png" />
-          <div class="marginLR15">
-            <a class="open_united" id="openApp_3">打开功夫财经，查看更多评论</a>
+          <div v-show="commentsHasText">
+            <img class="image_bg_2" v-bind:style="{height: authorHeight}" src="https://static1.kofuf.com/1524908164856.png" />
+            <div class="marginLR15">
+              <a class="open_united" id="openApp_3">打开功夫财经，查看更多评论</a>
+            </div>
           </div>
         </div>
       </div>
@@ -82,6 +84,7 @@
       return {
         id: null,
         showContent: false,
+        commentsHasText: false,
         dataInfoList: [],
         userInfo: {},
         dataInfo: {},
@@ -141,22 +144,27 @@
               this.share_text = res.share_text
               this.share_image = res.share_image
               this.shareWeixin()
+              this.commentsHasText = res.comments.has_text
               res.text = stringBr(res.text)
               res.comments.items.map((item) => {
                 item.content = stringBr(item.content)
               })
               userItem = {
                 can_delete: res.can_delete,
+                // comment_count: res.comment_count,
                 id: res.id,
+                images: res.images,
                 content: res.text,
+                share_url: res.share_url,
                 like_count: res.like_count,
                 liked: res.liked,
                 time: res.time,
+                // type: res.type,
                 user: res.user
               }
               userList.push(userItem)
-              this.userInfo = {items: userList}
-              this.dataQuery = res.images
+              this.userInfo = {items: userList} // 动态用户
+              this.dataQuery = res.images // 动态图片
               // 特殊处理
               this.dataInfoList = res.comments.items
               if(res.comments.items.length>3){
@@ -183,11 +191,13 @@
           button: document.querySelector('a#openApp_2'),
           autoLaunchApp : false,
         });
-        new Mlink({
-          mlink: "https://ah88dj.mlinks.cc/AK8f?id="+this.id,
-          button: document.querySelector('a#openApp_3'),
-          autoLaunchApp : false,
-        });
+        // if (this.tweet.comments.has_next) {
+          new Mlink({
+            mlink: "https://ah88dj.mlinks.cc/AK8f?id="+this.id,
+            button: document.querySelector('a#openApp_3'),
+            autoLaunchApp : false,
+          });
+        // }
       },
       toCommunity: function() {
         window.location.href = location.origin+'/m/community.html?id='+this.id
@@ -209,6 +219,7 @@
       getAuthor: function(id) {
         console.log(id)
         window.location.href = "/m/moments.html?id="+id+"&type=pid"
+        // window.location.href = "/m/tweet.html?id=" + id;
       },
       getDeleteComment: function(id) {
         console.log(id)
