@@ -201,7 +201,7 @@
       },
       getAuthor: function(id) {
         console.log(id)
-        window.location.href = "/m/moments.html?id="+id+"&type=mid";
+        window.location.href = "/m/moments.html?id="+id+"&type=pid";
       },
       getDeleteComment: function(id) {
         console.log(id)

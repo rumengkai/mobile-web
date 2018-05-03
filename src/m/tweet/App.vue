@@ -14,7 +14,7 @@
             </div>
           </div>
           <div style="margin: 0 15px;">
-            <a class="open_united" @click="toCommunity" id="openApp_2">打开功夫财经，打开原文</a>
+            <a class="open_united" id="openApp_2">打开功夫财经，打开原文</a>
           </div>
         </div>
       </div>
@@ -24,7 +24,7 @@
           <activity-author v-if="dataInfoList.length>0&&showContent" v-on:toAuthorHeight="getAuthorHeight" v-on:toIndex="getAuthor" v-on:toDelete="getDeleteCommunity" v-on:toLiked="getLikedCommunity" v-on:toUnLiked="getUnLikedCommunity" :dataInfo="dataInfo"></activity-author>
           <img class="image_bg_2" v-bind:style="{height: authorHeight}" src="https://static1.kofuf.com/1524908164856.png" />
           <div class="marginLR15">
-            <a class="open_united" @click="toCommunity" id="openApp_3">打开功夫财经，查看更多评论</a>
+            <a class="open_united" id="openApp_3">打开功夫财经，查看更多评论</a>
           </div>
         </div>
       </div>
@@ -131,6 +131,7 @@
         this.showContent = false
         getCommunityDetail({id: this.id}).then((res) => {
           this.showContent = true
+          this.toApp();
           this.getResizeWidth();
           console.log(res)
           try {
@@ -176,6 +177,18 @@
           }
         })
       },
+      toApp: function() {
+        new Mlink({
+          mlink: "https://ah88dj.mlinks.cc/AK8f?id="+this.id,
+          button: document.querySelector('a#openApp_2'),
+          autoLaunchApp : false,
+        });
+        new Mlink({
+          mlink: "https://ah88dj.mlinks.cc/AK8f?id="+this.id,
+          button: document.querySelector('a#openApp_3'),
+          autoLaunchApp : false,
+        });
+      },
       toCommunity: function() {
         window.location.href = location.origin+'/m/community.html?id='+this.id
       },
@@ -195,8 +208,7 @@
       },
       getAuthor: function(id) {
         console.log(id)
-        window.location.href = "/m/moments.html?id="+id+"&type=mid"
-        // window.location.href = "/m/tweet.html?id=" + id;
+        window.location.href = "/m/moments.html?id="+id+"&type=pid"
       },
       getDeleteComment: function(id) {
         console.log(id)
