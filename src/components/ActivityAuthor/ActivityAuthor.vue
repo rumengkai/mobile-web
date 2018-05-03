@@ -2,13 +2,13 @@
 	<div id="activity-author" class="activity-author">
     <div class="author_content" ref="author" v-bind:class="{'position-relative' : item.top!=undefined}" v-for="item in dataInfo.items" v-bind:key="item.id">
       <div v-bind:class="{'border-bottom' : item.top!=undefined}">
-        <div class="flex-start-between" @click="toCommunityDetail(item.id)">
+        <div class="flex-start-between">
           <div class="left flex-start">
-            <div class="left_1" @click="toAuthorIndex(item.user.id)">
+            <div class="left_1" @click:stop="toAuthorIndex(item.user.id)">
               <img class="photo" :src="item.user.photo" alt="">
               <img class="vip" :src="item.user.level_icon" alt="">
             </div>
-            <div class="left_2">
+            <div class="left_2" @click:stop="toCommunityDetail(item.id)">
               <p class="name flex-start"><span class="ell" v-bind:class="{ 'user-name' : item.user.name.length>9 }" >{{item.user.name}}</span><span v-show="item.top" class="place-top">置顶</span></p>
               <p class="time-number">{{item.time | parseTime('{m}/{d} {h}:{i}')}}</p>
             </div>
