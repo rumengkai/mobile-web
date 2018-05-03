@@ -18,8 +18,8 @@
       </div>
       <div v-show="dataTweetsList.length>0" class="content_4">
         <title-bar :title="dataTweets.name" :img="dataTweets.image" line="line" ></title-bar>
-        <activity-author v-if="showContent" v-on:toIndex="getAuthor" v-on:toComment="getComment" v-on:toDelete="getDeleteComment" v-on:toLiked="getLikedComment" v-on:toUnLiked="getUnLikedComment" :dataInfo="dataTweets"></activity-author>
-        <div class="marginLR15 deMarginT10">
+        <activity-author v-if="showContent" v-on:toCommunity="getCommunity" v-on:toIndex="getAuthor" v-on:toComment="getComment" v-on:toDelete="getDeleteComment" v-on:toLiked="getLikedComment" v-on:toUnLiked="getUnLikedComment" :dataInfo="dataTweets"></activity-author>
+        <div v-show="tweetHasText" class="marginLR15 deMarginT10">
           <a class="open_united" id="openApp">打开功夫财经，查看更多门派动态</a>
         </div>
       </div>
@@ -76,6 +76,7 @@
         id: null,
         followed: null,
         showContent: false,
+        tweetHasText: false,
         dataUnited: {},
         dataLive: null,
         dataActivity: null,
@@ -103,7 +104,7 @@
     },
     created () {
       let id = this.$geturlpara.getUrlKey("id");
-      shareData("群主页",location.href)
+      shareData("群主页",location.href, '群主页动态')
       weixinShare();
       this.id = id
       this.fetchData();
@@ -118,6 +119,7 @@
           try {
             if (res.status == 0) {
               console.log(res)
+              this.tweetHasText = res.tweets.has_text
               this.followed = res.followed
               this.dataUnited = {
                 teacher: res.teacher,
@@ -131,44 +133,6 @@
                 name: res.name,
                 push: res.push
               }
-              // res.lives = {
-              //   has_next: true,
-              //   image: "https://static1.kofuf.com/1516182652081.png",
-              //   index:  0,
-              //   items:[{
-              //     id: 27,
-              //     name: "test",
-              //     share_info: "wenan",
-              //     share_url: "http://dev.kofuf.com/m/live.html?id=27",
-              //     state: 1,
-              //     teacher: {name: "brasil", photo: "https://static1.kofuf.com/1496311047717.jpg", id: 0, time: 0},
-              //     thumb: "http://static1.kofuf.com/1520857526666.jpg",
-              //     time: 1521030328000,
-              //     user_count: 28
-              //   }],
-              //   name: "功夫·直播",
-              //   need_login:false
-              // }
-              // res.activities = {
-              //   has_next: true,
-              //   image: "https://static1.kofuf.com/1516182652081.png",
-              //   index: 1,
-              //   items:  [{
-              //     address:  "活动TTTTT",
-              //     article_id: 0,
-              //     banner: "http://static1.kofuf.com/1516696490875.jpg",
-              //     id: 13,
-              //     intro:"一句话结束",
-              //     name:"活动TTTTT",
-              //     start_time:1527147646000,
-              //     state:4,
-              //     state_val:  "报名中",
-              //     type:1,
-              //     type_val:"活动报名",
-              //     url:"http://dev.kofuf.com/mengqi/#/activity/detail/13",
-              //    }],
-              //   name:"功夫·财智会"
-              // }
               if (res.lives != undefined) {
                 this.dataLive = res.lives
               }
@@ -197,6 +161,9 @@
           button: document.querySelector('a#openApp'),
           autoLaunchApp : false,
         });
+      },
+      getCommunity: function(id) {
+        window.location.href = "/m/tweet.html?id=" + id;
       },
       getComment: function(id) {
         if (this.followed) {

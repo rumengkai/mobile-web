@@ -2,7 +2,7 @@
 	<div id="activity-author" class="activity-author">
     <div class="author_content" ref="author" v-bind:class="{'position-relative' : item.top!=undefined}" v-for="item in dataInfo.items" v-bind:key="item.id">
       <div v-bind:class="{'border-bottom' : item.top!=undefined}">
-        <div class="flex-start-between">
+        <div class="flex-start-between" @click="toCommunityDetail(item.id)">
           <div class="left flex-start">
             <div class="left_1" @click="toAuthorIndex(item.user.id)">
               <img class="photo" :src="item.user.photo" alt="">
@@ -32,14 +32,14 @@
           <div ref="eightell">
             <div v-if="item.type==0">
               <div class="content" v-bind:class="{'eightell' : eightStatus}">{{item.content}}</div>
-              <div @click="toLookMore" v-show="eightStatus" class="look-more">查看更多>></div>
+              <div @click:stop="toLookMore" v-show="eightStatus" class="look-more">查看更多>></div>
             </div>
           </div>
           <div v-if="item.type==1" class="images-section">
             <activity-images :dataQuery="item.images" :width="width"></activity-images>
           </div>
           <div v-if="item.type==2">
-            <div class="article-section flex-start" @click="toDetail(item.url)">
+            <div class="article-section flex-start" @click:stop="toDetail(item.url)">
               <img class="thumb" :src="item.thumb"/>
               <div class="title">{{item.title}}</div>
             </div>
@@ -89,6 +89,9 @@
       this.$emit('toAuthorHeight', this.$refs.author[0].clientHeight-39)
 		},
 		methods: {
+      toCommunityDetail(id) {
+        this.$emit('toCommunity', id)
+      },
       toLookMore() {
         setTimeout(() => {
           this.eightStatus = false
