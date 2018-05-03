@@ -199,7 +199,11 @@
         });
       },
       getComment: function(id) {
-        window.location.href = "/m/tweet.html?id=" + id;
+        if (this.followed) {
+          window.location.href = "/m/tweet.html?id=" + id;
+        } else {
+          toast('你还没有加入门派');
+        }
       },
       getAuthor: function(id) {
         console.log(id)
