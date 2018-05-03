@@ -14,7 +14,7 @@
             </div>
           </div>
           <div class="right flex-between">
-            <div @click="getComment(item.id)" v-if="item.comment_count != undefined" class="flex-start comment">
+            <div @click="getComment(item.id)" v-if="item.comment_count != undefined" class="comment">
               <img class="comment-img" src="https://static1.kofuf.com/1525254905356.png" alt="">
               <div class="liked-number">{{item.comment_count}}</div>
             </div>
@@ -76,16 +76,15 @@
       Audiobox
     },
 		mounted() {
-      console.log(this.$refs.author[0].clientHeight)
-      console.log(this.$refs.author[0].clientWidth)
-      console.log(this.dataInfo);
+      // console.log(this.$refs.author[0].clientHeight)
+      // console.log(this.$refs.author[0].clientWidth)
+      // console.log(this.dataInfo);
       // console.log(this.width)
-      console.log(this.$refs.eightell[0])
+      // console.log(this.$refs.eightell[0])
       if (this.$refs.eightell[0].clientHeight >= 160) {
         this.eightStatus = true
       }
       this.width = (this.$refs.author[0].clientWidth-30-46-8)/3+'px'
-      console.log(this.width)
       this.$emit('toAuthorHeight', this.$refs.author[0].clientHeight-39)
 		},
 		methods: {
@@ -185,18 +184,24 @@
         width: 16px;
         height: 16px;
         line-height: 16px;
+        float: left;
+        margin-top: -4px;
 			}
 			.liked{
         width: 17px;
         height: 17px;
         line-height: 17px;
         margin: 0 10px;
+        float: left;
+        margin-top: -4px;
       }
       .unliked{
         width: 17px;
         height: 17px;
         line-height: 17px;
         margin: 0 5px;
+        float: left;
+        margin-top: -4px;
       }
       .liked-number {
         height: 16px;
@@ -206,6 +211,7 @@
         color: #7B7B7B;
         letter-spacing: 0;
         text-align: center;
+        display: inline-block;
       }
       .comment {
         margin-right: 10px;
@@ -213,11 +219,12 @@
           width: 20px;
           height: 20px;
           line-height: 20px;
-          margin: 0 5px;
+          margin: 4px 5px 0;
+          float: left;
         }
       }
     }
-    .activity-section{
+    .activity-section {
       padding-left: 46px;
       .content {
         font-size: 14px;

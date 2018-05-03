@@ -74,6 +74,7 @@
     data () {
       return {
         id: null,
+        followed: null,
         showContent: false,
         dataUnited: {},
         dataLive: null,
@@ -117,6 +118,7 @@
           try {
             if (res.status == 0) {
               console.log(res)
+              this.followed = res.followed
               this.dataUnited = {
                 teacher: res.teacher,
                 member_price: res.member_price,
@@ -205,47 +207,60 @@
       },
       getDeleteComment: function(id) {
         console.log(id)
-        this.showContent = false
-        getDeleteComment({id: id}).then((res) => {
-          this.showContent = true
-          try {
-            if (res.status == 0) {
-              this.fetchData()
-            } else {
-              toast(res.error)
+        if (this.followed) {
+          this.showContent = false
+          getDeleteComment({id: id}).then((res) => {
+            this.showContent = true
+            try {
+              if (res.status == 0) {
+                this.fetchData()
+              } else {
+                toast(res.error)
+              }
+            } catch(error) {
+              toast(error)
             }
-          } catch(error) {
-            toast(error)
-          }
-        })
+          })
+        } else {
+          toast('你还没有加入门派')
+        }
       },
       getLikedComment: function(id) {
         console.log(id)
-        this.showContent = false
-        getLikeComment({id: id}).then((res) => {
-          this.showContent = true
-          try {
-            if (res.status == 0) {
-              this.fetchData()
+        console.log(this.followed)
+        if (this.followed) {
+          this.showContent = false
+          getLikeComment({id: id}).then((res) => {
+            this.showContent = true
+            try {
+              if (res.status == 0) {
+                this.fetchData()
+              }
+            } catch(error) {
+              toast(error)
             }
-          } catch(error) {
-            toast(error)
-          }
-        })
+          })
+        } else {
+          toast('你还没有加入门派')
+        }
       },
       getUnLikedComment: function(id) {
         console.log(id)
-        this.showContent = false
-        getUnLikeComment({id: id}).then((res) => {
-          this.showContent = true
-          try {
-            if (res.status == 0) {
-              this.fetchData()
+        if (this.followed) {
+          this.showContent = false
+          getUnLikeComment({id: id}).then((res) => {
+            this.showContent = true
+            try {
+              if (res.status == 0) {
+                this.fetchData()
+              }
+            } catch(error) {
+              toast(error)
             }
-          } catch(error) {
-            toast(error)
-          }
-        })
+          })
+        } else {
+          toast('你好没有加入门派')
+        }
       }
     }
   }
