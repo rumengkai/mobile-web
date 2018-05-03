@@ -3,7 +3,7 @@
     <div v-show="showContent">
       <div class="content_1">
         <div class="united_content">
-          <activity-author v-if="showContent" v-on:toIndex="getAuthor" v-on:toDelete="getDeleteCommunity" v-on:toLiked="getLikedCommunity" v-on:toUnLiked="getUnLikedCommunity" :dataInfo="userInfo"></activity-author>
+          <activity-author v-if="showContent" v-on:toIndex="getAuthor" v-on:toDelete="getDeleteComment" v-on:toLiked="getLikedComment" v-on:toUnLiked="getUnLikedComment" :dataInfo="userInfo"></activity-author>
           <div class="marginLR15">
             <a class="add_united" @click="toCommunity" id="openApp_1">加入大校门查看完整动态> </a>
           </div>
@@ -65,7 +65,10 @@
     getCommunityDetail,
     getLikedCommunity,
     getUnLikedCommunity,
-    getDeleteCommunity
+    getDeleteCommunity,
+    getLikeComment,
+    getUnLikeComment,
+    getDeleteComment,
   } from 'src/api/community.js'
   import ActivityAuthor from 'components/ActivityAuthor/ActivityAuthor'
   import ActivityImages from 'components/ActivityImages/ActivityImages'
@@ -194,6 +197,50 @@
         console.log(id)
         window.location.href = "/m/moments.html?id="+id+"&type=mid"
         // window.location.href = "/m/tweet.html?id=" + id;
+      },
+      getDeleteComment: function(id) {
+        console.log(id)
+        this.showContent = false
+        getDeleteComment({id: id}).then((res) => {
+          this.showContent = true
+          try {
+            if (res.status == 0) {
+              this.fetchData()
+            } else {
+              toast(res.error)
+            }
+          } catch(error) {
+            toast(error)
+          }
+        })
+      },
+      getLikedComment: function(id) {
+        console.log(id)
+        this.showContent = false
+        getLikeComment({id: id}).then((res) => {
+          this.showContent = true
+          try {
+            if (res.status == 0) {
+              this.fetchData()
+            }
+          } catch(error) {
+            toast(error)
+          }
+        })
+      },
+      getUnLikedComment: function(id) {
+        console.log(id)
+        this.showContent = false
+        getUnLikeComment({id: id}).then((res) => {
+          this.showContent = true
+          try {
+            if (res.status == 0) {
+              this.fetchData()
+            }
+          } catch(error) {
+            toast(error)
+          }
+        })
       },
       getDeleteCommunity: function(id) {
         console.log(id)
