@@ -91,7 +91,6 @@
         dataQuery: [],
         imageWidth: null,
         width: null,
-        height: null,
         authorHeight: null,
         defaultimg: 'http://image.51xy8.com/1496311047717.jpg',
         share_image: 'http://image.51xy8.com/1496311047717.jpg',
@@ -158,11 +157,6 @@
                 this.dataInfo = {items: res.comments.items.slice(0,2)}
               }else{
                 this.dataInfo = {items: this.dataInfoList}
-              }
-              if (this.dataInfoList.length<=3) {
-                setTimeout(function(){
-                  this.height = 'auto'
-                }.bind(this), 0)
               }
             } else {
               toast(res.error)

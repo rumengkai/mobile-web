@@ -19,10 +19,10 @@
       <div class="content_4">
         <title-bar v-if="dataTweetsList.length>0" :title="dataTweets.name" :img="dataTweets.image" line="line" ></title-bar>
         <activity-author v-if="dataTweetsList.length>0&&showContent" v-on:toCommunity="getCommunity" v-on:toIndex="getAuthor" v-on:toComment="getComment" v-on:toDelete="getDeleteComment" v-on:toLiked="getLikedComment" v-on:toUnLiked="getUnLikedComment" :dataInfo="dataTweets" mark="1"></activity-author>
-        <div v-show="tweetHasNext">
+        <!-- <div v-show="tweetHasNext">
           <img class="image_bg" v-bind:style="{height: height}" src="https://static2.kofuf.com/1524907490695.png" />
-        </div>
-        <div v-show="tweetHasNext" class="marginLR15">
+        </div> -->
+        <div v-show="tweetHasNext" class="marginLR15 open-united">
           <a class="open_united" id="openApp">打开功夫财经，查看更多门派动态</a>
         </div>
       </div>
