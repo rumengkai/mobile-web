@@ -1,9 +1,9 @@
 <template>
 	<div id="activity-images" class="activity-images">
     <div class="content-images" v-bind:style="{width: item.width, height: item.height}" v-bind:class="{'center' : index%3==1}" v-for="(item,index) in dataQuery" v-bind:key="index">
-      <img v-if="dataQuery.length == 1&&item.width>=item.height" @click="previewImage(item.url)" class="img" v-bind:style="{width: item.width, height: 'auto', maxWidth: item.width, maxHeight: item.height}" :src="item.url" />
-      <img v-if="dataQuery.length == 1&&item.width<item.height" @click="previewImage(item.url)" class="img" v-bind:style="{width: width+'px', height: 'auto'}" :src="item.url" />
-      <div v-if="dataQuery.length > 1"  @click="previewImage(item.url)" class="zoom-image" v-bind:style="{width: width+'px', backgroundImage: 'url(' + item.url + ')'}"></div>
+      <img v-if="dataQuery.length==1&&item.width>=item.height" @click="previewImage(item.url)" class="img" v-bind:style="{maxWidth: item.width, height: width+'px'}" :src="item.url" />
+      <img v-if="dataQuery.length==1&&item.width<item.height" @click="previewImage(item.url)" class="img" v-bind:style="{width: width+'px', height: 'auto'}" :src="item.url" />
+      <div v-if="dataQuery.length>1"  @click="previewImage(item.url)" class="zoom-image" v-bind:style="{width: width+'px', backgroundImage: 'url(' + item.url + ')'}"></div>
     </div>
 	</div>
 </template>

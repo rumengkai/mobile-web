@@ -1,7 +1,7 @@
 <template>
 	<div id="activity-author" class="activity-author" >
     <div class="author_content" ref="author" v-show="showContent" v-bind:class="{'position-relative' : item.top!=undefined}" v-for="(item,index) in dataInfo.items" v-bind:key="item.id">
-      <div v-bind:class="{'border-bottom' : item.top!=undefined}">
+      <div>
         <div class="flex-start-between" @click="toCommunityDetail(item.id)">
           <div class="left flex-start">
             <div class="left_1" @click="toAuthorIndex(item.user.id)">
@@ -41,7 +41,7 @@
           <div v-if="item.type==2">
             <div class="article-section flex-start" @click="toDetail(item.post.url)">
               <img class="article-thumb" :src="item.post.thumb"/>
-              <div class="article-title">{{item.post.title}}</div>
+              <div class="article-title dbell" style="-webkit-box-orient: vertical;">{{item.post.title}}</div>
             </div>
           </div>
           <div v-if="item.type==3">
@@ -49,6 +49,7 @@
           </div>
         </div>
       </div>
+      <div class="line vux-1px-b" v-if="dataInfo.items.length-1 != index"></div>
     </div>
 	</div>
 </template>
@@ -171,7 +172,10 @@
 		background: #fff;
     height: auto;
     .author_content {
-      padding: 15px;
+      padding: 15px 15px 0;
+      .line {
+        margin-top: 15px;
+      }
     }
 		.left{
       position: relative;
@@ -314,7 +318,6 @@
         overflow: hidden;
       }
       .article-title {
-        height: 50px;
         font-size: 13px;
         margin-left: 5px;
         width: 4.8rem;

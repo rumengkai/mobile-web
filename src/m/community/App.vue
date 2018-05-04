@@ -22,7 +22,7 @@
         <div v-show="tweetHasNext">
           <img class="image_bg" v-bind:style="{height: height}" src="https://static2.kofuf.com/1524907490695.png" />
         </div>
-        <div v-show="tweetHasNext" class="marginLR15 deMarginT10">
+        <div v-show="tweetHasNext" class="marginLR15">
           <a class="open_united" id="openApp">打开功夫财经，查看更多门派动态</a>
         </div>
       </div>
@@ -164,20 +164,11 @@
       },
       toApp: function() {
         new Mlink({
-          mlink: "https://ah88dj.mlinks.cc/AK8f?id="+this.id,
+          mlink: "https://ah88dj.mlinks.cc/AeBD?id="+this.id,
           button: document.querySelector('a#openApp'),
           autoLaunchApp : false,
         });
       },
-      // getLookMore: function(idx) {
-      //   this.showContent = false
-      //   this.dataTweets.items.map((item, index) => {
-      //     if (idx == index) {
-      //       this.showContent = true
-      //       item.eightStatus = false
-      //     }
-      //   })
-      // },
       getCommunity: function(id) {
         window.location.href = "/m/tweet.html?id="+id;
       },

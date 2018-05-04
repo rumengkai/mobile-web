@@ -181,12 +181,12 @@
       },
       toApp: function() {
         new Mlink({
-          mlink: "https://ah88dj.mlinks.cc/AK8f?id="+this.id,
+          mlink: "https://ah88dj.mlinks.cc/AeB2?id="+this.id,
           button: document.querySelector('a#openApp_2'),
           autoLaunchApp : false,
         });
         new Mlink({
-          mlink: "https://ah88dj.mlinks.cc/AK8f?id="+this.id,
+          mlink: "https://ah88dj.mlinks.cc/AeB2?id="+this.id,
           button: document.querySelector('a#openApp_3'),
           autoLaunchApp : false,
         });
