@@ -1,58 +1,162 @@
 <template>
-	<div id="activity-author" class="activity-author">
-    <div class="author_content" v-bind:class="{'position-relative' : item.user.can_delete!=undefined}" v-for="item in dataInfo.items" v-bind:key="item.id">
-      <div v-bind:class="{'border-bottom' : item.user.can_delete!=undefined}">
-        <div class="flex-start-between">
+	<div id="activity-author" class="activity-author" >
+    <div class="author_content" ref="author" v-show="showContent" v-bind:class="{'position-relative' : item.top!=undefined}" v-for="(item,index) in dataInfo.items" v-bind:key="item.id">
+      <div>
+        <div class="flex-start-between" @click="toCommunityDetail(item.id)">
           <div class="left flex-start">
             <div class="left_1" @click="toAuthorIndex(item.user.id)">
               <img class="photo" :src="item.user.photo" alt="">
               <img class="vip" :src="item.user.level_icon" alt="">
             </div>
             <div class="left_2">
-              <p class="name flex-start"><span class="ell" v-bind:class="{ 'user-name' : item.user.name.length>9 }" >{{item.user.name}}</span><span class="place-top">置顶</span></p>
-              <p class="time-number">{{item.user.time | parseTime('{m}/{d} {h}:{i}')}}</p>
+              <p class="name flex-start"><span class="ell" v-bind:class="{ 'user-name' : item.user.name.length>9 }" >{{item.user.name}}</span><span v-show="item.top" class="place-top">置顶</span></p>
+              <p class="time-number">{{item.time | parseTime('{m}/{d} {h}:{i}')}}</p>
             </div>
           </div>
-          <div v-if="item.user.can_delete != undefined" class="right flex-between">
-            <img @click="getDelete(item.user.id)" class="delete" src="https://static1.kofuf.com/1520577759131.png" alt="">
-            <img @click="getLiked(item.user.id)" v-if="item.liked" class="liked" src="https://static1.kofuf.com/1513910095553.png" alt="">
-            <img @click="getUnliked(item.user.id)" v-else class="unliked" src="https://static1.kofuf.com/1513910064052.png" alt="">
-            <div class="liked-number">{{item.user.count}}</div>
+          <div class="right flex-between" v-show="false">
+            <div @click="getComment(item.id)" v-if="item.comment_count != undefined" class="comment">
+              <img class="comment-img" src="https://static1.kofuf.com/1525254905356.png" alt="">
+              <div class="liked-number">{{item.comment_count}}</div>
+            </div>
+            <img @click="getDelete(item.id)" v-if="item.can_delete" class="delete" src="https://static1.kofuf.com/1520577759131.png" alt="">
+            <img @click="getUnLiked(item.id)" v-if="item.liked" class="liked" src="https://static1.kofuf.com/1513910095553.png" alt="">
+            <img @click="getLiked(item.id)" v-if="!item.liked"  class="unliked" src="https://static1.kofuf.com/1513910064052.png" alt="">
+            <div class="liked-number">{{item.like_count}}</div>
           </div>
         </div>
         <div class="activity-section">
-          <div v-if="item.user.can_delete == undefined" class="content dbell" style="-webkit-box-orient: vertical;" >{{item.content}}</div>
-          <div v-else class="content">{{item.content}}</div>
+          <div>
+            <div v-show="item.comments!=undefined&&mark==1&&item.type!=3" v-html="item.text" class="content" v-bind:class="{ 'dbell' : !markState }" style="-webkit-box-orient: vertical;" >{{item.text}}</div>
+            <div v-show="mark==2" class="content" v-html="item.content">{{item.content}}</div>
+          </div>
+          <div ref="eightell">
+            <div v-show="item.comments==undefined&&mark==1&&item.type!=3">
+              <div class="content" v-html='item.text' v-bind:class="{'eightell' : item.eightStatus}" style="-webkit-box-orient: vertical;" >{{item.text}}</div>
+              <div @click="toLookMore(index)" v-show="item.eightStatus" class="look-more">查看更多>></div>
+            </div>
+          </div>
+          <div v-show="item.comments!=undefined">
+            <a class="look-united" @click="toCommunity(item.community_id)">加入{{item.community_name}}查看完整动态> </a>
+          </div>
+          <div v-if="item.type==1" class="images-section" v-bind:class="{'overflow' : !markState}">
+            <activity-images v-if="widthNum!=0" :dataQuery="item.images" :width="widthNum"></activity-images>
+          </div>
+          <div v-if="item.type==2">
+            <div class="article-section flex-start" @click="toDetail(item.post.url)">
+              <img class="article-thumb" :src="item.post.thumb"/>
+              <div class="article-title dbell" style="-webkit-box-orient: vertical;">{{item.post.title}}</div>
+            </div>
+          </div>
+          <div v-if="item.type==3">
+            <audiobox :music="item.audio.url" :id="item.id.toString()"></audiobox>
+          </div>
         </div>
       </div>
+      <div class="line vux-1px-b" v-if="dataInfo.items.length-1 != index"></div>
     </div>
 	</div>
 </template>
 
 <script>
   import Vue from 'vue'
-  import {
-    parseTime
-  } from '../../filters/index'
+  import Audiobox from "../Audio/Audio"
+  import ActivityImages from "../ActivityImages/ActivityImages"
 	export default {
     name: 'activity-author',
 		props: {
 			dataInfo: {
 				type: Object,
 				default: {}
-			}
+      },
+      mark: {
+        type: String,
+        default: ''
+      },
+      markState: {
+        type: Boolean,
+        default: false
+      }
 		},
 		data() {
-			return {}
+			return {
+        width: '',
+        widthNum: 0,
+        height: null,
+        idx: -1,
+        jmz: {},
+        showContent: true
+      }
 		},
-		components: {},
+		components: {
+      ActivityImages,
+      Audiobox
+    },
 		mounted() {
-      console.log(this.dataInfo);
+      // console.log(this.$refs.author[0].clientHeight)
+      // console.log(this.$refs.author[0].clientWidth)
+      // console.log(this.dataInfo);
+      // console.log(this.$refs.eightell[0].clientHeight)
+      // console.log(this.$refs.eightell[0].clientWidth)
+      this.initData();
+      this.$emit('toAuthorHeight', this.$refs.author[0].clientHeight-39)
 		},
 		methods: {
+      initData() {
+        this.widthNum = (this.$refs.author[0].clientWidth-30-46-8)/3
+        console.log(this.widthNum)
+        this.width = (this.$refs.author[0].clientWidth-30-46-8)/3+'px'
+        if (!this.markState) {
+          this.height = this.width
+        } else {
+          this.height = 'auto'
+        }
+        this.getLength();
+        let w1 = this.$refs.eightell[0].clientWidth
+        this.dataInfo.items.map((item, index) => {
+          item.eightStatus = false
+          if (item.comments==undefined&&this.mark==1&&item.type!=3) {
+            let h2 = this.jmz.GetLength(item.text)
+            if (parseInt(w1/14)*8*2 <= h2) {
+              item.eightStatus = true
+            }
+          }
+        })
+      },
+      getLength(str) {
+        this.jmz = {};
+        this.jmz.GetLength = function(str) {
+          return str.replace(/[\u0391-\uFFE5]/g,"aa").length;  //先把中文替换成两个字节的英文，在计算长度
+        };
+      },
+      toCommunity(community_id) {
+        this.$emit('toCommunity', community_id)
+      },
+      toCommunityDetail(id) {
+        this.$emit('toCommunityDetail', id)
+      },
+      toLookMore(idx) {
+        console.log(idx)
+        this.showContent = false
+        this.dataInfo.items.map((item, index) => {
+          console.log(idx == index)
+          if (idx == index) {
+            this.showContent = true
+            item.eightStatus = false
+          }
+        })
+        this.$emit('toLookMore', idx)
+        console.log(this.dataInfo.items)
+      },
+      toDetail(url) {
+        console.log(url)
+        window.location.href = url
+      },
 			toAuthorIndex(id) {
         console.log(id)
         this.$emit('toIndex', id)
+      },
+      getComment(id) {
+        this.$emit('toComment', id)
       },
       getDelete(id) {
         console.log(id)
@@ -62,7 +166,7 @@
         console.log(id)
         this.$emit('toLiked', id)
       },
-      getUnliked(id) {
+      getUnLiked(id) {
         console.log(id)
         this.$emit('toUnLiked', id)
       }
@@ -76,7 +180,10 @@
 		background: #fff;
     height: auto;
     .author_content {
-      padding: 15px 0;
+      padding: 15px 15px 0;
+      .line {
+        margin-top: 15px;
+      }
     }
 		.left{
       position: relative;
@@ -122,8 +229,9 @@
           }
         }
         .time-number{
-          font-size: 10px;
-          color: #999999;
+          margin-top: -4px;
+          font-size: 12px;
+          color: #666666;
         }
       }
 		}
@@ -135,18 +243,24 @@
         width: 16px;
         height: 16px;
         line-height: 16px;
+        float: left;
+        margin-top: -4px;
 			}
 			.liked{
         width: 17px;
         height: 17px;
         line-height: 17px;
         margin: 0 10px;
+        float: left;
+        margin-top: -4px;
       }
       .unliked{
         width: 17px;
         height: 17px;
         line-height: 17px;
-        margin: 0 10px;
+        margin: 0 5px;
+        float: left;
+        margin-top: -4px;
       }
       .liked-number {
         height: 16px;
@@ -156,18 +270,86 @@
         color: #7B7B7B;
         letter-spacing: 0;
         text-align: center;
+        display: inline-block;
+      }
+      .comment {
+        margin-right: 10px;
+        .comment-img {
+          width: 20px;
+          height: 20px;
+          line-height: 20px;
+          margin: 4px 5px 0;
+          float: left;
+        }
       }
     }
-    .activity-section{
+    .activity-section {
       padding-left: 46px;
       .content {
-        font-size: 14px;
+        font-size: 15px;
         color: #000000;
         line-height: 20px;
         text-align: justify;
         margin-top: 10px;
       }
+      .look-more {
+        font-size: 14px;
+        color: #5F96CB;
+        background: #ffffff;
+        margin-top: -20px;
+        position: absolute;
+        right: 15px;
+      }
+      .images-section {
+        margin-top: 15px;
+        position: relative;
+        .content-images {
+          display: inline-block;
+          .img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+        .center {
+          padding: 0 4px;
+        }
+      }
+      .look-united {
+        display: block;
+        font-size: 14px;
+        color: #2b78e4;
+        text-align: justify;
+        margin-top: 10px;
+      }
     }
+    .article-section {
+      width: 96%;
+      height: 50px;
+      background: #eeeeee;
+      margin-top: 10px;
+      padding: 6px;
+      .article-thumb {
+        width: 50px;
+        height: 50px;
+        overflow: hidden;
+      }
+      .article-title {
+        font-size: 13px;
+        margin-left: 5px;
+        width: 4.8rem;
+      }
+    }
+  }
+  .image_bg {
+    position: absolute;
+    bottom: 78px;
+    width: 100%;
+  }
+  .eightell {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 8;
+    overflow: hidden;
   }
   .ell {
     overflow: hidden;
