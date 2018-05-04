@@ -80,6 +80,7 @@
     data () {
       return {
         id: null,
+        originId: null,
         showContent: false,
         showMark: false,
         commentsHasNext: false,
@@ -114,6 +115,10 @@
     },
     created () {
       let id = this.$geturlpara.getUrlKey("id");
+      if (location.search.indexOf('originId=')>0) {
+        let originId = location.search.split("originId=")[1]
+        this.originId = originId
+      }
       this.id = id
       this.fetchData();
       this.shareWeixin();
@@ -190,7 +195,7 @@
         });
       },
       toCommunity: function() {
-        window.location.href = location.origin+'/m/community.html?id='+this.id
+        window.location.href = location.origin+'/m/community.html?id='+this.originId
       },
       getAuthorHeight: function(val) {
         console.log(val)

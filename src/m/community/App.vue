@@ -167,11 +167,11 @@
         });
       },
       getCommunity: function(id) {
-        window.location.href = "/m/tweet.html?id=" + id;
+        window.location.href = "/m/tweet.html?id="+id+'&originId='+this.id;
       },
       getComment: function(id) {
         if (this.followed) {
-          window.location.href = "/m/tweet.html?id=" + id;
+          window.location.href = "/m/tweet.html?id="+id+'&originId='+this.id;
         } else {
           toast('你还没有加入门派');
         }
