@@ -3,13 +3,13 @@
     <div v-show="showContent">
       <div class="content_1">
         <div class="united_content">
-          <activity-author v-if="showContent" v-on:toIndex="getAuthor" v-on:toDelete="getDeleteComment" v-on:toLiked="getLikedComment" v-on:toUnLiked="getUnLikedComment" :dataInfo="userInfo" mark="1" :markState="showMark"></activity-author>
+          <activity-author v-if="showContent" v-on:toCommunity="getCommunity" v-on:toIndex="getAuthor" v-on:toDelete="getDeleteComment" v-on:toLiked="getLikedComment" v-on:toUnLiked="getUnLikedComment" :dataInfo="userInfo" mark="1" :markState="showMark"></activity-author>
           <div @click="toShowMark">
             <img v-show="!showMark" class="image_bg" src="https://static2.kofuf.com/1524907490695.png" />
           </div>
-          <div class="marginLR15">
+          <!-- <div class="marginLR15">
             <a class="add_united" @click="toCommunity" id="openApp_1">加入大校门查看完整动态> </a>
-          </div>
+          </div> -->
           <div class="marginLR15">
             <a class="open_united" id="openApp_2">打开功夫财经，查看原文</a>
           </div>
@@ -166,6 +166,9 @@
           }
         })
       },
+      getCommunity: function(community_id) {
+        window.location.href = location.origin+'/m/community.html?id='+this.community_id
+      },  
       toShowMark: function() {
         this.showContent = false
         this.showMark = true
@@ -185,9 +188,9 @@
           autoLaunchApp : false,
         });
       },
-      toCommunity: function() {
-        window.location.href = location.origin+'/m/community.html?id='+this.community_id
-      },
+      // toCommunity: function() {
+      //   window.location.href = location.origin+'/m/community.html?id='+this.community_id
+      // },
       getAuthorHeight: function(val) {
         console.log(val)
         this.authorHeight = val+'px'

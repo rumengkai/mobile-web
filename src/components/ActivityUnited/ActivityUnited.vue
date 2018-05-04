@@ -10,9 +10,9 @@
           <img class="img" :src="dataInfo.teacher.photo" />
           <span>{{dataInfo.teacher.name}}</span>
         </div>
-        <div class="teacher-num flex-between">
+        <div class="teacher-num flex-start">
           <div>成员：{{dataInfo.member_size}}</div>
-          <div>动态：{{dataInfo.post_count}}</div>
+          <div class="teacher-post-count">动态：{{dataInfo.post_count}}</div>
         </div>
         <div class="pay-united">
           <div class="join-united" v-show="!dataInfo.followed">
@@ -87,6 +87,9 @@
         }
         .teacher-num {
           width: 4.12rem;
+          .teacher-post-count {
+            margin-left: 10px;
+          }
         }
         .pay-united {
           width: 4.12rem;

@@ -35,6 +35,9 @@
               <div @click="toLookMore(index)" v-show="item.eightStatus" class="look-more">查看更多>></div>
             </div>
           </div>
+          <div v-show="item.comments!=undefined">
+            <a class="look-united" @click="toCommunity(item.community_id)">加入{{item.community_name}}查看完整动态> </a>
+          </div>
           <div v-if="item.type==1" class="images-section" v-bind:class="{'overflow' : !markState}">
             <activity-images v-if="widthNum!=0" :dataQuery="item.images" :width="widthNum"></activity-images>
           </div>
@@ -94,37 +97,42 @@
       // console.log(this.dataInfo);
       // console.log(this.$refs.eightell[0].clientHeight)
       // console.log(this.$refs.eightell[0].clientWidth)
-      this.widthNum = (this.$refs.author[0].clientWidth-30-46-8)/3
-      console.log(this.widthNum)
-      this.width = (this.$refs.author[0].clientWidth-30-46-8)/3+'px'
-      if (!this.markState) {
-        this.height = this.width
-      } else {
-        this.height = 'auto'
-      }
-      this.getLength()
-      let _self = this
-      let w1 = _self.$refs.eightell[0].clientWidth
-      this.dataInfo.items.map((item, index) => {
-        item.eightStatus = false
-        if (item.comments==undefined&&this.mark==1&&item.type!=3) {
-          let h2 = _self.jmz.GetLength(item.text)
-          if (parseInt(w1/14)*8*2 <= h2) {
-            item.eightStatus = true
-          }
-        }
-      })
+      this.initData();
       this.$emit('toAuthorHeight', this.$refs.author[0].clientHeight-39)
 		},
 		methods: {
+      initData() {
+        this.widthNum = (this.$refs.author[0].clientWidth-30-46-8)/3
+        console.log(this.widthNum)
+        this.width = (this.$refs.author[0].clientWidth-30-46-8)/3+'px'
+        if (!this.markState) {
+          this.height = this.width
+        } else {
+          this.height = 'auto'
+        }
+        this.getLength();
+        let w1 = this.$refs.eightell[0].clientWidth
+        this.dataInfo.items.map((item, index) => {
+          item.eightStatus = false
+          if (item.comments==undefined&&this.mark==1&&item.type!=3) {
+            let h2 = this.jmz.GetLength(item.text)
+            if (parseInt(w1/14)*8*2 <= h2) {
+              item.eightStatus = true
+            }
+          }
+        })
+      },
       getLength(str) {
         this.jmz = {};
         this.jmz.GetLength = function(str) {
           return str.replace(/[\u0391-\uFFE5]/g,"aa").length;  //先把中文替换成两个字节的英文，在计算长度
         };
       },
+      toCommunity(community_id) {
+        this.$emit('toCommunity', community_id)
+      },
       toCommunityDetail(id) {
-        this.$emit('toCommunity', id)
+        this.$emit('toCommunityDetail', id)
       },
       toLookMore(idx) {
         console.log(idx)
@@ -221,6 +229,7 @@
           }
         }
         .time-number{
+          margin-top: -4px;
           font-size: 12px;
           color: #666666;
         }
@@ -277,7 +286,7 @@
     .activity-section {
       padding-left: 46px;
       .content {
-        font-size: 14px;
+        font-size: 15px;
         color: #000000;
         line-height: 20px;
         text-align: justify;
@@ -304,6 +313,13 @@
         .center {
           padding: 0 4px;
         }
+      }
+      .look-united {
+        display: block;
+        font-size: 14px;
+        color: #2b78e4;
+        text-align: justify;
+        margin-top: 10px;
       }
     }
     .article-section {
