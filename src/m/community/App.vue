@@ -148,6 +148,9 @@
                 res.tweets.items.map((item) => {
                   item.text = stringBr(item.text)
                 })
+                // res.tweets.items.map((item) => {
+                //   item.eightStatus = false
+                // })
                 this.dataTweets = res.tweets
                 this.dataTweetsList = res.tweets.items
                 console.log(this.dataTweetsList)
@@ -166,12 +169,21 @@
           autoLaunchApp : false,
         });
       },
+      // getLookMore: function(idx) {
+      //   this.showContent = false
+      //   this.dataTweets.items.map((item, index) => {
+      //     if (idx == index) {
+      //       this.showContent = true
+      //       item.eightStatus = false
+      //     }
+      //   })
+      // },
       getCommunity: function(id) {
-        window.location.href = "/m/tweet.html?id="+id+'&originId='+this.id;
+        window.location.href = "/m/tweet.html?id="+id;
       },
       getComment: function(id) {
         if (this.followed) {
-          window.location.href = "/m/tweet.html?id="+id+'&originId='+this.id;
+          window.location.href = "/m/tweet.html?id="+id;
         } else {
           toast('你还没有加入门派');
         }

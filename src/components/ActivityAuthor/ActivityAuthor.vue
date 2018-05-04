@@ -1,6 +1,6 @@
 <template>
-	<div id="activity-author" class="activity-author">
-    <div class="author_content" ref="author" v-bind:class="{'position-relative' : item.top!=undefined}" v-for="item in dataInfo.items" v-bind:key="item.id">
+	<div id="activity-author" class="activity-author" >
+    <div class="author_content" ref="author" v-show="showContent" v-bind:class="{'position-relative' : item.top!=undefined}" v-for="(item,index) in dataInfo.items" v-bind:key="item.id">
       <div v-bind:class="{'border-bottom' : item.top!=undefined}">
         <div class="flex-start-between" @click="toCommunityDetail(item.id)">
           <div class="left flex-start">
@@ -31,15 +31,15 @@
           </div>
           <div ref="eightell">
             <div v-show="item.comments==undefined&&mark==1&&item.type!=3">
-              <div class="content" v-html='item.text' v-bind:class="{'eightell' : eightStatus}">{{item.text}}</div>
-              <div @click="toLookMore" v-show="eightStatus" class="look-more">查看更多>></div>
+              <div class="content" v-html='item.text' v-bind:class="{'eightell' : item.eightStatus}" style="-webkit-box-orient: vertical;" >{{item.text}}</div>
+              <div @click="toLookMore(index)" v-show="item.eightStatus" class="look-more">查看更多>></div>
             </div>
           </div>
-          <div v-if="item.type==1" class="images-section" v-bind:style="{height: height}" v-bind:class="{'overflow' : !markState}">
-            <activity-images :dataQuery="item.images" :width="width"></activity-images>
+          <div v-if="item.type==1" class="images-section" v-bind:class="{'overflow' : !markState}">
+            <activity-images v-if="widthNum!=0" :dataQuery="item.images" :width="widthNum"></activity-images>
           </div>
           <div v-if="item.type==2">
-            <div class="article-section flex-start" @click:stop="toDetail(item.post.url)">
+            <div class="article-section flex-start" @click="toDetail(item.post.url)">
               <img class="article-thumb" :src="item.post.thumb"/>
               <div class="article-title">{{item.post.title}}</div>
             </div>
@@ -77,8 +77,10 @@
 			return {
         width: '',
         widthNum: 0,
-        eightStatus: false,
-        height: null
+        height: null,
+        idx: -1,
+        jmz: {},
+        showContent: true
       }
 		},
 		components: {
@@ -88,30 +90,56 @@
 		mounted() {
       // console.log(this.$refs.author[0].clientHeight)
       // console.log(this.$refs.author[0].clientWidth)
-      console.log(this.dataInfo);
-      console.log(this.$refs.eightell[0].clientHeight)
-      if (this.$refs.eightell[0].clientHeight >= 160) {
-        this.eightStatus = true
-      }
+      // console.log(this.dataInfo);
+      // console.log(this.$refs.eightell[0].clientHeight)
+      // console.log(this.$refs.eightell[0].clientWidth)
       this.widthNum = (this.$refs.author[0].clientWidth-30-46-8)/3
+      console.log(this.widthNum)
       this.width = (this.$refs.author[0].clientWidth-30-46-8)/3+'px'
       if (!this.markState) {
         this.height = this.width
       } else {
         this.height = 'auto'
       }
+      this.getLength()
+      let _self = this
+      let w1 = _self.$refs.eightell[0].clientWidth
+      this.dataInfo.items.map((item, index) => {
+        item.eightStatus = false
+        if (item.comments==undefined&&this.mark==1&&item.type!=3) {
+          let h2 = _self.jmz.GetLength(item.text)
+          if (parseInt(w1/14)*8*2 <= h2) {
+            item.eightStatus = true
+          }
+        }
+      })
       this.$emit('toAuthorHeight', this.$refs.author[0].clientHeight-39)
 		},
 		methods: {
+      getLength(str) {
+        this.jmz = {};
+        this.jmz.GetLength = function(str) {
+          return str.replace(/[\u0391-\uFFE5]/g,"aa").length;  //先把中文替换成两个字节的英文，在计算长度
+        };
+      },
       toCommunityDetail(id) {
         this.$emit('toCommunity', id)
       },
-      toLookMore() {
-        setTimeout(() => {
-          this.eightStatus = false
-        }, 500)
+      toLookMore(idx) {
+        console.log(idx)
+        this.showContent = false
+        this.dataInfo.items.map((item, index) => {
+          console.log(idx == index)
+          if (idx == index) {
+            this.showContent = true
+            item.eightStatus = false
+          }
+        })
+        this.$emit('toLookMore', idx)
+        console.log(this.dataInfo.items)
       },
       toDetail(url) {
+        console.log(url)
         window.location.href = url
       },
 			toAuthorIndex(id) {
@@ -189,8 +217,8 @@
           }
         }
         .time-number{
-          font-size: 10px;
-          color: #999999;
+          font-size: 12px;
+          color: #666666;
         }
       }
 		}
@@ -287,7 +315,7 @@
       }
       .article-title {
         height: 50px;
-        font-size: 12px;
+        font-size: 13px;
         margin-left: 5px;
         width: 4.8rem;
       }
@@ -299,7 +327,9 @@
     width: 100%;
   }
   .eightell {
-    height: 160px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 8;
     overflow: hidden;
   }
   .ell {

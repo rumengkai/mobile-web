@@ -52,6 +52,7 @@ body {
 }
 #united_dynamic .content_1 .united_content .image_bg {
   width: 84%;
+  height: 100px;
   position: absolute;
   bottom: 64px;
   padding-left: 46px;

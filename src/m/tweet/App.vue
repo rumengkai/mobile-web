@@ -11,7 +11,7 @@
             <a class="add_united" @click="toCommunity" id="openApp_1">加入大校门查看完整动态> </a>
           </div>
           <div class="marginLR15">
-            <a class="open_united" id="openApp_2">打开功夫财经，打开原文</a>
+            <a class="open_united" id="openApp_2">打开功夫财经，查看原文</a>
           </div>
         </div>
       </div>
@@ -80,7 +80,7 @@
     data () {
       return {
         id: null,
-        originId: null,
+        community_id: null,
         showContent: false,
         showMark: false,
         commentsHasNext: false,
@@ -115,10 +115,6 @@
     },
     created () {
       let id = this.$geturlpara.getUrlKey("id");
-      if (location.search.indexOf('originId=')>0) {
-        let originId = location.search.split("originId=")[1]
-        this.originId = originId
-      }
       this.id = id
       this.fetchData();
       this.shareWeixin();
@@ -146,6 +142,7 @@
               this.share_image = res.share_image
               this.shareWeixin() // 转发
               this.commentsHasNext = res.comments.has_next
+              this.community_id = res.community_id
               res.text = stringBr(res.text)
               res.comments.items.map((item) => {
                 item.content = stringBr(item.content)
@@ -195,7 +192,7 @@
         });
       },
       toCommunity: function() {
-        window.location.href = location.origin+'/m/community.html?id='+this.originId
+        window.location.href = location.origin+'/m/community.html?id='+this.community_id
       },
       getAuthorHeight: function(val) {
         console.log(val)
