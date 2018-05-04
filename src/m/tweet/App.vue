@@ -1,19 +1,16 @@
 <template>
-  <div id="united_dynamic" ref="imageCommunity">
+  <div id="united_dynamic" ref="communityRef">
     <div v-show="showContent">
       <div class="content_1">
         <div class="united_content">
-          <activity-author v-if="showContent" v-on:toIndex="getAuthor" v-on:toDelete="getDeleteComment" v-on:toLiked="getLikedComment" v-on:toUnLiked="getUnLikedComment" :dataInfo="userInfo"></activity-author>
+          <activity-author v-if="showContent" v-on:toIndex="getAuthor" v-on:toDelete="getDeleteComment" v-on:toLiked="getLikedComment" v-on:toUnLiked="getUnLikedComment" :dataInfo="userInfo" mark="1" :markState="showMark"></activity-author>
+          <div @click="toShowMark">
+            <img v-show="!showMark" class="image_bg" src="https://static2.kofuf.com/1524907490695.png" />
+          </div>
           <div class="marginLR15">
             <a class="add_united" @click="toCommunity" id="openApp_1">加入大校门查看完整动态> </a>
           </div>
           <div class="marginLR15">
-            <div class="image_united" v-bind:style="{height : height}">
-              <activity-images :dataQuery="dataQuery" :width="width"></activity-images>
-              <img class="image_bg" v-bind:style="{height: width}" src="https://static2.kofuf.com/1524907490695.png" />
-            </div>
-          </div>
-          <div style="margin: 0 15px;">
             <a class="open_united" id="openApp_2">打开功夫财经，打开原文</a>
           </div>
         </div>
@@ -21,8 +18,8 @@
       <div class="content_1 sub_content_1" v-show="dataInfoList.length>0" >
         <div class="united_content">
           <div class="title">评论</div>
-          <activity-author v-if="dataInfoList.length>0&&showContent" v-on:toAuthorHeight="getAuthorHeight" v-on:toIndex="getAuthor" v-on:toDelete="getDeleteCommunity" v-on:toLiked="getLikedCommunity" v-on:toUnLiked="getUnLikedCommunity" :dataInfo="dataInfo"></activity-author>
-          <div v-show="commentsHasText">
+          <activity-author v-if="dataInfoList.length>0&&showContent" v-on:toAuthorHeight="getAuthorHeight" v-on:toIndex="getAuthor" v-on:toDelete="getDeleteCommunity" v-on:toLiked="getLikedCommunity" v-on:toUnLiked="getUnLikedCommunity" :dataInfo="dataInfo" mark="2"></activity-author>
+          <div v-show="commentsHasNext">
             <img class="image_bg_2" v-bind:style="{height: authorHeight}" src="https://static1.kofuf.com/1524908164856.png" />
             <div class="marginLR15">
               <a class="open_united" id="openApp_3">打开功夫财经，查看更多评论</a>
@@ -84,9 +81,11 @@
       return {
         id: null,
         showContent: false,
-        commentsHasText: false,
+        showMark: false,
+        commentsHasNext: false,
         dataInfoList: [],
         userInfo: {},
+        userImageLen: -1,
         dataInfo: {},
         dataQuery: [],
         imageWidth: null,
@@ -110,9 +109,8 @@
       //授权
       if(!isWeiXin()){
         message("请关注'功夫财经'公众号")
-      } else {
-        getAuth(cookie,querystring)
       }
+      getAuth(cookie,querystring)
     },
     created () {
       let id = this.$geturlpara.getUrlKey("id");
@@ -121,7 +119,6 @@
       this.shareWeixin();
     },
     mounted () {
-      window.addEventListener('scroll', this.handleScrollTop);
     },
     methods: {
       shareWeixin: function() {
@@ -135,7 +132,6 @@
         getCommunityDetail({id: this.id}).then((res) => {
           this.showContent = true
           this.toApp();
-          this.getResizeWidth();
           console.log(res)
           try {
             if (res.status == 0) {
@@ -143,27 +139,16 @@
               this.share_url = res.share_url
               this.share_text = res.share_text
               this.share_image = res.share_image
-              this.shareWeixin()
-              this.commentsHasText = res.comments.has_text
+              this.shareWeixin() // 转发
+              this.commentsHasNext = res.comments.has_next
               res.text = stringBr(res.text)
               res.comments.items.map((item) => {
                 item.content = stringBr(item.content)
               })
-              userItem = {
-                can_delete: res.can_delete,
-                // comment_count: res.comment_count,
-                id: res.id,
-                images: res.images,
-                content: res.text,
-                share_url: res.share_url,
-                like_count: res.like_count,
-                liked: res.liked,
-                time: res.time,
-                // type: res.type,
-                user: res.user
-              }
-              userList.push(userItem)
+              userList.push(res)
+              this.userImageLen = res.images.length
               this.userInfo = {items: userList} // 动态用户
+              console.log(this.userInfo)
               this.dataQuery = res.images // 动态图片
               // 特殊处理
               this.dataInfoList = res.comments.items
@@ -185,32 +170,27 @@
           }
         })
       },
+      toShowMark: function() {
+        this.showContent = false
+        this.showMark = true
+        setTimeout(function(){
+          this.showContent = true
+        }.bind(this), 0)
+      },
       toApp: function() {
         new Mlink({
           mlink: "https://ah88dj.mlinks.cc/AK8f?id="+this.id,
           button: document.querySelector('a#openApp_2'),
           autoLaunchApp : false,
         });
-        // if (this.tweet.comments.has_next) {
-          new Mlink({
-            mlink: "https://ah88dj.mlinks.cc/AK8f?id="+this.id,
-            button: document.querySelector('a#openApp_3'),
-            autoLaunchApp : false,
-          });
-        // }
+        new Mlink({
+          mlink: "https://ah88dj.mlinks.cc/AK8f?id="+this.id,
+          button: document.querySelector('a#openApp_3'),
+          autoLaunchApp : false,
+        });
       },
       toCommunity: function() {
         window.location.href = location.origin+'/m/community.html?id='+this.id
-      },
-      getResizeWidth: function() {
-        let _self = this;
-        window.onresize = (function temp() {
-          if (_self.$refs.imageCommunity != undefined) {
-            _self.imageWidth = (parseInt(_self.$refs.imageCommunity.getBoundingClientRect().width)-76-8)/3;
-            _self.width = _self.imageWidth+'px'
-            _self.height = _self.width
-          }
-        })();
       },
       getAuthorHeight: function(val) {
         console.log(val)
@@ -219,7 +199,6 @@
       getAuthor: function(id) {
         console.log(id)
         window.location.href = "/m/moments.html?id="+id+"&type=pid"
-        // window.location.href = "/m/tweet.html?id=" + id;
       },
       getDeleteComment: function(id) {
         console.log(id)
@@ -312,33 +291,6 @@
             toast(error)
           }
         })
-      },
-      handleScrollTop: function() {
-        let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-        let selfTop = null
-        console.log(scrollTop)
-        console.log(scrollTop>this.imageWidth-7)
-        if (scrollTop>this.imageWidth-7) {
-          setTimeout(function(){
-            this.height = 'auto'
-          }.bind(this), 500)
-        }
-        if(this.dataQuery.length<=3){
-          selfTop = this.imageWidth
-        }else if(this.dataQuery.length<=6&&this.dataQuery.length>3) {
-          selfTop = this.imageWidth*2
-        }else{
-          selfTop = this.imageWidth*3
-        }
-        if(scrollTop>selfTop){
-          setTimeout(function(){
-            this.dataInfo = {items: this.dataInfoList}
-            this.destroyed();
-          }.bind(this), 500)
-        }
-      },
-      destroyed () {
-        window.removeEventListener('scroll', this.handleScrollTop)
       }
     }
   }

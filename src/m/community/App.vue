@@ -17,9 +17,12 @@
 				<activities-list :dataList="dataActivity.items"></activities-list>
       </div>
       <div class="content_4">
-        <title-bar v-if="dataTweetsList.length>0"  :title="dataTweets.name" :img="dataTweets.image" line="line" ></title-bar>
-        <activity-author v-if="dataTweetsList.length>0&&showContent" v-on:toCommunity="getCommunity" v-on:toIndex="getAuthor" v-on:toComment="getComment" v-on:toDelete="getDeleteComment" v-on:toLiked="getLikedComment" v-on:toUnLiked="getUnLikedComment" :dataInfo="dataTweets"></activity-author>
-        <div v-show="tweetHasText" class="marginLR15 deMarginT10">
+        <title-bar v-if="dataTweetsList.length>0" :title="dataTweets.name" :img="dataTweets.image" line="line" ></title-bar>
+        <activity-author v-if="dataTweetsList.length>0&&showContent" v-on:toCommunity="getCommunity" v-on:toIndex="getAuthor" v-on:toComment="getComment" v-on:toDelete="getDeleteComment" v-on:toLiked="getLikedComment" v-on:toUnLiked="getUnLikedComment" :dataInfo="dataTweets" mark="1"></activity-author>
+        <div v-show="tweetHasNext">
+          <img class="image_bg" v-bind:style="{height: height}" src="https://static2.kofuf.com/1524907490695.png" />
+        </div>
+        <div v-show="tweetHasNext" class="marginLR15 deMarginT10">
           <a class="open_united" id="openApp">打开功夫财经，查看更多门派动态</a>
         </div>
       </div>
@@ -76,7 +79,7 @@
         id: null,
         followed: null,
         showContent: false,
-        tweetHasText: false,
+        tweetHasNext: false,
         dataUnited: {},
         dataLive: null,
         dataActivity: null,
@@ -98,9 +101,8 @@
       //授权
       if(!isWeiXin()){
         message("请关注'功夫财经'公众号")
-      } else {
-        getAuth(cookie,querystring)
       }
+      getAuth(cookie, querystring)
     },
     created () {
       let id = this.$geturlpara.getUrlKey("id");
@@ -119,7 +121,9 @@
           try {
             if (res.status == 0) {
               console.log(res)
-              this.tweetHasText = res.tweets.has_text
+              document.title = res.name
+              this.tweetHasNext = res.tweets.has_next
+              this.toApp();
               this.followed = res.followed
               this.dataUnited = {
                 teacher: res.teacher,
@@ -131,46 +135,9 @@
                 id: res.id,
                 no_read_num: res.no_read_num,
                 name: res.name,
-                push: res.push
+                push: res.push,
+                logo: res.logo
               }
-              // res.lives = {
-              //   has_next: true,
-              //   image: "https://static1.kofuf.com/1516182652081.png",
-              //   index:  0,
-              //   items:[{
-              //     id: 27,
-              //     name: "test",
-              //     share_info: "wenan",
-              //     share_url: "http://dev.kofuf.com/m/live.html?id=27",
-              //     state: 1,
-              //     teacher: {name: "brasil", photo: "https://static1.kofuf.com/1496311047717.jpg", id: 0, time: 0},
-              //     thumb: "http://static1.kofuf.com/1520857526666.jpg",
-              //     time: 1521030328000,
-              //     user_count: 28
-              //   }],
-              //   name: "功夫·直播",
-              //   need_login:false
-              // }
-              // res.activities = {
-              //   has_next: true,
-              //   image: "https://static1.kofuf.com/1516182652081.png",
-              //   index: 1,
-              //   items:  [{
-              //     address:  "活动TTTTT",
-              //     article_id: 0,
-              //     banner: "http://static1.kofuf.com/1516696490875.jpg",
-              //     id: 13,
-              //     intro:"一句话结束",
-              //     name:"活动TTTTT",
-              //     start_time:1527147646000,
-              //     state:4,
-              //     state_val:  "报名中",
-              //     type:1,
-              //     type_val:"活动报名",
-              //     url:"http://dev.kofuf.com/mengqi/#/activity/detail/13",
-              //    }],
-              //   name:"功夫·财智会"
-              // }
               if (res.lives != undefined) {
                 this.dataLive = res.lives
               }
@@ -179,12 +146,11 @@
               }
               if (res.tweets != undefined && res.tweets.items.length>0) {
                 res.tweets.items.map((item) => {
-                  item.content = stringBr(item.text)
+                  item.text = stringBr(item.text)
                 })
                 this.dataTweets = res.tweets
                 this.dataTweetsList = res.tweets.items
                 console.log(this.dataTweetsList)
-                this.toApp();
               }
               console.log(this.dataUnited)
             }

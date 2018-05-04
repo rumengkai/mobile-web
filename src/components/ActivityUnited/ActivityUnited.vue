@@ -2,7 +2,7 @@
 	<div id="activity-uniteds" class="activity-uniteds">
     <div class="content flex-start">
       <div class="teacher-photo">
-        <img class="photo" :src="dataInfo.teacher.photo" />
+        <img class="photo" :src="dataInfo.logo" />
       </div>
       <div class="teacher-content flex-column-start-between">
         <div class="teacher-name flex-start">
@@ -15,10 +15,10 @@
           <div>动态：{{dataInfo.post_count}}</div>
         </div>
         <div class="pay-united">
-          <div class="join-united" v-if="!dataInfo.followed">
+          <div class="join-united" v-show="!dataInfo.followed">
             <a id='joinOpenApp'>加入门派</a>
           </div>
-          <div class="united" v-else>已加入</div>
+          <div class="united" v-show="dataInfo.followed">已加入</div>
         </div>
       </div>
     </div>

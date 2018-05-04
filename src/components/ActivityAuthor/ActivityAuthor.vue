@@ -2,13 +2,13 @@
 	<div id="activity-author" class="activity-author">
     <div class="author_content" ref="author" v-bind:class="{'position-relative' : item.top!=undefined}" v-for="item in dataInfo.items" v-bind:key="item.id">
       <div v-bind:class="{'border-bottom' : item.top!=undefined}">
-        <div class="flex-start-between">
+        <div class="flex-start-between" @click="toCommunityDetail(item.id)">
           <div class="left flex-start">
-            <div class="left_1" @click:stop="toAuthorIndex(item.user.id)">
+            <div class="left_1" @click="toAuthorIndex(item.user.id)">
               <img class="photo" :src="item.user.photo" alt="">
               <img class="vip" :src="item.user.level_icon" alt="">
             </div>
-            <div class="left_2" @click:stop="toCommunityDetail(item.id)">
+            <div class="left_2">
               <p class="name flex-start"><span class="ell" v-bind:class="{ 'user-name' : item.user.name.length>9 }" >{{item.user.name}}</span><span v-show="item.top" class="place-top">置顶</span></p>
               <p class="time-number">{{item.time | parseTime('{m}/{d} {h}:{i}')}}</p>
             </div>
@@ -25,23 +25,23 @@
           </div>
         </div>
         <div class="activity-section">
-          <div v-if="item.comment_count == undefined">
-            <div v-if="item.top==undefined" class="content dbell" style="-webkit-box-orient: vertical;" >{{item.content}}</div>
-            <div v-else class="content">{{item.content}}</div>
+          <div>
+            <div v-show="item.comments!=undefined&&mark==1&&item.type!=3" v-html="item.text" class="content" v-bind:class="{ 'dbell' : !markState }" style="-webkit-box-orient: vertical;" >{{item.text}}</div>
+            <div v-show="mark==2" class="content" v-html="item.content">{{item.content}}</div>
           </div>
           <div ref="eightell">
-            <div v-if="item.type==0">
-              <div class="content" v-bind:class="{'eightell' : eightStatus}">{{item.content}}</div>
-              <div @click:stop="toLookMore" v-show="eightStatus" class="look-more">查看更多>></div>
+            <div v-show="item.comments==undefined&&mark==1&&item.type!=3">
+              <div class="content" v-html='item.text' v-bind:class="{'eightell' : eightStatus}">{{item.text}}</div>
+              <div @click="toLookMore" v-show="eightStatus" class="look-more">查看更多>></div>
             </div>
           </div>
-          <div v-if="item.type==1" class="images-section">
+          <div v-if="item.type==1" class="images-section" v-bind:style="{height: height}" v-bind:class="{'overflow' : !markState}">
             <activity-images :dataQuery="item.images" :width="width"></activity-images>
           </div>
           <div v-if="item.type==2">
-            <div class="article-section flex-start" @click:stop="toDetail(item.url)">
-              <img class="thumb" :src="item.thumb"/>
-              <div class="title">{{item.title}}</div>
+            <div class="article-section flex-start" @click:stop="toDetail(item.post.url)">
+              <img class="article-thumb" :src="item.post.thumb"/>
+              <div class="article-title">{{item.post.title}}</div>
             </div>
           </div>
           <div v-if="item.type==3">
@@ -63,12 +63,22 @@
 			dataInfo: {
 				type: Object,
 				default: {}
+      },
+      mark: {
+        type: String,
+        default: ''
+      },
+      markState: {
+        type: Boolean,
+        default: false
       }
 		},
 		data() {
 			return {
         width: '',
-        eightStatus: false
+        widthNum: 0,
+        eightStatus: false,
+        height: null
       }
 		},
 		components: {
@@ -76,16 +86,20 @@
       Audiobox
     },
 		mounted() {
-      console.log(this.$refs.author[0].clientHeight)
-      console.log(this.$refs.author[0].clientWidth)
+      // console.log(this.$refs.author[0].clientHeight)
+      // console.log(this.$refs.author[0].clientWidth)
       console.log(this.dataInfo);
-      // console.log(this.width)
-      console.log(this.$refs.eightell[0])
+      console.log(this.$refs.eightell[0].clientHeight)
       if (this.$refs.eightell[0].clientHeight >= 160) {
         this.eightStatus = true
       }
+      this.widthNum = (this.$refs.author[0].clientWidth-30-46-8)/3
       this.width = (this.$refs.author[0].clientWidth-30-46-8)/3+'px'
-      console.log(this.width)
+      if (!this.markState) {
+        this.height = this.width
+      } else {
+        this.height = 'auto'
+      }
       this.$emit('toAuthorHeight', this.$refs.author[0].clientHeight-39)
 		},
 		methods: {
@@ -247,6 +261,7 @@
       }
       .images-section {
         margin-top: 15px;
+        position: relative;
         .content-images {
           display: inline-block;
           .img {
@@ -260,21 +275,28 @@
       }
     }
     .article-section {
-      width: 100%;
+      width: 96%;
       height: 50px;
       background: #eeeeee;
       margin-top: 10px;
-      .thumb {
+      padding: 6px;
+      .article-thumb {
         width: 50px;
         height: 50px;
         overflow: hidden;
       }
-      .title {
+      .article-title {
+        height: 50px;
         font-size: 12px;
         margin-left: 5px;
         width: 4.8rem;
       }
     }
+  }
+  .image_bg {
+    position: absolute;
+    bottom: 78px;
+    width: 100%;
   }
   .eightell {
     height: 160px;
