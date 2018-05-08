@@ -214,8 +214,8 @@
 						if (this.articles.sub_type == 'R') {
 							shareType = {type:'music',link:this.articles.banner}
 						}
-						// weixinShare(Vue,shareType);
-						weixinShare(Vue);
+						weixinShare(Vue,shareType);
+						// weixinShare(Vue);
 						// 埋点统计
 						let params={
 							id:this.id,
