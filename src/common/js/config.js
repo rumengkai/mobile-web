@@ -94,7 +94,7 @@ window.getAuth=function (cookie,querystring,type,id){
 	//获取URLparse
 	var parse=querystring.parse();
 	/* 判断gid2是否过期 */
-	if(getLocalStorage("gid2").time&&!getLocalStorage("gid2",1000*20)){
+	if(getLocalStorage("gid2").time&&!getLocalStorage("gid2",1000*60*60*24*5)){
 		setLocalStorage("gid2",cookie.get('gid'));
 		var params;
 		if (!(id==undefined)&&id!='') {
