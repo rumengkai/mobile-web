@@ -94,9 +94,8 @@ window.getAuth=function (cookie,querystring,type,id){
 	//获取URLparse
 	var parse=querystring.parse();
 	/* 判断gid2是否过期 */
-	if(getLocalStorage("gid2")&&!getLocalStorage("gid2",1000*60*60*24*5)){
+	if(getLocalStorage("gid2").time&&!getLocalStorage("gid2",1000*20)){
 		setLocalStorage("gid2",cookie.get('gid'));
-		setLocalStorage("token2",cookie.get('token'));
 		var params;
 		if (!(id==undefined)&&id!='') {
 			params=type+"_"+id;
@@ -114,11 +113,9 @@ window.getAuth=function (cookie,querystring,type,id){
 		/* 存在gid但不存在gid2 */
 		if (!!localStorage.getItem('gid')&&!localStorage.getItem('gid2')) {
 			setLocalStorage("gid2",cookie.get('gid'));
-			setLocalStorage("token2",cookie.get('token'));
 		}
 	}else {
 		setLocalStorage("gid2",cookie.get('gid'));
-		setLocalStorage("token2",cookie.get('token'));
 		var params;
 		if (!(id==undefined)&&id!='') {
 			params=type+"_"+id;
@@ -143,9 +140,7 @@ function getLocalStorage(key,exp){
 			// alert("信息已过期")
 			return false
 		}else{
-				var value = dataObj?dataObj.data:false
-				console.log('return:'+value);
-				return value;
+			return dataObj;
 		}
 	}else{
 		return false;
