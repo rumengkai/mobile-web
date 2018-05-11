@@ -118,7 +118,7 @@
         <div class="subscribe" @click="composite_readysub">
           <a>
             <span v-if="price!='0'">{{channelsinfo.level_name?channelsinfo.level_name+'价':'订阅'}}：<span>¥{{price}}</span></span>
-            <span v-if="price=='0'">免费领取</span></span>
+            <span v-if="price=='0'">免费领取</span>
           </a>
         </div>
     </footer>
@@ -295,7 +295,7 @@
                 //正则匹配，处理information
                 data.information=data.information.replace(/[\n]/g,"<br/>") ;
                 this.loadingshow=false;
-                document.title = "专栏-"+data.name;
+                document.title = data.name;
                 self.subscription=data.followed;
                 self.unit=data.price_unit;
 								this.showContent=true;
@@ -309,12 +309,12 @@
 								}
 
                 window.shareData={
-                  title:data.name,
-                  link: HOSTM+'/m/channel-small.html?id=' + data.id+'',
-                  imgUrl:'https://m.kofuf.com/static/img_h5/h5_logo.png',
-                  desc:data.brief
+                  title: data.name,
+                  link: data.share_url,
+                  imgUrl: data.thumb,
+                  desc: data.brief
                 }
-                weixinShare(Vue);
+                weixinShare();
               }
             }
             if(data.status!=0){
